@@ -17,30 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		guard let _ = (scene as? UIWindowScene) else { return }
 	}
-
-	func sceneDidDisconnect(_ scene: UIScene) {
-		print("Scene moved from Inactive to Diccc:  \(#function)")
-	}
-
-	func sceneDidBecomeActive(_ scene: UIScene) {
-		print("Scene moved from Inactive to Active:  \(#function)")
-	}
-
-	func sceneWillResignActive(_ scene: UIScene) {
-		print("Scene will be moved from Active to Inactive:  \(#function)")
-	}
-
-	func sceneWillEnterForeground(_ scene: UIScene) {
-		print("Scene will be moved from Inactive to Foreground:  \(#function)")
-
-	}
-
-	func sceneDidEnterBackground(_ scene: UIScene) {
-		print("Scene moved from Active to Background:  \(#function)")
-
-	}
 	
-	
-
 }
 
