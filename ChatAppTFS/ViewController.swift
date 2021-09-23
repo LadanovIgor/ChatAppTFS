@@ -46,7 +46,9 @@ class ViewController: UIViewController {
 	}
 	
 	private func printFunctionName(_ name: String) {
+		#if LOGS
 		print(name)
+		#endif
 	}
 }
 
