@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 >>>>>>> parent of f291291 (revert macros)
 		return true
 	}
+<<<<<<< HEAD
 	
 <<<<<<< HEAD
 =======
@@ -56,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 >>>>>>> parent of f136c03 (add uiapplication watcher)
 
+=======
+>>>>>>> parent of 4485d64 (will be moved to dev branch)
 
 	@available(iOS 13.0, *)
 	func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

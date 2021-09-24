@@ -33,7 +33,6 @@ final class ApplicationStatusWatcher {
 											   selector: #selector(willTerminateNotification(notification:)),
 											   name: UIApplication.willTerminateNotification,
 											   object: nil)
-	
 	}
 	
 	@objc func didBecomeActiveNotification(notification: Notification) {
