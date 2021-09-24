@@ -7,12 +7,26 @@
 
 import UIKit
 
-final class ApplicationStatusObserver {
-	static let shared = ApplicationStatusObserver()
+final class ApplicationAndViewControllerLifecycleObserver {
+	static let shared = ApplicationAndViewControllerLifecycleObserver()
+	
+	private var isLogs: Bool {
+		return Bundle.main.object(forInfoDictionaryKey: "isLogs") as? Bool ?? false
+	}
 	
 	private init() {}
 	
-	public func startMonitor() {
+	public func printFunctionName(_ name: String) {
+		if isLogs {
+			print(name)
+		}
+	}
+	
+	public func startApplicationLifeCycleObserving() {
+		guard isLogs else {
+			return
+		}
+		
 		NotificationCenter.default.addObserver(self,
 											   selector: #selector(didBecomeActiveNotification(notification:)),
 											   name: UIApplication.didBecomeActiveNotification,

@@ -15,17 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	
 	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-		#if LOGS
-		print("Application will be moved from Not running to Inactive:  \(#function)")
-		#endif
+		ApplicationAndViewControllerLifecycleObserver.shared.printFunctionName(
+			"Application will be moved from Not running to Inactive:  \(#function)"
+		)
 		return true
 	}
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		#if LOGS
-		print("Application moved from Not running to Inactive:  \(#function)")
-		ApplicationStatusObserver.shared.startMonitor()
-		#endif
+		ApplicationAndViewControllerLifecycleObserver.shared.printFunctionName(
+			"Application moved from Not running to Inactive:  \(#function)"
+		)
+		ApplicationAndViewControllerLifecycleObserver.shared.startApplicationLifeCycleObserving()
+
 		return true
 	}
 
