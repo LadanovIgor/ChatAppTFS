@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8E3B2D3826FA1FEC00CC5139 /* ApplicationStatusWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3B2D3726FA1FEC00CC5139 /* ApplicationStatusWatcher.swift */; };
 		8E5810D626F999F000866413 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5810D526F999F000866413 /* AppDelegate.swift */; };
 		8E5810D826F999F000866413 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5810D726F999F000866413 /* SceneDelegate.swift */; };
 		8E5810DA26F999F000866413 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5810D926F999F000866413 /* ViewController.swift */; };
@@ -17,7 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8E3B2D3726FA1FEC00CC5139 /* ApplicationStatusWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationStatusWatcher.swift; sourceTree = "<group>"; };
 		8E5810D226F999F000866413 /* ChatAppTFS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatAppTFS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E5810D526F999F000866413 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E5810D726F999F000866413 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,7 +63,6 @@
 				8E5810DE26F999F200866413 /* Assets.xcassets */,
 				8E5810E026F999F200866413 /* LaunchScreen.storyboard */,
 				8E5810E326F999F200866413 /* Info.plist */,
-				8E3B2D3726FA1FEC00CC5139 /* ApplicationStatusWatcher.swift */,
 			);
 			path = ChatAppTFS;
 			sourceTree = "<group>";
@@ -144,7 +141,6 @@
 				8E5810DA26F999F000866413 /* ViewController.swift in Sources */,
 				8E5810D626F999F000866413 /* AppDelegate.swift in Sources */,
 				8E5810D826F999F000866413 /* SceneDelegate.swift in Sources */,
-				8E3B2D3826FA1FEC00CC5139 /* ApplicationStatusWatcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,7 +201,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

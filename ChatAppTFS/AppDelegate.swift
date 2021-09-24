@@ -19,10 +19,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		print("Application moved from Not running to Inactive:  \(#function)")
-		ApplicationStatusWatcher.shared.startMonitor()
 		return true
 	}
 	
+<<<<<<< HEAD
+=======
+	func applicationDidBecomeActive(_ application: UIApplication) {
+		print("Application moved from Inactive to Active:  \(#function)")
+
+	}
+	
+	func applicationWillResignActive(_ application: UIApplication) {
+		print("Application will be moved from Active to Inactive:  \(#function)")
+
+	}
+	
+	func applicationDidEnterBackground(_ application: UIApplication) {
+		print("Application moved from Active to Background:  \(#function)")
+
+	}
+	
+	func applicationWillEnterForeground(_ application: UIApplication) {
+		print("Application will be moved from Background to Foreground:  \(#function)")
+	}
+	
+	func applicationWillTerminate(_ application: UIApplication) {
+		print("Application will be moved from Background to Suspended:  \(#function)")
+	}
+>>>>>>> parent of f136c03 (add uiapplication watcher)
 
 
 	@available(iOS 13.0, *)

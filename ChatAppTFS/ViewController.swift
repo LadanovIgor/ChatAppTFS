@@ -12,41 +12,37 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .gray
-		printFunctionName(#function)
+		print(#function)
 	}
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		printFunctionName(#function)
+		print(#function)
 	}
 	
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		printFunctionName(#function)
+		print(#function)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		printFunctionName(#function)
+		print(#function)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		printFunctionName(#function)
+		print(#function)
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		printFunctionName(#function)
+		print(#function)
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
-		printFunctionName(#function)
-	}
-	
-	private func printFunctionName(_ name: String) {
-		print(name)
+		print(#function)
 	}
 }
 
