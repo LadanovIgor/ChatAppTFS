@@ -45,7 +45,7 @@ final class ApplicationStatusWatcher {
 	}
 	
 	@objc func didEnterBackgroundNotification(notification: Notification) {
-		print("Application moved from Active to Background:  applicationDidEnterBackground(_:)")
+		print("Application moved from Foreground to Background:  applicationDidEnterBackground(_:)")
 	}
 	
 	@objc func willEnterForegroundNotification(notification: Notification) {
@@ -53,6 +53,6 @@ final class ApplicationStatusWatcher {
 	}
 	
 	@objc func willTerminateNotification(notification: Notification) {
-		print("Application will be moved from Background to Suspended:  applicationWillTerminate(_:)")
+		print("Application will be Terminated:  applicationWillTerminate(_:)")
 	}
 }
