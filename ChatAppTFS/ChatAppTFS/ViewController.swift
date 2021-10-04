@@ -8,12 +8,45 @@
 import UIKit
 
 class ViewController: UIViewController {
+	
+	
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view.
+		view.backgroundColor = .gray
+		ApplicationAndViewControllerLifecycleObserver.shared.printFunctionName(#function)
 	}
 
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		ApplicationAndViewControllerLifecycleObserver.shared.printFunctionName(#function)
+	}
+	
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		ApplicationAndViewControllerLifecycleObserver.shared.printFunctionName(#function)
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		ApplicationAndViewControllerLifecycleObserver.shared.printFunctionName(#function)
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		ApplicationAndViewControllerLifecycleObserver.shared.printFunctionName(#function)
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		ApplicationAndViewControllerLifecycleObserver.shared.printFunctionName(#function)
+	}
+	
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		ApplicationAndViewControllerLifecycleObserver.shared.printFunctionName(#function)
+	}
+	
 
 }
 
