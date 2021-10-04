@@ -35,7 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
 	}
 
+
+
 	@available(iOS 13.0, *)
+
 	func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
 		
 	}
