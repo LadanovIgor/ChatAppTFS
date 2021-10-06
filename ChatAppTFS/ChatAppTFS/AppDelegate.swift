@@ -7,8 +7,6 @@
 
 import UIKit
 
-import UIKit
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -26,23 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			"Application moved from Not running to Inactive:  \(#function)"
 		)
 		ApplicationAndViewControllerLifecycleObserver.shared.startApplicationLifeCycleObserving()
-
+		window = UIWindow(frame: UIScreen.main.bounds)
+		window?.makeKeyAndVisible()
+		window?.rootViewController = ViewController()		
 		return true
 	}
-
-	@available(iOS 13.0, *)
-	func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-		return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-	}
-
-
-
-	@available(iOS 13.0, *)
-
-	func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-		
-	}
-
 
 }
 
