@@ -236,6 +236,21 @@ extension ConversationsListViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return ConversationsListTableViewCell.preferredHeight
 	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+		switch indexPath.section {
+			case 0:
+				let vc = ConversationViewController()
+				vc.title = usersOnline[indexPath.row].name
+				navigationController?.pushViewController(vc, animated: true)
+			case 1:
+				let vc = ConversationViewController()
+				vc.title = usersOffline[indexPath.row].name
+				navigationController?.pushViewController(vc, animated: true)
+			default: break
+		}
+	}
 
 }
 
@@ -271,6 +286,16 @@ extension ConversationsListViewController: UITableViewDataSource {
 					   hasUnreadMessages: !(model.messages?.last?.isRead ?? false))
 		cell.layoutIfNeeded()
 		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		 guard let view = tableView.dequeueReusableHeaderFooterView(
+			withIdentifier: ConversationsListTableHeaderView.identifier) as? ConversationsListTableHeaderView else {
+			return UIView()
+		}
+		
+		return view
+		
 	}
 	
 }

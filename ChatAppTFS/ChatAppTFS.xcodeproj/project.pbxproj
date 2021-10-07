@@ -19,6 +19,8 @@
 		8EAAFE22270E8A7000D7497B /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE21270E8A7000D7497B /* NibLoadable.swift */; };
 		8EAAFE25270E8AF100D7497B /* ConversationsListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EAAFE24270E8AF100D7497B /* ConversationsListTableViewCell.xib */; };
 		8EAAFE27270E8BA500D7497B /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE26270E8BA500D7497B /* CircleImageView.swift */; };
+		8EAAFE2A270E8E9000D7497B /* ConversationsListTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE29270E8E9000D7497B /* ConversationsListTableHeaderView.swift */; };
+		8EAAFE2E270E8F3600D7497B /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE2D270E8F3600D7497B /* ConversationViewController.swift */; };
 		8EB63ADD26FDAB2D00548A19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB63ADC26FDAB2D00548A19 /* AppDelegate.swift */; };
 		8EB63AE126FDAB2D00548A19 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB63AE026FDAB2D00548A19 /* ConversationsListViewController.swift */; };
 		8EB63AE626FDAB2E00548A19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EB63AE526FDAB2E00548A19 /* Assets.xcassets */; };
@@ -38,6 +40,8 @@
 		8EAAFE21270E8A7000D7497B /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		8EAAFE24270E8AF100D7497B /* ConversationsListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConversationsListTableViewCell.xib; sourceTree = "<group>"; };
 		8EAAFE26270E8BA500D7497B /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
+		8EAAFE29270E8E9000D7497B /* ConversationsListTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListTableHeaderView.swift; sourceTree = "<group>"; };
+		8EAAFE2D270E8F3600D7497B /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		8EB63AD926FDAB2D00548A19 /* ChatAppTFS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatAppTFS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EB63ADC26FDAB2D00548A19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EB63AE026FDAB2D00548A19 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +83,7 @@
 		8E2E270D270DE69700BFE156 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8EAAFE28270E8E6000D7497B /* Headers */,
 				8E2E270E270DE6A300BFE156 /* Cell */,
 				8EAAFE26270E8BA500D7497B /* CircleImageView.swift */,
 			);
@@ -97,6 +102,7 @@
 		8E2E2713270DF02700BFE156 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				8EAAFE2C270E8EE400D7497B /* Conversation */,
 				8E2E2716270DF07600BFE156 /* UserProfile */,
 				8E2E2715270DF05700BFE156 /* ConversationsList */,
 			);
@@ -126,6 +132,22 @@
 				8EAAFE21270E8A7000D7497B /* NibLoadable.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		8EAAFE28270E8E6000D7497B /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				8EAAFE29270E8E9000D7497B /* ConversationsListTableHeaderView.swift */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		8EAAFE2C270E8EE400D7497B /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				8EAAFE2D270E8F3600D7497B /* ConversationViewController.swift */,
+			);
+			path = Conversation;
 			sourceTree = "<group>";
 		};
 		8EB63AD026FDAB2D00548A19 = {
@@ -233,7 +255,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EAAFE2E270E8F3600D7497B /* ConversationViewController.swift in Sources */,
 				8E2E270A270DE61300BFE156 /* Date+.swift in Sources */,
+				8EAAFE2A270E8E9000D7497B /* ConversationsListTableHeaderView.swift in Sources */,
 				8E2E271A270DF08A00BFE156 /* UserProfileViewController.swift in Sources */,
 				8E2E2708270DE5EA00BFE156 /* UIView+.swift in Sources */,
 				8E2E2703270DE53400BFE156 /* User.swift in Sources */,
