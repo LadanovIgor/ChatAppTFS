@@ -241,11 +241,11 @@ extension ConversationsListViewController: UITableViewDelegate {
 		tableView.deselectRow(at: indexPath, animated: true)
 		switch indexPath.section {
 			case 0:
-				let vc = ConversationViewController()
+				let vc = ConversationViewController(messages: usersOnline[indexPath.row].messages ?? [])
 				vc.title = usersOnline[indexPath.row].name
 				navigationController?.pushViewController(vc, animated: true)
 			case 1:
-				let vc = ConversationViewController()
+				let vc = ConversationViewController(messages: usersOffline[indexPath.row].messages ?? [])
 				vc.title = usersOffline[indexPath.row].name
 				navigationController?.pushViewController(vc, animated: true)
 			default: break
