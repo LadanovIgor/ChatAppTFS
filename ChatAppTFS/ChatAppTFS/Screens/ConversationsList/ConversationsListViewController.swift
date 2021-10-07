@@ -212,7 +212,12 @@ class ConversationsListViewController: UIViewController {
 	private func setUpTableView() {
 		tableView.separatorStyle = .none
 		tableView.backgroundColor = .white
-		tableView.register(ConversationsListTableViewCell.nib, forCellReuseIdentifier: ConversationsListTableViewCell.name)
+		tableView.register(
+			ConversationsListTableViewCell.nib,
+			forCellReuseIdentifier: ConversationsListTableViewCell.name)
+		tableView.register(
+			ConversationsListTableHeaderView.self,
+			forHeaderFooterViewReuseIdentifier: ConversationsListTableHeaderView.identifier)
 		tableView.delegate = self
 		tableView.dataSource = self
 		view.addSubview(tableView)
@@ -293,7 +298,6 @@ extension ConversationsListViewController: UITableViewDataSource {
 			withIdentifier: ConversationsListTableHeaderView.identifier) as? ConversationsListTableHeaderView else {
 			return UIView()
 		}
-		
 		return view
 		
 	}

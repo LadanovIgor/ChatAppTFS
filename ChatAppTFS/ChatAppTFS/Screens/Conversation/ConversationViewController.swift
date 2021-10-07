@@ -11,6 +11,7 @@ class ConversationViewController: UIViewController {
 
 	private let tableView = UITableView(frame: .zero, style: .grouped)
 	private let newMessageView = NewMessageView()
+	private var bottomConstraint: NSLayoutConstraint?
 
 	private var messages: [Message]
 	
@@ -30,6 +31,7 @@ class ConversationViewController: UIViewController {
 		setUpTableView()
 		setUpNewMessageView()
 		setUpConstraints()
+		addKeyboardObservers()
 		navigationController?.navigationBar.backgroundColor = .white
 	}
 	
@@ -40,6 +42,29 @@ class ConversationViewController: UIViewController {
 		newMessageView.layer.borderColor = UIColor.black.cgColor
 		view.addSubview(newMessageView)
 		newMessageView.translatesAutoresizingMaskIntoConstraints = false
+	}
+
+	private func addKeyboardObservers() {
+		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+	}
+	
+	@objc private func handleKeyboardNotification(notification: NSNotification) {
+		guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+			return
+		}
+		let keyboardHeight = keyboardFrame.cgRectValue.height
+		let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
+		bottomConstraint?.constant = isKeyboardShowing ? -keyboardHeight : 0
+		UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
+			self.view.layoutIfNeeded()
+		} completion: {[weak self] _ in
+			if isKeyboardShowing, let lastRow = self?.messages.count{
+				let indexPath = IndexPath(row: lastRow-1, section: 0)
+				self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+			}
+		}
 	}
 	
 	private func setUpBackButton() {
@@ -66,8 +91,9 @@ class ConversationViewController: UIViewController {
 		let navBarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height + (navigationController?.navigationBar.frame.height ?? 0.0)
 		let views = ["tableView": tableView, "newMessageView": newMessageView]
 		let metrics = ["viewHeight": 80, "top": navBarHeight]
+		
 		view.addConstraints(NSLayoutConstraint.constraints(
-			withNewVisualFormat: "H:|[tableView]|,V:|-top-[tableView][newMessageView(viewHeight)]|",
+			withNewVisualFormat: "H:|[tableView]|,V:|-top-[tableView][newMessageView(viewHeight)]",
 			metrics: metrics,
 			views: views))
 		view.addConstraints(NSLayoutConstraint.constraints(
@@ -75,6 +101,11 @@ class ConversationViewController: UIViewController {
 			metrics: metrics,
 			views: views))
 		
+		bottomConstraint = NSLayoutConstraint(item: newMessageView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+		guard let constraint = bottomConstraint else {
+			return
+		}
+		view.addConstraint(constraint)
 	}
 }
 
@@ -82,7 +113,6 @@ extension ConversationViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return UITableView.automaticDimension
 	}
-	
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		newMessageView.stopEditing()
