@@ -7,20 +7,25 @@
 
 import UIKit
 
-class ConversationTableViewCell: UITableViewCell {
-
+class ConversationTableViewCell: UITableViewCell, ConfigurableView {
+	
+	typealias ConfigurationModel = ViewModel
 	static let identifier = "ConversationTableViewCell"
 	static let preferredHeight: CGFloat = 90
 	
-	var message: String? {
-		didSet {
-			messageLabel.text = message
+	struct ViewModel {
+		let message: String?
+		let messageDate: Date?
+		let isSelfMessage: Bool?
+		
+		init(model: Message) {
+			self.message = model.text
+			self.messageDate = model.date
+			self.isSelfMessage = model.isSelfMessage
 		}
 	}
-	var messageDate: Date?
-	private var labelWidth: CGFloat {
-		return contentView.frame.width * 0.7
-	}
+	
+	private var labelWidth: CGFloat { contentView.frame.width * 0.7 }
 	private let spacing: CGFloat = 10
 	
 	private let messageLabel: UILabel = {
@@ -67,10 +72,9 @@ class ConversationTableViewCell: UITableViewCell {
 		positionMessageDepending(on: false)
 	}
 	
-	public func configure(with message: String?, date: Date?, isSelfMessage: Bool?) {
-		self.message = message
-		self.messageDate = date
-		positionMessageDepending(on: isSelfMessage ?? true)
+	public func configure(with viewModel: ViewModel) {
+		messageLabel.text = viewModel.message
+		positionMessageDepending(on: viewModel.isSelfMessage ?? true)
 		setNeedsLayout()
 	}
 	

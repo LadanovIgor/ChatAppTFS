@@ -7,20 +7,22 @@
 
 import UIKit
 
-class ConversationsListTableViewCell: UITableViewCell, NibLoadable {
+class ConversationsListTableViewCell: UITableViewCell, NibLoadable, ConfigurableView {
+	typealias ConfigurationModel = ViewModel
 	
-	var name: String? = nil { didSet { nameLabel.text = name } }
-	var message: String? = nil { didSet { lastMessageLabel.text = message } }
-	var date: Date? = nil { didSet { dateLabel.text = date?.shortDateFormateTodayOrEarlier } }
-	
-	var online: Bool = true {
-		didSet {
-			contentView.backgroundColor = online ? .yellow.withAlphaComponent(0.05) : .clear
-		}
-	}
-	var hasUnreadMessages: Bool = true {
-		didSet {
-			lastMessageLabel.font = .systemFont(ofSize: 13, weight: hasUnreadMessages ? .bold : .regular)
+	struct ViewModel {
+		let name: String?
+		let lastMessage: String?
+		let lastMessageDate: Date?
+		let isOnline: Bool
+		let hasUnreadMessages: Bool
+		
+		init(model: User) {
+			self.name = model.name
+			self.lastMessage = model.messages?.last?.text
+			self.lastMessageDate = model.messages?.last?.date
+			self.isOnline = model.isOnline
+			self.hasUnreadMessages = !(model.messages?.last?.isRead ?? true)
 		}
 	}
 	
@@ -47,12 +49,12 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable {
 		lastMessageLabel.font = .systemFont(ofSize: 13, weight: .regular)
 	}
 	
-	public func configure(with name: String?, lastMessage: String?, date: Date?, online: Bool, hasUnreadMessages: Bool) {
-		self.name = name
-		self.message = lastMessage
-		self.date = date
-		self.online = online
-		self.hasUnreadMessages = hasUnreadMessages
+	public func configure(with viewModel: ViewModel) {
+		nameLabel.text = viewModel.name
+		dateLabel.text = viewModel.lastMessageDate?.shortDateFormateTodayOrEarlier
+		lastMessageLabel.text = viewModel.lastMessage
+		contentView.backgroundColor = viewModel.isOnline ? .yellow.withAlphaComponent(0.05) : .clear
+		lastMessageLabel.font = .systemFont(ofSize: 13, weight: viewModel.hasUnreadMessages ? .bold : .regular)
 		profileImageView.image = UIImage(named: "userPlaceholder")
 	}
 	

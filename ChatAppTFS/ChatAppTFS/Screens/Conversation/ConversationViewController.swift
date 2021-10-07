@@ -127,7 +127,7 @@ extension ConversationViewController: UITableViewDataSource {
 				return UITableViewCell()
 			}
 		let message = messages[indexPath.row]
-		cell.configure(with: message.text, date: message.date, isSelfMessage: message.isSelfMessage)
+		cell.configure(with: .init(model: message))
 		return cell
 	}
 	

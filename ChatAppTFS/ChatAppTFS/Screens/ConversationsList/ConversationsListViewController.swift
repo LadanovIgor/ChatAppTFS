@@ -284,11 +284,7 @@ extension ConversationsListViewController: UITableViewDataSource {
 			case 1: model = usersOffline[indexPath.row]
 			default: model = usersOnline[indexPath.row]
 		}
-		cell.configure(with: model.name,
-					   lastMessage: model.messages?.last?.text,
-					   date: model.messages?.last?.date,
-					   online: model.isOnline,
-					   hasUnreadMessages: !(model.messages?.last?.isRead ?? false))
+		cell.configure(with: .init(model: model))
 		cell.layoutIfNeeded()
 		return cell
 	}
