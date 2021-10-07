@@ -15,10 +15,6 @@ class ConversationViewController: UIViewController {
 
 	private var messages: [Message]
 	
-	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-		return .portrait
-	}
-	
 	init(messages: [Message]) {
 		self.messages = messages
 		super.init(nibName: nil, bundle: nil)

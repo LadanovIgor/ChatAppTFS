@@ -21,11 +21,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	@IBOutlet weak var topProfileLabelConstraint: NSLayoutConstraint!
 	
 	private let imagePicker = UIImagePickerController()
-	
-	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-		return .portrait
-	}
-	
+
 	// MARK: - Init
 	
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
