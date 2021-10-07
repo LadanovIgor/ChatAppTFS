@@ -58,10 +58,15 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 	public func configure(with viewModel: ViewModel) {
 		nameLabel.text = viewModel.name
 		dateLabel.text = viewModel.lastMessageDate?.shortDateFormateTodayOrEarlier
-		lastMessageLabel.text = viewModel.lastMessage
 		contentView.backgroundColor = viewModel.isOnline ? UIColor(named: "lightYellowColor") ?? .yellow : .clear
 		lastMessageLabel.font = .systemFont(ofSize: 13, weight: viewModel.hasUnreadMessages ? .bold : .regular)
 		profileImageView.image = UIImage(named: "userPlaceholder")
+		guard let lastMessage = viewModel.lastMessage else {
+			lastMessageLabel.text = "No messages yet"
+			lastMessageLabel.font = .systemFont(ofSize: 17, weight: .bold)
+			return
+		}
+		lastMessageLabel.text = lastMessage
 	}
 	
 }
