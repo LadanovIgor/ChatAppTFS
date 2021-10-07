@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window?.makeKeyAndVisible()
 		let navVC = UINavigationController(rootViewController: ConversationsListViewController())
 		navVC.navigationBar.backgroundColor = .white
-		navVC.navigationBar.prefersLargeTitles = true
 		window?.rootViewController = navVC
 		return true
 	}

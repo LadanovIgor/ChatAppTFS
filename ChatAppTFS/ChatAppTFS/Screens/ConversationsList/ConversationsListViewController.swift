@@ -207,21 +207,16 @@ class ConversationsListViewController: UIViewController {
 		view.backgroundColor = UIColor.init(named: "backgroundColor") ?? .white
 		title = "Tinkoff Chat"
 		setUpTableView()
-	}
-	
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
 		setUpRightBarItem()
-
 	}
-	
+
 	private func setUpRightBarItem() {
 		let imageView = UIImageView()
 		imageView.image = UIImage(named: "userPlaceholder")
 		imageView.contentMode = .scaleAspectFit
 		imageView.clipsToBounds = true
 		imageView.layer.masksToBounds = true
-		let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+		let button = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
 		button.setImage(UIImage(named: "userPlaceholder"), for: .normal)
 		button.clipsToBounds = true
 		button.layer.masksToBounds = true
@@ -229,8 +224,8 @@ class ConversationsListViewController: UIViewController {
 		button.addTarget(self, action: #selector(didTapRightBarButton), for: .touchUpInside)
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
 		NSLayoutConstraint.activate([
-			button.widthAnchor.constraint(equalToConstant: 40),
-			button.heightAnchor.constraint(equalToConstant: 40)
+			button.widthAnchor.constraint(equalToConstant: 32),
+			button.heightAnchor.constraint(equalToConstant: 32)
 		])
 		button.round()
 	}
@@ -286,6 +281,10 @@ extension ConversationsListViewController: UITableViewDelegate {
 			default: break
 		}
 	}
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return ConversationsListTableHeaderView.preferredHeight
+	}
 
 }
 
@@ -324,6 +323,8 @@ extension ConversationsListViewController: UITableViewDataSource {
 			withIdentifier: ConversationsListTableHeaderView.identifier) as? ConversationsListTableHeaderView else {
 			return UIView()
 		}
+		view.textLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+		view.textLabel?.textColor = UIColor(named: "buttonTitle") ?? .blue
 		return view
 		
 	}

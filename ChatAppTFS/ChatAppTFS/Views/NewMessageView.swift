@@ -18,7 +18,6 @@ class NewMessageView: UIView {
 		setUpAddButton()
 		setUpTextField()
 		setUpConstraints()
-		backgroundColor = .white
 	}
 	
 	private func setUpAddButton() {
@@ -26,7 +25,7 @@ class NewMessageView: UIView {
 		sendButton.addTarget(self, action: #selector(didTapSendButton), for: .touchUpInside)
 		let attributedString = NSAttributedString(
 			string: "Send",
-			attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold), NSAttributedString.Key.foregroundColor: UIColor.blue])
+			attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold), NSAttributedString.Key.foregroundColor: UIColor(named: "buttonTitle") ?? .blue])
 		sendButton.setAttributedTitle(attributedString, for: .normal)
 	}
 	

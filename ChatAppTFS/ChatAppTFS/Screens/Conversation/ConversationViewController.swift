@@ -46,9 +46,7 @@ class ConversationViewController: UIViewController {
 	
 	
 	private func setUpNewMessageView() {
-		newMessageView.backgroundColor = .gray
-		newMessageView.layer.borderWidth = 1
-		newMessageView.layer.borderColor = UIColor.black.cgColor
+		newMessageView.backgroundColor = UIColor(named: "lightGray") ?? .gray
 		view.addSubview(newMessageView)
 		newMessageView.translatesAutoresizingMaskIntoConstraints = false
 	}
@@ -82,7 +80,7 @@ class ConversationViewController: UIViewController {
 	private func setUpBackButton() {
 		let backButton = UIBarButtonItem()
 		backButton.title = "Back"
-		backButton.tintColor = .black
+		backButton.tintColor = UIColor(named: "buttonTitle") ?? .blue
 		navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
 	}
 
@@ -100,9 +98,9 @@ class ConversationViewController: UIViewController {
 	
 	private func setUpConstraints() {
 		view.removeConstraints(view.constraints)
-		let navBarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height + (navigationController?.navigationBar.frame.height ?? 0.0)
+		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
 		let views = ["tableView": tableView, "newMessageView": newMessageView]
-		let metrics = ["viewHeight": 80, "top": navBarHeight]
+		let metrics = ["viewHeight": 80, "top": statusBarHeight]
 		
 		view.addConstraints(NSLayoutConstraint.constraints(
 			withNewVisualFormat: "H:|[tableView]|,V:|-top-[tableView][newMessageView(viewHeight)]",

@@ -53,7 +53,7 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 		nameLabel.text = viewModel.name
 		dateLabel.text = viewModel.lastMessageDate?.shortDateFormateTodayOrEarlier
 		lastMessageLabel.text = viewModel.lastMessage
-		contentView.backgroundColor = viewModel.isOnline ? .yellow.withAlphaComponent(0.05) : .clear
+		contentView.backgroundColor = viewModel.isOnline ? UIColor(named: "lightYellowColor") ?? .yellow : .clear
 		lastMessageLabel.font = .systemFont(ofSize: 13, weight: viewModel.hasUnreadMessages ? .bold : .regular)
 		profileImageView.image = UIImage(named: "userPlaceholder")
 	}
