@@ -75,7 +75,8 @@ extension ConversationViewController: UITableViewDataSource {
 			for: indexPath) as? ConversationTableViewCell else {
 				return UITableViewCell()
 			}
-	
+		let message = messages[indexPath.row]
+		cell.configure(with: message.text, date: message.date, isSelfMessage: message.isSelfMessage)
 		return cell
 	}
 	
