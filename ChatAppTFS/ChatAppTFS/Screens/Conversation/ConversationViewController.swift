@@ -8,12 +8,15 @@
 import UIKit
 
 class ConversationViewController: UIViewController {
+	
+	// MARK: - Properties
 
 	private let tableView = UITableView(frame: .zero, style: .grouped)
 	private let newMessageView = NewMessageView()
 	private var bottomConstraint: NSLayoutConstraint?
-
 	private var messages: [Message]
+	
+	// MARK: - Init
 	
 	init(messages: [Message]) {
 		self.messages = messages
@@ -29,6 +32,8 @@ class ConversationViewController: UIViewController {
 		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
 	}
 	
+	// MARK: - Lifecycle
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
@@ -40,6 +45,7 @@ class ConversationViewController: UIViewController {
 		navigationController?.navigationBar.backgroundColor = .white
 	}
 	
+	// MARK: - Private
 	
 	private func setUpNewMessageView() {
 		newMessageView.backgroundColor = UIColor(named: "lightGray") ?? .gray
@@ -114,6 +120,8 @@ class ConversationViewController: UIViewController {
 		view.addConstraint(constraint)
 	}
 }
+
+	// MARK: - UITableViewDelegate and UITableViewDataSource
 
 extension ConversationViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

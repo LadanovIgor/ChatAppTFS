@@ -8,6 +8,8 @@
 import UIKit
 
 class NewMessageView: UIView {
+	
+	// MARK: - Properties
 
 	private var textField = UITextField()
 	private var sendButton = UIButton()
@@ -19,6 +21,8 @@ class NewMessageView: UIView {
 		setUpTextField()
 		setUpConstraints()
 	}
+	
+	// MARK: - Private
 	
 	private func setUpAddButton() {
 		sendButton.translatesAutoresizingMaskIntoConstraints = false
@@ -68,11 +72,15 @@ class NewMessageView: UIView {
 		textField.text = nil
 	}
 	
+	// MARK: - Public
+	
 	public func stopEditing() {
 		textField.endEditing(true)
 		textField.text = nil
 	}
 }
+
+	// MARK: - UITextFieldDelegate
 
 extension NewMessageView: UITextFieldDelegate {
 

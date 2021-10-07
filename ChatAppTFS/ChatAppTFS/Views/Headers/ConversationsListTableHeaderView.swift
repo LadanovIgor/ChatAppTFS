@@ -15,7 +15,6 @@ class ConversationsListTableHeaderView: UITableViewHeaderFooterView {
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
 		contentView.backgroundColor = .clear
-		contentView.tintColor = UIColor(named: "buttonTitle") ?? .blue
 	}
 	
 	required init?(coder: NSCoder) {

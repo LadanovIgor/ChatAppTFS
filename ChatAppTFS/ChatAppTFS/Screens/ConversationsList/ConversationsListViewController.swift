@@ -9,6 +9,8 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
 	
+	// MARK: - Properties
+	
 	private let usersOnline: [User] = [
 		User(name: "Homer Simpson", isOnline: true, messages: [
 			Message(text: "Morning! The last episode was awesome",
@@ -202,6 +204,8 @@ class ConversationsListViewController: UIViewController {
 	
 	private var tableView = UITableView(frame: .zero, style: .grouped)
 
+	// MARK: - Lifecycle
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = UIColor.init(named: "backgroundColor") ?? .white
@@ -209,6 +213,8 @@ class ConversationsListViewController: UIViewController {
 		setUpTableView()
 		setUpRightBarItem()
 	}
+	
+	// MARK: - Private
 
 	private func setUpRightBarItem() {
 		let imageView = UIImageView()
@@ -254,6 +260,8 @@ class ConversationsListViewController: UIViewController {
 	}
 }
 
+// MARK: - UITableViewDelegate
+
 extension ConversationsListViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch section {
@@ -285,8 +293,9 @@ extension ConversationsListViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return ConversationsListTableHeaderView.preferredHeight
 	}
-
 }
+
+// MARK: - UITableViewDataSource
 
 extension ConversationsListViewController: UITableViewDataSource {
 	func numberOfSections(in tableView: UITableView) -> Int {
@@ -323,8 +332,6 @@ extension ConversationsListViewController: UITableViewDataSource {
 			withIdentifier: ConversationsListTableHeaderView.identifier) as? ConversationsListTableHeaderView else {
 			return UIView()
 		}
-		view.textLabel?.font = .systemFont(ofSize: 17, weight: .bold)
-		view.textLabel?.textColor = UIColor(named: "buttonTitle") ?? .blue
 		return view
 		
 	}

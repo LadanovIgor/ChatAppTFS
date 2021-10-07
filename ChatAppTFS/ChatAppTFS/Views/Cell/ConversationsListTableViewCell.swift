@@ -8,6 +8,9 @@
 import UIKit
 
 class ConversationsListTableViewCell: UITableViewCell, NibLoadable, ConfigurableView {
+	
+	//MARK: - ViewModel
+	
 	typealias ConfigurationModel = ViewModel
 	
 	struct ViewModel {
@@ -26,8 +29,9 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 		}
 	}
 	
+	// MARK: - Outlets and Properties
+	
 	static let preferredHeight: CGFloat = 90
-
 	@IBOutlet weak var lastMessageLabel: UILabel!
 	@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var nameLabel: UILabel!
@@ -48,6 +52,8 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 		contentView.backgroundColor = .clear
 		lastMessageLabel.font = .systemFont(ofSize: 13, weight: .regular)
 	}
+	
+	// MARK: - Public
 	
 	public func configure(with viewModel: ViewModel) {
 		nameLabel.text = viewModel.name

@@ -9,10 +9,10 @@ import UIKit
 
 class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 	
-	typealias ConfigurationModel = ViewModel
-	static let identifier = "ConversationTableViewCell"
-	static let preferredHeight: CGFloat = 90
+	// MARK: - ViewModel
 	
+	typealias ConfigurationModel = ViewModel
+
 	struct ViewModel {
 		let message: String?
 		let messageDate: Date?
@@ -25,6 +25,10 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 		}
 	}
 	
+	// MARK: - Properties
+
+	static let identifier = "ConversationTableViewCell"
+	static let preferredHeight: CGFloat = 90
 	private var labelWidth: CGFloat { contentView.frame.width * 0.7 }
 	private let spacing: CGFloat = 10
 	
@@ -38,6 +42,8 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
+	
+	// MARK: - Init
 	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -58,6 +64,8 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 		messageLabel.text = nil
 	}
 	
+	// MARK: - Private
+	
 	private func positionMessageDepending(on isSelf: Bool) {
 		contentView.removeConstraints(contentView.constraints)
 		let visualFormat = isSelf ? "H:[label(labelWidth)]-spacing-|,V:|-spacing-[label]-spacing-|" :
@@ -72,6 +80,8 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 		contentView.addSubview(messageLabel)
 		positionMessageDepending(on: false)
 	}
+	
+	// MARK: - Public
 	
 	public func configure(with viewModel: ViewModel) {
 		messageLabel.text = viewModel.message
