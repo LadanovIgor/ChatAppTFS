@@ -208,6 +208,36 @@ class ConversationsListViewController: UIViewController {
 		title = "Tinkoff Chat"
 		setUpTableView()
 	}
+	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		setUpRightBarItem()
+
+	}
+	
+	private func setUpRightBarItem() {
+		let imageView = UIImageView()
+		imageView.image = UIImage(named: "userPlaceholder")
+		imageView.contentMode = .scaleAspectFit
+		imageView.clipsToBounds = true
+		imageView.layer.masksToBounds = true
+		let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+		button.setImage(UIImage(named: "userPlaceholder"), for: .normal)
+		button.clipsToBounds = true
+		button.layer.masksToBounds = true
+		button.backgroundColor = .red
+		button.addTarget(self, action: #selector(didTapRightBarButton), for: .touchUpInside)
+		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+		NSLayoutConstraint.activate([
+			button.widthAnchor.constraint(equalToConstant: 40),
+			button.heightAnchor.constraint(equalToConstant: 40)
+		])
+		button.round()
+	}
+	
+	@objc private func didTapRightBarButton() {
+		present(UserProfileViewController(), animated: true)
+	}
 
 	private func setUpTableView() {
 		tableView.separatorStyle = .none

@@ -15,6 +15,10 @@ class ConversationViewController: UIViewController {
 
 	private var messages: [Message]
 	
+	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+		return .portrait
+	}
+	
 	init(messages: [Message]) {
 		self.messages = messages
 		super.init(nibName: nil, bundle: nil)
@@ -22,6 +26,11 @@ class ConversationViewController: UIViewController {
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
 	}
 	
 	override func viewDidLoad() {
@@ -45,8 +54,10 @@ class ConversationViewController: UIViewController {
 	}
 
 	private func addKeyboardObservers() {
-		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)),
+											   name: UIResponder.keyboardWillShowNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)),
+											   name: UIResponder.keyboardWillHideNotification, object: nil)
 
 	}
 	
@@ -59,10 +70,11 @@ class ConversationViewController: UIViewController {
 		bottomConstraint?.constant = isKeyboardShowing ? -keyboardHeight : 0
 		UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
 			self.view.layoutIfNeeded()
-		} completion: {[weak self] _ in
-			if isKeyboardShowing, let lastRow = self?.messages.count{
-				let indexPath = IndexPath(row: lastRow-1, section: 0)
-				self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+		} completion: { [weak self] _ in
+			guard let self = self else { return }
+			if isKeyboardShowing, self.messages.count > 0 {
+				let indexPath = IndexPath(row: self.messages.count-1, section: 0)
+				self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
 			}
 		}
 	}

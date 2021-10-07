@@ -48,6 +48,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 		setUpProfileImageView()
 		delegating()
 		setUpConstraints()
+		setUpLabels()
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -63,6 +64,10 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	// MARK: - Private
+	
+	private func setUpLabels() {
+		profileDescriptionLabel.text = "Cartoonist, producer, animator\nPortland, Oregon, U.S."
+	}
 	
 	private func setUpConstraints() {
 		if #available(iOS 13, *) {
