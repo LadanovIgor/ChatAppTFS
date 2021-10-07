@@ -10,7 +10,8 @@ import UIKit
 class ConversationViewController: UIViewController {
 
 	private let tableView = UITableView(frame: .zero, style: .grouped)
-		
+	private let newMessageView = NewMessageView()
+
 	private var messages: [Message]
 	
 	init(messages: [Message]) {
@@ -27,8 +28,18 @@ class ConversationViewController: UIViewController {
 		view.backgroundColor = .white
 		setUpBackButton()
 		setUpTableView()
+		setUpNewMessageView()
 		setUpConstraints()
 		navigationController?.navigationBar.backgroundColor = .white
+	}
+	
+	
+	private func setUpNewMessageView() {
+		newMessageView.backgroundColor = .gray
+		newMessageView.layer.borderWidth = 1
+		newMessageView.layer.borderColor = UIColor.black.cgColor
+		view.addSubview(newMessageView)
+		newMessageView.translatesAutoresizingMaskIntoConstraints = false
 	}
 	
 	private func setUpBackButton() {
@@ -53,18 +64,28 @@ class ConversationViewController: UIViewController {
 	private func setUpConstraints() {
 		view.removeConstraints(view.constraints)
 		let navBarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height + (navigationController?.navigationBar.frame.height ?? 0.0)
-		let views = ["tableView": tableView]
+		let views = ["tableView": tableView, "newMessageView": newMessageView]
 		let metrics = ["viewHeight": 80, "top": navBarHeight]
 		view.addConstraints(NSLayoutConstraint.constraints(
-			withNewVisualFormat: "H:|[tableView]|,V:|-top-[tableView]|",
+			withNewVisualFormat: "H:|[tableView]|,V:|-top-[tableView][newMessageView(viewHeight)]|",
 			metrics: metrics,
 			views: views))
+		view.addConstraints(NSLayoutConstraint.constraints(
+			withNewVisualFormat: "H:|[newMessageView]|",
+			metrics: metrics,
+			views: views))
+		
 	}
 }
 
 extension ConversationViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return UITableView.automaticDimension
+	}
+	
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		newMessageView.stopEditing()
 	}
 }
 

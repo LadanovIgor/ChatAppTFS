@@ -22,6 +22,7 @@
 		8EAAFE2A270E8E9000D7497B /* ConversationsListTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE29270E8E9000D7497B /* ConversationsListTableHeaderView.swift */; };
 		8EAAFE2E270E8F3600D7497B /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE2D270E8F3600D7497B /* ConversationViewController.swift */; };
 		8EAAFE30270E979600D7497B /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE2F270E979600D7497B /* ConversationTableViewCell.swift */; };
+		8EAAFE32270EB32500D7497B /* NewMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE31270EB32500D7497B /* NewMessageView.swift */; };
 		8EB63ADD26FDAB2D00548A19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB63ADC26FDAB2D00548A19 /* AppDelegate.swift */; };
 		8EB63AE126FDAB2D00548A19 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB63AE026FDAB2D00548A19 /* ConversationsListViewController.swift */; };
 		8EB63AE626FDAB2E00548A19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EB63AE526FDAB2E00548A19 /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 		8EAAFE29270E8E9000D7497B /* ConversationsListTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListTableHeaderView.swift; sourceTree = "<group>"; };
 		8EAAFE2D270E8F3600D7497B /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		8EAAFE2F270E979600D7497B /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
+		8EAAFE31270EB32500D7497B /* NewMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageView.swift; sourceTree = "<group>"; };
 		8EB63AD926FDAB2D00548A19 /* ChatAppTFS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatAppTFS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EB63ADC26FDAB2D00548A19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EB63AE026FDAB2D00548A19 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				8EAAFE28270E8E6000D7497B /* Headers */,
 				8E2E270E270DE6A300BFE156 /* Cell */,
 				8EAAFE26270E8BA500D7497B /* CircleImageView.swift */,
+				8EAAFE31270EB32500D7497B /* NewMessageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				8EAAFE27270E8BA500D7497B /* CircleImageView.swift in Sources */,
 				8EB63AE126FDAB2D00548A19 /* ConversationsListViewController.swift in Sources */,
 				8EAAFE22270E8A7000D7497B /* NibLoadable.swift in Sources */,
+				8EAAFE32270EB32500D7497B /* NewMessageView.swift in Sources */,
 				8E2E2705270DE53B00BFE156 /* Message.swift in Sources */,
 				8E2E2711270DE6D800BFE156 /* ConversationsListTableViewCell.swift in Sources */,
 				8EB63ADD26FDAB2D00548A19 /* AppDelegate.swift in Sources */,
