@@ -18,6 +18,8 @@
 		8E40D98A2714399700406AD4 /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E40D9892714399700406AD4 /* ThemesViewController.m */; };
 		8E40D98D27143AFE00406AD4 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E40D98C27143AFE00406AD4 /* Theme.m */; };
 		8E40D98F27143C0600406AD4 /* ThemesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E40D98E27143C0600406AD4 /* ThemesViewController.xib */; };
+		8E40D99327146AC700406AD4 /* ThemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40D99127146AC700406AD4 /* ThemeViewController.swift */; };
+		8E40D99427146AC700406AD4 /* ThemeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E40D99227146AC700406AD4 /* ThemeViewController.xib */; };
 		8E5EC5AB26FDB05E008FC472 /* ApplicationAndViewControllerLifecycleObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EC5AA26FDB05E008FC472 /* ApplicationAndViewControllerLifecycleObserver.swift */; };
 		8EAAFE22270E8A7000D7497B /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE21270E8A7000D7497B /* NibLoadable.swift */; };
 		8EAAFE25270E8AF100D7497B /* ConversationsListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EAAFE24270E8AF100D7497B /* ConversationsListTableViewCell.xib */; };
@@ -49,6 +51,8 @@
 		8E40D98C27143AFE00406AD4 /* Theme.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
 		8E40D98E27143C0600406AD4 /* ThemesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemesViewController.xib; sourceTree = "<group>"; };
 		8E40D990271444C600406AD4 /* ThemesViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewControllerDelegate.h; sourceTree = "<group>"; };
+		8E40D99127146AC700406AD4 /* ThemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewController.swift; sourceTree = "<group>"; };
+		8E40D99227146AC700406AD4 /* ThemeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeViewController.xib; sourceTree = "<group>"; };
 		8E5EC5AA26FDB05E008FC472 /* ApplicationAndViewControllerLifecycleObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationAndViewControllerLifecycleObserver.swift; sourceTree = "<group>"; };
 		8EAAFE21270E8A7000D7497B /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		8EAAFE24270E8AF100D7497B /* ConversationsListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConversationsListTableViewCell.xib; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 		8E40D9852714395600406AD4 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
+				8E40D99127146AC700406AD4 /* ThemeViewController.swift */,
+				8E40D99227146AC700406AD4 /* ThemeViewController.xib */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
@@ -292,6 +298,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E40D99427146AC700406AD4 /* ThemeViewController.xib in Resources */,
 				8EAAFE25270E8AF100D7497B /* ConversationsListTableViewCell.xib in Resources */,
 				8E40D98F27143C0600406AD4 /* ThemesViewController.xib in Resources */,
 				8E2E2718270DF08400BFE156 /* UserProfileViewController.xib in Resources */,
@@ -317,6 +324,7 @@
 				8EB63AE126FDAB2D00548A19 /* ConversationsListViewController.swift in Sources */,
 				8EAAFE22270E8A7000D7497B /* NibLoadable.swift in Sources */,
 				8EAAFE32270EB32500D7497B /* NewMessageView.swift in Sources */,
+				8E40D99327146AC700406AD4 /* ThemeViewController.swift in Sources */,
 				8E2E2705270DE53B00BFE156 /* Message.swift in Sources */,
 				8E2E2711270DE6D800BFE156 /* ConversationsListTableViewCell.swift in Sources */,
 				8EB63ADD26FDAB2D00548A19 /* AppDelegate.swift in Sources */,

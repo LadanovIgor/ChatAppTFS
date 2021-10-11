@@ -29,9 +29,6 @@
 }
 
 - (Theme *)theme {
-	if (_theme == nil) {
-		_theme = [[Theme alloc] init];
-	}
 	return _theme;
 }
 
@@ -53,6 +50,18 @@
 }
 
 - (void) didThemeButtonTapped:(UIButton*) button {
+	UIColor* color = [[UIColor alloc] init];
+	if (button == self.lightThemeButton) {
+		color = self.theme.lightColor;
+	} else if (button == self.darkThemeButton) {
+		color = self.theme.darkColor;
+	} else if (button == self.champagneThemeButton) {
+		color = self.theme.champagneColor;
+	} else {
+		return;
+	}
+	[self.delegate themesViewController:self didSelectTheme:color];
+	[self dismissViewControllerAnimated:true completion:nil];
 }
 
 

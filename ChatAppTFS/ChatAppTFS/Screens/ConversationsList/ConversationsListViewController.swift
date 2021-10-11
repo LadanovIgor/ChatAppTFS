@@ -252,7 +252,12 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	@objc private func didTapLeftBarButton() {
-		let vc = ThemesViewController()
+//		let vc = ThemesViewController()
+		let vc = ThemeViewController()
+		vc.themeChanged = { color in
+			print("yes")
+			
+		}
 //		vc.delegate = self
 		present(vc, animated: true)
 	}
@@ -280,9 +285,11 @@ class ConversationsListViewController: UIViewController {
 			views: ["tableView":tableView]))
 	}
 	
-	private func logThemeChanging(selectedTheme: UIColor) {
-		UIApplication.shared.delegate?.window??.backgroundColor = selectedTheme
-		UINavigationBar.appearance().barTintColor = selectedTheme
+	private func logThemeChanging(selectedTheme: String?) {
+		guard let selectedTheme = selectedTheme else {
+			return
+		}
+		print(selectedTheme)
 	}
 }
 
@@ -364,6 +371,6 @@ extension ConversationsListViewController: UITableViewDataSource {
 
 extension ConversationsListViewController: ThemesViewControllerDelegate {
 	func themesViewController(_ controller: UIViewController, didSelectTheme selectedTheme: UIColor) {
-		logThemeChanging(selectedTheme: selectedTheme)
+		
 	}
 }
