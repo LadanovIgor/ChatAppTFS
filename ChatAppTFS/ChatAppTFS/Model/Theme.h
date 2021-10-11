@@ -9,5 +9,7 @@
 #import "UIKit/UIKit.h"
 
 @interface Theme : NSObject
-
+@property (nonatomic, strong, readonly) UIColor* lightColor;
+@property (nonatomic, strong, readonly) UIColor* darkColor;
+@property (nonatomic, strong, readonly) UIColor* champagneColor;
 @end

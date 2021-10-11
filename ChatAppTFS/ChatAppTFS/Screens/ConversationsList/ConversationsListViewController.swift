@@ -212,9 +212,24 @@ class ConversationsListViewController: UIViewController {
 		title = "Tinkoff Chat"
 		setUpTableView()
 		setUpRightBarItem()
+		setUpLeftBarItem()
 	}
 	
 	// MARK: - Private
+	
+	private func setUpLeftBarItem() {
+		let button = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+		button.setImage(UIImage(named: "settings"), for: .normal)
+		button.clipsToBounds = true
+		button.layer.masksToBounds = true
+		button.backgroundColor = .clear
+		button.addTarget(self, action: #selector(didTapLeftBarButton), for: .touchUpInside)
+		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+		NSLayoutConstraint.activate([
+			button.widthAnchor.constraint(equalToConstant: 32),
+			button.heightAnchor.constraint(equalToConstant: 32)
+		])
+	}
 
 	private func setUpRightBarItem() {
 		let imageView = UIImageView()
@@ -234,6 +249,12 @@ class ConversationsListViewController: UIViewController {
 			button.heightAnchor.constraint(equalToConstant: 32)
 		])
 		button.round()
+	}
+	
+	@objc private func didTapLeftBarButton() {
+		let vc = ThemesViewController()
+//		vc.delegate = self
+		present(vc, animated: true)
 	}
 	
 	@objc private func didTapRightBarButton() {
@@ -257,6 +278,11 @@ class ConversationsListViewController: UIViewController {
 			withNewVisualFormat: "H:|[tableView]|,V:|[tableView]|",
 			metrics: nil,
 			views: ["tableView":tableView]))
+	}
+	
+	private func logThemeChanging(selectedTheme: UIColor) {
+		UIApplication.shared.delegate?.window??.backgroundColor = selectedTheme
+		UINavigationBar.appearance().barTintColor = selectedTheme
 	}
 }
 
@@ -333,7 +359,11 @@ extension ConversationsListViewController: UITableViewDataSource {
 			return UIView()
 		}
 		return view
-		
 	}
-	
+}
+
+extension ConversationsListViewController: ThemesViewControllerDelegate {
+	func themesViewController(_ controller: UIViewController, didSelectTheme selectedTheme: UIColor) {
+		logThemeChanging(selectedTheme: selectedTheme)
+	}
 }

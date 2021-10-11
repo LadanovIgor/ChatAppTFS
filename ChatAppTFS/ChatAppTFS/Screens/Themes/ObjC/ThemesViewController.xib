@@ -16,6 +16,7 @@
                 <outlet property="closeButton" destination="6Rd-9E-7yl" id="3ls-yn-Qqz"/>
                 <outlet property="darkThemeButton" destination="saF-L3-eyB" id="vSl-ng-Kwx"/>
                 <outlet property="lightThemeButton" destination="VvY-gN-8hS" id="s6M-kf-nVt"/>
+                <outlet property="view" destination="iN0-l3-epB" id="T3A-SZ-sI8"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

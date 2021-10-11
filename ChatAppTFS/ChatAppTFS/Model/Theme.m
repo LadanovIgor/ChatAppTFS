@@ -9,6 +9,4 @@
 
 @implementation Theme
 
-
-
 @end
