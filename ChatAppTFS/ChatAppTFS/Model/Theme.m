@@ -8,53 +8,27 @@
 #import "Theme.h"
 
 @implementation Theme
-@synthesize lightColor = _lightColor;
-@synthesize champagneColor = _champagneColor;
-@synthesize darkColor = _darkColor;
 
-- (instancetype)init
-{
-	self = [super init];
-	if (self) {
-		_darkColor = [[UIColor alloc] initWithRed:0.184 green:0.310 blue:0.310 alpha:1.0];
-		_champagneColor = [[UIColor alloc] initWithRed:0.969 green:0.906 blue:0.598 alpha:1.0];
-		_lightColor = [[UIColor alloc] initWithRed:0.969 green:0.969 blue:0.969 alpha:1.0];
+- (instancetype)initWithThemeType:(ThemeType)type {
+	if (self = [super init]) {
+		_type = type;
 	}
 	return self;
 }
 
-- (void) setLightColor:(UIColor *)lightColor {
-	_lightColor = lightColor;
+- (UIColor *)color {
+	switch (_type) {
+		case ThemeTypeDark:
+			return [[[UIColor alloc] initWithRed:0.184 green:0.310 blue:0.310 alpha:1.0] autorelease];
+		case ThemeTypeLight:
+			return [[[UIColor alloc] initWithRed:0.969 green:0.969 blue:0.969 alpha:1.0] autorelease];
+		case ThemeTypeChampagne:
+			return [[[UIColor alloc] initWithRed:0.969 green:0.906 blue:0.598 alpha:1.0] autorelease];
+	}
 }
-
-- (void) setDarkColor:(UIColor *)darkColor {
-	_darkColor = darkColor;
-}
-
-- (void) setChampagneColor:(UIColor *)champagneColor {
-	_champagneColor = champagneColor;
-}
-
-- (UIColor *)lightColor {
-	return _lightColor;
-}
-
-- (UIColor *)darkColor {
-	return _darkColor;
-}
-
-- (UIColor *)champagneColor {
-	return _champagneColor;
-}
-
 
 - (void)dealloc {
-	
-	
-//	[_darkColor release];
-//	[_lightColor release];
-//	[_champagneColor release];
-//	NSLog(@"object is deallocated");
-//	[super dealloc];
+	NSLog(@"%s %@ deallocated", __PRETTY_FUNCTION__, self);
+	[super dealloc];
 }
 @end

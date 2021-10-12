@@ -252,13 +252,12 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	@objc private func didTapLeftBarButton() {
-//		let vc = ThemesViewController()
-		let vc = ThemeViewController()
-		vc.themeChanged = { color in
-			print("yes")
-			
-		}
-//		vc.delegate = self
+		let vc = ThemesViewController()
+//		let vc = ThemeViewController()
+//		vc.themeChanged = { color in
+//			print("yes")
+//		}
+		vc.delegate = self
 		present(vc, animated: true)
 	}
 	
@@ -268,7 +267,7 @@ class ConversationsListViewController: UIViewController {
 
 	private func setUpTableView() {
 		tableView.separatorStyle = .none
-		tableView.backgroundColor = .white
+		tableView.backgroundColor = .clear
 		tableView.register(
 			ConversationsListTableViewCell.nib,
 			forCellReuseIdentifier: ConversationsListTableViewCell.name)
@@ -285,11 +284,10 @@ class ConversationsListViewController: UIViewController {
 			views: ["tableView":tableView]))
 	}
 	
-	private func logThemeChanging(selectedTheme: String?) {
-		guard let selectedTheme = selectedTheme else {
-			return
-		}
-		print(selectedTheme)
+	private func logThemeChanging(selectedTheme: Theme) {
+		UINavigationBar.appearance().barTintColor = selectedTheme.color()
+		navigationController?.navigationBar.backgroundColor = selectedTheme.color()
+		view.backgroundColor = selectedTheme.color()
 	}
 }
 
@@ -365,12 +363,15 @@ extension ConversationsListViewController: UITableViewDataSource {
 			withIdentifier: ConversationsListTableHeaderView.identifier) as? ConversationsListTableHeaderView else {
 			return UIView()
 		}
+		view.backgroundColor = .clear
 		return view
 	}
 }
 
 extension ConversationsListViewController: ThemesViewControllerDelegate {
-	func themesViewController(_ controller: UIViewController, didSelectTheme selectedTheme: UIColor) {
-		
+	func themesViewController(_ controller: UIViewController, didSelect selectedTheme: Theme) {
+		logThemeChanging(selectedTheme: selectedTheme)
 	}
+	
+
 }

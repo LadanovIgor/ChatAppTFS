@@ -8,8 +8,16 @@
 #import "Foundation/Foundation.h"
 #import "UIKit/UIKit.h"
 
+typedef NS_ENUM(unsigned char, ThemeType) {
+	ThemeTypeLight,
+	ThemeTypeDark,
+	ThemeTypeChampagne
+};
+
 @interface Theme : NSObject
-@property (nonatomic, strong, readonly) UIColor* lightColor;
-@property (nonatomic, strong, readonly) UIColor* darkColor;
-@property (nonatomic, strong, readonly) UIColor* champagneColor;
+
+@property (assign) ThemeType type;
+- (UIColor *)color;
+- (instancetype)initWithThemeType:(ThemeType)type;
+
 @end

@@ -10,6 +10,6 @@
 
 @protocol ThemesViewControllerDelegate <NSObject>
 
-- (void)themesViewController: (UIViewController *)controller didSelectTheme:(UIColor*)selectedTheme;
+- (void)themesViewController: (UIViewController *)controller didSelectTheme:(Theme*)selectedTheme;
 
 @end

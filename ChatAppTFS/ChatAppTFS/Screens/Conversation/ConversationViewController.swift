@@ -36,13 +36,12 @@ class ConversationViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = .white
 		setUpBackButton()
 		setUpTableView()
 		setUpNewMessageView()
 		setUpConstraints()
 		addKeyboardObservers()
-		navigationController?.navigationBar.backgroundColor = .white
+		view.backgroundColor = .white
 	}
 	
 	// MARK: - Private

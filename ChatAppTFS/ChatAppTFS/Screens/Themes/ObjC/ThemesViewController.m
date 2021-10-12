@@ -25,7 +25,9 @@
 }
 
 - (void)setTheme:(Theme *)theme {
+	[_theme release];
 	_theme = theme;
+	[_theme retain];
 }
 
 - (Theme *)theme {
@@ -50,19 +52,24 @@
 }
 
 - (void) didThemeButtonTapped:(UIButton*) button {
-	UIColor* color = [[UIColor alloc] init];
 	if (button == self.lightThemeButton) {
-		color = self.theme.lightColor;
+		_theme = [[Theme alloc] initWithThemeType:ThemeTypeLight];
 	} else if (button == self.darkThemeButton) {
-		color = self.theme.darkColor;
+		_theme = [[Theme alloc] initWithThemeType:ThemeTypeDark];
 	} else if (button == self.champagneThemeButton) {
-		color = self.theme.champagneColor;
+		_theme = [[Theme alloc] initWithThemeType:ThemeTypeChampagne];
 	} else {
 		return;
 	}
-	[self.delegate themesViewController:self didSelectTheme:color];
+	[self.delegate themesViewController:self didSelectTheme:_theme];
 	[self dismissViewControllerAnimated:true completion:nil];
 }
 
+- (void) dealloc {
+	[_theme release];
+	_theme = nil;
+	NSLog(@"%s %@ deallocated", __PRETTY_FUNCTION__, self);
+	[super dealloc];
+}
 
 @end
