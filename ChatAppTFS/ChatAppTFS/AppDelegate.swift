@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.makeKeyAndVisible()
 		let navVC = UINavigationController(rootViewController: ConversationsListViewController())
-		navVC.navigationBar.backgroundColor = .clear
+		navVC.navigationBar.backgroundColor = .white
 		window?.rootViewController = navVC
 		return true
 	}

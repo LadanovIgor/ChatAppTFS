@@ -49,7 +49,6 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 		profileImageView.image = nil
 		lastMessageLabel.text = nil
 		dateLabel.text = nil
-		contentView.backgroundColor = .clear
 		lastMessageLabel.font = .systemFont(ofSize: 13, weight: .regular)
 	}
 	

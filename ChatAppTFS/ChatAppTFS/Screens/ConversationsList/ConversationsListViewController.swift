@@ -285,9 +285,11 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	private func logThemeChanging(selectedTheme: Theme) {
-		UINavigationBar.appearance().barTintColor = selectedTheme.color()
-		navigationController?.navigationBar.backgroundColor = selectedTheme.color()
-		view.backgroundColor = selectedTheme.color()
+		let color = selectedTheme.color()
+		UINavigationBar.appearance().backgroundColor = color
+		UINavigationBar.appearance().barTintColor = color
+		view.backgroundColor = color
+		UIApplication.shared.windows.reload()
 	}
 }
 
@@ -363,7 +365,7 @@ extension ConversationsListViewController: UITableViewDataSource {
 			withIdentifier: ConversationsListTableHeaderView.identifier) as? ConversationsListTableHeaderView else {
 			return UIView()
 		}
-		view.backgroundColor = .clear
+		view.backgroundColor = .white
 		return view
 	}
 }

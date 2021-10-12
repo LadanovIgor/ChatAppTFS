@@ -41,7 +41,7 @@ class ConversationViewController: UIViewController {
 		setUpNewMessageView()
 		setUpConstraints()
 		addKeyboardObservers()
-		view.backgroundColor = .white
+		view.backgroundColor = UIColor(named: "profileBackground")
 	}
 	
 	// MARK: - Private
