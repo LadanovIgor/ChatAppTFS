@@ -9,14 +9,7 @@ import Foundation
 
 struct LightTheme: ThemeProtocol {
 	var tint: UIColor = .black
-	
 	var backgroundColor: UIColor = .white
-	
-	var separatorColor: UIColor = .darkGray
-	
 	var labelColor: UIColor = .black
-	
 	var barStyle: UIBarStyle = .default
-	
-	
 }

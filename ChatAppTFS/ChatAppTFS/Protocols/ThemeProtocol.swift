@@ -10,7 +10,6 @@ import UIKit
 protocol ThemeProtocol {
 	var tint: UIColor { get }
 	var backgroundColor: UIColor { get }
-	var separatorColor: UIColor { get }
 	var labelColor: UIColor { get }
 	var barStyle: UIBarStyle { get }
 	
@@ -26,7 +25,6 @@ extension ThemeProtocol {
 		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : labelColor]
 		UINavigationBar.appearance().backgroundColor = backgroundColor
 		UITableViewHeaderFooterView.appearance().tintColor = labelColor
-		UITableView.appearance().separatorColor = separatorColor
 		UITableView.appearance().backgroundColor = backgroundColor
 		UILabel.appearance().textColor = labelColor
 		UIView.appearance(whenContainedInInstancesOf: [UITableView.self]).backgroundColor = backgroundColor

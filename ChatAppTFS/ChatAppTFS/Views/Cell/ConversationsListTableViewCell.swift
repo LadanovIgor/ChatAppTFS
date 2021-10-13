@@ -36,9 +36,9 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 	@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var profileImageView: UIImageView!
-	
-	override func layoutSubviews() {
-		super.layoutSubviews()
+
+	override func layoutIfNeeded() {
+		super.layoutIfNeeded()
 		profileImageView.layer.cornerRadius = profileImageView.frame.width/2
 		profileImageView.layer.masksToBounds = true
 		removeBottomSeparator()

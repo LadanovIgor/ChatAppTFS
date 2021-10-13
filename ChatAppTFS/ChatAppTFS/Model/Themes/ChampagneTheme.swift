@@ -8,16 +8,8 @@
 import Foundation
 
 struct ChampagneTheme: ThemeProtocol {
-	
-	var tint: UIColor = .red
-	
+	var tint: UIColor = .purple
 	var backgroundColor: UIColor = UIColor.init(red: 0.969, green: 0.906, blue: 0.598, alpha: 1.0)
-	
-	var separatorColor: UIColor = .green
-	
-	var labelColor: UIColor = .red
-	
+	var labelColor: UIColor = .purple
 	var barStyle: UIBarStyle = .default
-	
-	
 }
