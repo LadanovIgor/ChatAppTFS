@@ -52,15 +52,17 @@
 }
 
 - (void) didThemeButtonTapped:(UIButton*) button {
+	ThemeType themeType;
 	if (button == self.lightThemeButton) {
-		_theme = [[Theme alloc] initWithThemeType:ThemeTypeLight];
+		themeType = ThemeTypeLight;
 	} else if (button == self.darkThemeButton) {
-		_theme = [[Theme alloc] initWithThemeType:ThemeTypeDark];
+		themeType = ThemeTypeDark;
 	} else if (button == self.champagneThemeButton) {
-		_theme = [[Theme alloc] initWithThemeType:ThemeTypeChampagne];
+		themeType = ThemeTypeChampagne;
 	} else {
 		return;
 	}
+	_theme = [[Theme alloc] initWithThemeType: themeType];
 	[self.delegate themesViewController:self didSelectTheme:_theme];
 	[self dismissViewControllerAnimated:true completion:nil];
 }

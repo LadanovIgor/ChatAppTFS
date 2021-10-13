@@ -36,12 +36,14 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 	@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var profileImageView: UIImageView!
-
-	override func layoutIfNeeded() {
-		super.layoutIfNeeded()
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
 		profileImageView.layer.cornerRadius = profileImageView.frame.width/2
 		profileImageView.layer.masksToBounds = true
+		removeBottomSeparator()
 	}
+
 	
 	override func prepareForReuse() {
 		super.prepareForReuse()
@@ -57,7 +59,7 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 	public func configure(with viewModel: ViewModel) {
 		nameLabel.text = viewModel.name
 		dateLabel.text = viewModel.lastMessageDate?.shortDateFormateTodayOrEarlier
-		contentView.backgroundColor = viewModel.isOnline ? UIColor(named: "lightYellowColor") ?? .yellow : .clear
+//		contentView.backgroundColor = viewModel.isOnline ? UIColor(named: "lightYellowColor") ?? .yellow : .clear
 		lastMessageLabel.font = .systemFont(ofSize: 13, weight: viewModel.hasUnreadMessages ? .bold : .regular)
 		profileImageView.image = UIImage(named: "userPlaceholder")
 		guard let lastMessage = viewModel.lastMessage else {

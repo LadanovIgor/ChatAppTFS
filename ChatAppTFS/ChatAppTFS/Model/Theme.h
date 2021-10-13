@@ -18,6 +18,7 @@ typedef NS_ENUM(unsigned char, ThemeType) {
 
 @property (assign) ThemeType type;
 - (UIColor *)color;
+- (NSString *) description;
 - (instancetype)initWithThemeType:(ThemeType)type;
 
 @end

@@ -41,7 +41,7 @@ class ConversationViewController: UIViewController {
 		setUpNewMessageView()
 		setUpConstraints()
 		addKeyboardObservers()
-		view.backgroundColor = UIColor(named: "profileBackground")
+//		view.backgroundColor = UIColor(named: "profileBackground")
 	}
 	
 	// MARK: - Private
@@ -87,7 +87,7 @@ class ConversationViewController: UIViewController {
 
 	private func setUpTableView() {
 		tableView.separatorStyle = .none
-		tableView.backgroundColor = .white
+//		tableView.backgroundColor = .white
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.register(ConversationTableViewCell.self,
@@ -99,12 +99,11 @@ class ConversationViewController: UIViewController {
 	
 	private func setUpConstraints() {
 		view.removeConstraints(view.constraints)
-		let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
 		let views = ["tableView": tableView, "newMessageView": newMessageView]
-		let metrics = ["viewHeight": 80, "top": statusBarHeight]
+		let metrics = ["viewHeight": 80]
 		
 		view.addConstraints(NSLayoutConstraint.constraints(
-			withNewVisualFormat: "H:|[tableView]|,V:|-top-[tableView][newMessageView(viewHeight)]",
+			withNewVisualFormat: "H:|[tableView]|,V:|[tableView][newMessageView(viewHeight)]",
 			metrics: metrics,
 			views: views))
 		view.addConstraints(NSLayoutConstraint.constraints(

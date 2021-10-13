@@ -9,12 +9,14 @@ import UIKit
 
 class ThemeViewController: UIViewController {
 
-	@IBOutlet weak var champagneThemeButton: UIButton!
-	@IBOutlet weak var darkThemeButton: UIButton!
-	@IBOutlet weak var lightThemeButton: UIButton!
-	@IBOutlet weak var closeButton: UIButton!
+	@IBOutlet private weak var champagneThemeButton: UIButton!
+	@IBOutlet private weak var darkThemeButton: UIButton!
+	@IBOutlet private weak var lightThemeButton: UIButton!
+	@IBOutlet private weak var closeButton: UIButton!
 	
-	var themeChanged: ((UIColor) -> Void)?
+	var lightThemeSelected: ThemeClosure<LightTheme>?
+	var darkThemeSelected: ThemeClosure<DarkTheme>?
+	var champagneThemeSelected: ThemeClosure<ChampagneTheme>?
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,17 +32,28 @@ class ThemeViewController: UIViewController {
 	
 	private func addTargets() {
 		closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
-		lightThemeButton.addTarget(self, action: #selector(didTapThemeButton), for: .touchUpInside)
-		darkThemeButton.addTarget(self, action: #selector(didTapThemeButton), for: .touchUpInside)
-		champagneThemeButton.addTarget(self, action: #selector(didTapThemeButton), for: .touchUpInside)
+		lightThemeButton.addTarget(self, action: #selector(didTapLightThemeButton), for: .touchUpInside)
+		darkThemeButton.addTarget(self, action: #selector(didTapDarkThemeButton), for: .touchUpInside)
+		champagneThemeButton.addTarget(self, action: #selector(didTapChampagneThemeButton), for: .touchUpInside)
 	}
 	
 	@objc private func didTapCloseButton() {
 		dismiss(animated: true, completion: nil)
 	}
 	
-	@objc private func didTapThemeButton(_ button: UIButton) {
-		themeChanged?(UIColor.red)
+	@objc private func didTapLightThemeButton() {
+		lightThemeSelected?(LightTheme())
+		dismiss(animated: true, completion: nil)
+	}
+	
+	@objc private func didTapChampagneThemeButton() {
+		champagneThemeSelected?(ChampagneTheme())
+		dismiss(animated: true, completion: nil)
+	}
+	
+	@objc private func didTapDarkThemeButton(_ button: UIButton) {
+		darkThemeSelected?(DarkTheme())
+		dismiss(animated: true, completion: nil)
 	}
 
 }

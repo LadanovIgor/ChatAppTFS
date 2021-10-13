@@ -27,8 +27,19 @@
 	}
 }
 
+- (NSString *)description {
+	switch (_type) {
+		case ThemeTypeDark:
+			return @"Dark";
+		case ThemeTypeLight:
+			return @"Light";
+		case ThemeTypeChampagne:
+			return @"Champagne";
+	}
+}
+
 - (void)dealloc {
-	NSLog(@"%s %@ deallocated", __PRETTY_FUNCTION__, self);
+//	NSLog(@"%s %@ deallocated", __PRETTY_FUNCTION__, self);
 	[super dealloc];
 }
 @end

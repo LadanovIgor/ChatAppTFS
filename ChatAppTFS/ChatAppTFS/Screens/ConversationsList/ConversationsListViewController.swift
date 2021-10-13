@@ -208,7 +208,7 @@ class ConversationsListViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = UIColor.init(named: "backgroundColor") ?? .white
+//		view.backgroundColor =  .clear//UIColor.init(named: "backgroundColor") ?? .white
 		title = "Tinkoff Chat"
 		setUpTableView()
 		setUpRightBarItem()
@@ -252,12 +252,18 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	@objc private func didTapLeftBarButton() {
-		let vc = ThemesViewController()
-//		let vc = ThemeViewController()
-//		vc.themeChanged = { color in
-//			print("yes")
-//		}
-		vc.delegate = self
+//		let vc = ThemesViewController()
+//		vc.delegate = self
+		let vc = ThemeViewController()
+		vc.lightThemeSelected = {[weak self] theme in
+			self?.changeTheme(for: theme)
+		}
+		vc.champagneThemeSelected = {[weak self] theme in
+			self?.changeTheme(for: theme)
+		}
+		vc.darkThemeSelected = {[weak self] theme in
+			self?.changeTheme(for: theme)
+		}
 		present(vc, animated: true)
 	}
 	
@@ -266,8 +272,9 @@ class ConversationsListViewController: UIViewController {
 	}
 
 	private func setUpTableView() {
+		tableView.showsVerticalScrollIndicator = false
 		tableView.separatorStyle = .none
-		tableView.backgroundColor = .clear
+//		tableView.backgroundColor = .clear
 		tableView.register(
 			ConversationsListTableViewCell.nib,
 			forCellReuseIdentifier: ConversationsListTableViewCell.name)
@@ -285,11 +292,16 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	private func logThemeChanging(selectedTheme: Theme) {
+		print("Выбрана тема: \(selectedTheme.description() ?? "")")
 		let color = selectedTheme.color()
 		UINavigationBar.appearance().backgroundColor = color
 		UINavigationBar.appearance().barTintColor = color
 		view.backgroundColor = color
 		UIApplication.shared.windows.reload()
+	}
+	
+	private func changeTheme<T>(for theme: T) where T: ThemeProtocol {
+		theme.apply(for: UIApplication.shared)
 	}
 }
 
@@ -365,7 +377,6 @@ extension ConversationsListViewController: UITableViewDataSource {
 			withIdentifier: ConversationsListTableHeaderView.identifier) as? ConversationsListTableHeaderView else {
 			return UIView()
 		}
-		view.backgroundColor = .white
 		return view
 	}
 }
