@@ -208,7 +208,6 @@ class ConversationsListViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-//		view.backgroundColor =  .clear//UIColor.init(named: "backgroundColor") ?? .white
 		title = "Tinkoff Chat"
 		setUpTableView()
 		setUpRightBarItem()
@@ -252,8 +251,27 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	@objc private func didTapLeftBarButton() {
-//		let vc = ThemesViewController()
-//		vc.delegate = self
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "ObjC", style: .default, handler: { [weak self] _ in
+			self?.presentObjCThemeVC()
+		}))
+		alert.addAction(UIAlertAction(title: "Swift", style: .default, handler: { [weak self] _ in
+			self?.presentSwiftThemeVC()
+		}))
+		present(alert, animated: true, completion: nil)
+	}
+	
+	@objc private func didTapRightBarButton() {
+		present(UserProfileViewController(), animated: true)
+	}
+	
+	private func presentObjCThemeVC() {
+		let vc = ThemesViewController()
+		vc.delegate = self
+		present(vc, animated: true)
+	}
+	
+	private func presentSwiftThemeVC() {
 		let vc = ThemeViewController()
 		vc.lightThemeSelected = {[weak self] theme in
 			self?.changeTheme(for: theme)
@@ -267,14 +285,9 @@ class ConversationsListViewController: UIViewController {
 		present(vc, animated: true)
 	}
 	
-	@objc private func didTapRightBarButton() {
-		present(UserProfileViewController(), animated: true)
-	}
-
 	private func setUpTableView() {
 		tableView.showsVerticalScrollIndicator = false
 		tableView.separatorStyle = .none
-//		tableView.backgroundColor = .clear
 		tableView.register(
 			ConversationsListTableViewCell.nib,
 			forCellReuseIdentifier: ConversationsListTableViewCell.name)
@@ -294,14 +307,19 @@ class ConversationsListViewController: UIViewController {
 	private func logThemeChanging(selectedTheme: Theme) {
 		print("Выбрана тема: \(selectedTheme.description() ?? "")")
 		let color = selectedTheme.color()
-		UINavigationBar.appearance().backgroundColor = color
 		UINavigationBar.appearance().barTintColor = color
-		view.backgroundColor = color
+		UINavigationBar.appearance().backgroundColor = color
+		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
+		UITableView.appearance().backgroundColor = color
+		UIView.appearance(whenContainedInInstancesOf: [UITableView.self]).backgroundColor = color
+		UIVisualEffectView.appearance().backgroundColor = color
+		UILabel.appearance().textColor = .black
 		UIApplication.shared.windows.reload()
 	}
 	
 	private func changeTheme<T>(for theme: T) where T: ThemeProtocol {
 		theme.apply(for: UIApplication.shared)
+		theme.logThemeChanging()
 	}
 }
 

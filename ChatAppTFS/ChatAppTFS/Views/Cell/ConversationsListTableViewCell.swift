@@ -42,6 +42,7 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 		profileImageView.layer.cornerRadius = profileImageView.frame.width/2
 		profileImageView.layer.masksToBounds = true
 		removeBottomSeparator()
+		selectionStyle = .none
 	}
 
 	
@@ -52,6 +53,7 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 		lastMessageLabel.text = nil
 		dateLabel.text = nil
 		lastMessageLabel.font = .systemFont(ofSize: 13, weight: .regular)
+		contentView.backgroundColor = .clear
 	}
 	
 	// MARK: - Public

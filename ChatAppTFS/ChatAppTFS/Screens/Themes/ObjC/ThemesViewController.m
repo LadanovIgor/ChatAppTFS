@@ -70,7 +70,7 @@
 - (void) dealloc {
 	[_theme release];
 	_theme = nil;
-	NSLog(@"%s %@ deallocated", __PRETTY_FUNCTION__, self);
+//	NSLog(@"%s %@ deallocated", __PRETTY_FUNCTION__, self);
 	[super dealloc];
 }
 

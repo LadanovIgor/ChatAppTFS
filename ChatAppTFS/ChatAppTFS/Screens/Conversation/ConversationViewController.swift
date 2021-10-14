@@ -41,13 +41,11 @@ class ConversationViewController: UIViewController {
 		setUpNewMessageView()
 		setUpConstraints()
 		addKeyboardObservers()
-//		view.backgroundColor = UIColor(named: "profileBackground")
 	}
 	
 	// MARK: - Private
 	
 	private func setUpNewMessageView() {
-		newMessageView.backgroundColor = UIColor(named: "lightGray") ?? .gray
 		view.addSubview(newMessageView)
 		newMessageView.translatesAutoresizingMaskIntoConstraints = false
 	}
@@ -87,7 +85,6 @@ class ConversationViewController: UIViewController {
 
 	private func setUpTableView() {
 		tableView.separatorStyle = .none
-//		tableView.backgroundColor = .white
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.register(ConversationTableViewCell.self,

@@ -7,4 +7,4 @@
 
 import Foundation
 
-typealias ThemeClosure<T> = ((T) -> Void)
+typealias ThemeClosure<T> = ((T) -> Void)  where T: ThemeProtocol
