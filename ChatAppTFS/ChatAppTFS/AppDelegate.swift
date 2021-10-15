@@ -9,15 +9,21 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+	
+	private let theme = LightTheme()
 
 	var window: UIWindow?
 	var orientationLock = UIInterfaceOrientationMask.portrait
+	
+	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+		theme.apply(for: application)
+		return true
+	}
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.makeKeyAndVisible()
 		let navVC = UINavigationController(rootViewController: ConversationsListViewController())
-		navVC.navigationBar.backgroundColor = .white
 		window?.rootViewController = navVC
 		return true
 	}
@@ -26,4 +32,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return orientationLock
 	}
 }
+
 

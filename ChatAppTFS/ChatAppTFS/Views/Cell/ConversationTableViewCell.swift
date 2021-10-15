@@ -37,7 +37,6 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 		label.numberOfLines = 0
 		label.font = .systemFont(ofSize: 16, weight: .regular)
 		label.textAlignment = .left
-		label.textColor = .black
 		label.backgroundColor = .clear
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
@@ -47,7 +46,6 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		contentView.backgroundColor = .white
 		setUpMessageLabel()
 	}
 	

@@ -208,13 +208,27 @@ class ConversationsListViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = UIColor.init(named: "backgroundColor") ?? .white
 		title = "Tinkoff Chat"
 		setUpTableView()
 		setUpRightBarItem()
+		setUpLeftBarItem()
 	}
 	
 	// MARK: - Private
+	
+	private func setUpLeftBarItem() {
+		let button = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+		button.setImage(UIImage(named: "settings"), for: .normal)
+		button.clipsToBounds = true
+		button.layer.masksToBounds = true
+		button.backgroundColor = .clear
+		button.addTarget(self, action: #selector(didTapLeftBarButton), for: .touchUpInside)
+		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+		NSLayoutConstraint.activate([
+			button.widthAnchor.constraint(equalToConstant: 32),
+			button.heightAnchor.constraint(equalToConstant: 32)
+		])
+	}
 
 	private func setUpRightBarItem() {
 		let imageView = UIImageView()
@@ -236,13 +250,44 @@ class ConversationsListViewController: UIViewController {
 		button.round()
 	}
 	
+	@objc private func didTapLeftBarButton() {
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "ObjC", style: .default, handler: { [weak self] _ in
+			self?.presentObjCThemeVC()
+		}))
+		alert.addAction(UIAlertAction(title: "Swift", style: .default, handler: { [weak self] _ in
+			self?.presentSwiftThemeVC()
+		}))
+		present(alert, animated: true, completion: nil)
+	}
+	
 	@objc private func didTapRightBarButton() {
 		present(UserProfileViewController(), animated: true)
 	}
-
+	
+	private func presentObjCThemeVC() {
+		let vc = ThemesViewController()
+		vc.delegate = self
+		present(vc, animated: true)
+	}
+	
+	private func presentSwiftThemeVC() {
+		let vc = ThemeViewController()
+		vc.lightThemeSelected = {[weak self] theme in
+			self?.changeTheme(for: theme)
+		}
+		vc.champagneThemeSelected = {[weak self] theme in
+			self?.changeTheme(for: theme)
+		}
+		vc.darkThemeSelected = {[weak self] theme in
+			self?.changeTheme(for: theme)
+		}
+		present(vc, animated: true)
+	}
+	
 	private func setUpTableView() {
+		tableView.showsVerticalScrollIndicator = false
 		tableView.separatorStyle = .none
-		tableView.backgroundColor = .white
 		tableView.register(
 			ConversationsListTableViewCell.nib,
 			forCellReuseIdentifier: ConversationsListTableViewCell.name)
@@ -257,6 +302,24 @@ class ConversationsListViewController: UIViewController {
 			withNewVisualFormat: "H:|[tableView]|,V:|[tableView]|",
 			metrics: nil,
 			views: ["tableView":tableView]))
+	}
+	
+	private func logThemeChanging(selectedTheme: Theme) {
+		print("Выбрана тема: \(selectedTheme.description() ?? "")")
+		let color = selectedTheme.color()
+		UINavigationBar.appearance().barTintColor = color
+		UINavigationBar.appearance().backgroundColor = color
+		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
+		UITableView.appearance().backgroundColor = color
+		UIView.appearance(whenContainedInInstancesOf: [UITableView.self]).backgroundColor = color
+		UIVisualEffectView.appearance().backgroundColor = color
+		UILabel.appearance().textColor = .black
+		UIApplication.shared.windows.reload()
+	}
+	
+	private func changeTheme<T>(for theme: T) where T: ThemeProtocol {
+		theme.apply(for: UIApplication.shared)
+		theme.logThemeChanging()
 	}
 }
 
@@ -333,7 +396,13 @@ extension ConversationsListViewController: UITableViewDataSource {
 			return UIView()
 		}
 		return view
-		
+	}
+}
+
+extension ConversationsListViewController: ThemesViewControllerDelegate {
+	func themesViewController(_ controller: UIViewController, didSelect selectedTheme: Theme) {
+		logThemeChanging(selectedTheme: selectedTheme)
 	}
 	
+
 }
