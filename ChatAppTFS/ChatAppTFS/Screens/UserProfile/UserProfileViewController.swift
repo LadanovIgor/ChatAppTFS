@@ -14,43 +14,24 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	@IBOutlet weak var profileImageView: CircleImageView!
 	@IBOutlet weak var closeProfileButton: UIButton!
 	@IBOutlet weak var editProfileButton: UIButton!
-	@IBOutlet weak var saveProfileButton: UIButton!
-	@IBOutlet weak var profileDescriptionLabel: UILabel!
-	@IBOutlet weak var profileNameLabel: UILabel!
-	@IBOutlet weak var topDescriptionLabelConstraint: NSLayoutConstraint!
-	@IBOutlet weak var topProfileLabelConstraint: NSLayoutConstraint!
+	@IBOutlet weak var saveGCDButton: UIButton!
+	@IBOutlet weak var saveOperationButton: UIButton!
+	@IBOutlet weak var fullNameTextField: UITextField!
+	@IBOutlet weak var selfInformationTextField: UITextField!
+	@IBOutlet weak var locationTextField: UITextField!
+	@IBOutlet weak var cancelButton: UIButton!
+
 	
 	private let imagePicker = UIImagePickerController()
-
-	// MARK: - Init
-	
-	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-		// View еще не загружено и фреймов у кнопки тем более нет
-		// print("Frame Save Button: \(saveProfileButton.frame)")
-	}
-	
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
 	
 	// MARK: - Lifecycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		print("Frame Save Button(view did load): \(saveProfileButton.frame)")
 		setUpSaveButton()
 		addButtonTargets()
 		setUpProfileImageView()
 		delegating()
-		setUpConstraints()
-		setUpLabels()
-	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		// Метод viewDidAppear вызывается после того, как autolayout закончил свою работу. До этого фреймы вьюх на экране часто неверны.
-		print("Frame Save Button(view did appear): \(saveProfileButton.frame)")
 	}
 	
 	override func viewDidLayoutSubviews() {
@@ -61,26 +42,16 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	
 	// MARK: - Private
 	
-	private func setUpLabels() {
-		profileDescriptionLabel.text = "Cartoonist, producer, animator\nPortland, Oregon, U.S."
-	}
-	
-	private func setUpConstraints() {
-		if #available(iOS 13, *) {
-			topDescriptionLabelConstraint.constant = 32
-			topProfileLabelConstraint.constant = 32
-		} else {
-			topDescriptionLabelConstraint.constant = 12
-			topProfileLabelConstraint.constant = 12
-		}
-	}
-	
 	private func delegating() {
 		imagePicker.delegate = self
+		fullNameTextField.delegate = self
+		locationTextField.delegate = self
+		selfInformationTextField.delegate = self
 	}
 	
 	private func setUpSaveButton() {
-		saveProfileButton.layer.cornerRadius = 14.0
+		saveGCDButton.layer.cornerRadius = 14.0
+		saveOperationButton.layer.cornerRadius = 14.0
 	}
 	
 	private func setUpProfileImageView() {
@@ -97,9 +68,11 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	private func addButtonTargets() {
-		saveProfileButton.addTarget(self, action: #selector(didSaveButtonTapped), for: .touchUpInside)
+		saveGCDButton.addTarget(self, action: #selector(didSaveGCDButtonTapped), for: .touchUpInside)
 		editProfileButton.addTarget(self, action: #selector(didEditButtonTapped), for: .touchUpInside)
 		closeProfileButton.addTarget(self, action: #selector(didCloseButtonTapped), for: .touchUpInside)
+		cancelButton.addTarget(self, action: #selector(didCancelButtonTapped), for: .touchUpInside)
+		saveOperationButton.addTarget(self, action: #selector(didSaveOperationButtonTapped), for: .touchUpInside)
 	}
 	
 	@objc private func didProfileImageViewTapped() {
@@ -116,12 +89,35 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 		present(actionSheet, animated: true, completion: nil)
 	}
 	
-	@objc private func didSaveButtonTapped() {
+	@objc private func didCancelButtonTapped() {
+		editProfileButton.isHidden = false
+		cancelButton.isHidden = true
+		fullNameTextField.isEnabled = false
+		locationTextField.isEnabled = false
+		selfInformationTextField.isEnabled = false
+		saveOperationButton.isEnabled = false
+		saveOperationButton.isHidden = true
+		saveGCDButton.isEnabled = false
+		saveGCDButton.isHidden = true
+	}
+	
+	@objc private func didSaveGCDButtonTapped() {
+		// Save profile
+	}
+	
+	@objc private func didSaveOperationButtonTapped() {
 		// Save profile
 	}
 	
 	@objc private func didEditButtonTapped() {
-		// present EditProfile VC
+		saveOperationButton.isHidden = false
+		saveGCDButton.isHidden = false
+		editProfileButton.isHidden = true
+		cancelButton.isHidden = false
+		fullNameTextField.isEnabled = true
+		locationTextField.isEnabled = true
+		selfInformationTextField.isEnabled = true
+		fullNameTextField.becomeFirstResponder()
 	}
 	
 	@objc private func didCloseButtonTapped() {
@@ -154,5 +150,13 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 			return
 		}
 		profileImageView.image = image
+	}
+}
+
+extension UserProfileViewController: UITextFieldDelegate {
+	func textFieldDidBeginEditing(_ textField: UITextField) {
+		if textField.isFirstResponder {
+			textField.placeholder = nil
+		}
 	}
 }
