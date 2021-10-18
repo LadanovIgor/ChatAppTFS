@@ -19,8 +19,12 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	@IBOutlet weak var fullNameTextField: UITextField!
 	@IBOutlet weak var selfInformationTextField: UITextField!
 	@IBOutlet weak var locationTextField: UITextField!
+	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet weak var cancelButton: UIButton!
-
+	
+	@IBOutlet var informationTopConstraint: NSLayoutConstraint!
+	@IBOutlet var saveButtonBottomConstraint: NSLayoutConstraint!
+	@IBOutlet var fullNameTopToImageViewConstraint: NSLayoutConstraint!
 	
 	private let imagePicker = UIImagePickerController()
 	
@@ -32,6 +36,8 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 		addButtonTargets()
 		setUpProfileImageView()
 		delegating()
+		setUpConstraints()
+		addKeyboardObservers()
 	}
 	
 	override func viewDidLayoutSubviews() {
@@ -52,6 +58,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	private func setUpSaveButton() {
 		saveGCDButton.layer.cornerRadius = 14.0
 		saveOperationButton.layer.cornerRadius = 14.0
+		cancelButton.layer.cornerRadius = 14.0
 	}
 	
 	private func setUpProfileImageView() {
@@ -67,17 +74,26 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 		profileImageView.image = image
 	}
 	
+	private func setUpConstraints() {
+		if #available(iOS 13, *) {
+			fullNameTopToImageViewConstraint.constant = 32
+			informationTopConstraint.constant = 16
+		} else {
+			fullNameTopToImageViewConstraint.constant = 16
+			informationTopConstraint.constant = 3
+		}
+	}
+	
 	private func addButtonTargets() {
 		saveGCDButton.addTarget(self, action: #selector(didSaveGCDButtonTapped), for: .touchUpInside)
 		editProfileButton.addTarget(self, action: #selector(didEditButtonTapped), for: .touchUpInside)
 		closeProfileButton.addTarget(self, action: #selector(didCloseButtonTapped), for: .touchUpInside)
-		cancelButton.addTarget(self, action: #selector(didCancelButtonTapped), for: .touchUpInside)
 		saveOperationButton.addTarget(self, action: #selector(didSaveOperationButtonTapped), for: .touchUpInside)
+		cancelButton.addTarget(self, action: #selector(didCancelButtonTapped), for: .touchUpInside)
+
 	}
 	
 	@objc private func didProfileImageViewTapped() {
-		print("Выбери изображение профиля")
-		
 		let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		actionSheet.addAction(UIAlertAction(title: "Галерея", style: .default, handler: {[weak self] _ in
 			self?.choosePhotoFromGallery()
@@ -90,38 +106,40 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	@objc private func didCancelButtonTapped() {
-		editProfileButton.isHidden = false
-		cancelButton.isHidden = true
-		fullNameTextField.isEnabled = false
-		locationTextField.isEnabled = false
-		selfInformationTextField.isEnabled = false
-		saveOperationButton.isEnabled = false
-		saveOperationButton.isHidden = true
-		saveGCDButton.isEnabled = false
-		saveGCDButton.isHidden = true
+		self.fullNameTextField.isEnabled = false
+		self.locationTextField.isEnabled = false
+		self.selfInformationTextField.isEnabled = false
 	}
 	
 	@objc private func didSaveGCDButtonTapped() {
+		activityStartedAnimation()
 		// Save profile
 	}
 	
 	@objc private func didSaveOperationButtonTapped() {
+		activityStartedAnimation()
 		// Save profile
 	}
 	
 	@objc private func didEditButtonTapped() {
-		saveOperationButton.isHidden = false
-		saveGCDButton.isHidden = false
-		editProfileButton.isHidden = true
-		cancelButton.isHidden = false
-		fullNameTextField.isEnabled = true
-		locationTextField.isEnabled = true
-		selfInformationTextField.isEnabled = true
-		fullNameTextField.becomeFirstResponder()
+		self.fullNameTextField.isEnabled = true
+		self.locationTextField.isEnabled = true
+		self.selfInformationTextField.isEnabled = true
+		self.fullNameTextField.becomeFirstResponder()
 	}
 	
 	@objc private func didCloseButtonTapped() {
 		dismiss(animated: true, completion: nil)
+	}
+	
+	private func activityStartedAnimation() {
+		activityIndicator.isHidden = false
+		activityIndicator.startAnimating()
+	}
+	
+	private func activityFinishedAnimation() {
+		activityIndicator.isHidden = true
+		activityIndicator.stopAnimating()
 	}
 	
 	private func useCameraForPhoto() {
@@ -139,6 +157,40 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 		imagePicker.sourceType = .photoLibrary
 		present(imagePicker, animated: true, completion: nil)
 	}
+	
+	private func addKeyboardObservers() {
+		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)),
+											   name: UIResponder.keyboardWillShowNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)),
+											   name: UIResponder.keyboardWillHideNotification, object: nil)
+
+	}
+	
+	@objc private func handleKeyboardNotification(notification: NSNotification) {
+		guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+			return
+		}
+		let keyboardHeight = keyboardFrame.cgRectValue.height
+		let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
+		saveButtonBottomConstraint?.constant = isKeyboardShowing ? keyboardHeight : 0
+		fullNameTopToImageViewConstraint.isActive = !isKeyboardShowing
+		UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
+			self.profileImageView.isHidden = isKeyboardShowing
+			self.view.layoutIfNeeded()
+		} completion: { [weak self] _ in
+			guard let self = self else { return }
+			self.saveOperationButton.isHidden = !isKeyboardShowing
+			self.saveGCDButton.isHidden = !isKeyboardShowing
+			self.editProfileButton.isHidden = isKeyboardShowing
+			self.cancelButton.isHidden = !isKeyboardShowing
+		}
+	}
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+	}
+	
 }
 
 	// MARK: - UIImagePickerController
