@@ -32,6 +32,7 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 	// MARK: - Outlets and Properties
 	
 	static let preferredHeight: CGFloat = 90
+	
 	@IBOutlet weak var lastMessageLabel: UILabel!
 	@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var nameLabel: UILabel!
@@ -61,7 +62,6 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 	public func configure(with viewModel: ViewModel) {
 		nameLabel.text = viewModel.name
 		dateLabel.text = viewModel.lastMessageDate?.shortDateFormateTodayOrEarlier
-//		contentView.backgroundColor = viewModel.isOnline ? UIColor(named: "lightYellowColor") ?? .yellow : .clear
 		lastMessageLabel.font = .systemFont(ofSize: 13, weight: viewModel.hasUnreadMessages ? .bold : .regular)
 		profileImageView.image = UIImage(named: "userPlaceholder")
 		guard let lastMessage = viewModel.lastMessage else {

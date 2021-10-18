@@ -16,17 +16,23 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	@IBOutlet weak var editProfileButton: UIButton!
 	@IBOutlet weak var saveGCDButton: UIButton!
 	@IBOutlet weak var saveOperationButton: UIButton!
-	@IBOutlet weak var fullNameTextField: UITextField!
-	@IBOutlet weak var selfInformationTextField: UITextField!
+	@IBOutlet weak var nameTextField: UITextField!
+	@IBOutlet weak var infoTextField: UITextField!
 	@IBOutlet weak var locationTextField: UITextField!
 	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet weak var cancelButton: UIButton!
 	
-	@IBOutlet var informationTopConstraint: NSLayoutConstraint!
+	@IBOutlet var infoTextFieldTopConstraint: NSLayoutConstraint!
 	@IBOutlet var saveButtonBottomConstraint: NSLayoutConstraint!
-	@IBOutlet var fullNameTopToImageViewConstraint: NSLayoutConstraint!
+	@IBOutlet var nameTextFieldTopConstraint: NSLayoutConstraint!
 	
 	private let imagePicker = UIImagePickerController()
+	
+	private var isProfileEditing: Bool = false {
+		didSet {
+			updateScreenLayoutDependingOn(isEditing: isProfileEditing)
+		}
+	}
 	
 	// MARK: - Lifecycle
 	
@@ -50,15 +56,15 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	
 	private func delegating() {
 		imagePicker.delegate = self
-		fullNameTextField.delegate = self
+		nameTextField.delegate = self
 		locationTextField.delegate = self
-		selfInformationTextField.delegate = self
+		infoTextField.delegate = self
 	}
 	
 	private func setUpSaveButton() {
-		saveGCDButton.layer.cornerRadius = 14.0
-		saveOperationButton.layer.cornerRadius = 14.0
-		cancelButton.layer.cornerRadius = 14.0
+		saveGCDButton.layer.cornerRadius = Constants.ProfileScreen.buttonCornerRadius
+		saveOperationButton.layer.cornerRadius = Constants.ProfileScreen.buttonCornerRadius
+		cancelButton.layer.cornerRadius = Constants.ProfileScreen.buttonCornerRadius
 	}
 	
 	private func setUpProfileImageView() {
@@ -76,11 +82,9 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	
 	private func setUpConstraints() {
 		if #available(iOS 13, *) {
-			fullNameTopToImageViewConstraint.constant = 32
-			informationTopConstraint.constant = 16
+			infoTextFieldTopConstraint.constant = Constants.ProfileScreen.nameInfoOffset * 2
 		} else {
-			fullNameTopToImageViewConstraint.constant = 16
-			informationTopConstraint.constant = 3
+			infoTextFieldTopConstraint.constant = Constants.ProfileScreen.nameInfoOffset
 		}
 	}
 	
@@ -102,17 +106,11 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 			self?.useCameraForPhoto()
 		}))
 		actionSheet.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-		present(actionSheet, animated: true, completion: nil)
+		present(actionSheet, animated: true)
 	}
 	
 	@objc private func didCancelButtonTapped() {
-		self.saveOperationButton.isHidden = true
-		self.saveGCDButton.isHidden = true
-		self.editProfileButton.isHidden = false
-		self.cancelButton.isHidden = true
-		self.fullNameTextField.isEnabled = false
-		self.locationTextField.isEnabled = false
-		self.selfInformationTextField.isEnabled = false
+		isProfileEditing = false
 	}
 	
 	@objc private func didSaveGCDButtonTapped() {
@@ -126,14 +124,8 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	@objc private func didEditButtonTapped() {
-		self.saveOperationButton.isHidden = false
-		self.saveGCDButton.isHidden = false
-		self.editProfileButton.isHidden = true
-		self.cancelButton.isHidden = false
-		self.fullNameTextField.isEnabled = true
-		self.locationTextField.isEnabled = true
-		self.selfInformationTextField.isEnabled = true
-		self.fullNameTextField.becomeFirstResponder()
+		isProfileEditing = true
+		self.nameTextField.becomeFirstResponder()
 	}
 	
 	@objc private func didCloseButtonTapped() {
@@ -148,6 +140,16 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	private func activityFinishedAnimation() {
 		activityIndicator.isHidden = true
 		activityIndicator.stopAnimating()
+	}
+	
+	private func updateScreenLayoutDependingOn(isEditing: Bool) {
+		saveOperationButton.isHidden = !isEditing
+		saveGCDButton.isHidden = !isEditing
+		editProfileButton.isHidden = isEditing
+		cancelButton.isHidden = !isEditing
+		nameTextField.isEnabled = isEditing
+		locationTextField.isEnabled = isEditing
+		infoTextField.isEnabled = isEditing
 	}
 	
 	private func useCameraForPhoto() {
@@ -169,7 +171,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	private func addKeyboardObservers() {
 		KeyboardObserver.shared.startObserving { [weak self] keyboardHeight, isKeyboardShowing in
 			self?.saveButtonBottomConstraint?.constant = isKeyboardShowing ? keyboardHeight : 0
-			self?.fullNameTopToImageViewConstraint.isActive = !isKeyboardShowing
+			self?.nameTextFieldTopConstraint.isActive = !isKeyboardShowing
 			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
 				self?.profileImageView.isHidden = isKeyboardShowing
 				self?.view.layoutIfNeeded()
@@ -180,7 +182,6 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	deinit {
 		KeyboardObserver.shared.stopObserving()
 	}
-	
 }
 
 	// MARK: - UIImagePickerController
@@ -188,17 +189,40 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 		imagePicker.dismiss(animated: true, completion: nil)
-		guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+		guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage,
+			  let imageUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL else {
 			return
 		}
 		profileImageView.image = image
+		editProfileButton.isHidden = true
+		saveOperationButton.isHidden = false
+		saveGCDButton.isHidden = false
+		cancelButton.isHidden = false
 	}
 }
 
 extension UserProfileViewController: UITextFieldDelegate {
 	func textFieldDidBeginEditing(_ textField: UITextField) {
 		if textField.isFirstResponder {
+			textField.text = textField.placeholder
 			textField.placeholder = nil
+		}
+	}
+	
+	func textFieldDidEndEditing(_ textField: UITextField) {
+		textField.placeholder = textField.text
+	}
+	
+	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+		guard let textFieldText = textField.text,
+			let rangeOfText = Range(range, in: textFieldText) else {
+				return false
+		}
+		let count = textFieldText.count - textFieldText[rangeOfText].count + string.count
+		if textField == nameTextField {
+			return count <= Constants.ProfileScreen.nameCharacters
+		} else {
+			return count <= Constants.ProfileScreen.infoCharacters
 		}
 	}
 }

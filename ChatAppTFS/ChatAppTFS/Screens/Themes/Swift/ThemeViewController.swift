@@ -25,9 +25,9 @@ class ThemeViewController: UIViewController {
     }
 
 	private func decorateButtons() {
-		champagneThemeButton.layer.cornerRadius = 14.0
-		lightThemeButton.layer.cornerRadius = 14.0
-		darkThemeButton.layer.cornerRadius = 14.0
+		champagneThemeButton.layer.cornerRadius = Constants.ThemeScreen.buttonCornerRadius
+		lightThemeButton.layer.cornerRadius = Constants.ThemeScreen.buttonCornerRadius
+		darkThemeButton.layer.cornerRadius = Constants.ThemeScreen.buttonCornerRadius
 	}
 	
 	private func addTargets() {

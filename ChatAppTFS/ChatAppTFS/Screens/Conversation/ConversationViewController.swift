@@ -62,25 +62,6 @@ class ConversationViewController: UIViewController {
 				}
 			}
 		}
-
-	}
-	
-	@objc private func handleKeyboardNotification(notification: NSNotification) {
-		guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
-			return
-		}
-		let keyboardHeight = keyboardFrame.cgRectValue.height
-		let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
-		bottomConstraint?.constant = isKeyboardShowing ? -keyboardHeight : 0
-		UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
-			self.view.layoutIfNeeded()
-		} completion: { [weak self] _ in
-			guard let self = self else { return }
-			if isKeyboardShowing, self.messages.count > 0 {
-				let indexPath = IndexPath(row: self.messages.count-1, section: 0)
-				self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-			}
-		}
 	}
 	
 	private func setUpBackButton() {
@@ -104,7 +85,7 @@ class ConversationViewController: UIViewController {
 	private func setUpConstraints() {
 		view.removeConstraints(view.constraints)
 		let views = ["tableView": tableView, "newMessageView": newMessageView]
-		let metrics = ["viewHeight": 80]
+		let metrics = ["viewHeight": Constants.ConversationScreen.messageViewHeight]
 		
 		view.addConstraints(NSLayoutConstraint.constraints(
 			withNewVisualFormat: "H:|[tableView]|,V:|[tableView][newMessageView(viewHeight)]",
@@ -114,7 +95,6 @@ class ConversationViewController: UIViewController {
 			withNewVisualFormat: "H:|[newMessageView]|",
 			metrics: metrics,
 			views: views))
-		
 		bottomConstraint = NSLayoutConstraint(item: newMessageView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
 		guard let constraint = bottomConstraint else {
 			return

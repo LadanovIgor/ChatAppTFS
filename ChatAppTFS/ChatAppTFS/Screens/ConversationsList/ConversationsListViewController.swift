@@ -203,6 +203,8 @@ class ConversationsListViewController: UIViewController {
 	]
 	
 	private var tableView = UITableView(frame: .zero, style: .grouped)
+	
+	private let barButtonSize = Constants.ConversationListScreen.barButtonSize
 
 	// MARK: - Lifecycle
 
@@ -217,7 +219,7 @@ class ConversationsListViewController: UIViewController {
 	// MARK: - Private
 	
 	private func setUpLeftBarItem() {
-		let button = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+		let button = UIButton(frame: CGRect(x: 0, y: 0, width: barButtonSize, height: barButtonSize))
 		button.setImage(UIImage(named: "settings"), for: .normal)
 		button.clipsToBounds = true
 		button.layer.masksToBounds = true
@@ -225,8 +227,8 @@ class ConversationsListViewController: UIViewController {
 		button.addTarget(self, action: #selector(didTapLeftBarButton), for: .touchUpInside)
 		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
 		NSLayoutConstraint.activate([
-			button.widthAnchor.constraint(equalToConstant: 32),
-			button.heightAnchor.constraint(equalToConstant: 32)
+			button.widthAnchor.constraint(equalToConstant: barButtonSize),
+			button.heightAnchor.constraint(equalToConstant: barButtonSize)
 		])
 	}
 
@@ -236,7 +238,7 @@ class ConversationsListViewController: UIViewController {
 		imageView.contentMode = .scaleAspectFit
 		imageView.clipsToBounds = true
 		imageView.layer.masksToBounds = true
-		let button = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+		let button = UIButton(frame: CGRect(x: 0, y: 0, width: barButtonSize, height: barButtonSize))
 		button.setImage(UIImage(named: "userPlaceholder"), for: .normal)
 		button.clipsToBounds = true
 		button.layer.masksToBounds = true
@@ -244,8 +246,8 @@ class ConversationsListViewController: UIViewController {
 		button.addTarget(self, action: #selector(didTapRightBarButton), for: .touchUpInside)
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
 		NSLayoutConstraint.activate([
-			button.widthAnchor.constraint(equalToConstant: 32),
-			button.heightAnchor.constraint(equalToConstant: 32)
+			button.widthAnchor.constraint(equalToConstant: barButtonSize),
+			button.heightAnchor.constraint(equalToConstant: barButtonSize)
 		])
 		button.round()
 	}

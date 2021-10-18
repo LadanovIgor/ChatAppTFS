@@ -41,27 +41,27 @@ class NewMessageView: UIView {
 		textField.textAlignment = .left
 		textField.textColor = .black
 		textField.layer.masksToBounds = true
-		textField.layer.cornerRadius = 11
+		textField.layer.cornerRadius = Constants.MessageView.textFieldCornerRadius
 		textField.layer.borderColor = UIColor.gray.cgColor
-		textField.layer.borderWidth = 0.3
+		textField.layer.borderWidth = Constants.MessageView.textFieldBorderWidth
 	}
 	
 	private func setUpConstraints() {
-		let metrics = ["padding": 18, ]
+		let metrics = ["offset": Constants.MessageView.offset ]
 		let views = ["textField": textField, "button": sendButton]
 		textField.setContentHuggingPriority(.init(rawValue: 249), for: .horizontal)
 		addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "H:|-padding-[textField]-padding-[button]-padding-|",
+			withVisualFormat: "H:|-offset-[textField]-offset-[button]-offset-|",
 			options: [.alignAllCenterY],
 			metrics: metrics,
 			views: views))
 		addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-padding-[button]-padding-|",
+			withVisualFormat: "V:|-offset-[button]-offset-|",
 			options: [],
 			metrics: metrics,
 			views: views))
 		addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-padding-[textField]-padding-|",
+			withVisualFormat: "V:|-offset-[textField]-offset-|",
 			options: [],
 			metrics: metrics,
 			views: views))

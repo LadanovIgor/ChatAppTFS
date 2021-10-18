@@ -29,8 +29,9 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 
 	static let identifier = "ConversationTableViewCell"
 	static let preferredHeight: CGFloat = 90
-	private var labelWidth: CGFloat { contentView.frame.width * 0.7 }
-	private let spacing: CGFloat = 10
+	private var labelWidth: CGFloat {
+		contentView.frame.width * Constants.ConversationCell.labelWidthMultiplier
+	}
 	
 	private let messageLabel: UILabel = {
 		let label = UILabel()
@@ -66,11 +67,11 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 	
 	private func positionMessageDepending(on isSelf: Bool) {
 		contentView.removeConstraints(contentView.constraints)
-		let visualFormat = isSelf ? "H:[label(labelWidth)]-spacing-|,V:|-spacing-[label]-spacing-|" :
-									"H:|-spacing-[label(labelWidth)],V:|-spacing-[label]-spacing-|"
+		let visualFormat = isSelf ? "H:[label(width)]-offset-|,V:|-offset-[label]-offset-|" :
+									"H:|-offset-[label(width)],V:|-offset-[label]-offset-|"
 		contentView.addConstraints(NSLayoutConstraint.constraints(
 			withNewVisualFormat: visualFormat,
-			metrics: ["labelWidth": labelWidth, "spacing": spacing ],
+			metrics: ["width": labelWidth, "offset": Constants.ConversationCell.offset],
 			views: ["label": messageLabel]))
 	}
 	
