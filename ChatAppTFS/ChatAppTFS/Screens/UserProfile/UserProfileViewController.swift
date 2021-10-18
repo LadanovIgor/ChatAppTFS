@@ -106,6 +106,10 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	@objc private func didCancelButtonTapped() {
+		self.saveOperationButton.isHidden = true
+		self.saveGCDButton.isHidden = true
+		self.editProfileButton.isHidden = false
+		self.cancelButton.isHidden = true
 		self.fullNameTextField.isEnabled = false
 		self.locationTextField.isEnabled = false
 		self.selfInformationTextField.isEnabled = false
@@ -122,6 +126,10 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	@objc private func didEditButtonTapped() {
+		self.saveOperationButton.isHidden = false
+		self.saveGCDButton.isHidden = false
+		self.editProfileButton.isHidden = true
+		self.cancelButton.isHidden = false
 		self.fullNameTextField.isEnabled = true
 		self.locationTextField.isEnabled = true
 		self.selfInformationTextField.isEnabled = true
@@ -159,36 +167,18 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	private func addKeyboardObservers() {
-		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)),
-											   name: UIResponder.keyboardWillShowNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)),
-											   name: UIResponder.keyboardWillHideNotification, object: nil)
-
-	}
-	
-	@objc private func handleKeyboardNotification(notification: NSNotification) {
-		guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
-			return
-		}
-		let keyboardHeight = keyboardFrame.cgRectValue.height
-		let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
-		saveButtonBottomConstraint?.constant = isKeyboardShowing ? keyboardHeight : 0
-		fullNameTopToImageViewConstraint.isActive = !isKeyboardShowing
-		UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
-			self.profileImageView.isHidden = isKeyboardShowing
-			self.view.layoutIfNeeded()
-		} completion: { [weak self] _ in
-			guard let self = self else { return }
-			self.saveOperationButton.isHidden = !isKeyboardShowing
-			self.saveGCDButton.isHidden = !isKeyboardShowing
-			self.editProfileButton.isHidden = isKeyboardShowing
-			self.cancelButton.isHidden = !isKeyboardShowing
+		KeyboardObserver.shared.startObserving { [weak self] keyboardHeight, isKeyboardShowing in
+			self?.saveButtonBottomConstraint?.constant = isKeyboardShowing ? keyboardHeight : 0
+			self?.fullNameTopToImageViewConstraint.isActive = !isKeyboardShowing
+			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
+				self?.profileImageView.isHidden = isKeyboardShowing
+				self?.view.layoutIfNeeded()
+			}
 		}
 	}
 	
 	deinit {
-		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+		KeyboardObserver.shared.stopObserving()
 	}
 	
 }

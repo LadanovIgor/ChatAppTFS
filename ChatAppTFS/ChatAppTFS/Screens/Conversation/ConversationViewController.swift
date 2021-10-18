@@ -28,8 +28,7 @@ class ConversationViewController: UIViewController {
 	}
 	
 	deinit {
-		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+		KeyboardObserver.shared.stopObserving()
 	}
 	
 	// MARK: - Lifecycle
@@ -51,10 +50,18 @@ class ConversationViewController: UIViewController {
 	}
 
 	private func addKeyboardObservers() {
-		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)),
-											   name: UIResponder.keyboardWillShowNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)),
-											   name: UIResponder.keyboardWillHideNotification, object: nil)
+		KeyboardObserver.shared.startObserving { [weak self] keyboardHeight, isKeyboardShowing in
+			self?.bottomConstraint?.constant = isKeyboardShowing ? -keyboardHeight : 0
+			UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
+				self?.view.layoutIfNeeded()
+			} completion: { [weak self] _ in
+				guard let self = self else { return }
+				if isKeyboardShowing, self.messages.count > 0 {
+					let indexPath = IndexPath(row: self.messages.count-1, section: 0)
+					self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+				}
+			}
+		}
 
 	}
 	

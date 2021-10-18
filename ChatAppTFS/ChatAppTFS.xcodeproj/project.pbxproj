@@ -20,7 +20,7 @@
 		8E40D98F27143C0600406AD4 /* ThemesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E40D98E27143C0600406AD4 /* ThemesViewController.xib */; };
 		8E40D99327146AC700406AD4 /* ThemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40D99127146AC700406AD4 /* ThemeViewController.swift */; };
 		8E40D99427146AC700406AD4 /* ThemeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E40D99227146AC700406AD4 /* ThemeViewController.xib */; };
-		8E5EC5AB26FDB05E008FC472 /* ApplicationAndViewControllerLifecycleObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EC5AA26FDB05E008FC472 /* ApplicationAndViewControllerLifecycleObserver.swift */; };
+		8E5EC5AB26FDB05E008FC472 /* KeyboardObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EC5AA26FDB05E008FC472 /* KeyboardObserver.swift */; };
 		8E72BC792717C2B60046870F /* UserDefaultsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E72BC782717C2B60046870F /* UserDefaultsConstants.swift */; };
 		8EAAFE22270E8A7000D7497B /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE21270E8A7000D7497B /* NibLoadable.swift */; };
 		8EAAFE25270E8AF100D7497B /* ConversationsListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EAAFE24270E8AF100D7497B /* ConversationsListTableViewCell.xib */; };
@@ -61,7 +61,7 @@
 		8E40D990271444C600406AD4 /* ThemesViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewControllerDelegate.h; sourceTree = "<group>"; };
 		8E40D99127146AC700406AD4 /* ThemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewController.swift; sourceTree = "<group>"; };
 		8E40D99227146AC700406AD4 /* ThemeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeViewController.xib; sourceTree = "<group>"; };
-		8E5EC5AA26FDB05E008FC472 /* ApplicationAndViewControllerLifecycleObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationAndViewControllerLifecycleObserver.swift; sourceTree = "<group>"; };
+		8E5EC5AA26FDB05E008FC472 /* KeyboardObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
 		8E72BC782717C2B60046870F /* UserDefaultsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsConstants.swift; sourceTree = "<group>"; };
 		8EAAFE21270E8A7000D7497B /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		8EAAFE24270E8AF100D7497B /* ConversationsListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConversationsListTableViewCell.xib; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 				8E2E2701270DE51600BFE156 /* Model */,
 				8EB63ADC26FDAB2D00548A19 /* AppDelegate.swift */,
 				8E40D9882714399700406AD4 /* ChatAppTFS-Bridging-Header.h */,
-				8E5EC5AA26FDB05E008FC472 /* ApplicationAndViewControllerLifecycleObserver.swift */,
+				8E5EC5AA26FDB05E008FC472 /* KeyboardObserver.swift */,
 				8EB63AE526FDAB2E00548A19 /* Assets.xcassets */,
 				8EB63AE726FDAB2E00548A19 /* LaunchScreen.storyboard */,
 				8EB63AEA26FDAB2E00548A19 /* Info.plist */,
@@ -370,7 +370,7 @@
 				8E40D98A2714399700406AD4 /* ThemesViewController.m in Sources */,
 				8E72BC792717C2B60046870F /* UserDefaultsConstants.swift in Sources */,
 				8EAB38A92717023500A1FF98 /* ThemeProtocol.swift in Sources */,
-				8E5EC5AB26FDB05E008FC472 /* ApplicationAndViewControllerLifecycleObserver.swift in Sources */,
+				8E5EC5AB26FDB05E008FC472 /* KeyboardObserver.swift in Sources */,
 				8E2E270C270DE65D00BFE156 /* NSLayoutConstraint.swift in Sources */,
 				8EAB38A72717022900A1FF98 /* LightTheme.swift in Sources */,
 				8EAAFE30270E979600D7497B /* ConversationTableViewCell.swift in Sources */,
