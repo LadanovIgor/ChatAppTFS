@@ -63,7 +63,6 @@ final class PlistManager {
 		}
 		if !fileManager.fileExists(atPath: fileURL.path) {
 			try? fileManager.copyItem(atPath: source, toPath: fileURL.path)
-
 		}
 	}
 	

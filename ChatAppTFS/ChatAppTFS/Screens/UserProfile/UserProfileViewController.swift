@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
+class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, KeyboardObservable {
 	
 	// MARK: - Outlets and Properties
 	
@@ -268,7 +268,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	private func addKeyboardObservers() {
-		KeyboardObserver.shared.startObserving { [weak self] keyboardHeight, isKeyboardShowing in
+		startObserving { [weak self] keyboardHeight, isKeyboardShowing in
 			self?.saveButtonBottomConstraint?.constant = isKeyboardShowing ? keyboardHeight : 0
 			self?.nameTextFieldTopConstraint.isActive = !isKeyboardShowing
 			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
@@ -279,7 +279,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	deinit {
-		KeyboardObserver.shared.stopObserving()
+		stopObserving()
 	}
 }
 

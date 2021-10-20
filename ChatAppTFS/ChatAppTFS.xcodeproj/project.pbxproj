@@ -12,7 +12,7 @@
 		8E2E2705270DE53B00BFE156 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2704270DE53B00BFE156 /* Message.swift */; };
 		8E2E2708270DE5EA00BFE156 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2707270DE5EA00BFE156 /* UIView+.swift */; };
 		8E2E270A270DE61300BFE156 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2709270DE61300BFE156 /* Date+.swift */; };
-		8E2E270C270DE65D00BFE156 /* NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E270B270DE65D00BFE156 /* NSLayoutConstraint.swift */; };
+		8E2E270C270DE65D00BFE156 /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E270B270DE65D00BFE156 /* NSLayoutConstraint+.swift */; };
 		8E2E2711270DE6D800BFE156 /* ConversationsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E270F270DE6D800BFE156 /* ConversationsListTableViewCell.swift */; };
 		8E2E2718270DF08400BFE156 /* UserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E2E2717270DF08400BFE156 /* UserProfileViewController.xib */; };
 		8E2E271A270DF08A00BFE156 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2719270DF08A00BFE156 /* UserProfileViewController.swift */; };
@@ -21,7 +21,7 @@
 		8E40D98F27143C0600406AD4 /* ThemesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E40D98E27143C0600406AD4 /* ThemesViewController.xib */; };
 		8E40D99327146AC700406AD4 /* ThemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40D99127146AC700406AD4 /* ThemeViewController.swift */; };
 		8E40D99427146AC700406AD4 /* ThemeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E40D99227146AC700406AD4 /* ThemeViewController.xib */; };
-		8E5EC5AB26FDB05E008FC472 /* KeyboardObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EC5AA26FDB05E008FC472 /* KeyboardObserver.swift */; };
+		8E5EC5AB26FDB05E008FC472 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */; };
 		8E6B3547271E82D300653B8D /* ProfileStorageManagerGCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B3546271E82D300653B8D /* ProfileStorageManagerGCD.swift */; };
 		8E6B3549271E82E700653B8D /* ProfileStorageManagerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B3548271E82E700653B8D /* ProfileStorageManagerOperation.swift */; };
 		8E6B354D271E935300653B8D /* PlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B354C271E935300653B8D /* PlistManager.swift */; };
@@ -58,7 +58,7 @@
 		8E2E2704270DE53B00BFE156 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		8E2E2707270DE5EA00BFE156 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		8E2E2709270DE61300BFE156 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
-		8E2E270B270DE65D00BFE156 /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
+		8E2E270B270DE65D00BFE156 /* NSLayoutConstraint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+.swift"; sourceTree = "<group>"; };
 		8E2E270F270DE6D800BFE156 /* ConversationsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListTableViewCell.swift; sourceTree = "<group>"; };
 		8E2E2717270DF08400BFE156 /* UserProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserProfileViewController.xib; sourceTree = "<group>"; };
 		8E2E2719270DF08A00BFE156 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 		8E40D990271444C600406AD4 /* ThemesViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewControllerDelegate.h; sourceTree = "<group>"; };
 		8E40D99127146AC700406AD4 /* ThemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewController.swift; sourceTree = "<group>"; };
 		8E40D99227146AC700406AD4 /* ThemeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeViewController.xib; sourceTree = "<group>"; };
-		8E5EC5AA26FDB05E008FC472 /* KeyboardObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
+		8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservable.swift; sourceTree = "<group>"; };
 		8E6B3546271E82D300653B8D /* ProfileStorageManagerGCD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageManagerGCD.swift; sourceTree = "<group>"; };
 		8E6B3548271E82E700653B8D /* ProfileStorageManagerOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageManagerOperation.swift; sourceTree = "<group>"; };
 		8E6B354C271E935300653B8D /* PlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistManager.swift; sourceTree = "<group>"; };
@@ -134,7 +134,7 @@
 			children = (
 				8E2E2707270DE5EA00BFE156 /* UIView+.swift */,
 				8E2E2709270DE61300BFE156 /* Date+.swift */,
-				8E2E270B270DE65D00BFE156 /* NSLayoutConstraint.swift */,
+				8E2E270B270DE65D00BFE156 /* NSLayoutConstraint+.swift */,
 				8EEF17E527156A0800AFE370 /* UIWindow+.swift */,
 				8EAB38AE27171B0600A1FF98 /* UITableViewCell+.swift */,
 				8EE62B4027200A3E0011FE58 /* Data+.swift */,
@@ -234,7 +234,6 @@
 			isa = PBXGroup;
 			children = (
 				8EB63AE726FDAB2E00548A19 /* LaunchScreen.storyboard */,
-				8E5EC5AA26FDB05E008FC472 /* KeyboardObserver.swift */,
 				8E40D9882714399700406AD4 /* ChatAppTFS-Bridging-Header.h */,
 				8EB63ADC26FDAB2D00548A19 /* AppDelegate.swift */,
 			);
@@ -253,6 +252,7 @@
 		8EAAFE23270E8A8F00D7497B /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */,
 				8EAAFE21270E8A7000D7497B /* NibLoadable.swift */,
 				8ED5F084270EE3AC005CDA29 /* ConfigurableView.swift */,
 				8E40D990271444C600406AD4 /* ThemesViewControllerDelegate.h */,
@@ -438,8 +438,8 @@
 				8E72BC792717C2B60046870F /* Constants.swift in Sources */,
 				8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */,
 				8EAB38A92717023500A1FF98 /* ThemeProtocol.swift in Sources */,
-				8E5EC5AB26FDB05E008FC472 /* KeyboardObserver.swift in Sources */,
-				8E2E270C270DE65D00BFE156 /* NSLayoutConstraint.swift in Sources */,
+				8E5EC5AB26FDB05E008FC472 /* KeyboardObservable.swift in Sources */,
+				8E2E270C270DE65D00BFE156 /* NSLayoutConstraint+.swift in Sources */,
 				8EAB38A72717022900A1FF98 /* LightTheme.swift in Sources */,
 				8EAAFE30270E979600D7497B /* ConversationTableViewCell.swift in Sources */,
 			);

@@ -7,11 +7,12 @@
 
 import UIKit
 
-final class KeyboardObserver {
-	
-	static let shared = KeyboardObserver()
-	
-	private init() { }
+protocol KeyboardObservable: AnyObject {
+	func stopObserving()
+	func startObserving(completion: @escaping (CGFloat, Bool)->Void)
+}
+
+extension KeyboardObservable {
 	
 	private func handleKeyboardNotification(notification: Notification, completion: @escaping (CGFloat, Bool)->Void) {
 		guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
@@ -22,7 +23,7 @@ final class KeyboardObserver {
 		completion(keyboardHeight, isKeyboardShowing)
 	}
 	
-	public func startObserving(completion: @escaping (CGFloat, Bool)->Void) {
+	func startObserving(completion: @escaping (CGFloat, Bool)->Void) {
 		NotificationCenter.default.addObserver(
 			forName: UIResponder.keyboardWillShowNotification,
 			object: nil,
@@ -37,10 +38,8 @@ final class KeyboardObserver {
 			}
 	}
 	
-	
-	public func stopObserving() {
+	func stopObserving() {
 		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
 		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
 	}
-	
 }

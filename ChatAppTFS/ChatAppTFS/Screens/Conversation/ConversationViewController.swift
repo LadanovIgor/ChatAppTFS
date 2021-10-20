@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ConversationViewController: UIViewController {
+class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	// MARK: - Properties
 
@@ -28,7 +28,7 @@ class ConversationViewController: UIViewController {
 	}
 	
 	deinit {
-		KeyboardObserver.shared.stopObserving()
+		stopObserving()
 	}
 	
 	// MARK: - Lifecycle
@@ -50,7 +50,7 @@ class ConversationViewController: UIViewController {
 	}
 
 	private func addKeyboardObservers() {
-		KeyboardObserver.shared.startObserving { [weak self] keyboardHeight, isKeyboardShowing in
+		startObserving { [weak self] keyboardHeight, isKeyboardShowing in
 			self?.bottomConstraint?.constant = isKeyboardShowing ? -keyboardHeight : 0
 			UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
 				self?.view.layoutIfNeeded()
