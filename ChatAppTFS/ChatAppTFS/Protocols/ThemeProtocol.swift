@@ -15,7 +15,6 @@ protocol ThemeProtocol {
 	var barStyle: UIBarStyle { get }
 	var newMessageBackground: UIColor { get }
 	func apply(for application: UIApplication)
-	func logThemeChanging()
 }
 
 extension ThemeProtocol {
@@ -33,10 +32,6 @@ extension ThemeProtocol {
 		UIVisualEffectView.appearance().backgroundColor = backgroundColor
 		NewMessageView.appearance().backgroundColor = newMessageBackground
 		application.windows.reload()
-	}
-	
-	func logThemeChanging() {
-		print("Выбрана тема: \(themeName)")
 	}
 }
 

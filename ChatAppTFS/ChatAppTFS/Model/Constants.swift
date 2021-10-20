@@ -45,5 +45,6 @@ enum Constants {
 		static let infoKey = "info"
 		static let locationKey = "location"
 		static let imageKey = "image"
+		static let themeKey = "theme"
 	}
 }

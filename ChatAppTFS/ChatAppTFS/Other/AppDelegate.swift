@@ -10,13 +10,11 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	
-	private let theme = LightTheme()
-
 	var window: UIWindow?
 	var orientationLock = UIInterfaceOrientationMask.portrait
 	
 	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-		theme.apply(for: application)
+		loadThemeFor(application: application)
 		return true
 	}
 
@@ -31,6 +29,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
 		return orientationLock
+	}
+	
+	private func loadThemeFor(application: UIApplication) {
+		ProfileStorageManagerGCD.shared.loadTheme { result in
+			switch result {
+				case .success(let data):
+					data.setTheme(for: application)
+				case .failure(_):
+					LightTheme().apply(for: application)
+			}
+		}
 	}
 }
 

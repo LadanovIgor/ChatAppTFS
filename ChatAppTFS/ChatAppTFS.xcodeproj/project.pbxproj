@@ -48,6 +48,7 @@
 		8EE62B3A271FBFA90011FE58 /* Data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EE62B39271FBFA90011FE58 /* Data.plist */; };
 		8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B3B271FEB0A0011FE58 /* LocalDataOperationError.swift */; };
 		8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */; };
+		8EE62B4127200A3E0011FE58 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B4027200A3E0011FE58 /* Data+.swift */; };
 		8EEF17E627156A0800AFE370 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF17E527156A0800AFE370 /* UIWindow+.swift */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +100,7 @@
 		8EE62B39271FBFA90011FE58 /* Data.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Data.plist; sourceTree = "<group>"; };
 		8EE62B3B271FEB0A0011FE58 /* LocalDataOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataOperationError.swift; sourceTree = "<group>"; };
 		8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOperations.swift; sourceTree = "<group>"; };
+		8EE62B4027200A3E0011FE58 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		8EEF17E527156A0800AFE370 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +137,7 @@
 				8E2E270B270DE65D00BFE156 /* NSLayoutConstraint.swift */,
 				8EEF17E527156A0800AFE370 /* UIWindow+.swift */,
 				8EAB38AE27171B0600A1FF98 /* UITableViewCell+.swift */,
+				8EE62B4027200A3E0011FE58 /* Data+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				8ED5F085270EE3AC005CDA29 /* ConfigurableView.swift in Sources */,
 				8E40D98D27143AFE00406AD4 /* Theme.m in Sources */,
 				8E6B3547271E82D300653B8D /* ProfileStorageManagerGCD.swift in Sources */,
+				8EE62B4127200A3E0011FE58 /* Data+.swift in Sources */,
 				8E40D98A2714399700406AD4 /* ThemesViewController.m in Sources */,
 				8E72BC792717C2B60046870F /* Constants.swift in Sources */,
 				8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */,

@@ -253,14 +253,7 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	@objc private func didTapLeftBarButton() {
-		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: "ObjC", style: .default, handler: { [weak self] _ in
-			self?.presentObjCThemeVC()
-		}))
-		alert.addAction(UIAlertAction(title: "Swift", style: .default, handler: { [weak self] _ in
-			self?.presentSwiftThemeVC()
-		}))
-		present(alert, animated: true, completion: nil)
+		presentSwiftThemeVC()
 	}
 	
 	@objc private func didTapRightBarButton() {
@@ -321,7 +314,14 @@ class ConversationsListViewController: UIViewController {
 	
 	private func changeTheme<T>(for theme: T) where T: ThemeProtocol {
 		theme.apply(for: UIApplication.shared)
-		theme.logThemeChanging()
+		let themeName = String(describing: type(of: theme).self)
+		guard let themeNameData = themeName.data(using: .utf8) else {
+			return
+		}
+		let dict = [Constants.PlistManager.themeKey: themeNameData]
+		ProfileStorageManagerGCD.shared.saveLocally(dict) { _ in
+			
+		}
 	}
 }
 

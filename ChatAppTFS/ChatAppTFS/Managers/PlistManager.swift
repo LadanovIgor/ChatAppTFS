@@ -62,12 +62,8 @@ final class PlistManager {
 			return
 		}
 		if !fileManager.fileExists(atPath: fileURL.path) {
-			do {
-				try fileManager.copyItem(atPath: source, toPath: fileURL.path)
-			} catch {
-				print(error.localizedDescription)
-				return
-			}
+			try? fileManager.copyItem(atPath: source, toPath: fileURL.path)
+
 		}
 	}
 	
@@ -80,14 +76,13 @@ final class PlistManager {
 			completion(.invalidData)
 			return
 		}
-		
 		dict[key] = data
 		do {
 			try addValuesToPlistFile(dictionary: dict)
 			completion(nil)
 		}
 		catch {
-			completion(error as? PlistManagerError)
+			completion(.couldNotSaveData)
 		}
 	}
 	
@@ -102,6 +97,22 @@ final class PlistManager {
 			return
 		}
 		completion(.success(plist))
+	}
+	
+	func getValue(for key: String, completion: @escaping (Result<Data, Error>) -> Void) {
+		guard let fileURL = fileURL, fileManager.fileExists(atPath: fileURL.path) else {
+			completion(.failure(PlistManagerError.fileDoesNotExist))
+			return
+		}
+		guard let dict = getValueInPlistFile() else {
+			completion(.failure(PlistManagerError.fileUnavailable))
+			return
+		}
+		guard let value = dict[key] else {
+			completion(.failure(PlistManagerError.keyValuePairDoesNotExist))
+			return
+		}
+		completion(.success(value))
 	}
 }
 

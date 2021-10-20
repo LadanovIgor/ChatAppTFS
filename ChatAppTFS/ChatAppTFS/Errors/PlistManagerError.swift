@@ -14,4 +14,5 @@ enum PlistManagerError: Error {
 	case keyValuePairDoesNotExist
 	case invalidData
 	case couldNotGetData
+	case couldNotSaveData
 }

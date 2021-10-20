@@ -36,4 +36,14 @@ class ProfileStorageManagerGCD {
 			}
 		}
 	}
+	
+	func loadTheme(completion: @escaping (Result<Data, Error>) -> Void) {
+		queue.async {
+			PlistManager.shared.getValue(for: Constants.PlistManager.themeKey) { result in
+				DispatchQueue.main.async {
+					completion(result)
+				}
+			}
+		}
+	}
 }
