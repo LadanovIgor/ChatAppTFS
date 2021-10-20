@@ -43,6 +43,9 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 		return label
 	}()
 	
+	private var labelLeftConstraint: NSLayoutConstraint!
+	private var labelRightConstraint: NSLayoutConstraint!
+	
 	// MARK: - Init
 	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -65,27 +68,54 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 	
 	// MARK: - Private
 	
-	private func positionMessageDepending(on isSelf: Bool) {
-		contentView.removeConstraints(contentView.constraints)
-		let visualFormat = isSelf ? "H:[label(width)]-offset-|,V:|-offset-[label]-offset-|" :
-									"H:|-offset-[label(width)],V:|-offset-[label]-offset-|"
+	private func setUpConstraints() {
 		contentView.addConstraints(NSLayoutConstraint.constraints(
-			withNewVisualFormat: visualFormat,
+			withNewVisualFormat: "V:|-offset-[label]-offset-|",
 			metrics: ["width": labelWidth, "offset": Constants.ConversationCell.offset],
 			views: ["label": messageLabel]))
+		labelLeftConstraint = NSLayoutConstraint(item: messageLabel,
+												 attribute: .left,
+												 relatedBy: .equal,
+												 toItem: contentView,
+												 attribute: .left,
+												 multiplier: 1.0,
+												 constant: Constants.ConversationCell.offset)
+		labelRightConstraint = NSLayoutConstraint(item: messageLabel,
+												 attribute: .right,
+												 relatedBy: .equal,
+												 toItem: contentView,
+												 attribute: .right,
+												 multiplier: 1.0,
+												 constant: Constants.ConversationCell.offset)
+		messageLabel.widthAnchor.constraint(equalToConstant: labelWidth).isActive = true
+		positionLabelToLeft()
 	}
 	
+	private func positionLabelToLeft() {
+		labelRightConstraint.isActive = false
+		labelLeftConstraint.isActive = true
+		contentView.layoutIfNeeded()
+	}
+	
+	private func positionLabelToRight() {
+		labelLeftConstraint.isActive = false
+		labelRightConstraint.isActive = true
+		contentView.layoutIfNeeded()
+	}
+
 	private func setUpMessageLabel() {
 		contentView.addSubview(messageLabel)
-		positionMessageDepending(on: false)
+		setUpConstraints()
 	}
 	
 	// MARK: - Public
 	
 	public func configure(with viewModel: ViewModel) {
 		messageLabel.text = viewModel.message
-		positionMessageDepending(on: viewModel.isSelfMessage ?? true)
-		setNeedsLayout()
+		switch viewModel.isSelfMessage {
+			case false: positionLabelToLeft()
+			default: positionLabelToRight()
+		}
 	}
 	
 }
