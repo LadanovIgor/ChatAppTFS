@@ -34,6 +34,9 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 		}
 	}
 	
+	private var changedValues = [String: Data]()
+	private var loadedValues = [String: Data]()
+	
 	// MARK: - Lifecycle
 	
 	override func viewDidLoad() {
@@ -44,6 +47,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 		delegating()
 		setUpConstraints()
 		addKeyboardObservers()
+		fetchProfileData()
 	}
 	
 	override func viewDidLayoutSubviews() {
@@ -80,6 +84,44 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 		profileImageView.image = image
 	}
 	
+	private func fetchProfileData() {
+		activityStartedAnimation()
+		ProfileStorageManagerGCD.shared.loadLocally { [weak self] result in
+			switch result {
+				case .success(let dict):
+					self?.loadedValues = dict
+					self?.updateScreen(with: dict)
+				case .failure(let error):
+					print(error.localizedDescription)
+			}
+			self?.activityFinishedAnimation()
+		}
+	}
+	
+	private func updateScreen(with values: [String: Data]) {
+		if let nameData = values[Constants.PlistManager.nameKey], let name = String(data: nameData, encoding: .utf8) {
+			nameTextField.text = name
+		} else {
+			nameTextField.text = "Full name"
+		}
+		
+		if let infoData = values[Constants.PlistManager.infoKey], let info = String(data: infoData, encoding: .utf8) {
+			infoTextField.text = info
+		} else {
+			infoTextField.text = "About youself"
+		}
+		
+		if let locationData = values[Constants.PlistManager.locationKey], let location = String(data: locationData, encoding: .utf8) {
+			locationTextField.text = location
+		} else {
+			locationTextField.text = "Location"
+		}
+		
+		if let imageData = values[Constants.PlistManager.imageKey], let image = UIImage(data: imageData) {
+			profileImageView.image = image
+		}
+	}
+	
 	private func setUpConstraints() {
 		if #available(iOS 13, *) {
 			infoTextFieldTopConstraint.constant = Constants.ProfileScreen.nameInfoOffset * 2
@@ -94,7 +136,9 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 		closeProfileButton.addTarget(self, action: #selector(didCloseButtonTapped), for: .touchUpInside)
 		saveOperationButton.addTarget(self, action: #selector(didSaveOperationButtonTapped), for: .touchUpInside)
 		cancelButton.addTarget(self, action: #selector(didCancelButtonTapped), for: .touchUpInside)
-
+		locationTextField.addTarget(self, action: #selector(didTextFieldDidChange), for: .editingChanged)
+		infoTextField.addTarget(self, action: #selector(didTextFieldDidChange), for: .editingChanged)
+		nameTextField.addTarget(self, action: #selector(didTextFieldDidChange), for: .editingChanged)
 	}
 	
 	@objc private func didProfileImageViewTapped() {
@@ -110,12 +154,22 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	@objc private func didCancelButtonTapped() {
+		updateScreen(with: loadedValues)
 		isProfileEditing = false
 	}
 	
 	@objc private func didSaveGCDButtonTapped() {
 		activityStartedAnimation()
-		// Save profile
+		locationTextField.resignFirstResponder()
+		infoTextField.resignFirstResponder()
+		nameTextField.resignFirstResponder()
+		ProfileStorageManagerGCD.shared.saveLocally(changedValues) { [weak self] error in
+			self?.activityFinishedAnimation()
+			if let error = error {
+				print(error.localizedDescription)
+			}
+		}
+		isProfileEditing = false
 	}
 	
 	@objc private func didSaveOperationButtonTapped() {
@@ -130,6 +184,11 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	
 	@objc private func didCloseButtonTapped() {
 		dismiss(animated: true, completion: nil)
+	}
+	
+	@objc private func didTextFieldDidChange() {
+		saveOperationButton.isEnabled = true
+		saveGCDButton.isEnabled = true
 	}
 	
 	private func activityStartedAnimation() {
@@ -189,8 +248,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 		imagePicker.dismiss(animated: true, completion: nil)
-		guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage,
-			  let imageUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL else {
+		guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
 			return
 		}
 		profileImageView.image = image
@@ -198,18 +256,28 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 		saveOperationButton.isHidden = false
 		saveGCDButton.isHidden = false
 		cancelButton.isHidden = false
+		saveGCDButton.isEnabled = true
+		guard let imageData = image.jpegData(compressionQuality: 1.0) else {
+			return
+		}
+		changedValues[Constants.PlistManager.imageKey] = imageData
 	}
 }
 
 extension UserProfileViewController: UITextFieldDelegate {
-	func textFieldDidBeginEditing(_ textField: UITextField) {
-		if textField.isFirstResponder {
-			textField.text = textField.placeholder
-			textField.placeholder = nil
-		}
-	}
 	
 	func textFieldDidEndEditing(_ textField: UITextField) {
+		guard textField.placeholder != textField.text else {
+			return
+		}
+		let data = (textField.text ?? "").data(using: .utf8)
+		if textField == nameTextField {
+			changedValues[Constants.PlistManager.nameKey] = data
+		} else if textField == locationTextField {
+			changedValues[Constants.PlistManager.locationKey] = data
+		} else if textField == infoTextField {
+			changedValues[Constants.PlistManager.infoKey] = data
+		}
 		textField.placeholder = textField.text
 	}
 	

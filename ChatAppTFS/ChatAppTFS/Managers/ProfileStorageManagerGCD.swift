@@ -15,16 +15,25 @@ class ProfileStorageManagerGCD {
 	
 	private init() { }
 	
-//	func saveLocally(_ plist: [String: String], completion: @escaping CompletionClosure<Bool>) {
-//		queue.async {
-//
-//		}
-//	}
-//
-//	func loadLocally(completion: @escaping CompletionClosure<[String: String]>) {
-//		queue.async {
-//
-//		}
-//	}
-//}
+	func saveLocally(_ plist: [String: Data], completion: @escaping (Error?) -> Void) {
+		queue.async {
+			for key in plist.keys {
+				PlistManager.shared.save(plist[key], forKey: key) { error in
+					DispatchQueue.main.async {
+						completion(error)
+					}
+				}
+			}
+		}
+	}
+	
+	func loadLocally(completion: @escaping (Result<[String: Data], Error>) -> Void) {
+		queue.async {
+			PlistManager.shared.getPlist { result in
+				DispatchQueue.main.async {
+					completion(result)
+				}
+			}
+		}
+	}
 }

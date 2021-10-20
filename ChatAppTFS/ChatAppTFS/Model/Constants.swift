@@ -38,4 +38,12 @@ enum Constants {
 		static let labelWidthMultiplier: CGFloat = 0.7
 		static let offset: CGFloat = 10.0
 	}
+	
+	enum PlistManager {
+		static let plistFileName = "Data"
+		static let nameKey = "name"
+		static let infoKey = "info"
+		static let locationKey = "location"
+		static let imageKey = "image"
+	}
 }
