@@ -8,10 +8,9 @@
 import Foundation
 
 struct DarkTheme: ThemeProtocol {
-	var themeName: String = "Dark"
 	var tint: UIColor = .white
 	var backgroundColor: UIColor = .darkGray
 	var textColor: UIColor = .white
 	var barStyle: UIBarStyle = .black
-	var newMessageBackground: UIColor = .gray
+	var secondaryBackground: UIColor = UIColor.init(red: 75/255, green: 75/255, blue: 75/255, alpha: 1.0)
 }

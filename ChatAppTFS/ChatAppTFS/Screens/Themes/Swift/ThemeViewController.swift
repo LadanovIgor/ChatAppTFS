@@ -9,9 +9,9 @@ import UIKit
 
 class ThemeViewController: UIViewController {
 
-	@IBOutlet private weak var champagneThemeButton: UIButton!
-	@IBOutlet private weak var darkThemeButton: UIButton!
-	@IBOutlet private weak var lightThemeButton: UIButton!
+	@IBOutlet private weak var champagneThemeButton: AppButton!
+	@IBOutlet private weak var darkThemeButton: AppButton!
+	@IBOutlet private weak var lightThemeButton: AppButton!
 	@IBOutlet private weak var closeButton: UIButton!
 	
 	var lightThemeSelected: ThemeClosure<LightTheme>?

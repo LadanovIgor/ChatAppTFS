@@ -12,9 +12,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserProfileViewController" customModule="ChatAppTFS">
             <connections>
                 <outlet property="activityIndicator" destination="Gej-b3-cEJ" id="KtK-ls-oPP"/>
-                <outlet property="cancelButton" destination="bbQ-nc-ey0" id="TNp-XP-ghN"/>
+                <outlet property="cancelButton" destination="bbQ-nc-ey0" id="A5d-BE-O7j"/>
                 <outlet property="closeProfileButton" destination="PD1-uz-Sqs" id="K3y-iF-a9u"/>
-                <outlet property="editProfileButton" destination="C35-iA-nq7" id="2YT-aE-3R9"/>
+                <outlet property="editProfileButton" destination="C35-iA-nq7" id="Gr0-2V-6tJ"/>
                 <outlet property="infoTextField" destination="Z63-nQ-afj" id="8RX-Gd-RbU"/>
                 <outlet property="infoTextFieldTopConstraint" destination="99f-JR-096" id="S1m-V5-ZaP"/>
                 <outlet property="locationTextField" destination="HL0-Go-4Qm" id="ZlW-bj-bCA"/>
@@ -22,17 +22,17 @@
                 <outlet property="nameTextFieldTopConstraint" destination="l14-M8-4tW" id="gvi-Eo-YgU"/>
                 <outlet property="profileImageView" destination="p9Y-NK-z1Q" id="fCk-SE-qZs"/>
                 <outlet property="saveButtonBottomConstraint" destination="kUK-mn-D70" id="R5J-4x-acl"/>
-                <outlet property="saveGCDButton" destination="ZqK-jj-oLu" id="xqa-fJ-3hd"/>
-                <outlet property="saveOperationButton" destination="MBX-nS-fWs" id="seo-tR-hLY"/>
+                <outlet property="saveGCDButton" destination="ZqK-jj-oLu" id="EvW-Rb-fwI"/>
+                <outlet property="saveOperationButton" destination="MBX-nS-fWs" id="Fql-Lf-1nr"/>
                 <outlet property="view" destination="iN0-l3-epB" id="JKc-T8-VgS"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AppView" customModule="ChatAppTFS" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PAX-gv-gE1">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PAX-gv-gE1" customClass="ProfileHeaderView" customModule="ChatAppTFS" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="44" width="428" height="96"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mmd-N5-SWD">
@@ -50,7 +50,6 @@
                             </state>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" name="lightGray"/>
                     <constraints>
                         <constraint firstItem="Mmd-N5-SWD" firstAttribute="leading" secondItem="PAX-gv-gE1" secondAttribute="leading" constant="16" id="33k-Bk-Jie"/>
                         <constraint firstItem="Mmd-N5-SWD" firstAttribute="centerY" secondItem="PAX-gv-gE1" secondAttribute="centerY" id="eAI-2R-HtA"/>
@@ -81,9 +80,8 @@
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="hix-92-cRD">
                     <rect key="frame" x="183.66666666666666" y="592.66666666666663" width="61" height="269.33333333333337"/>
                     <subviews>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqK-jj-oLu">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqK-jj-oLu" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="140" height="40"/>
-                            <color key="backgroundColor" name="saveButtonBackground"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="hMJ-sd-Y1P"/>
                                 <constraint firstAttribute="width" constant="140" id="yfy-oe-LLy"/>
@@ -94,9 +92,8 @@
                                 <color key="titleColor" name="buttonTitle"/>
                             </state>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MBX-nS-fWs">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MBX-nS-fWs" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="0.0" height="40"/>
-                            <color key="backgroundColor" name="saveButtonBackground"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="VwT-LW-lgX"/>
                             </constraints>
@@ -139,9 +136,8 @@
                     <rect key="frame" x="204" y="526.66666666666663" width="20" height="20"/>
                     <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </activityIndicatorView>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbQ-nc-ey0">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbQ-nc-ey0" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
                     <rect key="frame" x="183.66666666666666" y="549.66666666666663" width="61" height="40"/>
-                    <color key="backgroundColor" name="saveButtonBackground"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="CPD-d6-3uO"/>
                     </constraints>
@@ -153,7 +149,6 @@
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" name="profileBackground"/>
             <constraints>
                 <constraint firstItem="hix-92-cRD" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="4xZ-bR-vhr"/>
                 <constraint firstItem="W26-pQ-q4b" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6dv-Ol-qaQ"/>
@@ -188,17 +183,8 @@
         <namedColor name="labelText">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="lightGray">
-            <color red="0.96899998188018799" green="0.96899998188018799" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="noImageBackground">
             <color red="0.89399999380111694" green="0.9100000262260437" blue="0.16899999976158142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="profileBackground">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="saveButtonBackground">
-            <color red="0.9649999737739563" green="0.9649999737739563" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

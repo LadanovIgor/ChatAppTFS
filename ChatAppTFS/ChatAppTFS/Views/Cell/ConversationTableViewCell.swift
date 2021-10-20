@@ -56,11 +56,7 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
-	override func layoutSubviews() {
-		super.layoutSubviews()
-	}
-	
+
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		messageLabel.text = nil
@@ -117,5 +113,4 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 			default: positionLabelToRight()
 		}
 	}
-	
 }

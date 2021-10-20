@@ -49,6 +49,9 @@
 		8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B3B271FEB0A0011FE58 /* LocalDataOperationError.swift */; };
 		8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */; };
 		8EE62B4127200A3E0011FE58 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B4027200A3E0011FE58 /* Data+.swift */; };
+		8EE62B48272036510011FE58 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B47272036510011FE58 /* AppView.swift */; };
+		8EE62B4A272036680011FE58 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B49272036680011FE58 /* ProfileHeaderView.swift */; };
+		8EE62B4C2720394E0011FE58 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B4B2720394E0011FE58 /* AppButton.swift */; };
 		8EEF17E627156A0800AFE370 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF17E527156A0800AFE370 /* UIWindow+.swift */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +104,9 @@
 		8EE62B3B271FEB0A0011FE58 /* LocalDataOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataOperationError.swift; sourceTree = "<group>"; };
 		8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOperations.swift; sourceTree = "<group>"; };
 		8EE62B4027200A3E0011FE58 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
+		8EE62B47272036510011FE58 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		8EE62B49272036680011FE58 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		8EE62B4B2720394E0011FE58 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		8EEF17E527156A0800AFE370 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +156,9 @@
 				8E2E270E270DE6A300BFE156 /* Cell */,
 				8EAAFE26270E8BA500D7497B /* CircleImageView.swift */,
 				8EAAFE31270EB32500D7497B /* NewMessageView.swift */,
+				8EE62B47272036510011FE58 /* AppView.swift */,
+				8EE62B49272036680011FE58 /* ProfileHeaderView.swift */,
+				8EE62B4B2720394E0011FE58 /* AppButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -418,6 +427,7 @@
 				8E2E2708270DE5EA00BFE156 /* UIView+.swift in Sources */,
 				8E2E2703270DE53400BFE156 /* User.swift in Sources */,
 				8EAAFE27270E8BA500D7497B /* CircleImageView.swift in Sources */,
+				8EE62B48272036510011FE58 /* AppView.swift in Sources */,
 				8EAB38AF27171B0600A1FF98 /* UITableViewCell+.swift in Sources */,
 				8EB63AE126FDAB2D00548A19 /* ConversationsListViewController.swift in Sources */,
 				8EEF17E627156A0800AFE370 /* UIWindow+.swift in Sources */,
@@ -427,6 +437,7 @@
 				8E40D99327146AC700406AD4 /* ThemeViewController.swift in Sources */,
 				8E2E2705270DE53B00BFE156 /* Message.swift in Sources */,
 				8E6B3550271E939200653B8D /* PlistManagerError.swift in Sources */,
+				8EE62B4C2720394E0011FE58 /* AppButton.swift in Sources */,
 				8E2E2711270DE6D800BFE156 /* ConversationsListTableViewCell.swift in Sources */,
 				8E6B354D271E935300653B8D /* PlistManager.swift in Sources */,
 				8EB63ADD26FDAB2D00548A19 /* AppDelegate.swift in Sources */,
@@ -434,6 +445,7 @@
 				8E40D98D27143AFE00406AD4 /* Theme.m in Sources */,
 				8E6B3547271E82D300653B8D /* ProfileStorageManagerGCD.swift in Sources */,
 				8EE62B4127200A3E0011FE58 /* Data+.swift in Sources */,
+				8EE62B4A272036680011FE58 /* ProfileHeaderView.swift in Sources */,
 				8E40D98A2714399700406AD4 /* ThemesViewController.m in Sources */,
 				8E72BC792717C2B60046870F /* Constants.swift in Sources */,
 				8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */,

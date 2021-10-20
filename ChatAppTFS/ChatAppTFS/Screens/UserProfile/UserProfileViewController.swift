@@ -14,13 +14,13 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	@IBOutlet weak var profileImageView: CircleImageView!
 	@IBOutlet weak var closeProfileButton: UIButton!
 	@IBOutlet weak var editProfileButton: UIButton!
-	@IBOutlet weak var saveGCDButton: UIButton!
-	@IBOutlet weak var saveOperationButton: UIButton!
+	@IBOutlet weak var saveGCDButton: AppButton!
+	@IBOutlet weak var saveOperationButton: AppButton!
 	@IBOutlet weak var nameTextField: UITextField!
 	@IBOutlet weak var infoTextField: UITextField!
 	@IBOutlet weak var locationTextField: UITextField!
 	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-	@IBOutlet weak var cancelButton: UIButton!
+	@IBOutlet weak var cancelButton: AppButton!
 	
 	@IBOutlet var infoTextFieldTopConstraint: NSLayoutConstraint!
 	@IBOutlet var saveButtonBottomConstraint: NSLayoutConstraint!
@@ -297,6 +297,7 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 		saveGCDButton.isHidden = false
 		cancelButton.isHidden = false
 		saveGCDButton.isEnabled = true
+		saveOperationButton.isEnabled = true
 		guard let imageData = image.jpegData(compressionQuality: 1.0) else {
 			return
 		}
