@@ -46,6 +46,8 @@
 		8EB63AE926FDAB2E00548A19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EB63AE726FDAB2E00548A19 /* LaunchScreen.storyboard */; };
 		8ED5F085270EE3AC005CDA29 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED5F084270EE3AC005CDA29 /* ConfigurableView.swift */; };
 		8EE62B3A271FBFA90011FE58 /* Data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EE62B39271FBFA90011FE58 /* Data.plist */; };
+		8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B3B271FEB0A0011FE58 /* LocalDataOperationError.swift */; };
+		8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */; };
 		8EEF17E627156A0800AFE370 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF17E527156A0800AFE370 /* UIWindow+.swift */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +97,8 @@
 		8EB63AEA26FDAB2E00548A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ED5F084270EE3AC005CDA29 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		8EE62B39271FBFA90011FE58 /* Data.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Data.plist; sourceTree = "<group>"; };
+		8EE62B3B271FEB0A0011FE58 /* LocalDataOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataOperationError.swift; sourceTree = "<group>"; };
+		8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOperations.swift; sourceTree = "<group>"; };
 		8EEF17E527156A0800AFE370 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -216,8 +220,8 @@
 		8E6B3544271E81C400653B8D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				8EE62B3D271FEB6B0011FE58 /* Operation */,
 				8E6B3546271E82D300653B8D /* ProfileStorageManagerGCD.swift */,
-				8E6B3548271E82E700653B8D /* ProfileStorageManagerOperation.swift */,
 				8E6B354C271E935300653B8D /* PlistManager.swift */,
 			);
 			path = Managers;
@@ -238,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				8E6B354F271E939200653B8D /* PlistManagerError.swift */,
+				8EE62B3B271FEB0A0011FE58 /* LocalDataOperationError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -311,6 +316,15 @@
 				8E2E270D270DE69700BFE156 /* Views */,
 			);
 			path = ChatAppTFS;
+			sourceTree = "<group>";
+		};
+		8EE62B3D271FEB6B0011FE58 /* Operation */ = {
+			isa = PBXGroup;
+			children = (
+				8E6B3548271E82E700653B8D /* ProfileStorageManagerOperation.swift */,
+				8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */,
+			);
+			path = Operation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,6 +406,7 @@
 				8EAAFE2E270E8F3600D7497B /* ConversationViewController.swift in Sources */,
 				8E6B3549271E82E700653B8D /* ProfileStorageManagerOperation.swift in Sources */,
 				8E2E270A270DE61300BFE156 /* Date+.swift in Sources */,
+				8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */,
 				8E21E796271DA0280005F20F /* Profile.swift in Sources */,
 				8EAB38AB2717052900A1FF98 /* typealiases.swift in Sources */,
 				8EAB38A52717022200A1FF98 /* ChampagneTheme.swift in Sources */,
@@ -417,6 +432,7 @@
 				8E6B3547271E82D300653B8D /* ProfileStorageManagerGCD.swift in Sources */,
 				8E40D98A2714399700406AD4 /* ThemesViewController.m in Sources */,
 				8E72BC792717C2B60046870F /* Constants.swift in Sources */,
+				8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */,
 				8EAB38A92717023500A1FF98 /* ThemeProtocol.swift in Sources */,
 				8E5EC5AB26FDB05E008FC472 /* KeyboardObserver.swift in Sources */,
 				8E2E270C270DE65D00BFE156 /* NSLayoutConstraint.swift in Sources */,

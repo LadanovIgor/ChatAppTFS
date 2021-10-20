@@ -131,10 +131,10 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 	
 	private func addButtonTargets() {
-		saveGCDButton.addTarget(self, action: #selector(didSaveGCDButtonTapped), for: .touchUpInside)
+		saveGCDButton.addTarget(self, action: #selector(didSaveButtonTapped), for: .touchUpInside)
 		editProfileButton.addTarget(self, action: #selector(didEditButtonTapped), for: .touchUpInside)
 		closeProfileButton.addTarget(self, action: #selector(didCloseButtonTapped), for: .touchUpInside)
-		saveOperationButton.addTarget(self, action: #selector(didSaveOperationButtonTapped), for: .touchUpInside)
+		saveOperationButton.addTarget(self, action: #selector(didSaveButtonTapped), for: .touchUpInside)
 		cancelButton.addTarget(self, action: #selector(didCancelButtonTapped), for: .touchUpInside)
 		locationTextField.addTarget(self, action: #selector(didTextFieldDidChange), for: .editingChanged)
 		infoTextField.addTarget(self, action: #selector(didTextFieldDidChange), for: .editingChanged)
@@ -158,23 +158,16 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 		isProfileEditing = false
 	}
 	
-	@objc private func didSaveGCDButtonTapped() {
-		activityStartedAnimation()
+	@objc private func didSaveButtonTapped(_ button: UIButton) {
 		locationTextField.resignFirstResponder()
 		infoTextField.resignFirstResponder()
 		nameTextField.resignFirstResponder()
-		ProfileStorageManagerGCD.shared.saveLocally(changedValues) { [weak self] error in
-			self?.activityFinishedAnimation()
-			if let error = error {
-				print(error.localizedDescription)
-			}
+		guard !changedValues.isEmpty else { return }
+		if button == saveGCDButton {
+			saveGCD()
+		} else if button == saveOperationButton {
+			saveOperation()
 		}
-		isProfileEditing = false
-	}
-	
-	@objc private func didSaveOperationButtonTapped() {
-		activityStartedAnimation()
-		// Save profile
 	}
 	
 	@objc private func didEditButtonTapped() {
@@ -189,6 +182,53 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 	@objc private func didTextFieldDidChange() {
 		saveOperationButton.isEnabled = true
 		saveGCDButton.isEnabled = true
+	}
+	
+	private func saveGCD() {
+		activityStartedAnimation()
+		ProfileStorageManagerGCD.shared.saveLocally(changedValues) { [weak self] error in
+			self?.activityFinishedAnimation()
+			if error != nil {
+				self?.presentFailureLoadAlert(handler: self?.saveGCD)
+			} else {
+				self?.presentSuccessLoadAlert()
+				self?.changedValues = [String: Data]()
+			}
+		}
+	}
+	
+	private func saveOperation() {
+		activityStartedAnimation()
+		ProfileStorageManagerOperation.shared.saveLocally(changedValues) { [weak self] error in
+			self?.activityFinishedAnimation()
+			if error != nil {
+				self?.presentFailureLoadAlert(handler: self?.saveOperation)
+			} else {
+				self?.presentSuccessLoadAlert()
+				self?.changedValues = [String: Data]()
+			}
+		}
+	}
+	
+	private func presentSuccessLoadAlert() {
+		let alert = UIAlertController(title: "Data saved", message: nil, preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { [weak self] _ in
+			self?.isProfileEditing = false
+		}))
+		present(alert, animated: true)
+	}
+	
+	private func presentFailureLoadAlert(handler: (() -> Void)?) {
+		let alert = UIAlertController(title: "Error!", message: "Failed to save data.", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { [weak self] _ in
+			self?.isProfileEditing = false
+		}))
+		alert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { _ in
+			if let handler = handler {
+				handler()
+			}
+		}))
+		present(alert, animated: true)
 	}
 	
 	private func activityStartedAnimation() {

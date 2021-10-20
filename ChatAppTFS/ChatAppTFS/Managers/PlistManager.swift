@@ -43,7 +43,7 @@ final class PlistManager {
 		}
 	}
 	
-	private func getValuerInPlistFile() -> [String: Data]? {
+	private func getValueInPlistFile() -> [String: Data]? {
 		if let fileURL = fileURL, fileManager.fileExists(atPath: fileURL.path) {
 			guard let data = try? Data(contentsOf: fileURL)  else {
 				return nil
@@ -72,7 +72,7 @@ final class PlistManager {
 	}
 	
 	func save(_ data: Data?, forKey key: String, completion:(PlistManagerError?) -> ()) {
-		guard var dict = getValuerInPlistFile() else {
+		guard var dict = getValueInPlistFile() else {
 			completion(.fileUnavailable)
 			return
 		}
