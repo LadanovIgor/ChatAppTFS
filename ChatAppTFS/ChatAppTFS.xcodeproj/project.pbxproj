@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8E21E796271DA0280005F20F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21E795271DA0280005F20F /* Profile.swift */; };
+		8E21E796271DA0280005F20F /* ProfileStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21E795271DA0280005F20F /* ProfileStorageManager.swift */; };
 		8E2E2703270DE53400BFE156 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2702270DE53400BFE156 /* User.swift */; };
 		8E2E2705270DE53B00BFE156 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2704270DE53B00BFE156 /* Message.swift */; };
 		8E2E2708270DE5EA00BFE156 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2707270DE5EA00BFE156 /* UIView+.swift */; };
@@ -56,7 +56,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8E21E795271DA0280005F20F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		8E21E795271DA0280005F20F /* ProfileStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageManager.swift; sourceTree = "<group>"; };
 		8E2E2702270DE53400BFE156 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8E2E2704270DE53B00BFE156 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		8E2E2707270DE5EA00BFE156 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -130,7 +130,6 @@
 				8E40D98B27143AD600406AD4 /* Theme.h */,
 				8E40D98C27143AFE00406AD4 /* Theme.m */,
 				8E72BC782717C2B60046870F /* Constants.swift */,
-				8E21E795271DA0280005F20F /* Profile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -232,6 +231,7 @@
 		8E6B3544271E81C400653B8D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				8E21E795271DA0280005F20F /* ProfileStorageManager.swift */,
 				8EE62B3D271FEB6B0011FE58 /* Operation */,
 				8E6B3546271E82D300653B8D /* ProfileStorageManagerGCD.swift */,
 			);
@@ -419,7 +419,7 @@
 				8E6B3549271E82E700653B8D /* ProfileStorageManagerOperation.swift in Sources */,
 				8E2E270A270DE61300BFE156 /* Date+.swift in Sources */,
 				8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */,
-				8E21E796271DA0280005F20F /* Profile.swift in Sources */,
+				8E21E796271DA0280005F20F /* ProfileStorageManager.swift in Sources */,
 				8EAB38AB2717052900A1FF98 /* typealiases.swift in Sources */,
 				8EAB38A52717022200A1FF98 /* ChampagneTheme.swift in Sources */,
 				8EAAFE2A270E8E9000D7497B /* ConversationsListTableHeaderView.swift in Sources */,

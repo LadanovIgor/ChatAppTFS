@@ -319,7 +319,7 @@ class ConversationsListViewController: UIViewController {
 			return
 		}
 		let dict = [Constants.PlistManager.themeKey: themeNameData]
-		ProfileStorageManagerGCD.shared.saveLocally(dict) { _ in
+		ProfileStorageManager.use(.gcd).saveLocally(dict) { _ in
 			
 		}
 	}

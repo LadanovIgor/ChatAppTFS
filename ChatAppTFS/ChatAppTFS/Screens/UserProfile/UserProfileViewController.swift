@@ -86,7 +86,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	
 	private func fetchProfileData() {
 		activityStartedAnimation()
-		ProfileStorageManagerGCD.shared.loadLocally { [weak self] result in
+		ProfileStorageManager.use(.gcd).loadLocally { [weak self] result in
 			switch result {
 				case .success(let dict):
 					self?.loadedValues = dict
@@ -185,29 +185,34 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	private func saveGCD() {
-		activityStartedAnimation()
-		ProfileStorageManagerGCD.shared.saveLocally(changedValues) { [weak self] error in
-			self?.activityFinishedAnimation()
-			if error != nil {
-				self?.presentFailureLoadAlert(handler: self?.saveGCD)
-			} else {
-				self?.presentSuccessLoadAlert()
-				self?.changedValues = [String: Data]()
-			}
-		}
+		saveLocally(type: ProfileStorageManager.use(.gcd))
 	}
 	
 	private func saveOperation() {
+		saveLocally(type: ProfileStorageManager.use(.operation))
+	}
+	
+	private func saveLocally(type: StoredLocally) {
 		activityStartedAnimation()
-		ProfileStorageManagerOperation.shared.saveLocally(changedValues) { [weak self] error in
+		type.saveLocally(changedValues) { [weak self] error in
 			self?.activityFinishedAnimation()
 			if error != nil {
 				self?.presentFailureLoadAlert(handler: self?.saveOperation)
 			} else {
 				self?.presentSuccessLoadAlert()
-				self?.changedValues = [String: Data]()
+				self?.updateValues(with: self?.changedValues)
 			}
 		}
+	}
+	
+	private func updateValues(with values: [String: Data]?) {
+		guard let values = values else {
+			return
+		}
+		for key in values.keys {
+			loadedValues[key] = values[key]
+		}
+		changedValues = [String: Data]()
 	}
 	
 	private func presentSuccessLoadAlert() {
