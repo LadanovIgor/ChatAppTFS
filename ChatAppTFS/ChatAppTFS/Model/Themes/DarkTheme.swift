@@ -8,6 +8,7 @@
 import Foundation
 
 struct DarkTheme: ThemeProtocol {
+	static let name = String(describing: Self.self)
 	var tint: UIColor = .white
 	var backgroundColor: UIColor = .darkGray
 	var textColor: UIColor = .white

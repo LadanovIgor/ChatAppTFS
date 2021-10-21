@@ -10,23 +10,31 @@ import Foundation
 final class LocalDataLoadOperation: Operation {
 
 	var result: Result<[String: Data], Error>?
+	var task: (ResultClosure<[String: Data]>) -> Void
+	
+	init(with task: @escaping (ResultClosure<[String: Data]>) -> Void) {
+		self.task = task
+		super.init()
+	}
 
 	override func main() {
 		if isCancelled { return }
-		PlistManager.shared.getPlist { [weak self] result in
+		task { [weak self] result in
 			self?.result = result
 		}
 	}
 }
 
 final class LocalDataSaveOperation: Operation {
-
+	
+	var task: (Data?, String, (StoredLocallyError?) -> ()) -> Void
 	var error: Error?
 
 	private let plist: [String: Data]
 
-	init(plist: [String: Data]) {
+	init(with task: @escaping (Data?, String, (StoredLocallyError?) -> ()) -> Void, plist: [String: Data]) {
 		self.plist = plist
+		self.task = task
 		super.init()
 	}
 
@@ -34,7 +42,7 @@ final class LocalDataSaveOperation: Operation {
 		if isCancelled { return }
 		for key in plist.keys {
 			if isCancelled { return }
-			PlistManager.shared.save(plist[key], forKey: key) { [weak self] error in
+			task(plist[key], key) { [weak self] error in
 				self?.error = error
 			}
 		}

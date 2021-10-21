@@ -8,6 +8,7 @@
 import Foundation
 
 struct LightTheme: ThemeProtocol {
+	static let name = String(describing: Self.self)
 	var tint: UIColor = .black
 	var backgroundColor: UIColor = .white
 	var textColor: UIColor = .black

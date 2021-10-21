@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		PlistManager.shared.start()
+		createFileLocallyIfNeeded()
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.makeKeyAndVisible()
 		let navVC = UINavigationController(rootViewController: ConversationsListViewController())
@@ -39,6 +39,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				case .failure(_):
 					LightTheme().apply(for: application)
 			}
+		}
+	}
+	
+	private func createFileLocallyIfNeeded() {
+		guard let sourcePath = Bundle.main.path(forResource: Constants.PlistManager.plistFileName, ofType: "plist"),
+			  let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+			  FileManager.default.fileExists(atPath: sourcePath) else { return }
+		let fileURL = directory.appendingPathComponent("\(Constants.PlistManager.plistFileName).plist")
+		if !FileManager.default.fileExists(atPath: fileURL.path) {
+			try? FileManager.default.copyItem(atPath: sourcePath, toPath: fileURL.path)
 		}
 	}
 }

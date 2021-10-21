@@ -13,12 +13,11 @@ extension Data {
 			LightTheme().apply(for: application)
 			return
 		}
-		if themeName == String(describing: DarkTheme.self) {
-			DarkTheme().apply(for: application)
-		} else if themeName == String(describing: ChampagneTheme.self) {
-			ChampagneTheme().apply(for: application)
-		} else {
-			LightTheme().apply(for: application)
+		switch themeName {
+			case DarkTheme.name: DarkTheme().apply(for: application)
+			case ChampagneTheme.name: ChampagneTheme().apply(for: application)
+			default: LightTheme().apply(for: application)
 		}
+		
 	}
 }

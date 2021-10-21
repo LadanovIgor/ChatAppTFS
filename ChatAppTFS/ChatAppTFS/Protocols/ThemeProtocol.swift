@@ -8,6 +8,7 @@
 import UIKit
 
 protocol ThemeProtocol {
+	static var name: String { get }
 	var tint: UIColor { get }
 	var backgroundColor: UIColor { get }
 	var textColor: UIColor { get }

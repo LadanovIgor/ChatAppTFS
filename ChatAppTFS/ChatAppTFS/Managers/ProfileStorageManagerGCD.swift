@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ProfileStorageManagerGCD {
+class ProfileStorageManagerGCD: StoredLocally {
 	
 	static let shared = ProfileStorageManagerGCD()
 	
@@ -16,9 +16,9 @@ class ProfileStorageManagerGCD {
 	private init() { }
 	
 	func saveLocally(_ plist: [String: Data], completion: @escaping (Error?) -> Void) {
-		queue.async {
+		queue.async { [weak self] in
 			for key in plist.keys {
-				PlistManager.shared.save(plist[key], forKey: key) { error in
+				self?.save(plist[key], forKey: key) { error in
 					DispatchQueue.main.async {
 						completion(error)
 					}
@@ -28,8 +28,8 @@ class ProfileStorageManagerGCD {
 	}
 	
 	func loadLocally(completion: @escaping (Result<[String: Data], Error>) -> Void) {
-		queue.async {
-			PlistManager.shared.getPlist { result in
+		queue.async { [weak self] in
+			self?.getPlist { result in
 				DispatchQueue.main.async {
 					completion(result)
 				}
@@ -38,8 +38,8 @@ class ProfileStorageManagerGCD {
 	}
 	
 	func loadTheme(completion: @escaping (Result<Data, Error>) -> Void) {
-		queue.async {
-			PlistManager.shared.getValue(for: Constants.PlistManager.themeKey) { result in
+		queue.async { [weak self] in
+			self?.getValue(for: Constants.PlistManager.themeKey) { result in
 				DispatchQueue.main.async {
 					completion(result)
 				}

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PlistManagerError: Error {
+enum StoredLocallyError: Error {
 	case fileNotWritten
 	case fileDoesNotExist
 	case fileUnavailable
