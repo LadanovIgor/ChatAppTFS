@@ -35,6 +35,7 @@ extension ThemeProtocol {
 		NewMessageView.appearance().backgroundColor = secondaryBackground
 		UITextField.appearance().textColor = textColor
 		AppButton.appearance().backgroundColor = secondaryBackground
+		UIActivityIndicatorView.appearance().tintColor = tint
 		application.windows.reload()
 	}
 }

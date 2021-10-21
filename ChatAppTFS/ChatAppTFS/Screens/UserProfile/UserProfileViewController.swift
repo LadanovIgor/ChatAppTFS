@@ -171,6 +171,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	@objc private func didEditButtonTapped() {
+		cancelButton.isEnabled = true
 		isProfileEditing = true
 		self.nameTextField.becomeFirstResponder()
 	}
@@ -194,6 +195,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	
 	private func saveLocally(type: StoredLocally) {
 		activityStartedAnimation()
+		changeButtonState(with: false)
 		type.saveLocally(changedValues) { [weak self] error in
 			self?.activityFinishedAnimation()
 			if error != nil {
@@ -203,6 +205,12 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 				self?.updateValues(with: self?.changedValues)
 			}
 		}
+	}
+	
+	private func changeButtonState(with isEnable: Bool) {
+		saveOperationButton.isEnabled = isEnable
+		cancelButton.isEnabled = isEnable
+		saveGCDButton.isEnabled = isEnable
 	}
 	
 	private func updateValues(with values: [String: Data]?) {
@@ -301,8 +309,7 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 		saveOperationButton.isHidden = false
 		saveGCDButton.isHidden = false
 		cancelButton.isHidden = false
-		saveGCDButton.isEnabled = true
-		saveOperationButton.isEnabled = true
+		changeButtonState(with: true)
 		guard let imageData = image.jpegData(compressionQuality: 1.0) else {
 			return
 		}
