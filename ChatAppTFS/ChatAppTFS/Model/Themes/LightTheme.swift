@@ -13,5 +13,5 @@ struct LightTheme: ThemeProtocol {
 	var backgroundColor: UIColor = .white
 	var textColor: UIColor = .black
 	var barStyle: UIBarStyle = .default
-	var secondaryBackground: UIColor = UIColor.init(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
+	var secondaryBackground: UIColor = UIColor(red: 235 / 255, green: 235 / 255, blue: 235 / 255, alpha: 1.0)
 }

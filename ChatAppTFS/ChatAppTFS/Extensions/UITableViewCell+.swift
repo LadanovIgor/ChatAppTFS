@@ -11,7 +11,5 @@ extension UITableViewCell {
 		for view in self.subviews where String(describing: type(of: view)).hasSuffix("SeparatorView") {
 			view.removeFromSuperview()
 		}
-
 	}
 }
-

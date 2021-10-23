@@ -9,7 +9,7 @@ import UIKit
 
 extension UIView {
 	func round() {
-		self.layer.cornerRadius = self.frame.height/2
+		self.layer.cornerRadius = self.frame.height / 2
 	}
 }
 
@@ -18,4 +18,3 @@ extension UIView {
 		views.forEach { addSubview($0) }
 	}
 }
-

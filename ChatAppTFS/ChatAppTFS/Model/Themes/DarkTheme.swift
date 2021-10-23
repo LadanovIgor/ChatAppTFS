@@ -13,5 +13,5 @@ struct DarkTheme: ThemeProtocol {
 	var backgroundColor: UIColor = .darkGray
 	var textColor: UIColor = .white
 	var barStyle: UIBarStyle = .black
-	var secondaryBackground: UIColor = UIColor.init(red: 75/255, green: 75/255, blue: 75/255, alpha: 1.0)
+	var secondaryBackground: UIColor = UIColor(red: 75 / 255, green: 75 / 255, blue: 75 / 255, alpha: 1.0)
 }

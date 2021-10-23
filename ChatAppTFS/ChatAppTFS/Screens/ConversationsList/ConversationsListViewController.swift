@@ -6,10 +6,14 @@
 //
 
 import UIKit
+import Firebase
 
 class ConversationsListViewController: UIViewController {
 	
 	// MARK: - Properties
+	
+	private lazy var db = Firestore.firestore()
+	private lazy var reference = db.collection("channels")
 	
 	private let usersOnline: [User] = [
 		User(name: "Homer Simpson", isOnline: true, messages: [
@@ -296,7 +300,7 @@ class ConversationsListViewController: UIViewController {
 		view.addConstraints(NSLayoutConstraint.constraints(
 			withNewVisualFormat: "H:|[tableView]|,V:|[tableView]|",
 			metrics: nil,
-			views: ["tableView":tableView]))
+			views: ["tableView": tableView]))
 	}
 	
 	private func logThemeChanging(selectedTheme: Theme) {
@@ -304,7 +308,7 @@ class ConversationsListViewController: UIViewController {
 		let color = selectedTheme.color()
 		UINavigationBar.appearance().barTintColor = color
 		UINavigationBar.appearance().backgroundColor = color
-		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
+		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
 		UITableView.appearance().backgroundColor = color
 		UIView.appearance(whenContainedInInstancesOf: [UITableView.self]).backgroundColor = color
 		UIVisualEffectView.appearance().backgroundColor = color
@@ -330,9 +334,9 @@ class ConversationsListViewController: UIViewController {
 extension ConversationsListViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch section {
-			case 0: return "Online"
-			case 1: return "History"
-			default: return ""
+		case 0: return "Online"
+		case 1: return "History"
+		default: return ""
 		}
 	}
 	
@@ -343,15 +347,15 @@ extension ConversationsListViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 		switch indexPath.section {
-			case 0:
-				let vc = ConversationViewController(messages: usersOnline[indexPath.row].messages ?? [])
-				vc.title = usersOnline[indexPath.row].name
-				navigationController?.pushViewController(vc, animated: true)
-			case 1:
-				let vc = ConversationViewController(messages: usersOffline[indexPath.row].messages ?? [])
-				vc.title = usersOffline[indexPath.row].name
-				navigationController?.pushViewController(vc, animated: true)
-			default: break
+		case 0:
+			let vc = ConversationViewController(messages: usersOnline[indexPath.row].messages ?? [])
+			vc.title = usersOnline[indexPath.row].name
+			navigationController?.pushViewController(vc, animated: true)
+		case 1:
+			let vc = ConversationViewController(messages: usersOffline[indexPath.row].messages ?? [])
+			vc.title = usersOffline[indexPath.row].name
+			navigationController?.pushViewController(vc, animated: true)
+		default: break
 		}
 	}
 	
@@ -369,9 +373,9 @@ extension ConversationsListViewController: UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch section {
-			case 0: return usersOnline.count
-			case 1: return usersOffline.count
-			default: return 2
+		case 0: return usersOnline.count
+		case 1: return usersOffline.count
+		default: return 2
 		}
 	}
 	
@@ -383,9 +387,9 @@ extension ConversationsListViewController: UITableViewDataSource {
 			}
 		var model: User
 		switch indexPath.section {
-			case 0: model = usersOnline[indexPath.row]
-			case 1: model = usersOffline[indexPath.row]
-			default: model = usersOnline[indexPath.row]
+		case 0: model = usersOnline[indexPath.row]
+		case 1: model = usersOffline[indexPath.row]
+		default: model = usersOnline[indexPath.row]
 		}
 		cell.configure(with: .init(model: model))
 		cell.layoutIfNeeded()
@@ -405,6 +409,4 @@ extension ConversationsListViewController: ThemesViewControllerDelegate {
 	func themesViewController(_ controller: UIViewController, didSelect selectedTheme: Theme) {
 		logThemeChanging(selectedTheme: selectedTheme)
 	}
-	
-
 }

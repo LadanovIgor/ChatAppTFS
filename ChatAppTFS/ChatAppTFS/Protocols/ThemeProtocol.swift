@@ -23,7 +23,7 @@ extension ThemeProtocol {
 		UINavigationBar.appearance().barStyle = barStyle
 		UINavigationBar.appearance().barTintColor = backgroundColor
 		UINavigationBar.appearance().tintColor = tint
-		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : textColor]
+		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: textColor]
 		UINavigationBar.appearance().backgroundColor = backgroundColor
 		UITableViewHeaderFooterView.appearance().tintColor = textColor
 		UITableView.appearance().backgroundColor = backgroundColor
@@ -39,4 +39,3 @@ extension ThemeProtocol {
 		application.windows.reload()
 	}
 }
-

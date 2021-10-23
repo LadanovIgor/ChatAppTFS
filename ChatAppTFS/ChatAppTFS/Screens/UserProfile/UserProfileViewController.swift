@@ -88,11 +88,11 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		activityStartedAnimation()
 		ProfileStorageManager.use(.gcd).loadLocally { [weak self] result in
 			switch result {
-				case .success(let dict):
-					self?.loadedValues = dict
-					self?.updateScreen(with: dict)
-				case .failure(let error):
-					print(error.localizedDescription)
+			case .success(let dict):
+				self?.loadedValues = dict
+				self?.updateScreen(with: dict)
+			case .failure(let error):
+				print(error.localizedDescription)
 			}
 			self?.activityFinishedAnimation()
 		}
@@ -299,7 +299,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	// MARK: - UIImagePickerController
 
 extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		imagePicker.dismiss(animated: true, completion: nil)
 		guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
 			return

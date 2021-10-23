@@ -8,7 +8,7 @@
 import Foundation
 
 protocol StoredLocally: AnyObject {
-	func save(_ data: Data?, forKey key: String, completion:(StoredLocallyError?) -> ())
+	func save(_ data: Data?, forKey key: String, completion: (StoredLocallyError?) -> Void)
 	func getPlist(completion: @escaping ResultClosure<[String: Data]>)
 	func getValue(for key: String, completion: @escaping ResultClosure<Data>)
 	func saveLocally(_ plist: [String: Data], completion: @escaping (Error?) -> Void)
@@ -37,21 +37,20 @@ extension StoredLocally {
 		}
 		do {
 			try plistData.write(to: fileURL)
-		}
-		catch {
+		} catch {
 			throw StoredLocallyError.fileNotWritten
 		}
 	}
 	
 	private func getValueInPlistFile() -> [String: Data]? {
 		guard let fileURL = fileURL, FileManager.default.fileExists(atPath: fileURL.path), let data = try? Data(contentsOf: fileURL),
-			  let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String:Data] else {
+			  let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Data] else {
 				  return nil
 			  }
 		return plist
 	}
 	
-	func save(_ data: Data?, forKey key: String, completion:(StoredLocallyError?) -> ()) {
+	func save(_ data: Data?, forKey key: String, completion: (StoredLocallyError?) -> Void) {
 		guard var dict = getValueInPlistFile() else {
 			completion(.fileUnavailable)
 			return
@@ -64,8 +63,7 @@ extension StoredLocally {
 		do {
 			try addValuesToPlistFile(dictionary: dict)
 			completion(nil)
-		}
-		catch {
+		} catch {
 			completion(.couldNotSaveData)
 		}
 	}
@@ -76,7 +74,7 @@ extension StoredLocally {
 			return
 		}
 		guard let data = try? Data(contentsOf: fileURL),
-			  let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String:Data] else {
+			  let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Data] else {
 			completion(.failure(StoredLocallyError.couldNotGetData))
 			return
 		}
@@ -99,4 +97,3 @@ extension StoredLocally {
 		completion(.success(value))
 	}
 }
-

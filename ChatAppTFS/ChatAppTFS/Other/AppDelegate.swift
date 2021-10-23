@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,8 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	var orientationLock = UIInterfaceOrientationMask.portrait
 	
-	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 		loadThemeFor(application: application)
+		FirebaseApp.configure()
 		return true
 	}
 
@@ -34,9 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	private func loadThemeFor(application: UIApplication) {
 		ProfileStorageManagerGCD.shared.loadTheme { result in
 			switch result {
-				case .success(let data):
+			case .success(let data):
 					data.setTheme(for: application)
-				case .failure(_):
+			case .failure(_):
 					LightTheme().apply(for: application)
 			}
 		}
@@ -52,5 +54,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 	}
 }
-
-

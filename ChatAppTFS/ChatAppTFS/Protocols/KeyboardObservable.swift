@@ -9,12 +9,12 @@ import UIKit
 
 protocol KeyboardObservable: AnyObject {
 	func stopObserving()
-	func startObserving(completion: @escaping (CGFloat, Bool)->Void)
+	func startObserving(completion: @escaping (CGFloat, Bool) -> Void)
 }
 
 extension KeyboardObservable {
 	
-	private func handleKeyboardNotification(notification: Notification, completion: @escaping (CGFloat, Bool)->Void) {
+	private func handleKeyboardNotification(notification: Notification, completion: @escaping (CGFloat, Bool) -> Void) {
 		guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
 			return
 		}
@@ -23,7 +23,7 @@ extension KeyboardObservable {
 		completion(keyboardHeight, isKeyboardShowing)
 	}
 	
-	func startObserving(completion: @escaping (CGFloat, Bool)->Void) {
+	func startObserving(completion: @escaping (CGFloat, Bool) -> Void) {
 		NotificationCenter.default.addObserver(
 			forName: UIResponder.keyboardWillShowNotification,
 			object: nil,

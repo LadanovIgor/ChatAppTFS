@@ -9,7 +9,7 @@ import UIKit
 
 class ConversationsListTableViewCell: UITableViewCell, NibLoadable, ConfigurableView {
 	
-	//MARK: - ViewModel
+	// MARK: - ViewModel
 	
 	typealias ConfigurationModel = ViewModel
 	
@@ -40,13 +40,12 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 
 	override func layoutIfNeeded() {
 		super.layoutIfNeeded()
-		profileImageView.layer.cornerRadius = profileImageView.frame.width/2
+		profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
 		profileImageView.layer.masksToBounds = true
 		removeBottomSeparator()
 		selectionStyle = .none
 	}
 
-	
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		nameLabel.text = nil

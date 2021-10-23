@@ -109,8 +109,8 @@ class ConversationTableViewCell: UITableViewCell, ConfigurableView {
 	public func configure(with viewModel: ViewModel) {
 		messageLabel.text = viewModel.message
 		switch viewModel.isSelfMessage {
-			case false: positionLabelToLeft()
-			default: positionLabelToRight()
+		case false: positionLabelToLeft()
+		default: positionLabelToRight()
 		}
 	}
 }

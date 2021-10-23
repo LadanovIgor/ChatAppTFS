@@ -1,0 +1,6 @@
+framework module Pods_ChatAppTFS {
+  umbrella header "Pods-ChatAppTFS-umbrella.h"
+
+  export *
+  module * { export * }
+}

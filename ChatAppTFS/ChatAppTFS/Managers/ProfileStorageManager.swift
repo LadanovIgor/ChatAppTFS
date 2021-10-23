@@ -15,10 +15,10 @@ enum MultiThreading {
 class ProfileStorageManager {
 	static func use(_ type: MultiThreading) -> StoredLocally {
 		switch type {
-			case .gcd:
-				return ProfileStorageManagerGCD.shared
-			case .operation:
-				return ProfileStorageManagerOperation.shared
+		case .gcd:
+			return ProfileStorageManagerGCD.shared
+		case .operation:
+			return ProfileStorageManagerOperation.shared
 		}
 	}
 }

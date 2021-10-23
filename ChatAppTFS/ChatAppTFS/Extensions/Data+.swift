@@ -14,9 +14,9 @@ extension Data {
 			return
 		}
 		switch themeName {
-			case DarkTheme.name: DarkTheme().apply(for: application)
-			case ChampagneTheme.name: ChampagneTheme().apply(for: application)
-			default: LightTheme().apply(for: application)
+		case DarkTheme.name: DarkTheme().apply(for: application)
+		case ChampagneTheme.name: ChampagneTheme().apply(for: application)
+		default: LightTheme().apply(for: application)
 		}
 		
 	}

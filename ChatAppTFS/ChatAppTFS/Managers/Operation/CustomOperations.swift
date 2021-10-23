@@ -27,12 +27,12 @@ final class LocalDataLoadOperation: Operation {
 
 final class LocalDataSaveOperation: Operation {
 	
-	var task: (Data?, String, (StoredLocallyError?) -> ()) -> Void
+	var task: (Data?, String, (StoredLocallyError?) -> Void) -> Void
 	var error: Error?
 
 	private let plist: [String: Data]
 
-	init(with task: @escaping (Data?, String, (StoredLocallyError?) -> ()) -> Void, plist: [String: Data]) {
+	init(with task: @escaping (Data?, String, (StoredLocallyError?) -> Void) -> Void, plist: [String: Data]) {
 		self.plist = plist
 		self.task = task
 		super.init()

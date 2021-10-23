@@ -57,7 +57,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 			} completion: { [weak self] _ in
 				guard let self = self else { return }
 				if isKeyboardShowing, self.messages.count > 0 {
-					let indexPath = IndexPath(row: self.messages.count-1, section: 0)
+					let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
 					self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
 				}
 			}
@@ -131,6 +131,3 @@ extension ConversationViewController: UITableViewDataSource {
 		return messages.count
 	}
 }
-
-    
-
