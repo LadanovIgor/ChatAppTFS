@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct User {
+struct Channel {
+	let identifier: String
 	let name: String
-	let isOnline: Bool
-	let messages: [Message]?
+	let lastMessage: String?
+	let lastActivity: Date?
 }

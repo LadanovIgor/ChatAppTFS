@@ -4,23 +4,30 @@
 //
 //  Created by Ladanov Igor on 07.10.2021.
 //
-
+import Firebase
 import UIKit
 
 class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	// MARK: - Properties
 
+	private lazy var db = Firestore.firestore()
 	private let tableView = UITableView(frame: .zero, style: .grouped)
 	private let newMessageView = NewMessageView()
 	private var bottomConstraint: NSLayoutConstraint?
-	private var messages: [Message]
+	private var channel: Channel?
+	private var messages = [Message]()
+	private lazy var reference: CollectionReference = {
+		guard let channelIdentifier = channel?.identifier else { fatalError() }
+		return db.collection("channels").document(channelIdentifier).collection("messages")
+	}()
 	
 	// MARK: - Init
 	
-	init(messages: [Message]) {
-		self.messages = messages
+	init(channel: Channel) {
+		self.channel = channel
 		super.init(nibName: nil, bundle: nil)
+		self.title = channel.name
 	}
 	
 	required init?(coder: NSCoder) {
@@ -40,6 +47,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		setUpNewMessageView()
 		setUpConstraints()
 		addKeyboardObservers()
+		loadMessages()
 	}
 	
 	// MARK: - Private
@@ -75,8 +83,8 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		tableView.separatorStyle = .none
 		tableView.delegate = self
 		tableView.dataSource = self
-		tableView.register(ConversationTableViewCell.self,
-						   forCellReuseIdentifier: ConversationTableViewCell.identifier)
+		tableView.register(ConversationTableViewCell.nib,
+						   forCellReuseIdentifier: ConversationTableViewCell.name)
 		view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		
@@ -101,6 +109,34 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		}
 		view.addConstraint(constraint)
 	}
+	
+	private func loadMessages() {
+		
+		reference.addSnapshotListener { [weak self] snapshot, error in
+			if let error = error {
+				print(error.localizedDescription)
+				return
+			}
+			guard let documents = snapshot?.documents else {
+				return
+			}
+			self?.getMessages(from: documents)
+		}
+	}
+	
+	private func getMessages(from documents: [QueryDocumentSnapshot]) {
+		
+		for document in documents {
+			let data = document.data()
+			let content = data["content"] as? String ?? ""
+			let senderId = data["senderId"] as? String ?? ""
+			let created = (data["created"] as? Timestamp)?.dateValue() ?? Date()
+			let senderName = data["senderName"] as? String ?? ""
+			messages.append(Message(content: content, created: created, senderId: senderId, senderName: senderName))
+		}
+		messages.sort { $0.created < $1.created }
+		tableView.reloadData()
+	}
 }
 
 	// MARK: - UITableViewDelegate and UITableViewDataSource
@@ -118,12 +154,12 @@ extension ConversationViewController: UITableViewDelegate {
 extension ConversationViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(
-			withIdentifier: ConversationTableViewCell.identifier,
+			withIdentifier: ConversationTableViewCell.name,
 			for: indexPath) as? ConversationTableViewCell else {
 				return UITableViewCell()
 			}
 		let message = messages[indexPath.row]
-		cell.configure(with: .init(model: message))
+		cell.configure(with: message)
 		return cell
 	}
 	

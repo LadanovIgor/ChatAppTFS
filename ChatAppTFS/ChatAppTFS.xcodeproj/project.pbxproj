@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		8A2B74FB3BCA6CB0D78870B7 /* Pods_ChatAppTFS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8830123D16B91AB09729AF64 /* Pods_ChatAppTFS.framework */; };
+		8E03E7F32726466B007F1B2B /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E03E7F22726466B007F1B2B /* MessageView.swift */; };
+		8E03E7F52726511D007F1B2B /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E03E7F42726511D007F1B2B /* ConversationTableViewCell.xib */; };
 		8E21E796271DA0280005F20F /* ProfileStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21E795271DA0280005F20F /* ProfileStorageManager.swift */; };
-		8E2E2703270DE53400BFE156 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2702270DE53400BFE156 /* User.swift */; };
+		8E2E2703270DE53400BFE156 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2702270DE53400BFE156 /* Channel.swift */; };
 		8E2E2705270DE53B00BFE156 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2704270DE53B00BFE156 /* Message.swift */; };
 		8E2E2708270DE5EA00BFE156 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2707270DE5EA00BFE156 /* UIView+.swift */; };
 		8E2E270A270DE61300BFE156 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2709270DE61300BFE156 /* Date+.swift */; };
@@ -60,8 +62,10 @@
 /* Begin PBXFileReference section */
 		50D454760D24A968F5EADD66 /* Pods-ChatAppTFS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTFS.release.xcconfig"; path = "Target Support Files/Pods-ChatAppTFS/Pods-ChatAppTFS.release.xcconfig"; sourceTree = "<group>"; };
 		8830123D16B91AB09729AF64 /* Pods_ChatAppTFS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTFS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E03E7F22726466B007F1B2B /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		8E03E7F42726511D007F1B2B /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
 		8E21E795271DA0280005F20F /* ProfileStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageManager.swift; sourceTree = "<group>"; };
-		8E2E2702270DE53400BFE156 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8E2E2702270DE53400BFE156 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		8E2E2704270DE53B00BFE156 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		8E2E2707270DE5EA00BFE156 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		8E2E2709270DE61300BFE156 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
@@ -141,7 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				8EAB38A1271701D700A1FF98 /* Themes */,
-				8E2E2702270DE53400BFE156 /* User.swift */,
+				8E2E2702270DE53400BFE156 /* Channel.swift */,
 				8E2E2704270DE53B00BFE156 /* Message.swift */,
 				8E40D98B27143AD600406AD4 /* Theme.h */,
 				8E40D98C27143AFE00406AD4 /* Theme.m */,
@@ -174,6 +178,7 @@
 				8EE62B47272036510011FE58 /* AppView.swift */,
 				8EE62B49272036680011FE58 /* ProfileHeaderView.swift */,
 				8EE62B4B2720394E0011FE58 /* AppButton.swift */,
+				8E03E7F22726466B007F1B2B /* MessageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 				8E2E270F270DE6D800BFE156 /* ConversationsListTableViewCell.swift */,
 				8EAAFE24270E8AF100D7497B /* ConversationsListTableViewCell.xib */,
 				8EAAFE2F270E979600D7497B /* ConversationTableViewCell.swift */,
+				8E03E7F42726511D007F1B2B /* ConversationTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -431,6 +437,7 @@
 				8EE62B3A271FBFA90011FE58 /* Data.plist in Resources */,
 				8E40D99427146AC700406AD4 /* ThemeViewController.xib in Resources */,
 				8EAAFE25270E8AF100D7497B /* ConversationsListTableViewCell.xib in Resources */,
+				8E03E7F52726511D007F1B2B /* ConversationTableViewCell.xib in Resources */,
 				8E40D98F27143C0600406AD4 /* ThemesViewController.xib in Resources */,
 				8E2E2718270DF08400BFE156 /* UserProfileViewController.xib in Resources */,
 				8EB63AE926FDAB2E00548A19 /* LaunchScreen.storyboard in Resources */,
@@ -510,13 +517,14 @@
 				8E6B3549271E82E700653B8D /* ProfileStorageManagerOperation.swift in Sources */,
 				8E2E270A270DE61300BFE156 /* Date+.swift in Sources */,
 				8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */,
+				8E03E7F32726466B007F1B2B /* MessageView.swift in Sources */,
 				8E21E796271DA0280005F20F /* ProfileStorageManager.swift in Sources */,
 				8EAB38AB2717052900A1FF98 /* typealiases.swift in Sources */,
 				8EAB38A52717022200A1FF98 /* ChampagneTheme.swift in Sources */,
 				8EAAFE2A270E8E9000D7497B /* ConversationsListTableHeaderView.swift in Sources */,
 				8E2E271A270DF08A00BFE156 /* UserProfileViewController.swift in Sources */,
 				8E2E2708270DE5EA00BFE156 /* UIView+.swift in Sources */,
-				8E2E2703270DE53400BFE156 /* User.swift in Sources */,
+				8E2E2703270DE53400BFE156 /* Channel.swift in Sources */,
 				8EAAFE27270E8BA500D7497B /* CircleImageView.swift in Sources */,
 				8EE62B48272036510011FE58 /* AppView.swift in Sources */,
 				8EAB38AF27171B0600A1FF98 /* UITableViewCell+.swift in Sources */,
@@ -702,7 +710,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "-DLOGS";
-				PRODUCT_BUNDLE_IDENTIFIER = "messer87-mail.com.ChatAppTFS";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "ChatAppTFS/Other/ChatAppTFS-Bridging-Header.h";
@@ -736,7 +744,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "-DLOGS";
-				PRODUCT_BUNDLE_IDENTIFIER = "messer87-mail.com.ChatAppTFS";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "ChatAppTFS/Other/ChatAppTFS-Bridging-Header.h";

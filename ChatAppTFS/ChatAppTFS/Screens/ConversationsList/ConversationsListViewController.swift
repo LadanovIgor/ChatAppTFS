@@ -15,196 +15,8 @@ class ConversationsListViewController: UIViewController {
 	private lazy var db = Firestore.firestore()
 	private lazy var reference = db.collection("channels")
 	
-	private let usersOnline: [User] = [
-		User(name: "Homer Simpson", isOnline: true, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: false, isSelfMessage: false)
-		]),
-		User(name: "Marge Simpson", isOnline: true, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false)
-		]),
-		User(name: "Lisa Simpson", isOnline: true, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false)
-		]),
-		User(name: "Abraham Simpson", isOnline: true, messages: nil),
-		User(name: "Milhouse Van Houten", isOnline: true, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false)
-		]),
-		User(name: "Mr. Burns", isOnline: true, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: false, isSelfMessage: false)
-		]),
-		User(name: "Philip J. Fry", isOnline: true, messages: nil),
-		User(name: "Hubert J. Farnsworth", isOnline: true, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false)
-		]),
-		User(name: "Dr. Amy Wong", isOnline: true, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false)
-		]),
-		User(name: "Zapp Brannigan", isOnline: true, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: false, isSelfMessage: false)
-		])
-	]
-	
-	private let usersOffline: [User] = [
-		User(name: "Bart Simpson", isOnline: false, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false)
-		]),
-		User(name: "Maggie Simpson", isOnline: false, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: false, isSelfMessage: false)
-		]),
-		User(name: "Apu Nahasapeemapetilon", isOnline: false, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: false, isSelfMessage: false)
-		]),
-		User(name: "Chief Clancy Wiggum", isOnline: false, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: false, isSelfMessage: false)
-		]),
-		User(name: "Turanga Leela", isOnline: false, messages: nil),
-		User(name: "Bender Bending Rodríguez", isOnline: false, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false)
-		]),
-		User(name: "Lord Nibbler", isOnline: false, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false)
-		]),
-		User(name: "Turanga Leela", isOnline: false, messages: nil),
-		User(name: "Kif Kroker", isOnline: false, messages: [
-			Message(text: "Morning! The last episode was awesome",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "Thx, I try my best",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Matty, I'm very exhausted, I wanna go on vacation to the Caribbean",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: false),
-			Message(text: "We're overwhelmed now, be patient",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: true, isSelfMessage: true),
-			Message(text: "Hey Matt. I don't think my character's storyline has any progression. How about my running for president of the US?",
-					date: Date.randomBetween(start: Date(timeIntervalSinceNow: -3600*24*4), end: Date()), isRead: false, isSelfMessage: false)
-		]),
-		User(name: "Turanga Leela", isOnline: false, messages: nil)
-	]
+	var channels = [Channel]()
+//	var channel: Channel?
 	
 	private var tableView = UITableView(frame: .zero, style: .grouped)
 	
@@ -214,10 +26,11 @@ class ConversationsListViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		title = "Tinkoff Chat"
+		title = "Channels"
 		setUpTableView()
 		setUpRightBarItem()
 		setUpLeftBarItem()
+		loadDatabase()
 	}
 	
 	// MARK: - Private
@@ -327,36 +140,48 @@ class ConversationsListViewController: UIViewController {
 			
 		}
 	}
+	
+	private func loadDatabase() {
+		reference.addSnapshotListener { [weak self] snapshot, error in
+			if let error = error {
+				print(error.localizedDescription)
+				return
+			}
+			guard let documents = snapshot?.documents else {
+				return
+			}
+			self?.getChannels(from: documents)
+		}
+	}
+	
+	private func getChannels(from documents: [QueryDocumentSnapshot]) {
+		
+		for document in documents {
+			let data = document.data()
+			guard let channelName = data["name"] as? String else {
+				return
+			}
+			let lastMessage = data["lastMessage"] as? String
+			let lastActivity = (data["lastActivity"] as? Timestamp)?.dateValue()
+			channels.append(Channel(identifier: document.documentID, name: channelName, lastMessage: lastMessage, lastActivity: lastActivity))
+		}
+		channels.sort { ($0.lastActivity ?? Date()) > ($1.lastActivity ?? Date()) }
+		tableView.reloadData()
+	}
 }
 
 // MARK: - UITableViewDelegate
 
 extension ConversationsListViewController: UITableViewDelegate {
-	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		switch section {
-		case 0: return "Online"
-		case 1: return "History"
-		default: return ""
-		}
-	}
-	
+
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return ConversationsListTableViewCell.preferredHeight
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		switch indexPath.section {
-		case 0:
-			let vc = ConversationViewController(messages: usersOnline[indexPath.row].messages ?? [])
-			vc.title = usersOnline[indexPath.row].name
-			navigationController?.pushViewController(vc, animated: true)
-		case 1:
-			let vc = ConversationViewController(messages: usersOffline[indexPath.row].messages ?? [])
-			vc.title = usersOffline[indexPath.row].name
-			navigationController?.pushViewController(vc, animated: true)
-		default: break
-		}
+		let vc = ConversationViewController(channel: channels[indexPath.row])
+		navigationController?.pushViewController(vc, animated: true)
 	}
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -368,15 +193,11 @@ extension ConversationsListViewController: UITableViewDelegate {
 
 extension ConversationsListViewController: UITableViewDataSource {
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return 2
+		return 1
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		switch section {
-		case 0: return usersOnline.count
-		case 1: return usersOffline.count
-		default: return 2
-		}
+		return channels.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -385,13 +206,7 @@ extension ConversationsListViewController: UITableViewDataSource {
 			for: indexPath) as? ConversationsListTableViewCell else {
 				return UITableViewCell()
 			}
-		var model: User
-		switch indexPath.section {
-		case 0: model = usersOnline[indexPath.row]
-		case 1: model = usersOffline[indexPath.row]
-		default: model = usersOnline[indexPath.row]
-		}
-		cell.configure(with: .init(model: model))
+		cell.configure(with: .init(with: channels[indexPath.row]))
 		cell.layoutIfNeeded()
 		return cell
 	}

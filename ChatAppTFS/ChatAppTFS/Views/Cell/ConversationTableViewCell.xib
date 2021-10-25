@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConversationTableViewCell" customModule="ChatAppTFS" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ConversationTableViewCell" customModule="ChatAppTFS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="514" height="189"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="91S-Cc-VhJ">
+                    <rect key="frame" x="0.0" y="0.0" width="514" height="189"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fWS-vM-886" customClass="MessageView" customModule="ChatAppTFS" customModuleProvider="target">
+                            <rect key="frame" x="50" y="5" width="414" height="179"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JCw-1i-6mN">
+                                    <rect key="frame" x="5" y="5" width="364" height="13.5"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v41-fe-tRX">
+                                    <rect key="frame" x="369" y="5" width="40" height="13.5"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="40" id="gku-a3-HKe"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4K-Sc-QIi">
+                                    <rect key="frame" x="5" y="18.5" width="404" height="155.5"/>
+                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" name="noImageBackground"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="f4K-Sc-QIi" secondAttribute="trailing" constant="5" id="2kr-wM-iw6"/>
+                                <constraint firstItem="f4K-Sc-QIi" firstAttribute="top" secondItem="JCw-1i-6mN" secondAttribute="bottom" id="6v4-iQ-w4W"/>
+                                <constraint firstItem="v41-fe-tRX" firstAttribute="top" secondItem="fWS-vM-886" secondAttribute="top" constant="5" id="Fra-OX-kmx"/>
+                                <constraint firstItem="f4K-Sc-QIi" firstAttribute="leading" secondItem="fWS-vM-886" secondAttribute="leading" constant="5" id="ONZ-mu-d6w"/>
+                                <constraint firstItem="v41-fe-tRX" firstAttribute="leading" secondItem="JCw-1i-6mN" secondAttribute="trailing" id="Wmj-U6-hF1"/>
+                                <constraint firstItem="JCw-1i-6mN" firstAttribute="leading" secondItem="fWS-vM-886" secondAttribute="leading" constant="5" id="bO3-wv-zhe"/>
+                                <constraint firstItem="JCw-1i-6mN" firstAttribute="top" secondItem="fWS-vM-886" secondAttribute="top" constant="5" id="jPq-co-0IJ"/>
+                                <constraint firstAttribute="bottom" secondItem="f4K-Sc-QIi" secondAttribute="bottom" constant="5" id="l63-pz-6hZ"/>
+                                <constraint firstAttribute="trailing" secondItem="v41-fe-tRX" secondAttribute="trailing" constant="5" id="zlU-vQ-Q5d"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="fWS-vM-886" firstAttribute="centerY" secondItem="91S-Cc-VhJ" secondAttribute="centerY" id="1gB-2y-h3Z"/>
+                        <constraint firstItem="fWS-vM-886" firstAttribute="leading" secondItem="91S-Cc-VhJ" secondAttribute="leading" constant="50" id="FTg-he-35F"/>
+                        <constraint firstAttribute="bottom" secondItem="fWS-vM-886" secondAttribute="bottom" constant="5" id="exf-PL-p6Z"/>
+                        <constraint firstAttribute="trailing" secondItem="fWS-vM-886" secondAttribute="trailing" constant="50" id="sHg-Kb-oPs"/>
+                        <constraint firstItem="fWS-vM-886" firstAttribute="top" secondItem="91S-Cc-VhJ" secondAttribute="top" constant="5" id="v9c-WH-DeC"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="91S-Cc-VhJ" secondAttribute="trailing" id="89N-9S-La1"/>
+                <constraint firstItem="91S-Cc-VhJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="EXK-6G-pV9"/>
+                <constraint firstAttribute="bottom" secondItem="91S-Cc-VhJ" secondAttribute="bottom" id="ElZ-EP-X9L"/>
+                <constraint firstItem="91S-Cc-VhJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="aOE-Bj-awv"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="contentLabel" destination="f4K-Sc-QIi" id="QUn-4V-xj8"/>
+                <outlet property="dateLabel" destination="v41-fe-tRX" id="ha8-I5-O73"/>
+                <outlet property="nameLabel" destination="JCw-1i-6mN" id="MuJ-CO-du6"/>
+            </connections>
+            <point key="canvasLocation" x="204.34782608695653" y="41.852678571428569"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="noImageBackground">
+            <color red="0.89399999380111694" green="0.9100000262260437" blue="0.16899999976158142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -20,12 +20,12 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 		let isOnline: Bool
 		let hasUnreadMessages: Bool
 		
-		init(model: User) {
-			self.name = model.name
-			self.lastMessage = model.messages?.last?.text
-			self.lastMessageDate = model.messages?.last?.date
-			self.isOnline = model.isOnline
-			self.hasUnreadMessages = !(model.messages?.last?.isRead ?? true)
+		init(with channel: Channel) {
+			self.name = channel.name
+			self.lastMessage = channel.lastMessage
+			self.lastMessageDate = channel.lastActivity
+			self.isOnline = true
+			self.hasUnreadMessages = true
 		}
 	}
 	

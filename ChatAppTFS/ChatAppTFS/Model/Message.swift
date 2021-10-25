@@ -8,8 +8,8 @@
 import Foundation
 
 struct Message {
-	let text: String
-	let date: Date
-	let isRead: Bool
-	let isSelfMessage: Bool
+	let content: String
+	let created: Date
+	let senderId: String
+	let senderName: String
 }
