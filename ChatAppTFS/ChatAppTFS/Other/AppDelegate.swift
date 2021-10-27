@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			switch result {
 			case .success(let data):
 				data.setTheme(for: application)
-			case .failure(_):
+			case .failure:
 				LightTheme().apply(for: application)
 			}
 		}

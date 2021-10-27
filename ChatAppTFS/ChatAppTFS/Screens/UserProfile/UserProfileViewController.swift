@@ -199,10 +199,10 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		type.saveLocally(changedValues) { [weak self] result in
 			self?.activityFinishedAnimation()
 			switch result {
-			case .success(_):
+			case .success:
 				self?.presentSuccessLoadAlert()
 				self?.updateValues(with: self?.changedValues)
-			case .failure(_):
+			case .failure:
 				self?.presentFailureLoadAlert(handler: self?.saveOperation)
 			}
 		}
