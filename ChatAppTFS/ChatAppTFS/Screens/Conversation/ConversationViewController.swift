@@ -12,15 +12,16 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	// MARK: - Properties
 
 	private lazy var db = Firestore.firestore()
+	private lazy var reference: CollectionReference = {
+		guard let channelIdentifier = channel?.identifier else { fatalError() }
+		return db.collection("channels").document(channelIdentifier).collection("messages")
+	}()
+	
 	private let tableView = UITableView(frame: .zero, style: .grouped)
 	private let newMessageView = NewMessageView()
 	private var bottomConstraint: NSLayoutConstraint?
 	private var channel: Channel?
 	private var messages = [Message]()
-	private lazy var reference: CollectionReference = {
-		guard let channelIdentifier = channel?.identifier else { fatalError() }
-		return db.collection("channels").document(channelIdentifier).collection("messages")
-	}()
 	
 	// MARK: - Init
 	
@@ -55,6 +56,15 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	private func setUpNewMessageView() {
 		view.addSubview(newMessageView)
 		newMessageView.translatesAutoresizingMaskIntoConstraints = false
+		newMessageView.textFieldChanged = { [weak self] text in
+			self?.createNewMessage(with: text)
+		}
+	}
+	
+	private func createNewMessage(with text: String) {
+		print(text)
+		reference.addDocument(data: ["content": text, "created": Timestamp(date: Date()), "senderName": "Test"])
+//		tableView.reloadData()
 	}
 
 	private func addKeyboardObservers() {
@@ -111,7 +121,6 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func loadMessages() {
-		
 		reference.addSnapshotListener { [weak self] snapshot, error in
 			if let error = error {
 				print(error.localizedDescription)
@@ -132,10 +141,13 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 			let senderId = data["senderId"] as? String ?? ""
 			let created = (data["created"] as? Timestamp)?.dateValue() ?? Date()
 			let senderName = data["senderName"] as? String ?? ""
+			print("content: \(content)  senderId: \(senderId)")
+			print("------------------------------------------------------------")
 			messages.append(Message(content: content, created: created, senderId: senderId, senderName: senderName))
 		}
 		messages.sort { $0.created < $1.created }
 		tableView.reloadData()
+		tableView.scrollToBottom()
 	}
 }
 

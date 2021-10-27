@@ -16,12 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 		loadThemeFor(application: application)
-		FirebaseApp.configure()
 		return true
 	}
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		createFileLocallyIfNeeded()
+		FirebaseApp.configure()
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.makeKeyAndVisible()
 		let navVC = UINavigationController(rootViewController: ConversationsListViewController())
@@ -37,9 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		ProfileStorageManagerGCD.shared.loadTheme { result in
 			switch result {
 			case .success(let data):
-					data.setTheme(for: application)
+				data.setTheme(for: application)
 			case .failure(_):
-					LightTheme().apply(for: application)
+				LightTheme().apply(for: application)
 			}
 		}
 	}

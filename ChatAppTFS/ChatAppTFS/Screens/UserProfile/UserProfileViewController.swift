@@ -196,13 +196,14 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	private func saveLocally(type: StoredLocally) {
 		activityStartedAnimation()
 		changeButtonState(with: false)
-		type.saveLocally(changedValues) { [weak self] error in
+		type.saveLocally(changedValues) { [weak self] result in
 			self?.activityFinishedAnimation()
-			if error != nil {
-				self?.presentFailureLoadAlert(handler: self?.saveOperation)
-			} else {
+			switch result {
+			case .success(_):
 				self?.presentSuccessLoadAlert()
 				self?.updateValues(with: self?.changedValues)
+			case .failure(_):
+				self?.presentFailureLoadAlert(handler: self?.saveOperation)
 			}
 		}
 	}

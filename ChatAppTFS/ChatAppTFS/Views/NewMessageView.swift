@@ -13,6 +13,8 @@ class NewMessageView: UIView {
 
 	private var textField = UITextField()
 	private var sendButton = UIButton()
+	
+	var textFieldChanged: ((String) -> Void)?
 		
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
@@ -83,5 +85,10 @@ class NewMessageView: UIView {
 	// MARK: - UITextFieldDelegate
 
 extension NewMessageView: UITextFieldDelegate {
-
+	func textFieldDidEndEditing(_ textField: UITextField) {
+		guard let text = textField.text else {
+			return
+		}
+		textFieldChanged?(text)
+	}
 }

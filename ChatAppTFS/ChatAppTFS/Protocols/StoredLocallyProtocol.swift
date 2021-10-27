@@ -8,10 +8,10 @@
 import Foundation
 
 protocol StoredLocally: AnyObject {
-	func save(_ data: Data?, forKey key: String, completion: (StoredLocallyError?) -> Void)
+	func save(_ data: Data?, forKey key: String, completion: ResultClosure<Bool>)
 	func getPlist(completion: @escaping ResultClosure<[String: Data]>)
 	func getValue(for key: String, completion: @escaping ResultClosure<Data>)
-	func saveLocally(_ plist: [String: Data], completion: @escaping (Error?) -> Void)
+	func saveLocally(_ plist: [String: Data], completion: @escaping ResultClosure<Bool>)
 	func loadLocally(completion: @escaping ResultClosure<[String: Data]>)
 }
 
@@ -50,24 +50,38 @@ extension StoredLocally {
 		return plist
 	}
 	
-	func save(_ data: Data?, forKey key: String, completion: (StoredLocallyError?) -> Void) {
+	func save(_ data: Data?, forKey key: String, completion: ResultClosure<Bool>) {
 		guard var dict = getValueInPlistFile() else {
-			completion(.fileUnavailable)
+			completion(.failure(StoredLocallyError.fileUnavailable))
 			return
 		}
 		guard let data = data else {
-			completion(.invalidData)
+			completion(.failure(StoredLocallyError.invalidData))
 			return
 		}
 		dict[key] = data
 		do {
 			try addValuesToPlistFile(dictionary: dict)
-			completion(nil)
+			completion(.success(true))
 		} catch {
-			completion(.couldNotSaveData)
+			completion(.failure(StoredLocallyError.couldNotSaveData))
 		}
 	}
 	
+	func savePlist(_ plist: [String: Data], completion: ResultClosure<Bool>) {
+		for key in plist.keys {
+			save(plist[key], forKey: key) { result in
+				switch result {
+				case .failure(let error):
+					completion(.failure(error))
+					return
+				default: break
+				}
+			}
+		}
+		completion(.success(true))
+	}
+
 	func getPlist(completion: ResultClosure<[String: Data]>) {
 		guard let fileURL = fileURL, FileManager.default.fileExists(atPath: fileURL.path) else {
 			completion(.failure(StoredLocallyError.fileDoesNotExist))

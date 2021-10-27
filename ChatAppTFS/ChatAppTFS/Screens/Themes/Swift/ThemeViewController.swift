@@ -14,9 +14,7 @@ class ThemeViewController: UIViewController {
 	@IBOutlet private weak var lightThemeButton: AppButton!
 	@IBOutlet private weak var closeButton: UIButton!
 	
-	var lightThemeSelected: ThemeClosure<LightTheme>?
-	var darkThemeSelected: ThemeClosure<DarkTheme>?
-	var champagneThemeSelected: ThemeClosure<ChampagneTheme>?
+	var themeSelected: ThemeClosure?
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,17 +40,17 @@ class ThemeViewController: UIViewController {
 	}
 	
 	@objc private func didTapLightThemeButton() {
-		lightThemeSelected?(LightTheme())
+		themeSelected?(LightTheme())
 		dismiss(animated: true, completion: nil)
 	}
 	
 	@objc private func didTapChampagneThemeButton() {
-		champagneThemeSelected?(ChampagneTheme())
+		themeSelected?(ChampagneTheme())
 		dismiss(animated: true, completion: nil)
 	}
 	
 	@objc private func didTapDarkThemeButton(_ button: UIButton) {
-		darkThemeSelected?(DarkTheme())
+		themeSelected?(DarkTheme())
 		dismiss(animated: true, completion: nil)
 	}
 

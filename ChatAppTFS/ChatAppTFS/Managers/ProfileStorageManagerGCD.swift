@@ -15,19 +15,24 @@ class ProfileStorageManagerGCD: StoredLocally {
 	
 	private init() { }
 	
-	func saveLocally(_ plist: [String: Data], completion: @escaping (Error?) -> Void) {
+	func saveLocally(_ plist: [String: Data], completion: @escaping ResultClosure<Bool>) {
 		queue.async { [weak self] in
-			for key in plist.keys {
-				self?.save(plist[key], forKey: key) { error in
-					DispatchQueue.main.async {
-						completion(error)
-					}
+			self?.savePlist(plist) { result in
+				DispatchQueue.main.async {
+					completion(result)
 				}
 			}
+//			for key in plist.keys {
+//				self?.save(plist[key], forKey: key) { result in
+//					DispatchQueue.main.async {
+//						completion(result)
+//					}
+//				}
+//			}
 		}
 	}
 	
-	func loadLocally(completion: @escaping (Result<[String: Data], Error>) -> Void) {
+	func loadLocally(completion: @escaping ResultClosure<[String: Data]>) {
 		queue.async { [weak self] in
 			self?.getPlist { result in
 				DispatchQueue.main.async {
@@ -37,7 +42,7 @@ class ProfileStorageManagerGCD: StoredLocally {
 		}
 	}
 	
-	func loadTheme(completion: @escaping (Result<Data, Error>) -> Void) {
+	func loadTheme(completion: @escaping ResultClosure<Data>) {
 		queue.async { [weak self] in
 			self?.getValue(for: Constants.PlistManager.themeKey) { result in
 				DispatchQueue.main.async {

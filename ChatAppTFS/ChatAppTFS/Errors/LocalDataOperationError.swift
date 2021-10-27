@@ -9,4 +9,5 @@ import Foundation
 
 enum LocalDataOperationError: Error {
 	case failureLoading
+	case failureSaving
 }

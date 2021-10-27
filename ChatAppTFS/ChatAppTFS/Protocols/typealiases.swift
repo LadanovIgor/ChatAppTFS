@@ -7,5 +7,5 @@
 
 import Foundation
 
-typealias ThemeClosure<T> = ((T) -> Void)  where T: ThemeProtocol
 typealias ResultClosure<T> = (Result<T, Error>) -> Void
+typealias ThemeClosure = ((ThemeProtocol) -> Void)

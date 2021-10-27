@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 class ConversationsListViewController: UIViewController {
 	
@@ -73,7 +74,7 @@ class ConversationsListViewController: UIViewController {
 		presentSwiftThemeVC()
 	}
 	
-	@objc private func didTapRightBarButton() {
+	@objc private func didTapRightBarButton() { 
 		present(UserProfileViewController(), animated: true)
 	}
 	
@@ -85,13 +86,7 @@ class ConversationsListViewController: UIViewController {
 	
 	private func presentSwiftThemeVC() {
 		let vc = ThemeViewController()
-		vc.lightThemeSelected = {[weak self] theme in
-			self?.changeTheme(for: theme)
-		}
-		vc.champagneThemeSelected = {[weak self] theme in
-			self?.changeTheme(for: theme)
-		}
-		vc.darkThemeSelected = {[weak self] theme in
+		vc.themeSelected = {[weak self] theme in
 			self?.changeTheme(for: theme)
 		}
 		present(vc, animated: true)
@@ -129,7 +124,7 @@ class ConversationsListViewController: UIViewController {
 		UIApplication.shared.windows.reload()
 	}
 	
-	private func changeTheme<T>(for theme: T) where T: ThemeProtocol {
+	private func changeTheme(for theme: ThemeProtocol) {
 		theme.apply(for: UIApplication.shared)
 		let themeName = String(describing: type(of: theme).self)
 		guard let themeNameData = themeName.data(using: .utf8) else {
@@ -168,6 +163,28 @@ class ConversationsListViewController: UIViewController {
 		channels.sort { ($0.lastActivity ?? Date()) > ($1.lastActivity ?? Date()) }
 		tableView.reloadData()
 	}
+	
+	private func presentNewChannelAlert() {
+		var textField = UITextField()
+		let alert = UIAlertController(title: "New channel", message: nil, preferredStyle: .alert)
+		alert.addTextField { alertTextField in
+			alertTextField.placeholder = "Channel name"
+			textField = alertTextField
+		}
+		alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { [weak self] _ in
+			guard let channelName = textField.text else {
+				return
+			}
+			self?.createNewChannel(with: channelName)
+		}))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		present(alert, animated: true, completion: nil)
+	}
+	
+	private func createNewChannel(with name: String) {
+		reference.addDocument(data: ["name": name])
+		tableView.reloadData()
+	}
 }
 
 // MARK: - UITableViewDelegate
@@ -185,7 +202,7 @@ extension ConversationsListViewController: UITableViewDelegate {
 	}
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return ConversationsListTableHeaderView.preferredHeight
+		return UITableView.automaticDimension
 	}
 }
 
@@ -212,11 +229,14 @@ extension ConversationsListViewController: UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		 guard let view = tableView.dequeueReusableHeaderFooterView(
+		 guard let headerView = tableView.dequeueReusableHeaderFooterView(
 			withIdentifier: ConversationsListTableHeaderView.identifier) as? ConversationsListTableHeaderView else {
 			return UIView()
 		}
-		return view
+		headerView.addingChannel = { [weak self] in
+			self?.presentNewChannelAlert()
+		}
+		return headerView
 	}
 }
 

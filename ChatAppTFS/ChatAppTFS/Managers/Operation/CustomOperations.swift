@@ -27,12 +27,12 @@ final class LocalDataLoadOperation: Operation {
 
 final class LocalDataSaveOperation: Operation {
 	
-	var task: (Data?, String, (StoredLocallyError?) -> Void) -> Void
-	var error: Error?
+	var task: (Data?, String, ResultClosure<Bool>) -> Void
+	var result: Result<Bool, Error>?
 
 	private let plist: [String: Data]
 
-	init(with task: @escaping (Data?, String, (StoredLocallyError?) -> Void) -> Void, plist: [String: Data]) {
+	init(with task: @escaping (Data?, String, ResultClosure<Bool>) -> Void, plist: [String: Data]) {
 		self.plist = plist
 		self.task = task
 		super.init()
@@ -42,8 +42,8 @@ final class LocalDataSaveOperation: Operation {
 		if isCancelled { return }
 		for key in plist.keys {
 			if isCancelled { return }
-			task(plist[key], key) { [weak self] error in
-				self?.error = error
+			task(plist[key], key) { [weak self] result in
+				self?.result = result
 			}
 		}
 	}

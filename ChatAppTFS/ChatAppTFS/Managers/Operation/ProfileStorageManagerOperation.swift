@@ -15,18 +15,22 @@ class ProfileStorageManagerOperation: StoredLocally {
 	
 	private init() { }
 	
-	func saveLocally(_ plist: [String: Data], completion: @escaping (Error?) -> Void) {
+	func saveLocally(_ plist: [String: Data], completion: @escaping ResultClosure<Bool>) {
 		let saveDataOperation = LocalDataSaveOperation(with: save(_:forKey:completion:), plist: plist)
 		saveDataOperation.qualityOfService = .utility
 		saveDataOperation.completionBlock = {
 			OperationQueue.main.addOperation {
-				completion(saveDataOperation.error)
+				if let result = saveDataOperation.result {
+					completion(result)
+				} else {
+					completion(.failure(LocalDataOperationError.failureSaving))
+				}
 			}
 		}
 		queue.addOperation(saveDataOperation)
 	}
 	
-	func loadLocally(completion: @escaping (Result<[String: Data], Error>) -> Void) {
+	func loadLocally(completion: @escaping ResultClosure<[String: Data]>) {
 		let loadDataOperation = LocalDataLoadOperation(with: getPlist(completion:))
 		loadDataOperation.qualityOfService = .utility
 		loadDataOperation.completionBlock = {
