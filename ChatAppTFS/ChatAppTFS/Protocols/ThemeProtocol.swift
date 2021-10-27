@@ -34,7 +34,6 @@ extension ThemeProtocol {
 		ProfileHeaderView.appearance().backgroundColor = secondaryBackground
 		UIVisualEffectView.appearance().backgroundColor = backgroundColor
 		NewMessageView.appearance().backgroundColor = secondaryBackground
-		UITextField.appearance().textColor = textColor
 		AppButton.appearance().backgroundColor = secondaryBackground
 		UIActivityIndicatorView.appearance().tintColor = tint
 		application.windows.reload()

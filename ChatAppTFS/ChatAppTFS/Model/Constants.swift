@@ -32,6 +32,7 @@ enum Constants {
 		static let offset: CGFloat = 18.0
 		static let textFieldCornerRadius: CGFloat = 11.0
 		static let textFieldBorderWidth: CGFloat = 0.3
+		static let sendButtonWidth: CGFloat = 50
 	}
 	
 	enum ConversationCell {
@@ -46,5 +47,6 @@ enum Constants {
 		static let locationKey = "location"
 		static let imageKey = "image"
 		static let themeKey = "theme"
+		static let idKey = "id"
 	}
 }

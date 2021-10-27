@@ -49,11 +49,10 @@ class NewMessageView: UIView {
 	}
 	
 	private func setUpConstraints() {
-		let metrics = ["offset": Constants.MessageView.offset ]
+		let metrics = ["offset": Constants.MessageView.offset, "width": Constants.MessageView.sendButtonWidth ]
 		let views = ["textField": textField, "button": sendButton]
-		textField.setContentHuggingPriority(.init(rawValue: 249), for: .horizontal)
 		addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "H:|-offset-[textField]-offset-[button]-offset-|",
+			withVisualFormat: "H:|-offset-[textField]-offset-[button(width)]-offset-|",
 			options: [.alignAllCenterY],
 			metrics: metrics,
 			views: views))
@@ -71,6 +70,7 @@ class NewMessageView: UIView {
 	
 	@objc private func didTapSendButton() {
 		if let text = textField.text, !text.isEmpty {
+			print(text)
 			messageSent?(text)
 		}
 		textField.endEditing(true)

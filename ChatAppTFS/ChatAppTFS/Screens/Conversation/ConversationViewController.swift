@@ -22,6 +22,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	private var bottomConstraint: NSLayoutConstraint?
 	private var channel: Channel?
 	private var messages = [Message]()
+	private var senderId: String?
 	
 	// MARK: - Init
 	
@@ -43,6 +44,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		getSenderId()
 		setUpBackButton()
 		setUpTableView()
 		setUpNewMessageView()
@@ -62,9 +64,38 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func createNewMessage(with text: String) {
-		print(text)
-		reference.addDocument(data: ["content": text, "created": Timestamp(date: Date()), "senderName": "Test"])
-//		tableView.reloadData()
+		guard let senderId = senderId else {
+			return
+		}
+		reference.addDocument(data: ["content": text, "created": Timestamp(date: Date()), "senderId": senderId, "senderName": "Test"])
+		messages = [Message]()
+	}
+	
+	private func getSenderId() {
+		let key = Constants.PlistManager.idKey
+		ProfileStorageManagerGCD.shared.getValue(for: key, completion: { [weak self] result in
+			switch result {
+			case .success(let data):
+				guard let senderId = String(data: data, encoding: .utf8) else {
+					self?.createNewId()
+					return
+				}
+				self?.senderId = senderId
+			case .failure:
+				self?.createNewId()
+			}
+		})
+	}
+	
+	private func createNewId() {
+		senderId = UUID().uuidString
+		guard let dataId = senderId?.data(using: .utf8) else {
+			return
+		}
+		let dict = [Constants.PlistManager.idKey: dataId]
+		ProfileStorageManager.use(.gcd).saveLocally(dict) { _ in
+			
+		}
 	}
 
 	private func addKeyboardObservers() {
@@ -134,15 +165,12 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func getMessages(from documents: [QueryDocumentSnapshot]) {
-		
 		for document in documents {
 			let data = document.data()
 			let content = data["content"] as? String ?? ""
 			let senderId = data["senderId"] as? String ?? ""
 			let created = (data["created"] as? Timestamp)?.dateValue() ?? Date()
 			let senderName = data["senderName"] as? String ?? ""
-			print("content: \(content)  senderId: \(senderId)")
-			print("------------------------------------------------------------")
 			messages.append(Message(content: content, created: created, senderId: senderId, senderName: senderName))
 		}
 		messages.sort { $0.created < $1.created }
@@ -171,7 +199,7 @@ extension ConversationViewController: UITableViewDataSource {
 				return UITableViewCell()
 			}
 		let message = messages[indexPath.row]
-		cell.configure(with: message)
+		cell.configure(with: message, senderId: senderId ?? "")
 		return cell
 	}
 	

@@ -145,16 +145,15 @@ class ConversationsListViewController: UIViewController {
 			guard let documents = snapshot?.documents else {
 				return
 			}
-			self?.getChannels(from: documents)
+			self?.getChannelsFrom(documents: documents)
 		}
 	}
 	
-	private func getChannels(from documents: [QueryDocumentSnapshot]) {
-		
+	private func getChannelsFrom(documents: [QueryDocumentSnapshot]) {
 		for document in documents {
 			let data = document.data()
 			guard let channelName = data["name"] as? String else {
-				return
+				continue
 			}
 			let lastMessage = data["lastMessage"] as? String
 			let lastActivity = (data["lastActivity"] as? Timestamp)?.dateValue()
@@ -175,13 +174,13 @@ class ConversationsListViewController: UIViewController {
 			guard let channelName = textField.text else {
 				return
 			}
-			self?.createNewChannel(with: channelName)
+			self?.createNewChannelWith(name: channelName)
 		}))
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		present(alert, animated: true, completion: nil)
 	}
 	
-	private func createNewChannel(with name: String) {
+	private func createNewChannelWith(name: String) {
 		reference.addDocument(data: ["name": name])
 		tableView.reloadData()
 	}

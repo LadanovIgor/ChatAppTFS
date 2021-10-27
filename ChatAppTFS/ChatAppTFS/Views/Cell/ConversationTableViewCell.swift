@@ -7,11 +7,7 @@
 
 import UIKit
 
-class ConversationTableViewCell: UITableViewCell, NibLoadable, ConfigurableView {
-	
-	// MARK: - ViewModel
-	
-	typealias ConfigurationModel = Message
+class ConversationTableViewCell: UITableViewCell, NibLoadable {
 	
 	// MARK: - Properties
 
@@ -26,8 +22,8 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable, ConfigurableView 
 		contentLabel.text = nil
 	}
 	
-	public func configure(with model: Message) {
-		nameLabel.text = model.senderName
+	public func configure(with model: Message, senderId: String) {
+		nameLabel.text = model.senderId == senderId ? "" : model.senderName
 		contentLabel.text = model.content
 		dateLabel.text = model.created.shortDateFormateTodayOrEarlier
 		selectionStyle = .none
