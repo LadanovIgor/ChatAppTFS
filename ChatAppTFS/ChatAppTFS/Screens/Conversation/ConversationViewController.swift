@@ -56,7 +56,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	private func setUpNewMessageView() {
 		view.addSubview(newMessageView)
 		newMessageView.translatesAutoresizingMaskIntoConstraints = false
-		newMessageView.textFieldChanged = { [weak self] text in
+		newMessageView.messageSent = { [weak self] text in
 			self?.createNewMessage(with: text)
 		}
 	}
