@@ -36,7 +36,7 @@
 		8EAAFE2A270E8E9000D7497B /* ConversationsListTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE29270E8E9000D7497B /* ConversationsListTableHeaderView.swift */; };
 		8EAAFE2E270E8F3600D7497B /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE2D270E8F3600D7497B /* ConversationViewController.swift */; };
 		8EAAFE30270E979600D7497B /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE2F270E979600D7497B /* ConversationTableViewCell.swift */; };
-		8EAAFE32270EB32500D7497B /* NewMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE31270EB32500D7497B /* NewMessageView.swift */; };
+		8EAAFE32270EB32500D7497B /* SendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE31270EB32500D7497B /* SendMessageView.swift */; };
 		8EAB38A32717021700A1FF98 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB38A22717021700A1FF98 /* DarkTheme.swift */; };
 		8EAB38A52717022200A1FF98 /* ChampagneTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB38A42717022200A1FF98 /* ChampagneTheme.swift */; };
 		8EAB38A72717022900A1FF98 /* LightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB38A62717022900A1FF98 /* LightTheme.swift */; };
@@ -95,7 +95,7 @@
 		8EAAFE29270E8E9000D7497B /* ConversationsListTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListTableHeaderView.swift; sourceTree = "<group>"; };
 		8EAAFE2D270E8F3600D7497B /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		8EAAFE2F270E979600D7497B /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
-		8EAAFE31270EB32500D7497B /* NewMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageView.swift; sourceTree = "<group>"; };
+		8EAAFE31270EB32500D7497B /* SendMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageView.swift; sourceTree = "<group>"; };
 		8EAB38A22717021700A1FF98 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
 		8EAB38A42717022200A1FF98 /* ChampagneTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampagneTheme.swift; sourceTree = "<group>"; };
 		8EAB38A62717022900A1FF98 /* LightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTheme.swift; sourceTree = "<group>"; };
@@ -177,7 +177,7 @@
 				8EAAFE28270E8E6000D7497B /* Headers */,
 				8E2E270E270DE6A300BFE156 /* Cell */,
 				8EAAFE26270E8BA500D7497B /* CircleImageView.swift */,
-				8EAAFE31270EB32500D7497B /* NewMessageView.swift */,
+				8EAAFE31270EB32500D7497B /* SendMessageView.swift */,
 				8EE62B47272036510011FE58 /* AppView.swift */,
 				8EE62B49272036680011FE58 /* ProfileHeaderView.swift */,
 				8EE62B4B2720394E0011FE58 /* AppButton.swift */,
@@ -535,7 +535,7 @@
 				8EEF17E627156A0800AFE370 /* UIWindow+.swift in Sources */,
 				8EAB38A32717021700A1FF98 /* DarkTheme.swift in Sources */,
 				8EAAFE22270E8A7000D7497B /* NibLoadable.swift in Sources */,
-				8EAAFE32270EB32500D7497B /* NewMessageView.swift in Sources */,
+				8EAAFE32270EB32500D7497B /* SendMessageView.swift in Sources */,
 				8EF079A02726C8F800C88771 /* TableView+.swift in Sources */,
 				8E40D99327146AC700406AD4 /* ThemeViewController.swift in Sources */,
 				8E2E2705270DE53B00BFE156 /* Message.swift in Sources */,

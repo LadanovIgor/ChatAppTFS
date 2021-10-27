@@ -18,7 +18,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}()
 	
 	private let tableView = UITableView(frame: .zero, style: .grouped)
-	private let newMessageView = NewMessageView()
+	private let newMessageView = SendMessageView()
 	private var bottomConstraint: NSLayoutConstraint?
 	private var channel: Channel?
 	private var messages = [Message]()
@@ -67,7 +67,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		guard let senderId = senderId else {
 			return
 		}
-		reference.addDocument(data: ["content": text, "created": Timestamp(date: Date()), "senderId": senderId, "senderName": "Test"])
+		reference.addDocument(data: ["content": text, "created": Timestamp(date: Date()), "senderId": senderId, "senderName": "I.Ladanov"])
 		messages = [Message]()
 	}
 	

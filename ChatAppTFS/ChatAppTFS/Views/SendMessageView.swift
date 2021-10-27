@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewMessageView: UIView {
+class SendMessageView: UIView {
 	
 	// MARK: - Properties
 
@@ -31,7 +31,8 @@ class NewMessageView: UIView {
 		sendButton.addTarget(self, action: #selector(didTapSendButton), for: .touchUpInside)
 		let attributedString = NSAttributedString(
 			string: "Send",
-			attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold), NSAttributedString.Key.foregroundColor: UIColor(named: "buttonTitle") ?? .blue])
+			attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold),
+						 NSAttributedString.Key.foregroundColor: UIColor(named: "buttonTitle") ?? .blue])
 		sendButton.setAttributedTitle(attributedString, for: .normal)
 	}
 	
@@ -70,7 +71,6 @@ class NewMessageView: UIView {
 	
 	@objc private func didTapSendButton() {
 		if let text = textField.text, !text.isEmpty {
-			print(text)
 			messageSent?(text)
 		}
 		textField.endEditing(true)
@@ -87,6 +87,6 @@ class NewMessageView: UIView {
 
 	// MARK: - UITextFieldDelegate
 
-extension NewMessageView: UITextFieldDelegate {
+extension SendMessageView: UITextFieldDelegate {
 	
 }

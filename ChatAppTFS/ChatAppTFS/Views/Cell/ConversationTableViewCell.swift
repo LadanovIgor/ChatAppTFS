@@ -23,7 +23,7 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 	}
 	
 	public func configure(with model: Message, senderId: String) {
-		nameLabel.text = model.senderId == senderId ? "" : model.senderName
+		nameLabel.text = model.senderId == senderId ? nil : model.senderName
 		contentLabel.text = model.content
 		dateLabel.text = model.created.shortDateFormateTodayOrEarlier
 		selectionStyle = .none

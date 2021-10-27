@@ -31,16 +31,22 @@ class ConversationsListTableHeaderView: UITableViewHeaderFooterView {
 	}
 	
 	private func setUpConstraints() {
-		addButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-		addButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0).isActive = true
+		NSLayoutConstraint.activate([
+			addButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10.0),
+			addButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+			addButton.heightAnchor.constraint(equalToConstant: 30),
+			addButton.widthAnchor.constraint(equalTo: addButton.heightAnchor)
+		])
 	}
 	
 	private func setUpButton() {
 		addButton.translatesAutoresizingMaskIntoConstraints = false
-		let attributedTitle = NSAttributedString(string: "Create",
-												 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)])
-		addButton.setAttributedTitle(attributedTitle, for: .normal)
+		addButton.setImage(UIImage(named: "add"), for: .normal)
+//		let attributedTitle = NSAttributedString(string: "+",
+//												 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25, weight: .regular)])
+//		addButton.setAttributedTitle(attributedTitle, for: .normal)
 		addButton.addTarget(self, action: #selector(didAddButtonTapped), for: .touchUpInside)
+		addButton.clipsToBounds = true
 		contentView.addSubview(addButton)
 	}
 	
