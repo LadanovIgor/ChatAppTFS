@@ -386,8 +386,8 @@
 			buildConfigurationList = 8EB63AED26FDAB2E00548A19 /* Build configuration list for PBXNativeTarget "ChatAppTFS" */;
 			buildPhases = (
 				20AED7D1288947A23AEA4F72 /* [CP] Check Pods Manifest.lock */,
-				8E020BB3272439DF007D1396 /* Run Script */,
 				8EB63AD526FDAB2D00548A19 /* Sources */,
+				8E020BB3272439DF007D1396 /* Run Script */,
 				8EB63AD626FDAB2D00548A19 /* Frameworks */,
 				8EB63AD726FDAB2D00548A19 /* Resources */,
 				160EA8F64542156262FC0856 /* [CP] Embed Pods Frameworks */,
