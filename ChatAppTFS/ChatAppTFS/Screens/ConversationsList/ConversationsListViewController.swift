@@ -159,7 +159,7 @@ class ConversationsListViewController: UIViewController {
 			textField = alertTextField
 		}
 		alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { [weak self] _ in
-			guard let channelName = textField.text else {
+			guard let channelName = textField.text, !channelName.isEmpty else {
 				return
 			}
 			self?.createNewChannelWith(name: channelName)

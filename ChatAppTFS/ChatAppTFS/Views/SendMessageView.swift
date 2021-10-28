@@ -44,13 +44,13 @@ class SendMessageView: UIView {
 		textField.textAlignment = .left
 		textField.textColor = .black
 		textField.layer.masksToBounds = true
-		textField.layer.cornerRadius = Constants.MessageView.textFieldCornerRadius
+		textField.layer.cornerRadius = Constants.SendMessageView.textFieldCornerRadius
 		textField.layer.borderColor = UIColor.gray.cgColor
-		textField.layer.borderWidth = Constants.MessageView.textFieldBorderWidth
+		textField.layer.borderWidth = Constants.SendMessageView.textFieldBorderWidth
 	}
 	
 	private func setUpConstraints() {
-		let metrics = ["offset": Constants.MessageView.offset, "width": Constants.MessageView.sendButtonWidth ]
+		let metrics = ["offset": Constants.SendMessageView.offset, "width": Constants.SendMessageView.sendButtonWidth ]
 		let views = ["textField": textField, "button": sendButton]
 		addConstraints(NSLayoutConstraint.constraints(
 			withVisualFormat: "H:|-offset-[textField]-offset-[button(width)]-offset-|",

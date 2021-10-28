@@ -99,22 +99,30 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	private func updateScreen(with values: [String: Data]) {
-		if let nameData = values[Constants.PlistManager.nameKey], let name = String(data: nameData, encoding: .utf8) {
-			nameTextField.text = name
-		} else {
-			nameTextField.text = "Full name"
-		}
-		
-		if let infoData = values[Constants.PlistManager.infoKey], let info = String(data: infoData, encoding: .utf8) {
-			infoTextField.text = info
-		} else {
-			infoTextField.text = "About youself"
-		}
-		
-		if let locationData = values[Constants.PlistManager.locationKey], let location = String(data: locationData, encoding: .utf8) {
-			locationTextField.text = location
-		} else {
-			locationTextField.text = "Location"
+		DispatchQueue.global(qos: .userInteractive).async {
+			let nameText: String
+			let infoText: String
+			let locationText: String
+			if let nameData = values[Constants.PlistManager.nameKey], let name = String(data: nameData, encoding: .utf8) {
+				nameText = name
+			} else {
+				nameText = "Full name"
+			}
+			if let infoData = values[Constants.PlistManager.infoKey], let info = String(data: infoData, encoding: .utf8) {
+				infoText = info
+			} else {
+				infoText = "About youself"
+			}
+			if let locationData = values[Constants.PlistManager.locationKey], let location = String(data: locationData, encoding: .utf8) {
+				locationText = location
+			} else {
+				locationText = "Location"
+			}
+			DispatchQueue.main.async { [weak self] in
+				self?.nameTextField.text = nameText
+				self?.locationTextField.text = locationText
+				self?.infoTextField.text = infoText
+			}
 		}
 		
 		if let imageData = values[Constants.PlistManager.imageKey], let image = UIImage(data: imageData) {

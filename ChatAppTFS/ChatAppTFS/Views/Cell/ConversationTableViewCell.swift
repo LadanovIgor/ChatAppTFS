@@ -14,6 +14,16 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 	@IBOutlet private weak var nameLabel: UILabel!
 	@IBOutlet private weak var dateLabel: UILabel!
 	@IBOutlet private weak var contentLabel: UILabel!
+	@IBOutlet private weak var messageView: MessageView!
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		messageView.layer.masksToBounds = true
+		messageView.layer.cornerRadius = Constants.ConversationCell.messageViewCornerRadius
+		messageView.clipsToBounds = true
+		messageView.layer.borderWidth = Constants.ConversationCell.messageViewBorderWidth
+		messageView.layer.borderColor = UIColor.black.cgColor
+	}
 	
 	override func prepareForReuse() {
 		super.prepareForReuse()
@@ -27,5 +37,6 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 		contentLabel.text = model.content
 		dateLabel.text = model.created.shortDateFormateTodayOrEarlier
 		selectionStyle = .none
+		
 	}
 }

@@ -259,9 +259,9 @@
 		8E6B3544271E81C400653B8D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				8E6B3546271E82D300653B8D /* ProfileStorageManagerGCD.swift */,
 				8E21E795271DA0280005F20F /* ProfileStorageManager.swift */,
 				8EE62B3D271FEB6B0011FE58 /* Operation */,
-				8E6B3546271E82D300653B8D /* ProfileStorageManagerGCD.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";

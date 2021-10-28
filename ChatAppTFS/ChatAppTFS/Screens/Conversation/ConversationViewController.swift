@@ -169,8 +169,9 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 			let data = document.data()
 			let content = data["content"] as? String ?? ""
 			let senderId = data["senderId"] as? String ?? ""
-			let created = (data["created"] as? Timestamp)?.dateValue() ?? Date()
-			let senderName = data["senderName"] as? String ?? ""
+			let created = (data["created"] as? Timestamp)?.dateValue() ?? Date(timeIntervalSinceReferenceDate: 10)
+			var senderName = data["senderName"] as? String ?? ""
+			if senderName == "" { senderName = "Anonymous" }
 			messages.append(Message(content: content, created: created, senderId: senderId, senderName: senderName))
 		}
 		messages.sort { $0.created < $1.created }

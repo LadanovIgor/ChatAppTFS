@@ -59,13 +59,14 @@
                     </constraints>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p9Y-NK-z1Q" customClass="CircleImageView" customModule="ChatAppTFS" customModuleProvider="target">
-                    <rect key="frame" x="64" y="103" width="192" height="192"/>
+                    <rect key="frame" x="50" y="103" width="220" height="220"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="220" id="gCF-ta-EMr"/>
                         <constraint firstAttribute="width" secondItem="p9Y-NK-z1Q" secondAttribute="height" multiplier="1:1" id="tIy-R8-nic"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C35-iA-nq7">
-                    <rect key="frame" x="216" y="255" width="40" height="40"/>
+                    <rect key="frame" x="230" y="283" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="2L5-0N-tBf"/>
                         <constraint firstAttribute="width" constant="40" id="XXV-cS-tYn"/>
@@ -77,7 +78,7 @@
                     </state>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="hix-92-cRD">
-                    <rect key="frame" x="129.5" y="484" width="61" height="54"/>
+                    <rect key="frame" x="129.5" y="512" width="61" height="26"/>
                     <subviews>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqK-jj-oLu" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="140" height="40"/>
@@ -105,7 +106,7 @@
                     </subviews>
                 </stackView>
                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W26-pQ-q4b">
-                    <rect key="frame" x="157" y="311" width="6" height="30"/>
+                    <rect key="frame" x="157" y="339" width="6" height="30"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="B2L-4F-c66"/>
@@ -114,7 +115,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z63-nQ-afj">
-                    <rect key="frame" x="157.5" y="373" width="5" height="21"/>
+                    <rect key="frame" x="157.5" y="401" width="5" height="21"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="rWT-kq-SKC"/>
@@ -123,7 +124,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HL0-Go-4Qm">
-                    <rect key="frame" x="157.5" y="394" width="5" height="21"/>
+                    <rect key="frame" x="157.5" y="422" width="5" height="21"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="CmJ-4R-mTB"/>
@@ -132,10 +133,10 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Gej-b3-cEJ">
-                    <rect key="frame" x="150" y="418" width="20" height="20"/>
+                    <rect key="frame" x="150" y="446" width="20" height="20"/>
                 </activityIndicatorView>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbQ-nc-ey0" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
-                    <rect key="frame" x="129.5" y="441" width="61" height="40"/>
+                    <rect key="frame" x="129.5" y="469" width="61" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="CPD-d6-3uO"/>
                     </constraints>
@@ -150,7 +151,6 @@
             <constraints>
                 <constraint firstItem="hix-92-cRD" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="4xZ-bR-vhr"/>
                 <constraint firstItem="W26-pQ-q4b" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6dv-Ol-qaQ"/>
-                <constraint firstItem="p9Y-NK-z1Q" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.6" id="7Gd-4w-19Q"/>
                 <constraint firstItem="Z63-nQ-afj" firstAttribute="top" secondItem="W26-pQ-q4b" secondAttribute="bottom" constant="32" id="99f-JR-096"/>
                 <constraint firstItem="Z63-nQ-afj" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="DYO-TT-A3b"/>
                 <constraint firstItem="hix-92-cRD" firstAttribute="top" secondItem="bbQ-nc-ey0" secondAttribute="bottom" constant="3" id="DqM-uU-Ps0"/>

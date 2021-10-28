@@ -28,7 +28,7 @@ enum Constants {
 		static let barButtonSize: CGFloat = 30.0
 	}
 	
-	enum MessageView {
+	enum SendMessageView {
 		static let offset: CGFloat = 18.0
 		static let textFieldCornerRadius: CGFloat = 11.0
 		static let textFieldBorderWidth: CGFloat = 0.3
@@ -38,6 +38,8 @@ enum Constants {
 	enum ConversationCell {
 		static let labelWidthMultiplier: CGFloat = 0.7
 		static let offset: CGFloat = 10.0
+		static let messageViewCornerRadius: CGFloat = 12.0
+		static let messageViewBorderWidth: CGFloat = 0.5
 	}
 	
 	enum PlistManager {
