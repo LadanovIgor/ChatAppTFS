@@ -18,7 +18,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}()
 	
 	private let tableView = UITableView(frame: .zero, style: .grouped)
-	private let newMessageView = SendMessageView()
+	private let sendMessageView = SendMessageView()
 	private var bottomConstraint: NSLayoutConstraint?
 	private var channel: Channel?
 	private var messages = [Message]()
@@ -56,9 +56,9 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	// MARK: - Private
 	
 	private func setUpNewMessageView() {
-		view.addSubview(newMessageView)
-		newMessageView.translatesAutoresizingMaskIntoConstraints = false
-		newMessageView.messageSent = { [weak self] text in
+		view.addSubview(sendMessageView)
+		sendMessageView.translatesAutoresizingMaskIntoConstraints = false
+		sendMessageView.messageSent = { [weak self] text in
 			self?.createNewMessage(with: text)
 		}
 	}
@@ -133,7 +133,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	private func setUpConstraints() {
 		view.removeConstraints(view.constraints)
-		let views = ["tableView": tableView, "newMessageView": newMessageView]
+		let views = ["tableView": tableView, "newMessageView": sendMessageView]
 		let metrics = ["viewHeight": Constants.ConversationScreen.messageViewHeight]
 		
 		view.addConstraints(NSLayoutConstraint.constraints(
@@ -144,7 +144,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 			withNewVisualFormat: "H:|[newMessageView]|",
 			metrics: metrics,
 			views: views))
-		bottomConstraint = NSLayoutConstraint(item: newMessageView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+		bottomConstraint = NSLayoutConstraint(item: sendMessageView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
 		guard let constraint = bottomConstraint else {
 			return
 		}
@@ -166,13 +166,8 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	private func getMessages(from documents: [QueryDocumentSnapshot]) {
 		for document in documents {
-			let data = document.data()
-			let content = data["content"] as? String ?? ""
-			let senderId = data["senderId"] as? String ?? ""
-			let created = (data["created"] as? Timestamp)?.dateValue() ?? Date(timeIntervalSinceReferenceDate: 10)
-			var senderName = data["senderName"] as? String ?? ""
-			if senderName == "" { senderName = "Anonymous" }
-			messages.append(Message(content: content, created: created, senderId: senderId, senderName: senderName))
+			let dict = document.data()
+			messages.append(Message(with: dict))
 		}
 		messages.sort { $0.created < $1.created }
 		tableView.reloadData()
@@ -188,7 +183,7 @@ extension ConversationViewController: UITableViewDelegate {
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		newMessageView.stopEditing()
+		sendMessageView.stopEditing()
 	}
 }
 
