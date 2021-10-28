@@ -28,7 +28,6 @@ extension ThemeProtocol {
 		UITableViewHeaderFooterView.appearance().tintColor = textColor
 		UITableView.appearance().backgroundColor = backgroundColor
 		UILabel.appearance().textColor = textColor
-		MessageView.appearance().backgroundColor = secondaryBackground
 		UIView.appearance(whenContainedInInstancesOf: [UITableView.self]).backgroundColor = backgroundColor
 		AppView.appearance().backgroundColor = backgroundColor
 		ProfileHeaderView.appearance().backgroundColor = secondaryBackground

@@ -19,7 +19,7 @@ class ConversationsListViewController: UIViewController {
 	var channels = [Channel]()
 //	var channel: Channel?
 	
-	private var tableView = UITableView(frame: .zero, style: .grouped)
+	private var tableView = UITableView(frame: .zero, style: .plain)
 	
 	private let barButtonSize = Constants.ConversationListScreen.barButtonSize
 
@@ -37,36 +37,24 @@ class ConversationsListViewController: UIViewController {
 	// MARK: - Private
 	
 	private func setUpLeftBarItem() {
-		let button = UIButton(frame: CGRect(x: 0, y: 0, width: barButtonSize, height: barButtonSize))
-		button.setImage(UIImage(named: "settings"), for: .normal)
+		let button = UIButton()
+		let resizeImage = UIImage(named: "settings")?.resize(width: barButtonSize, height: barButtonSize)
+		button.setImage(resizeImage, for: .normal)
 		button.clipsToBounds = true
 		button.layer.masksToBounds = true
 		button.backgroundColor = .clear
 		button.addTarget(self, action: #selector(didTapLeftBarButton), for: .touchUpInside)
 		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
-		NSLayoutConstraint.activate([
-			button.widthAnchor.constraint(equalToConstant: barButtonSize),
-			button.heightAnchor.constraint(equalToConstant: barButtonSize)
-		])
 	}
 
 	private func setUpRightBarItem() {
-		let imageView = UIImageView()
-		imageView.image = UIImage(named: "userPlaceholder")
-		imageView.contentMode = .scaleAspectFit
-		imageView.clipsToBounds = true
-		imageView.layer.masksToBounds = true
 		let button = UIButton(frame: CGRect(x: 0, y: 0, width: barButtonSize, height: barButtonSize))
-		button.setImage(UIImage(named: "userPlaceholder"), for: .normal)
+		let resizeImage = UIImage(named: "userPlaceholder")?.resize(width: barButtonSize, height: barButtonSize)
+		button.setImage(resizeImage, for: .normal)
 		button.clipsToBounds = true
 		button.layer.masksToBounds = true
-		button.backgroundColor = .red
 		button.addTarget(self, action: #selector(didTapRightBarButton), for: .touchUpInside)
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-		NSLayoutConstraint.activate([
-			button.widthAnchor.constraint(equalToConstant: barButtonSize),
-			button.heightAnchor.constraint(equalToConstant: barButtonSize)
-		])
 		button.round()
 	}
 	

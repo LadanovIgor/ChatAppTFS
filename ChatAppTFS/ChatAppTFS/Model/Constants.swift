@@ -8,7 +8,7 @@
 import Foundation
 
 enum Constants {
-	
+		
 	enum ThemeScreen {
 		static let buttonCornerRadius: CGFloat = 14.0
 	}
@@ -25,7 +25,7 @@ enum Constants {
 	}
 	
 	enum ConversationListScreen {
-		static let barButtonSize: CGFloat = 32.0
+		static let barButtonSize: CGFloat = 30.0
 	}
 	
 	enum MessageView {
