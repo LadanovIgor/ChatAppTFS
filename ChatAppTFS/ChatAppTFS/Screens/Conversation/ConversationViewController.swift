@@ -181,8 +181,8 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		}
 		DatabaseManager.shared.fetchMessagesFrom(channelId: channel.identifier) { result in
 			switch result {
-			case .success(let messages):
-					messages?.compactMap {$0}.forEach { print($0) }
+			case .success(let messages): break
+//					messages?.compactMap {$0}.forEach { print($0) }
 			case .failure(let error):
 				print(error.localizedDescription)
 			}
