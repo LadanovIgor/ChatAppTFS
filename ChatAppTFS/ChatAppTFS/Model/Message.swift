@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import UIKit
 
 struct Message {
 	let content: String
@@ -24,5 +25,16 @@ struct Message {
 		self.created = created
 		self.senderId = senderId
 		self.senderName = senderName
+	}
+	
+	init(dbMessage: DBMessage) {
+		guard let created = dbMessage.created, let senderId = dbMessage.senderId,
+			  let content = dbMessage.content, let senderName = dbMessage.senderName else {
+				  fatalError("invalid data from database")
+			  }
+		self.created = created
+		self.senderName = senderName
+		self.senderId = senderId
+		self.content = content
 	}
 }

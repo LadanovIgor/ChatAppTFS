@@ -31,7 +31,8 @@ class ConversationsListViewController: UIViewController {
 		setUpTableView()
 		setUpRightBarItem()
 		setUpLeftBarItem()
-		loadDatabase()
+		addFirestoreListener()
+		loadDB()
 	}
 	
 	// MARK: - Private
@@ -124,7 +125,7 @@ class ConversationsListViewController: UIViewController {
 		}
 	}
 	
-	private func loadDatabase() {
+	private func addFirestoreListener() {
 		reference.addSnapshotListener { [weak self] snapshot, error in
 			if let error = error {
 				print(error.localizedDescription)
@@ -138,17 +139,26 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	private func getChannelsFrom(documents: [QueryDocumentSnapshot]) {
-		for document in documents {
+		documents.forEach { document in
 			let data = document.data()
-			guard let channelName = data["name"] as? String else {
-				continue
-			}
+			let channelName = (data["name"] as? String) ?? "No title"
 			let lastMessage = data["lastMessage"] as? String
 			let lastActivity = (data["lastActivity"] as? Timestamp)?.dateValue()
 			channels.append(Channel(identifier: document.documentID, name: channelName, lastMessage: lastMessage, lastActivity: lastActivity))
 		}
 		channels.sort { ($0.lastActivity ?? Date()) > ($1.lastActivity ?? Date()) }
 		tableView.reloadData()
+	}
+	
+	private func loadDB() {
+		DatabaseManager.shared.fetchChannels {result in
+			switch result {
+			case .success(let channels):
+					channels.forEach { print("Channel name: \($0.name), id: \($0.identifier), lastMessage: \($0.lastMessage ?? ""), lastActivity: \(String(describing: $0.lastActivity))")}
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+		}
 	}
 	
 	private func presentNewChannelAlert() {
@@ -171,6 +181,17 @@ class ConversationsListViewController: UIViewController {
 	private func createNewChannelWith(name: String) {
 		reference.addDocument(data: ["name": name])
 		tableView.reloadData()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		DatabaseManager.shared.save(channels: channels) { result in
+			switch result {
+			case .success: break
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+		}
 	}
 }
 

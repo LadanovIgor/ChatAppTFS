@@ -22,13 +22,6 @@ class ProfileStorageManagerGCD: StoredLocally {
 					completion(result)
 				}
 			}
-//			for key in plist.keys {
-//				self?.save(plist[key], forKey: key) { result in
-//					DispatchQueue.main.async {
-//						completion(result)
-//					}
-//				}
-//			}
 		}
 	}
 	

@@ -51,6 +51,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		setUpConstraints()
 		addKeyboardObservers()
 		loadMessages()
+		fetchMessages()
 	}
 	
 	// MARK: - Private
@@ -172,6 +173,29 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		messages.sort { $0.created < $1.created }
 		tableView.reloadData()
 		tableView.scrollToBottom()
+	}
+	
+	private func fetchMessages() {
+		guard let channel = channel else {
+			return
+		}
+		DatabaseManager.shared.fetchMessagesFrom(channelId: channel.identifier) { result in
+			switch result {
+			case .success(let messages):
+					messages?.compactMap {$0}.forEach { print($0) }
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+		}
+	}
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		DatabaseManager.shared.save(messages: messages, to: channel?.identifier) { result in
+			switch result {
+			case .success: break
+			case .failure(let error): print(error.localizedDescription)
+			}
+		}
 	}
 }
 
