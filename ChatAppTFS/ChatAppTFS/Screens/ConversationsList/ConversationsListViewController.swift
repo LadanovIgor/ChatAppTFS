@@ -60,20 +60,14 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	@objc private func didTapLeftBarButton() {
-		presentSwiftThemeVC()
+		presentThemeVC()
 	}
 	
 	@objc private func didTapRightBarButton() { 
 		present(UserProfileViewController(), animated: true)
 	}
-	
-	private func presentObjCThemeVC() {
-		let vc = ThemesViewController()
-		vc.delegate = self
-		present(vc, animated: true)
-	}
-	
-	private func presentSwiftThemeVC() {
+
+	private func presentThemeVC() {
 		let vc = ThemeViewController()
 		vc.themeSelected = {[weak self] theme in
 			self?.changeTheme(for: theme)

@@ -76,10 +76,6 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		profileImageView.clipsToBounds = true
 		let gesture = UITapGestureRecognizer(target: self, action: #selector(didProfileImageViewTapped))
 		profileImageView.addGestureRecognizer(gesture)
-		guard let image = UIImage(named: "userPlaceholder") else {
-			return
-		}
-		profileImageView.image = image
 	}
 	
 	private func fetchProfileData() {
@@ -116,16 +112,23 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 			} else {
 				locationText = "Location"
 			}
+			let imageData = values[Constants.PlistManager.imageKey]
 			DispatchQueue.main.async { [weak self] in
 				self?.nameTextField.text = nameText
 				self?.locationTextField.text = locationText
 				self?.infoTextField.text = infoText
+				self?.updateProfileImageView(with: imageData)
 			}
 		}
-		
-		if let imageData = values[Constants.PlistManager.imageKey], let image = UIImage(data: imageData) {
-			profileImageView.image = image
+	}
+	
+	private func updateProfileImageView(with data: Data?) {
+		guard let data = data, let image = UIImage(data: data) else {
+			let capitalLetters = nameTextField.text?.getCapitalLetters()
+			profileImageView.image = UIImage.textImage(text: capitalLetters)
+			return
 		}
+		profileImageView.image = image
 	}
 	
 	private func setUpConstraints() {

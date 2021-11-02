@@ -5,9 +5,23 @@
 //  Created by Ladanov Igor on 14.10.2021.
 //
 
-import Foundation
+import UIKit
 
 enum Constants {
+	
+	enum ImageBackgroundColor: CaseIterable {
+		case red
+		case brown
+		case green
+		
+		var color: UIColor {
+			switch self {
+			case .red: return .red
+			case .brown: return .brown
+			case .green: return .green
+			}
+		}
+	}
 		
 	enum ThemeScreen {
 		static let buttonCornerRadius: CGFloat = 14.0

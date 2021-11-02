@@ -62,7 +62,7 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 		nameLabel.text = viewModel.name
 		dateLabel.text = viewModel.lastMessageDate?.shortDateFormateTodayOrEarlier
 		lastMessageLabel.font = .systemFont(ofSize: 13, weight: viewModel.hasUnreadMessages ? .bold : .regular)
-		profileImageView.image = UIImage(named: "userPlaceholder")
+		profileImageView.image = UIImage.textImage(text: viewModel.name?.getCapitalLetters())
 		guard let lastMessage = viewModel.lastMessage else {
 			lastMessageLabel.text = "No messages yet"
 			lastMessageLabel.font = .systemFont(ofSize: 17, weight: .bold)
