@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	private func loadThemeFor(application: UIApplication) {
-		ProfileStorageManagerGCD.shared.loadTheme { result in
+		LocalStorageManager.shared.loadTheme { result in
 			switch result {
 			case .success(let data):
 				data.setTheme(for: application)

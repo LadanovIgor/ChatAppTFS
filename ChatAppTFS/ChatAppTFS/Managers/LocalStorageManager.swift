@@ -7,9 +7,9 @@
 
 import Foundation
 
-class ProfileStorageManagerGCD: StoredLocally {
+final class LocalStorageManager: StoredLocally {
 	
-	static let shared = ProfileStorageManagerGCD()
+	static let shared = LocalStorageManager()
 	
 	private let queue = DispatchQueue.global(qos: .utility)
 	

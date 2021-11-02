@@ -74,7 +74,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	private func getSenderId() {
 		let key = Constants.PlistManager.idKey
-		ProfileStorageManagerGCD.shared.getValue(for: key, completion: { [weak self] result in
+		LocalStorageManager.shared.getValue(for: key, completion: { [weak self] result in
 			switch result {
 			case .success(let data):
 				guard let senderId = String(data: data, encoding: .utf8) else {
@@ -94,7 +94,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 			return
 		}
 		let dict = [Constants.PlistManager.idKey: dataId]
-		ProfileStorageManager.use(.gcd).saveLocally(dict) { _ in
+		LocalStorageManager.shared.saveLocally(dict) { _ in
 			
 		}
 	}
@@ -176,13 +176,11 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func fetchMessages() {
-		guard let channel = channel else {
-			return
-		}
+		guard let channel = channel else { return }
 		DatabaseManager.shared.fetchMessagesFrom(channelId: channel.identifier) { result in
 			switch result {
-			case .success(let messages): break
-//					messages?.compactMap {$0}.forEach { print($0) }
+			case .success(let messages):
+				messages?.compactMap {$0}.forEach { print($0) }
 			case .failure(let error):
 				print(error.localizedDescription)
 			}

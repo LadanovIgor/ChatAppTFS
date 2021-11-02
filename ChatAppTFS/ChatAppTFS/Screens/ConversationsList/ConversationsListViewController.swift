@@ -120,7 +120,7 @@ class ConversationsListViewController: UIViewController {
 			return
 		}
 		let dict = [Constants.PlistManager.themeKey: themeNameData]
-		ProfileStorageManager.use(.gcd).saveLocally(dict) { _ in
+		LocalStorageManager.shared.saveLocally(dict) { _ in
 			
 		}
 	}
@@ -153,8 +153,8 @@ class ConversationsListViewController: UIViewController {
 	private func loadDB() {
 		DatabaseManager.shared.fetchChannels {result in
 			switch result {
-			case .success(let channels): break
-//					channels.forEach { print("Channel name: \($0.name), id: \($0.identifier), lastMessage: \($0.lastMessage ?? ""), lastActivity: \(String(describing: $0.lastActivity))")}
+			case .success(let channels):
+					channels.forEach { print("Channel name: \($0.name), id: \($0.identifier), lastMessage: \($0.lastMessage ?? ""), lastActivity: \(String(describing: $0.lastActivity))")}
 			case .failure(let error):
 				print(error.localizedDescription)
 			}

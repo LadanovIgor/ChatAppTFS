@@ -14,14 +14,11 @@ final class DatabaseManager {
 	
 	private lazy var persistentContainer: NSPersistentContainer = {
 		let container = NSPersistentContainer(name: "ChatDB")
-		container.loadPersistentStores { storeDescription, error in
+		container.loadPersistentStores { _, error in
 			if let error = error {
 				fatalError(error.localizedDescription)
-			} else {
-				print(storeDescription.url ?? "")
 			}
 		}
-		
 		return container
 	}()
 	
@@ -29,12 +26,6 @@ final class DatabaseManager {
 	private lazy var backgroundContext = persistentContainer.newBackgroundContext()
 	
 	private init() {}
-	
-	func newChannel() {
-		let dbChannel = DBChannel(context: backgroundContext)
-		dbChannel.name = "Test22"
-		dbChannel.identifier = "dsfsfdsfdsfdsaf"
-	}
 	
 	func fetchChannels(completion: @escaping ResultClosure<[Channel]>) {
 		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DBChannel")

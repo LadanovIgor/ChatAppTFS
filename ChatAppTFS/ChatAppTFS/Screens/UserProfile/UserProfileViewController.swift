@@ -14,8 +14,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	@IBOutlet weak var profileImageView: CircleImageView!
 	@IBOutlet weak var closeProfileButton: UIButton!
 	@IBOutlet weak var editProfileButton: UIButton!
-	@IBOutlet weak var saveGCDButton: AppButton!
-	@IBOutlet weak var saveOperationButton: AppButton!
+	@IBOutlet weak var saveButton: AppButton!
 	@IBOutlet weak var nameTextField: UITextField!
 	@IBOutlet weak var infoTextField: UITextField!
 	@IBOutlet weak var locationTextField: UITextField!
@@ -66,8 +65,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	private func setUpSaveButton() {
-		saveGCDButton.layer.cornerRadius = Constants.ProfileScreen.buttonCornerRadius
-		saveOperationButton.layer.cornerRadius = Constants.ProfileScreen.buttonCornerRadius
+		saveButton.layer.cornerRadius = Constants.ProfileScreen.buttonCornerRadius
 		cancelButton.layer.cornerRadius = Constants.ProfileScreen.buttonCornerRadius
 	}
 	
@@ -86,7 +84,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	
 	private func fetchProfileData() {
 		activityStartedAnimation()
-		ProfileStorageManager.use(.gcd).loadLocally { [weak self] result in
+		LocalStorageManager.shared.loadLocally { [weak self] result in
 			switch result {
 			case .success(let dict):
 				self?.loadedValues = dict
@@ -139,10 +137,9 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	private func addButtonTargets() {
-		saveGCDButton.addTarget(self, action: #selector(didSaveButtonTapped), for: .touchUpInside)
+		saveButton.addTarget(self, action: #selector(didSaveButtonTapped), for: .touchUpInside)
 		editProfileButton.addTarget(self, action: #selector(didEditButtonTapped), for: .touchUpInside)
 		closeProfileButton.addTarget(self, action: #selector(didCloseButtonTapped), for: .touchUpInside)
-		saveOperationButton.addTarget(self, action: #selector(didSaveButtonTapped), for: .touchUpInside)
 		cancelButton.addTarget(self, action: #selector(didCancelButtonTapped), for: .touchUpInside)
 		locationTextField.addTarget(self, action: #selector(didTextFieldDidChange), for: .editingChanged)
 		infoTextField.addTarget(self, action: #selector(didTextFieldDidChange), for: .editingChanged)
@@ -171,11 +168,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		infoTextField.resignFirstResponder()
 		nameTextField.resignFirstResponder()
 		guard !changedValues.isEmpty else { return }
-		if button == saveGCDButton {
-			saveGCD()
-		} else if button == saveOperationButton {
-			saveOperation()
-		}
+		saveProfile()
 	}
 	
 	@objc private func didEditButtonTapped() {
@@ -189,37 +182,27 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	@objc private func didTextFieldDidChange() {
-		saveOperationButton.isEnabled = true
-		saveGCDButton.isEnabled = true
+		saveButton.isEnabled = true
 	}
 	
-	private func saveGCD() {
-		saveLocally(type: ProfileStorageManager.use(.gcd))
-	}
-	
-	private func saveOperation() {
-		saveLocally(type: ProfileStorageManager.use(.operation))
-	}
-	
-	private func saveLocally(type: StoredLocally) {
+	private func saveProfile() {
 		activityStartedAnimation()
 		changeButtonState(with: false)
-		type.saveLocally(changedValues) { [weak self] result in
+		LocalStorageManager.shared.saveLocally(changedValues) { [weak self] result in
 			self?.activityFinishedAnimation()
 			switch result {
 			case .success:
 				self?.presentSuccessLoadAlert()
 				self?.updateValues(with: self?.changedValues)
 			case .failure:
-				self?.presentFailureLoadAlert(handler: self?.saveOperation)
+				self?.presentFailureLoadAlert(handler: self?.saveProfile)
 			}
 		}
 	}
 	
 	private func changeButtonState(with isEnable: Bool) {
-		saveOperationButton.isEnabled = isEnable
 		cancelButton.isEnabled = isEnable
-		saveGCDButton.isEnabled = isEnable
+		saveButton.isEnabled = isEnable
 	}
 	
 	private func updateValues(with values: [String: Data]?) {
@@ -264,8 +247,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	private func updateScreenLayoutDependingOn(isEditing: Bool) {
-		saveOperationButton.isHidden = !isEditing
-		saveGCDButton.isHidden = !isEditing
+		saveButton.isHidden = !isEditing
 		editProfileButton.isHidden = isEditing
 		cancelButton.isHidden = !isEditing
 		nameTextField.isEnabled = isEditing
@@ -315,8 +297,7 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 		}
 		profileImageView.image = image
 		editProfileButton.isHidden = true
-		saveOperationButton.isHidden = false
-		saveGCDButton.isHidden = false
+		saveButton.isHidden = false
 		cancelButton.isHidden = false
 		changeButtonState(with: true)
 		guard let imageData = image.jpegData(compressionQuality: 1.0) else {

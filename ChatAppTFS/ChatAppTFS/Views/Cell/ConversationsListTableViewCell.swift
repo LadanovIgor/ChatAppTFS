@@ -25,7 +25,7 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 			self.lastMessage = channel.lastMessage
 			self.lastMessageDate = channel.lastActivity
 			self.isOnline = true
-			self.hasUnreadMessages = true
+			self.hasUnreadMessages = false
 		}
 	}
 	

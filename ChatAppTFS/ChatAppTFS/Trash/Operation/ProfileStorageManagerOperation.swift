@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ProfileStorageManagerOperation: StoredLocally {
+final class ProfileStorageManagerOperation: StoredLocally {
 	
 	static let shared = ProfileStorageManagerOperation()
 	 

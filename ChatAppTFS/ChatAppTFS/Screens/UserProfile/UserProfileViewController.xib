@@ -21,9 +21,8 @@
                 <outlet property="nameTextField" destination="W26-pQ-q4b" id="tpx-yZ-Xqm"/>
                 <outlet property="nameTextFieldTopConstraint" destination="l14-M8-4tW" id="gvi-Eo-YgU"/>
                 <outlet property="profileImageView" destination="p9Y-NK-z1Q" id="fCk-SE-qZs"/>
-                <outlet property="saveButtonBottomConstraint" destination="kUK-mn-D70" id="R5J-4x-acl"/>
-                <outlet property="saveGCDButton" destination="ZqK-jj-oLu" id="EvW-Rb-fwI"/>
-                <outlet property="saveOperationButton" destination="MBX-nS-fWs" id="Fql-Lf-1nr"/>
+                <outlet property="saveButton" destination="ZqK-jj-oLu" id="EvW-Rb-fwI"/>
+                <outlet property="saveButtonBottomConstraint" destination="3fq-Vf-tvr" id="VeP-dg-XGs"/>
                 <outlet property="view" destination="iN0-l3-epB" id="JKc-T8-VgS"/>
             </connections>
         </placeholder>
@@ -77,34 +76,6 @@
                         <color key="titleColor" name="buttonTitle"/>
                     </state>
                 </button>
-                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="hix-92-cRD">
-                    <rect key="frame" x="129.5" y="512" width="61" height="26"/>
-                    <subviews>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqK-jj-oLu" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="140" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="40" id="hMJ-sd-Y1P"/>
-                                <constraint firstAttribute="width" constant="140" id="yfy-oe-LLy"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Save GCD">
-                                <color key="titleColor" name="buttonTitle"/>
-                            </state>
-                        </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MBX-nS-fWs" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="40" id="VwT-LW-lgX"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Save Operation">
-                                <color key="titleColor" name="buttonTitle"/>
-                            </state>
-                        </button>
-                    </subviews>
-                </stackView>
                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W26-pQ-q4b">
                     <rect key="frame" x="157" y="339" width="6" height="30"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -133,10 +104,10 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Gej-b3-cEJ">
-                    <rect key="frame" x="150" y="446" width="20" height="20"/>
+                    <rect key="frame" x="150" y="446" width="20" height="6"/>
                 </activityIndicatorView>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbQ-nc-ey0" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
-                    <rect key="frame" x="129.5" y="469" width="61" height="40"/>
+                    <rect key="frame" x="50" y="455" width="220" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="CPD-d6-3uO"/>
                     </constraints>
@@ -146,32 +117,44 @@
                         <color key="titleColor" name="buttonTitle"/>
                     </state>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqK-jj-oLu" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
+                    <rect key="frame" x="50" y="498" width="220" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="hMJ-sd-Y1P"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Save">
+                        <color key="titleColor" name="buttonTitle"/>
+                    </state>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
-                <constraint firstItem="hix-92-cRD" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="4xZ-bR-vhr"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ZqK-jj-oLu" secondAttribute="bottom" constant="30" id="3fq-Vf-tvr"/>
                 <constraint firstItem="W26-pQ-q4b" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6dv-Ol-qaQ"/>
                 <constraint firstItem="Z63-nQ-afj" firstAttribute="top" secondItem="W26-pQ-q4b" secondAttribute="bottom" constant="32" id="99f-JR-096"/>
+                <constraint firstItem="ZqK-jj-oLu" firstAttribute="top" secondItem="bbQ-nc-ey0" secondAttribute="bottom" constant="3" id="9xE-is-Gg4"/>
                 <constraint firstItem="Z63-nQ-afj" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="DYO-TT-A3b"/>
-                <constraint firstItem="hix-92-cRD" firstAttribute="top" secondItem="bbQ-nc-ey0" secondAttribute="bottom" constant="3" id="DqM-uU-Ps0"/>
                 <constraint firstItem="HL0-Go-4Qm" firstAttribute="top" secondItem="Z63-nQ-afj" secondAttribute="bottom" id="GXr-TI-LOv"/>
                 <constraint firstItem="HL0-Go-4Qm" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="HrU-Nx-61j"/>
                 <constraint firstItem="p9Y-NK-z1Q" firstAttribute="top" secondItem="PAX-gv-gE1" secondAttribute="bottom" constant="7" id="KIB-Jw-QpB"/>
                 <constraint firstItem="p9Y-NK-z1Q" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="KVs-RL-QMg"/>
                 <constraint firstItem="Gej-b3-cEJ" firstAttribute="top" secondItem="HL0-Go-4Qm" secondAttribute="bottom" constant="3" id="NJ3-TS-f3I"/>
-                <constraint firstItem="bbQ-nc-ey0" firstAttribute="width" secondItem="hix-92-cRD" secondAttribute="width" multiplier="1:1" id="UIf-OY-muu"/>
+                <constraint firstItem="ZqK-jj-oLu" firstAttribute="width" secondItem="p9Y-NK-z1Q" secondAttribute="width" id="Ph9-d8-cRO"/>
                 <constraint firstItem="Gej-b3-cEJ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="XLi-br-YUO"/>
                 <constraint firstItem="bbQ-nc-ey0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ZcC-8v-c5u"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="PAX-gv-gE1" secondAttribute="trailing" id="ePd-oc-xtp"/>
                 <constraint firstItem="C35-iA-nq7" firstAttribute="bottom" secondItem="p9Y-NK-z1Q" secondAttribute="bottom" id="g5A-Jn-03u"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="hix-92-cRD" secondAttribute="bottom" constant="30" id="kUK-mn-D70"/>
+                <constraint firstItem="bbQ-nc-ey0" firstAttribute="width" secondItem="p9Y-NK-z1Q" secondAttribute="width" id="jye-Xx-W5Q"/>
                 <constraint firstItem="W26-pQ-q4b" firstAttribute="top" secondItem="p9Y-NK-z1Q" secondAttribute="bottom" constant="16" id="l14-M8-4tW"/>
+                <constraint firstItem="ZqK-jj-oLu" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="odw-Sa-542"/>
                 <constraint firstItem="PAX-gv-gE1" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="pXH-4J-Jgx"/>
                 <constraint firstItem="C35-iA-nq7" firstAttribute="trailing" secondItem="p9Y-NK-z1Q" secondAttribute="trailing" id="rAu-IK-9ww"/>
                 <constraint firstItem="bbQ-nc-ey0" firstAttribute="top" secondItem="Gej-b3-cEJ" secondAttribute="bottom" priority="900" constant="3" id="rNn-tl-1Xg"/>
                 <constraint firstItem="PAX-gv-gE1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="sQV-oI-dLi"/>
             </constraints>
-            <point key="canvasLocation" x="132" y="34.632683658170919"/>
+            <point key="canvasLocation" x="131.25" y="33.802816901408448"/>
         </view>
     </objects>
     <resources>

@@ -32,7 +32,7 @@
 		8E40D99327146AC700406AD4 /* ThemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40D99127146AC700406AD4 /* ThemeViewController.swift */; };
 		8E40D99427146AC700406AD4 /* ThemeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E40D99227146AC700406AD4 /* ThemeViewController.xib */; };
 		8E5EC5AB26FDB05E008FC472 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */; };
-		8E6B3547271E82D300653B8D /* ProfileStorageManagerGCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B3546271E82D300653B8D /* ProfileStorageManagerGCD.swift */; };
+		8E6B3547271E82D300653B8D /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B3546271E82D300653B8D /* LocalStorageManager.swift */; };
 		8E6B3549271E82E700653B8D /* ProfileStorageManagerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B3548271E82E700653B8D /* ProfileStorageManagerOperation.swift */; };
 		8E6B354D271E935300653B8D /* StoredLocallyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B354C271E935300653B8D /* StoredLocallyProtocol.swift */; };
 		8E6B3550271E939200653B8D /* StoredLocallyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B354F271E939200653B8D /* StoredLocallyError.swift */; };
@@ -101,7 +101,7 @@
 		8E40D99127146AC700406AD4 /* ThemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewController.swift; sourceTree = "<group>"; };
 		8E40D99227146AC700406AD4 /* ThemeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeViewController.xib; sourceTree = "<group>"; };
 		8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservable.swift; sourceTree = "<group>"; };
-		8E6B3546271E82D300653B8D /* ProfileStorageManagerGCD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageManagerGCD.swift; sourceTree = "<group>"; };
+		8E6B3546271E82D300653B8D /* LocalStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
 		8E6B3548271E82E700653B8D /* ProfileStorageManagerOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageManagerOperation.swift; sourceTree = "<group>"; };
 		8E6B354C271E935300653B8D /* StoredLocallyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredLocallyProtocol.swift; sourceTree = "<group>"; };
 		8E6B354F271E939200653B8D /* StoredLocallyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredLocallyError.swift; sourceTree = "<group>"; };
@@ -181,14 +181,24 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
+		8E184B0C2731576100C352B9 /* Trash */ = {
+			isa = PBXGroup;
+			children = (
+				8E40D9862714396400406AD4 /* ObjC */,
+				8E40D98C27143AFE00406AD4 /* Theme.m */,
+				8E40D98B27143AD600406AD4 /* Theme.h */,
+				8EE62B3D271FEB6B0011FE58 /* Operation */,
+				8E21E795271DA0280005F20F /* ProfileStorageManager.swift */,
+			);
+			path = Trash;
+			sourceTree = "<group>";
+		};
 		8E2E2701270DE51600BFE156 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				8EAB38A1271701D700A1FF98 /* Themes */,
 				8E2E2702270DE53400BFE156 /* Channel.swift */,
 				8E2E2704270DE53B00BFE156 /* Message.swift */,
-				8E40D98B27143AD600406AD4 /* Theme.h */,
-				8E40D98C27143AFE00406AD4 /* Theme.m */,
 				8E72BC782717C2B60046870F /* Constants.swift */,
 			);
 			path = Model;
@@ -268,7 +278,8 @@
 		8E40D9842714393700406AD4 /* Themes */ = {
 			isa = PBXGroup;
 			children = (
-				8E40D9862714396400406AD4 /* ObjC */,
+				8E40D99227146AC700406AD4 /* ThemeViewController.xib */,
+				8E40D99127146AC700406AD4 /* ThemeViewController.swift */,
 				8E40D9852714395600406AD4 /* Swift */,
 			);
 			path = Themes;
@@ -277,8 +288,6 @@
 		8E40D9852714395600406AD4 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
-				8E40D99127146AC700406AD4 /* ThemeViewController.swift */,
-				8E40D99227146AC700406AD4 /* ThemeViewController.xib */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
@@ -297,9 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				8E15F8F6272E40F500EE7918 /* Database */,
-				8E6B3546271E82D300653B8D /* ProfileStorageManagerGCD.swift */,
-				8E21E795271DA0280005F20F /* ProfileStorageManager.swift */,
-				8EE62B3D271FEB6B0011FE58 /* Operation */,
+				8E6B3546271E82D300653B8D /* LocalStorageManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -386,16 +393,17 @@
 		8EB63ADB26FDAB2D00548A19 /* ChatAppTFS */ = {
 			isa = PBXGroup;
 			children = (
-				8ED76E1E2721D45F004D7100 /* GoogleService-Info.plist */,
 				8EE62B39271FBFA90011FE58 /* Data.plist */,
 				8E6B354E271E937500653B8D /* Errors */,
 				8E2E2706270DE5C600BFE156 /* Extensions */,
+				8ED76E1E2721D45F004D7100 /* GoogleService-Info.plist */,
 				8EB63AEA26FDAB2E00548A19 /* Info.plist */,
 				8E6B3544271E81C400653B8D /* Managers */,
 				8E2E2701270DE51600BFE156 /* Model */,
 				8E6B3545271E81E500653B8D /* Other */,
 				8EAAFE23270E8A8F00D7497B /* Protocols */,
 				8E2E2713270DF02700BFE156 /* Screens */,
+				8E184B0C2731576100C352B9 /* Trash */,
 				8E2E270D270DE69700BFE156 /* Views */,
 			);
 			path = ChatAppTFS;
@@ -586,7 +594,7 @@
 				8EB63ADD26FDAB2D00548A19 /* AppDelegate.swift in Sources */,
 				8ED5F085270EE3AC005CDA29 /* ConfigurableView.swift in Sources */,
 				8E40D98D27143AFE00406AD4 /* Theme.m in Sources */,
-				8E6B3547271E82D300653B8D /* ProfileStorageManagerGCD.swift in Sources */,
+				8E6B3547271E82D300653B8D /* LocalStorageManager.swift in Sources */,
 				8EE62B4127200A3E0011FE58 /* Data+.swift in Sources */,
 				8EE62B4A272036680011FE58 /* ProfileHeaderView.swift in Sources */,
 				8E40D98A2714399700406AD4 /* ThemesViewController.m in Sources */,
@@ -741,6 +749,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K8F8VH947T;
@@ -776,6 +785,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K8F8VH947T;
