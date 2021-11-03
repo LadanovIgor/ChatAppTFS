@@ -40,7 +40,7 @@ class ConversationsListTableHeaderView: UITableViewHeaderFooterView {
 	
 	private func setUpButton() {
 		addButton.translatesAutoresizingMaskIntoConstraints = false
-		addButton.setImage(UIImage(named: "chat")?.resize(width: 30, height: 30), for: .normal)
+		addButton.setImage(UIImage(named: "chatNew"), for: .normal)
 		addButton.addTarget(self, action: #selector(didAddButtonTapped), for: .touchUpInside)
 		addButton.clipsToBounds = true
 		contentView.addSubview(addButton)

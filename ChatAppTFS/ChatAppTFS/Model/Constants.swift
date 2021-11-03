@@ -11,14 +11,18 @@ enum Constants {
 	
 	enum ImageBackgroundColor: CaseIterable {
 		case red
-		case brown
+		case orange
+		case violet
 		case green
+		case cyan
 		
 		var color: UIColor {
 			switch self {
-			case .red: return .red
-			case .brown: return .brown
-			case .green: return .green
+			case .red: return UIColor(red: 204 / 255, green: 78 / 255, blue: 92 / 255, alpha: 1.0)
+			case .orange: return UIColor(red: 255 / 255, green: 127 / 255, blue: 80 / 255, alpha: 1.0)
+			case .green: return UIColor(red: 143 / 255, green: 188 / 255, blue: 143 / 255, alpha: 1.0)
+			case .violet: return UIColor(red: 136 / 255, green: 120 / 255, blue: 195 / 255, alpha: 1.0)
+			case .cyan: return UIColor(red: 155 / 255, green: 221 / 255, blue: 255 / 255, alpha: 1.0)
 			}
 		}
 	}
@@ -39,7 +43,7 @@ enum Constants {
 	}
 	
 	enum ConversationListScreen {
-		static let barButtonSize: CGFloat = 30.0
+		static let barButtonSize: CGFloat = 35.0
 	}
 	
 	enum SendMessageView {

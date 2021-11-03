@@ -39,7 +39,7 @@ class ConversationsListViewController: UIViewController {
 	
 	private func setUpLeftBarItem() {
 		let button = UIButton()
-		let resizeImage = UIImage(named: "settings")?.resize(width: barButtonSize, height: barButtonSize)
+		let resizeImage = UIImage(named: "themes")
 		button.setImage(resizeImage, for: .normal)
 		button.clipsToBounds = true
 		button.layer.masksToBounds = true
@@ -50,13 +50,23 @@ class ConversationsListViewController: UIViewController {
 
 	private func setUpRightBarItem() {
 		let button = UIButton(frame: CGRect(x: 0, y: 0, width: barButtonSize, height: barButtonSize))
-		let resizeImage = UIImage(named: "userPlaceholder")?.resize(width: barButtonSize, height: barButtonSize)
+		let resizeImage = UIImage.textImage(text: "")?.resize(width: barButtonSize, height: barButtonSize)
 		button.setImage(resizeImage, for: .normal)
 		button.clipsToBounds = true
 		button.layer.masksToBounds = true
 		button.addTarget(self, action: #selector(didTapRightBarButton), for: .touchUpInside)
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
 		button.round()
+		LocalStorageManager.shared.getValue(for: Constants.PlistManager.nameKey) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let data):
+				guard let text = String(data: data, encoding: .utf8),
+					  let image = UIImage.textImage(text: text.getCapitalLetters()) else { return }
+				button.setImage(image.resize(width: self.barButtonSize, height: self.barButtonSize), for: .normal)
+			case .failure(let error): print(error.localizedDescription)
+			}
+		}
 	}
 	
 	@objc private func didTapLeftBarButton() {
