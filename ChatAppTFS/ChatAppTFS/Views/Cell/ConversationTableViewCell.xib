@@ -18,7 +18,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="514" height="189"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fWS-vM-886" customClass="MessageView" customModule="ChatAppTFS" customModuleProvider="target">
-                            <rect key="frame" x="20" y="5" width="474" height="179"/>
+                            <rect key="frame" x="32" y="10" width="477" height="169"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JCw-1i-6mN">
                                     <rect key="frame" x="10" y="5" width="30.5" height="14"/>
@@ -27,13 +27,13 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4K-Sc-QIi">
-                                    <rect key="frame" x="10" y="24" width="409" height="150"/>
+                                    <rect key="frame" x="10" y="24" width="412" height="140"/>
                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v41-fe-tRX">
-                                    <rect key="frame" x="424" y="160" width="40" height="14"/>
+                                    <rect key="frame" x="427" y="150" width="40" height="14"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="14" id="EF7-JS-e71"/>
                                         <constraint firstAttribute="width" constant="40" id="gku-a3-HKe"/>
@@ -56,12 +56,21 @@
                                 <constraint firstAttribute="trailing" secondItem="v41-fe-tRX" secondAttribute="trailing" constant="10" id="zlU-vQ-Q5d"/>
                             </constraints>
                         </view>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kIp-ay-Mgk">
+                            <rect key="frame" x="5" y="162" width="22" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="SBj-Tc-MyS"/>
+                                <constraint firstAttribute="width" constant="22" id="h6n-Ax-LOu"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="kIp-ay-Mgk" secondAttribute="bottom" constant="5" id="1Hc-g6-4PW"/>
                         <constraint firstItem="fWS-vM-886" firstAttribute="centerY" secondItem="91S-Cc-VhJ" secondAttribute="centerY" id="1gB-2y-h3Z"/>
-                        <constraint firstItem="fWS-vM-886" firstAttribute="leading" secondItem="91S-Cc-VhJ" secondAttribute="leading" constant="20" id="FTg-he-35F"/>
-                        <constraint firstAttribute="bottom" secondItem="fWS-vM-886" secondAttribute="bottom" constant="5" id="exf-PL-p6Z"/>
-                        <constraint firstAttribute="trailing" secondItem="fWS-vM-886" secondAttribute="trailing" constant="20" id="sHg-Kb-oPs"/>
+                        <constraint firstItem="fWS-vM-886" firstAttribute="leading" secondItem="kIp-ay-Mgk" secondAttribute="trailing" constant="5" id="NOj-Im-poE"/>
+                        <constraint firstItem="kIp-ay-Mgk" firstAttribute="leading" secondItem="91S-Cc-VhJ" secondAttribute="leading" constant="5" id="R3w-RG-olM"/>
+                        <constraint firstAttribute="bottom" secondItem="fWS-vM-886" secondAttribute="bottom" constant="10" id="exf-PL-p6Z"/>
+                        <constraint firstAttribute="trailing" secondItem="fWS-vM-886" secondAttribute="trailing" constant="5" id="sHg-Kb-oPs"/>
                     </constraints>
                 </view>
             </subviews>
@@ -78,8 +87,9 @@
                 <outlet property="dateLabel" destination="v41-fe-tRX" id="ha8-I5-O73"/>
                 <outlet property="messageView" destination="fWS-vM-886" id="ZWx-IX-STk"/>
                 <outlet property="nameLabel" destination="JCw-1i-6mN" id="MuJ-CO-du6"/>
+                <outlet property="senderImageView" destination="kIp-ay-Mgk" id="1EA-Pe-UjS"/>
             </connections>
-            <point key="canvasLocation" x="204.34782608695653" y="41.852678571428569"/>
+            <point key="canvasLocation" x="202.5" y="41.725352112676056"/>
         </view>
     </objects>
 </document>

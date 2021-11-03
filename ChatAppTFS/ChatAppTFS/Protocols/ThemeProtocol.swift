@@ -25,7 +25,6 @@ extension ThemeProtocol {
 		UINavigationBar.appearance().tintColor = tint
 		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: textColor]
 		UINavigationBar.appearance().backgroundColor = backgroundColor
-		UITableViewHeaderFooterView.appearance().tintColor = textColor
 		UITableView.appearance().backgroundColor = backgroundColor
 		UILabel.appearance().textColor = textColor
 		UIView.appearance(whenContainedInInstancesOf: [UITableView.self]).backgroundColor = backgroundColor

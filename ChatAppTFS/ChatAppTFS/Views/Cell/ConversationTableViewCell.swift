@@ -15,6 +15,7 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 	@IBOutlet private weak var dateLabel: UILabel!
 	@IBOutlet private weak var contentLabel: UILabel!
 	@IBOutlet private weak var messageView: MessageView!
+	@IBOutlet private weak var senderImageView: UIImageView!
 	
 	override func layoutSubviews() {
 		super.layoutSubviews()
@@ -23,6 +24,7 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 		messageView.clipsToBounds = true
 		messageView.layer.borderWidth = Constants.ConversationCell.messageViewBorderWidth
 		messageView.layer.borderColor = UIColor.black.cgColor
+		senderImageView.round()
 	}
 	
 	override func prepareForReuse() {
@@ -30,6 +32,7 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 		nameLabel.text = nil
 		dateLabel.text = nil
 		contentLabel.text = nil
+		senderImageView.image = nil
 	}
 	
 	public func configure(with model: Message, senderId: String) {
@@ -37,6 +40,6 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 		contentLabel.text = model.content
 		dateLabel.text = model.created.shortDateFormateTodayOrEarlier
 		selectionStyle = .none
-		
+		senderImageView.image = UIImage.textImage(text: model.senderName.getCapitalLetters())
 	}
 }

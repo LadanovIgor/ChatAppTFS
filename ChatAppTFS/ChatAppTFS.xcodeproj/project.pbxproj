@@ -18,7 +18,7 @@
 		8E15F8FD272E424100EE7918 /* DBChannel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E15F8F7272E424100EE7918 /* DBChannel+CoreDataClass.swift */; };
 		8E15F8FE272E424100EE7918 /* DBChannel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E15F8F9272E424100EE7918 /* DBChannel+CoreDataProperties.swift */; };
 		8E184B12273173D600C352B9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E184B11273173D600C352B9 /* String+.swift */; };
-		8E21E796271DA0280005F20F /* ProfileStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21E795271DA0280005F20F /* ProfileStorageManager.swift */; };
+		8E21E796271DA0280005F20F /* Character+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21E795271DA0280005F20F /* Character+.swift */; };
 		8E2E2703270DE53400BFE156 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2702270DE53400BFE156 /* Channel.swift */; };
 		8E2E2705270DE53B00BFE156 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2704270DE53B00BFE156 /* Message.swift */; };
 		8E2E2708270DE5EA00BFE156 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2707270DE5EA00BFE156 /* UIView+.swift */; };
@@ -84,7 +84,7 @@
 		8E15F8F9272E424100EE7918 /* DBChannel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBChannel+CoreDataProperties.swift"; path = "/Users/ladanov/Documents/Developer/ChatAppTFS/ChatAppTFS/ChatAppTFS/Managers/Database/DBChannel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		8E15F8FA272E424100EE7918 /* DBMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBMessage+CoreDataProperties.swift"; path = "/Users/ladanov/Documents/Developer/ChatAppTFS/ChatAppTFS/ChatAppTFS/Managers/Database/DBMessage+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		8E184B11273173D600C352B9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
-		8E21E795271DA0280005F20F /* ProfileStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageManager.swift; sourceTree = "<group>"; };
+		8E21E795271DA0280005F20F /* Character+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+.swift"; sourceTree = "<group>"; };
 		8E2E2702270DE53400BFE156 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		8E2E2704270DE53B00BFE156 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		8E2E2707270DE5EA00BFE156 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -190,7 +190,6 @@
 				8E40D98C27143AFE00406AD4 /* Theme.m */,
 				8E40D98B27143AD600406AD4 /* Theme.h */,
 				8EE62B3D271FEB6B0011FE58 /* Operation */,
-				8E21E795271DA0280005F20F /* ProfileStorageManager.swift */,
 			);
 			path = Trash;
 			sourceTree = "<group>";
@@ -217,6 +216,7 @@
 				8EE62B4027200A3E0011FE58 /* Data+.swift */,
 				8EF0799F2726C8F800C88771 /* TableView+.swift */,
 				8EF0D00E272AA97500F9D485 /* UIImage+.swift */,
+				8E21E795271DA0280005F20F /* Character+.swift */,
 				8E0040B3272EBAEA00587E99 /* NSSet+.swift */,
 				8E184B11273173D600C352B9 /* String+.swift */,
 			);
@@ -569,7 +569,7 @@
 				8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */,
 				8EF3AA1C272D606200BCA00E /* ChatDB.xcdatamodeld in Sources */,
 				8E03E7F32726466B007F1B2B /* MessageView.swift in Sources */,
-				8E21E796271DA0280005F20F /* ProfileStorageManager.swift in Sources */,
+				8E21E796271DA0280005F20F /* Character+.swift in Sources */,
 				8EAB38AB2717052900A1FF98 /* typealiases.swift in Sources */,
 				8EAB38A52717022200A1FF98 /* ChampagneTheme.swift in Sources */,
 				8EAAFE2A270E8E9000D7497B /* ConversationsListTableHeaderView.swift in Sources */,

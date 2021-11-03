@@ -47,7 +47,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		getSenderId()
 		setUpBackButton()
 		setUpTableView()
-		setUpNewMessageView()
+		setUpSendMessageView()
 		setUpConstraints()
 		addKeyboardObservers()
 		loadMessages()
@@ -56,7 +56,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	// MARK: - Private
 	
-	private func setUpNewMessageView() {
+	private func setUpSendMessageView() {
 		view.addSubview(sendMessageView)
 		sendMessageView.translatesAutoresizingMaskIntoConstraints = false
 		sendMessageView.messageSent = { [weak self] text in
@@ -171,8 +171,18 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 			messages.append(Message(with: dict))
 		}
 		messages.sort { $0.created < $1.created }
+		saveToDatabase()
 		tableView.reloadData()
 		tableView.scrollToBottom()
+	}
+	
+	private func saveToDatabase() {
+		DatabaseManager.shared.save(messages: messages, to: channel?.identifier) { result in
+			switch result {
+			case .success: break
+			case .failure(let error): print(error.localizedDescription)
+			}
+		}
 	}
 	
 	private func fetchMessages() {
@@ -180,18 +190,9 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		DatabaseManager.shared.fetchMessagesFrom(channelId: channel.identifier) { result in
 			switch result {
 			case .success(let messages):
-				messages?.compactMap {$0}.forEach { print($0) }
+				messages?.forEach { print($0) }
 			case .failure(let error):
 				print(error.localizedDescription)
-			}
-		}
-	}
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-		DatabaseManager.shared.save(messages: messages, to: channel?.identifier) { result in
-			switch result {
-			case .success: break
-			case .failure(let error): print(error.localizedDescription)
 			}
 		}
 	}

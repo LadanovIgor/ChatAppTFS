@@ -32,7 +32,7 @@ class ConversationsListViewController: UIViewController {
 		setUpRightBarItem()
 		setUpLeftBarItem()
 		addFirestoreListener()
-		loadDB()
+		loadFromDatabase()
 	}
 	
 	// MARK: - Private
@@ -151,14 +151,15 @@ class ConversationsListViewController: UIViewController {
 			channels.append(Channel(identifier: document.documentID, name: channelName, lastMessage: lastMessage, lastActivity: lastActivity))
 		}
 		channels.sort { ($0.lastActivity ?? Date()) > ($1.lastActivity ?? Date()) }
+		saveToDatabase()
 		tableView.reloadData()
 	}
 	
-	private func loadDB() {
+	private func loadFromDatabase() {
 		DatabaseManager.shared.fetchChannels {result in
 			switch result {
 			case .success(let channels):
-					channels.forEach { print("Channel name: \($0.name), id: \($0.identifier), lastMessage: \($0.lastMessage ?? ""), lastActivity: \(String(describing: $0.lastActivity))")}
+					channels.forEach { print($0.name) }
 			case .failure(let error):
 				print(error.localizedDescription)
 			}
@@ -187,8 +188,7 @@ class ConversationsListViewController: UIViewController {
 		tableView.reloadData()
 	}
 	
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
+	private func saveToDatabase() {
 		DatabaseManager.shared.save(channels: channels) { result in
 			switch result {
 			case .success: break

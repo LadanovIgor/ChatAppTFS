@@ -25,7 +25,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WTB-y8-zlb">
-                        <rect key="frame" x="109" y="10" width="209" height="20"/>
+                        <rect key="frame" x="109" y="16" width="269" height="20"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="hhl-Pz-dlh"/>
@@ -34,8 +34,15 @@
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YHp-v5-7Gx">
+                        <rect key="frame" x="109" y="36" width="209" height="64"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qho-K1-6GO">
-                        <rect key="frame" x="318" y="10" width="60" height="20"/>
+                        <rect key="frame" x="318" y="58" width="60" height="20"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="KSj-0A-YhI"/>
@@ -45,28 +52,21 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YHp-v5-7Gx">
-                        <rect key="frame" x="109" y="30" width="249" height="70"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="YHp-v5-7Gx" secondAttribute="trailing" constant="10" id="7a4-Uc-GlY"/>
+                    <constraint firstItem="qho-K1-6GO" firstAttribute="leading" secondItem="YHp-v5-7Gx" secondAttribute="trailing" id="6IF-mG-cBz"/>
                     <constraint firstItem="YHp-v5-7Gx" firstAttribute="leading" secondItem="BMr-OV-at6" secondAttribute="trailing" constant="10" id="A1i-mg-AP2"/>
                     <constraint firstItem="BMr-OV-at6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="DU1-bZ-nde"/>
                     <constraint firstAttribute="bottomMargin" secondItem="YHp-v5-7Gx" secondAttribute="bottom" constant="10" id="JKD-R5-gRg"/>
                     <constraint firstItem="BMr-OV-at6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="L6v-Qp-wTa"/>
                     <constraint firstItem="WTB-y8-zlb" firstAttribute="leading" secondItem="BMr-OV-at6" secondAttribute="trailing" constant="10" id="RC4-h1-fZX"/>
-                    <constraint firstItem="qho-K1-6GO" firstAttribute="leading" secondItem="WTB-y8-zlb" secondAttribute="trailing" id="RhP-Yg-uQV"/>
-                    <constraint firstItem="qho-K1-6GO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="bji-e3-YDM"/>
-                    <constraint firstItem="WTB-y8-zlb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="cYm-WW-H4P"/>
+                    <constraint firstAttribute="trailing" secondItem="WTB-y8-zlb" secondAttribute="trailing" constant="10" id="RhP-Yg-uQV"/>
+                    <constraint firstItem="WTB-y8-zlb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="cYm-WW-H4P"/>
                     <constraint firstAttribute="bottom" secondItem="BMr-OV-at6" secondAttribute="bottom" constant="16" id="fn9-Tr-fR0"/>
                     <constraint firstAttribute="trailing" secondItem="qho-K1-6GO" secondAttribute="trailing" constant="10" id="hXX-YY-Pmu"/>
                     <constraint firstItem="YHp-v5-7Gx" firstAttribute="top" secondItem="WTB-y8-zlb" secondAttribute="bottom" id="jl6-SA-mV9"/>
+                    <constraint firstItem="qho-K1-6GO" firstAttribute="centerY" secondItem="YHp-v5-7Gx" secondAttribute="centerY" id="vZN-ue-3Fv"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
