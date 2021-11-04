@@ -19,14 +19,10 @@ extension Date {
 		return Date(timeIntervalSinceNow: span)
 	}
 	
-	var shortDateFormateTodayOrEarlier: String {
-		let diffFromNow = self.timeIntervalSinceNow
+	var todayOrEarlier: String {
 		let dateFormatter = DateFormatter()
-		if diffFromNow > -86400 {
-			dateFormatter.dateFormat = "HH:mm"
-		} else {
-			dateFormatter.dateFormat = "dd MMM"
-		}
+		let isToday = Calendar.current.isDateInToday(self)
+		dateFormatter.dateFormat = isToday ? "HH:mm" : "dd MMM"
 		return dateFormatter.string(from: self)
 	}
 }

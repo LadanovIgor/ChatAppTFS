@@ -60,7 +60,7 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 	
 	public func configure(with viewModel: ViewModel) {
 		nameLabel.text = viewModel.name
-		dateLabel.text = viewModel.lastMessageDate?.shortDateFormateTodayOrEarlier
+		dateLabel.text = viewModel.lastMessageDate?.todayOrEarlier
 		lastMessageLabel.font = .systemFont(ofSize: 13, weight: viewModel.hasUnreadMessages ? .bold : .regular)
 		profileImageView.image = UIImage.textImage(text: viewModel.name?.getCapitalLetters())
 		guard let lastMessage = viewModel.lastMessage else {

@@ -13,7 +13,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 
 	private lazy var db = Firestore.firestore()
 	private lazy var reference: CollectionReference = {
-		guard let channelIdentifier = channel?.identifier else { fatalError("Channel Id None!") }
+		guard let channelIdentifier = channel?.identifier else { fatalError("Channel None!") }
 		return db.collection("channels").document(channelIdentifier).collection("messages")
 	}()
 	
@@ -178,7 +178,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	private func saveToDatabase() {
 		guard let channel = channel else {
-			fatalError("Channel Id None!")
+			fatalError("Channel None!")
 		}
 		DatabaseManager.shared.save(messages: messages, toChannel: channel.identifier) { result in
 			switch result {

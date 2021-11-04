@@ -38,7 +38,7 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 	public func configure(with model: Message, senderId: String) {
 		nameLabel.text = model.senderId == senderId ? nil : model.senderName
 		contentLabel.text = model.content
-		dateLabel.text = model.created.shortDateFormateTodayOrEarlier
+		dateLabel.text = model.created.todayOrEarlier
 		selectionStyle = .none
 		senderImageView.image = UIImage.textImage(text: model.senderName.getCapitalLetters())
 	}
