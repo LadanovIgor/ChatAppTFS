@@ -18,14 +18,14 @@ protocol StoredLocally: AnyObject {
 extension StoredLocally {
 	
 	private var sourcePath: String? {
-		guard let path = Bundle.main.path(forResource: Constants.PlistManager.plistFileName, ofType: "plist") else { return nil }
+		guard let path = Bundle.main.path(forResource: Constants.LocalStorage.plistFileName, ofType: "plist") else { return nil }
 		return path
 	}
 	
 	private var fileURL: URL? {
 		guard sourcePath != nil else { return nil }
 		let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-		return directory?.appendingPathComponent("\(Constants.PlistManager.plistFileName).plist")
+		return directory?.appendingPathComponent("\(Constants.LocalStorage.plistFileName).plist")
 	}
 	
 	private func addValuesToPlistFile(dictionary: [String: Data]) throws {

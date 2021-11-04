@@ -13,7 +13,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 
 	private lazy var db = Firestore.firestore()
 	private lazy var reference: CollectionReference = {
-		guard let channelIdentifier = channel?.identifier else { fatalError() }
+		guard let channelIdentifier = channel?.identifier else { fatalError("Channel Id None!") }
 		return db.collection("channels").document(channelIdentifier).collection("messages")
 	}()
 	
@@ -65,15 +65,17 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func createNewMessage(with text: String) {
-		guard let senderId = senderId else {
-			return
-		}
-		reference.addDocument(data: ["content": text, "created": Timestamp(date: Date()), "senderId": senderId, "senderName": "I.Ladanov"])
+		guard let senderId = senderId else { return }
+		reference.addDocument(data: [
+			Constants.FirebaseKey.content: text,
+			Constants.FirebaseKey.data: Timestamp(date: Date()),
+			Constants.FirebaseKey.senderId: senderId,
+			Constants.FirebaseKey.senderName: "I.Ladanov"])
 		messages = [Message]()
 	}
 	
 	private func getSenderId() {
-		let key = Constants.PlistManager.idKey
+		let key = Constants.LocalStorage.idKey
 		LocalStorageManager.shared.getValue(for: key, completion: { [weak self] result in
 			switch result {
 			case .success(let data):
@@ -93,7 +95,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		guard let dataId = senderId?.data(using: .utf8) else {
 			return
 		}
-		let dict = [Constants.PlistManager.idKey: dataId]
+		let dict = [Constants.LocalStorage.idKey: dataId]
 		LocalStorageManager.shared.saveLocally(dict) { _ in
 			
 		}
@@ -159,6 +161,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 				return
 			}
 			guard let documents = snapshot?.documents else {
+				print(CustomFirebaseError.snapshotNone.localizedDescription)
 				return
 			}
 			self?.getMessages(from: documents)
@@ -166,10 +169,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func getMessages(from documents: [QueryDocumentSnapshot]) {
-		for document in documents {
-			let dict = document.data()
-			messages.append(Message(with: dict))
-		}
+		documents.forEach { messages.append(Message(with: $0)) }
 		messages.sort { $0.created < $1.created }
 		saveToDatabase()
 		tableView.reloadData()
@@ -177,7 +177,10 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func saveToDatabase() {
-		DatabaseManager.shared.save(messages: messages, to: channel?.identifier) { result in
+		guard let channel = channel else {
+			fatalError("Channel Id None!")
+		}
+		DatabaseManager.shared.save(messages: messages, toChannel: channel.identifier) { result in
 			switch result {
 			case .success: break
 			case .failure(let error): print(error.localizedDescription)
@@ -189,8 +192,8 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		guard let channel = channel else { return }
 		DatabaseManager.shared.fetchMessagesFrom(channelId: channel.identifier) { result in
 			switch result {
-			case .success(let messages):
-				messages?.forEach { print($0) }
+			case .success: break
+//				messages?.forEach { print($0) }
 			case .failure(let error):
 				print(error.localizedDescription)
 			}

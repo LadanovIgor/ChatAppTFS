@@ -37,7 +37,7 @@ final class LocalStorageManager: StoredLocally {
 	
 	func loadTheme(completion: @escaping ResultClosure<Data>) {
 		queue.async { [weak self] in
-			self?.getValue(for: Constants.PlistManager.themeKey) { result in
+			self?.getValue(for: Constants.LocalStorage.themeKey) { result in
 				DispatchQueue.main.async {
 					completion(result)
 				}

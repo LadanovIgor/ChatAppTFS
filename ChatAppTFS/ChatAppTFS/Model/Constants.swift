@@ -60,7 +60,7 @@ enum Constants {
 		static let messageViewBorderWidth: CGFloat = 0.5
 	}
 	
-	enum PlistManager {
+	enum LocalStorage {
 		static let plistFileName = "Data"
 		static let nameKey = "name"
 		static let infoKey = "info"
@@ -68,5 +68,17 @@ enum Constants {
 		static let imageKey = "image"
 		static let themeKey = "theme"
 		static let idKey = "id"
+	}
+	
+	enum FirebaseKey {
+		static let content = "content"
+		static let data = "created"
+		static let senderId = "senderId"
+		static let senderName = "senderName"
+	}
+	
+	enum DatabaseKey {
+		static let channel = "DBChannel"
+		static let message = "DBMessage"
 	}
 }

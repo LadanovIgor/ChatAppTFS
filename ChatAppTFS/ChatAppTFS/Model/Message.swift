@@ -14,8 +14,12 @@ struct Message {
 	let created: Date
 	let senderId: String
 	let senderName: String
+}
+
+extension Message {
 	
-	init(with dict: [String: Any]) {
+	init(with document: QueryDocumentSnapshot) {
+		let dict = document.data()
 		let content = dict["content"] as? String ?? ""
 		let senderId = dict["senderId"] as? String ?? ""
 		let created = (dict["created"] as? Timestamp)?.dateValue() ?? Date(timeIntervalSinceReferenceDate: 10)

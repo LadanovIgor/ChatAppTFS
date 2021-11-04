@@ -11,4 +11,5 @@ enum DatabaseError: Error {
 	case failureSaving
 	case failureFetching
 	case invalidData
+	case channel
 }

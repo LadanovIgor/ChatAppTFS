@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct Channel {
 	let identifier: String
@@ -18,6 +19,20 @@ struct Channel {
 		self.lastActivity = lastActivity
 		self.lastMessage = lastMessage
 		self.name = name
+	}
+}
+
+extension Channel {
+	
+	init(with document: QueryDocumentSnapshot) {
+		let dict = document.data()
+		let channelName = (dict["name"] as? String) ?? "No title"
+		let lastMessage = dict["lastMessage"] as? String
+		let lastActivity = (dict["lastActivity"] as? Timestamp)?.dateValue()
+		self.lastMessage = lastMessage
+		self.lastActivity = lastActivity
+		self.name = channelName
+		self.identifier = document.documentID
 	}
 	
 	init(with dbChannel: DBChannel) {

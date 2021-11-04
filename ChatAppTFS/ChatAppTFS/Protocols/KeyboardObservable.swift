@@ -27,14 +27,14 @@ extension KeyboardObservable {
 		NotificationCenter.default.addObserver(
 			forName: UIResponder.keyboardWillShowNotification,
 			object: nil,
-			queue: nil) { notification in
-				self.handleKeyboardNotification(notification: notification, completion: completion)
+			queue: nil) { [weak self] notification in
+				self?.handleKeyboardNotification(notification: notification, completion: completion)
 			}
 		NotificationCenter.default.addObserver(
 			forName: UIResponder.keyboardWillHideNotification,
 			object: nil,
-			queue: nil) { notification in
-				self.handleKeyboardNotification(notification: notification, completion: completion)
+			queue: nil) { [weak self] notification in
+				self?.handleKeyboardNotification(notification: notification, completion: completion)
 			}
 	}
 	

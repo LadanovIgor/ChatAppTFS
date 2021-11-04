@@ -97,22 +97,22 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 			let nameText: String
 			let infoText: String
 			let locationText: String
-			if let nameData = values[Constants.PlistManager.nameKey], let name = String(data: nameData, encoding: .utf8) {
+			if let nameData = values[Constants.LocalStorage.nameKey], let name = String(data: nameData, encoding: .utf8) {
 				nameText = name
 			} else {
 				nameText = "Full name"
 			}
-			if let infoData = values[Constants.PlistManager.infoKey], let info = String(data: infoData, encoding: .utf8) {
+			if let infoData = values[Constants.LocalStorage.infoKey], let info = String(data: infoData, encoding: .utf8) {
 				infoText = info
 			} else {
 				infoText = "About youself"
 			}
-			if let locationData = values[Constants.PlistManager.locationKey], let location = String(data: locationData, encoding: .utf8) {
+			if let locationData = values[Constants.LocalStorage.locationKey], let location = String(data: locationData, encoding: .utf8) {
 				locationText = location
 			} else {
 				locationText = "Location"
 			}
-			let imageData = values[Constants.PlistManager.imageKey]
+			let imageData = values[Constants.LocalStorage.imageKey]
 			DispatchQueue.main.async { [weak self] in
 				self?.nameTextField.text = nameText
 				self?.locationTextField.text = locationText
@@ -306,7 +306,7 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 		guard let imageData = image.jpegData(compressionQuality: 1.0) else {
 			return
 		}
-		changedValues[Constants.PlistManager.imageKey] = imageData
+		changedValues[Constants.LocalStorage.imageKey] = imageData
 	}
 }
 
@@ -318,11 +318,11 @@ extension UserProfileViewController: UITextFieldDelegate {
 		}
 		let data = (textField.text ?? "").data(using: .utf8)
 		if textField == nameTextField {
-			changedValues[Constants.PlistManager.nameKey] = data
+			changedValues[Constants.LocalStorage.nameKey] = data
 		} else if textField == locationTextField {
-			changedValues[Constants.PlistManager.locationKey] = data
+			changedValues[Constants.LocalStorage.locationKey] = data
 		} else if textField == infoTextField {
-			changedValues[Constants.PlistManager.infoKey] = data
+			changedValues[Constants.LocalStorage.infoKey] = data
 		}
 		textField.placeholder = textField.text
 	}

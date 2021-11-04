@@ -50,21 +50,22 @@ class ConversationsListViewController: UIViewController {
 
 	private func setUpRightBarItem() {
 		let button = UIButton(frame: CGRect(x: 0, y: 0, width: barButtonSize, height: barButtonSize))
-		let resizeImage = UIImage.textImage(text: "")?.resize(width: barButtonSize, height: barButtonSize)
+		let resizeImage = UIImage.textImage(text: "FN")?.resize(width: barButtonSize, height: barButtonSize)
 		button.setImage(resizeImage, for: .normal)
 		button.clipsToBounds = true
 		button.layer.masksToBounds = true
 		button.addTarget(self, action: #selector(didTapRightBarButton), for: .touchUpInside)
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
 		button.round()
-		LocalStorageManager.shared.getValue(for: Constants.PlistManager.nameKey) { [weak self] result in
+		LocalStorageManager.shared.getValue(for: Constants.LocalStorage.nameKey) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let data):
 				guard let text = String(data: data, encoding: .utf8),
 					  let image = UIImage.textImage(text: text.getCapitalLetters()) else { return }
 				button.setImage(image.resize(width: self.barButtonSize, height: self.barButtonSize), for: .normal)
-			case .failure(let error): print(error.localizedDescription)
+			case .failure(let error):
+					print(error.localizedDescription)
 			}
 		}
 	}
@@ -123,7 +124,7 @@ class ConversationsListViewController: UIViewController {
 		guard let themeNameData = themeName.data(using: .utf8) else {
 			return
 		}
-		let dict = [Constants.PlistManager.themeKey: themeNameData]
+		let dict = [Constants.LocalStorage.themeKey: themeNameData]
 		LocalStorageManager.shared.saveLocally(dict) { _ in
 			
 		}
@@ -136,6 +137,7 @@ class ConversationsListViewController: UIViewController {
 				return
 			}
 			guard let documents = snapshot?.documents else {
+				print(CustomFirebaseError.snapshotNone.localizedDescription)
 				return
 			}
 			self?.getChannelsFrom(documents: documents)
@@ -143,13 +145,7 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	private func getChannelsFrom(documents: [QueryDocumentSnapshot]) {
-		documents.forEach { document in
-			let data = document.data()
-			let channelName = (data["name"] as? String) ?? "No title"
-			let lastMessage = data["lastMessage"] as? String
-			let lastActivity = (data["lastActivity"] as? Timestamp)?.dateValue()
-			channels.append(Channel(identifier: document.documentID, name: channelName, lastMessage: lastMessage, lastActivity: lastActivity))
-		}
+		documents.forEach { channels.append(Channel(with: $0)) }
 		channels.sort { ($0.lastActivity ?? Date()) > ($1.lastActivity ?? Date()) }
 		saveToDatabase()
 		tableView.reloadData()
@@ -158,8 +154,8 @@ class ConversationsListViewController: UIViewController {
 	private func loadFromDatabase() {
 		DatabaseManager.shared.fetchChannels {result in
 			switch result {
-			case .success(let channels):
-					channels.forEach { print($0.name) }
+			case .success: break
+//					channels.forEach { print($0.name) }
 			case .failure(let error):
 				print(error.localizedDescription)
 			}

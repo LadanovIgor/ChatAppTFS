@@ -23,12 +23,11 @@ final class DatabaseManager {
 	}()
 	
 	private lazy var viewContext = persistentContainer.viewContext
-	private lazy var backgroundContext = persistentContainer.newBackgroundContext()
 	
 	private init() {}
 	
 	func fetchChannels(completion: @escaping ResultClosure<[Channel]>) {
-		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DBChannel")
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.DatabaseKey.channel)
 		if let dbChannels = try? viewContext.fetch(fetchRequest) as? [DBChannel] {
 			let channels = dbChannels.map { Channel(with: $0) }
 			completion(.success(channels))
@@ -38,7 +37,7 @@ final class DatabaseManager {
 	}
 	
 	func fetchMessagesFrom(channelId: String, completion: @escaping ResultClosure<[Message]?>) {
-		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DBChannel")
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.DatabaseKey.channel)
 		fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
 		if let dbChannels = try? viewContext.fetch(fetchRequest) as? [DBChannel] {
 			guard let dbMessages = dbChannels.first?.messages else {
@@ -60,7 +59,6 @@ final class DatabaseManager {
 				dbChannel.lastMessage = channel.lastMessage
 				dbChannel.lastActivity = channel.lastActivity
 				dbChannel.name = channel.name
-				
 				context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 				do {
 					try context.save()
@@ -72,10 +70,7 @@ final class DatabaseManager {
 		}
 	}
 	
-	func save(messages: [Message], to channelId: String?, completion: @escaping ResultClosure<Bool>) {
-		guard let channelId = channelId else {
-			return
-		}
+	func save(messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>) {
 		persistentContainer.performBackgroundTask { context in
 			let dbMessages: [DBMessage] = messages.map { message in
 				let dbMessage = DBMessage(context: context)
@@ -85,7 +80,7 @@ final class DatabaseManager {
 				dbMessage.senderName = message.senderName
 				return dbMessage
 			}
-			let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DBChannel")
+			let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.DatabaseKey.channel)
 			fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
 			if let dbChannels = try? context.fetch(fetchRequest) as? [DBChannel], let dbChannel = dbChannels.first {
 				context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -97,7 +92,7 @@ final class DatabaseManager {
 					completion(.failure(DatabaseError.failureSaving))
 				}
 			} else {
-				completion(.failure(DatabaseError.failureSaving))
+				completion(.failure(DatabaseError.failureFetching))
 			}
 			
 		}
