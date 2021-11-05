@@ -19,14 +19,14 @@ class SendMessageView: UIView {
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
 		addSubViews(textField, sendButton)
-		setUpAddButton()
+		setUpSendButton()
 		setUpTextField()
 		setUpConstraints()
 	}
 	
 	// MARK: - Private
 	
-	private func setUpAddButton() {
+	private func setUpSendButton() {
 		sendButton.translatesAutoresizingMaskIntoConstraints = false
 		sendButton.addTarget(self, action: #selector(didTapSendButton), for: .touchUpInside)
 		let attributedString = NSAttributedString(

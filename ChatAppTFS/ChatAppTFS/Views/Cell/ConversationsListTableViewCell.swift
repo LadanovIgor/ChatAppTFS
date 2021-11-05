@@ -20,7 +20,7 @@ class ConversationsListTableViewCell: UITableViewCell, NibLoadable, Configurable
 		let isOnline: Bool
 		let hasUnreadMessages: Bool
 		
-		init(with channel: Channel) {
+		init(with channel: DBChannel) {
 			self.name = channel.name
 			self.lastMessage = channel.lastMessage
 			self.lastMessageDate = channel.lastActivity

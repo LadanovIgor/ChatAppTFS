@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import CoreData
 
 class ConversationsListViewController: UIViewController {
 	
@@ -16,8 +17,21 @@ class ConversationsListViewController: UIViewController {
 	private lazy var db = Firestore.firestore()
 	private lazy var reference = db.collection("channels")
 	
+	lazy var fetchResultController: NSFetchedResultsController<DBChannel> = {
+		let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
+		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBChannel.lastActivity), ascending: false)
+//		fetchRequest.fetchLimit = 10
+//		fetchRequest.fetchOffset = 5
+		fetchRequest.sortDescriptors = [sortDescriptor]
+		let fetchResultController = NSFetchedResultsController(
+			fetchRequest: fetchRequest,
+			managedObjectContext: DatabaseManager.shared.viewContext,
+			sectionNameKeyPath: nil,
+			cacheName: nil)
+		return fetchResultController
+	}()
+	
 	var channels = [Channel]()
-//	var channel: Channel?
 	
 	private var tableView = UITableView(frame: .zero, style: .plain)
 	
@@ -33,6 +47,7 @@ class ConversationsListViewController: UIViewController {
 		setUpLeftBarItem()
 		addFirestoreListener()
 		loadFromDatabase()
+		performFetching()
 	}
 	
 	// MARK: - Private
@@ -193,6 +208,15 @@ class ConversationsListViewController: UIViewController {
 			}
 		}
 	}
+	
+	private func performFetching() {
+		fetchResultController.delegate = self
+		do {
+			try fetchResultController.performFetch()
+		} catch {
+			print(error.localizedDescription)
+		}
+	}
 }
 
 // MARK: - UITableViewDelegate
@@ -205,7 +229,8 @@ extension ConversationsListViewController: UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		let vc = ConversationViewController(channel: channels[indexPath.row])
+		let channel = fetchResultController.object(at: indexPath)
+		let vc = ConversationViewController(channel: channel)
 		navigationController?.pushViewController(vc, animated: true)
 	}
 	
@@ -218,11 +243,12 @@ extension ConversationsListViewController: UITableViewDelegate {
 
 extension ConversationsListViewController: UITableViewDataSource {
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+		return fetchResultController.sections?.count ?? 0
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return channels.count
+		let sectionInfo = fetchResultController.sections?[section]
+		return sectionInfo?.numberOfObjects ?? 0
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -231,7 +257,8 @@ extension ConversationsListViewController: UITableViewDataSource {
 			for: indexPath) as? ConversationsListTableViewCell else {
 				return UITableViewCell()
 			}
-		cell.configure(with: .init(with: channels[indexPath.row]))
+		let channel = fetchResultController.object(at: indexPath)
+		cell.configure(with: .init(with: channel))
 		cell.layoutIfNeeded()
 		return cell
 	}
@@ -246,10 +273,51 @@ extension ConversationsListViewController: UITableViewDataSource {
 		}
 		return headerView
 	}
+	
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == .delete {
+			let person = fetchResultController.object(at: indexPath)
+			DatabaseManager.shared.viewContext.delete(person)
+			DatabaseManager.shared.saveContext(DatabaseManager.shared.viewContext) { result in
+				switch result {
+				case .failure(let error):
+					print(error.localizedDescription)
+				default: break
+				}
+			}
+		}
+	}
 }
 
-extension ConversationsListViewController: ThemesViewControllerDelegate {
-	func themesViewController(_ controller: UIViewController, didSelect selectedTheme: Theme) {
-		logThemeChanging(selectedTheme: selectedTheme)
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+	func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+		tableView.beginUpdates()
+	}
+	
+	func controller(
+		_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any,
+		at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+		guard let indexPath = indexPath else {
+			return
+		}
+		
+		switch type {
+		case .insert: tableView.insertRows(at: [indexPath], with: .automatic)
+		case .delete: tableView.deleteRows(at: [indexPath], with: .automatic)
+		case .update: tableView.reloadRows(at: [indexPath], with: .automatic)
+		case .move:
+			guard let newIndexPath = newIndexPath else {
+				return
+			}
+			tableView.moveRow(at: indexPath, to: newIndexPath)
+		default: break
+		}
+
+	}
+	
+	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+		tableView.endUpdates()
 	}
 }

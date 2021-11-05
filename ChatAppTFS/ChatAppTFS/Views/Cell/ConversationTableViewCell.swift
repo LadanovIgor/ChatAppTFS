@@ -35,11 +35,14 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 		senderImageView.image = nil
 	}
 	
-	public func configure(with model: Message, senderId: String) {
+	public func configure(with model: DBMessage, senderId: String) {
 		nameLabel.text = model.senderId == senderId ? nil : model.senderName
 		contentLabel.text = model.content
-		dateLabel.text = model.created.todayOrEarlier
+		guard let senderName = model.senderName, let created = model.created else {
+			fatalError("Wrong DBMessage")
+		}
+		dateLabel.text = created.todayOrEarlier
 		selectionStyle = .none
-		senderImageView.image = UIImage.textImage(text: model.senderName.getCapitalLetters())
+		senderImageView.image = UIImage.textImage(text: senderName.getCapitalLetters())
 	}
 }

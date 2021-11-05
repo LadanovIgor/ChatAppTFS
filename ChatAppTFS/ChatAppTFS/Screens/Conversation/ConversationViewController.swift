@@ -6,6 +6,7 @@
 //
 import Firebase
 import UIKit
+import CoreData
 
 class ConversationViewController: UIViewController, KeyboardObservable {
 	
@@ -17,16 +18,32 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		return db.collection("channels").document(channelIdentifier).collection("messages")
 	}()
 	
+	lazy var fetchResultController: NSFetchedResultsController<DBMessage> = {
+		guard let channelIdentifier = channel?.identifier else { fatalError("Channel None!") }
+		let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
+		fetchRequest.predicate = NSPredicate(format: "channel.identifier = %@", channelIdentifier)
+		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBMessage.created), ascending: true)
+//		fetchRequest.fetchLimit = 10
+//		fetchRequest.fetchOffset = 5
+		fetchRequest.sortDescriptors = [sortDescriptor]
+		let fetchResultController = NSFetchedResultsController(
+			fetchRequest: fetchRequest,
+			managedObjectContext: DatabaseManager.shared.viewContext,
+			sectionNameKeyPath: nil,
+			cacheName: nil)
+		return fetchResultController
+	}()
+	
 	private let tableView = UITableView(frame: .zero, style: .grouped)
 	private let sendMessageView = SendMessageView()
 	private var bottomConstraint: NSLayoutConstraint?
-	private var channel: Channel?
+	private var channel: DBChannel?
 	private var messages = [Message]()
 	private var senderId: String?
 	
 	// MARK: - Init
 	
-	init(channel: Channel) {
+	init(channel: DBChannel) {
 		self.channel = channel
 		super.init(nibName: nil, bundle: nil)
 		self.title = channel.name
@@ -52,6 +69,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		addKeyboardObservers()
 		loadMessages()
 		fetchMessages()
+		performFetching()
 	}
 	
 	// MARK: - Private
@@ -177,10 +195,10 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func saveToDatabase() {
-		guard let channel = channel else {
+		guard let channel = channel, let channelId = channel.identifier else {
 			fatalError("Channel None!")
 		}
-		DatabaseManager.shared.save(messages: messages, toChannel: channel.identifier) { result in
+		DatabaseManager.shared.save(messages: messages, toChannel: channelId) { result in
 			switch result {
 			case .success: break
 			case .failure(let error): print(error.localizedDescription)
@@ -189,14 +207,25 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func fetchMessages() {
-		guard let channel = channel else { return }
-		DatabaseManager.shared.fetchMessagesFrom(channelId: channel.identifier) { result in
+		guard let channel = channel, let channelId = channel.identifier else {
+			fatalError("Channel None!")
+		}
+		DatabaseManager.shared.fetchMessagesFrom(channelId: channelId) { result in
 			switch result {
 			case .success: break
 //				messages?.forEach { print($0) }
 			case .failure(let error):
 				print(error.localizedDescription)
 			}
+		}
+	}
+	
+	private func performFetching() {
+		fetchResultController.delegate = self
+		do {
+			try fetchResultController.performFetch()
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 }
@@ -220,12 +249,46 @@ extension ConversationViewController: UITableViewDataSource {
 			for: indexPath) as? ConversationTableViewCell else {
 				return UITableViewCell()
 			}
-		let message = messages[indexPath.row]
+		let message = fetchResultController.object(at: indexPath)
 		cell.configure(with: message, senderId: senderId ?? "")
 		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return messages.count
+		let sectionInfo = fetchResultController.sections?[section]
+		return sectionInfo?.numberOfObjects ?? 0
+	}
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension ConversationViewController: NSFetchedResultsControllerDelegate {
+	func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+		tableView.beginUpdates()
+	}
+	
+	func controller(
+		_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any,
+		at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+		guard let indexPath = indexPath else {
+			return
+		}
+		
+		switch type {
+		case .insert: tableView.insertRows(at: [indexPath], with: .automatic)
+		case .delete: tableView.deleteRows(at: [indexPath], with: .automatic)
+		case .update: tableView.reloadRows(at: [indexPath], with: .automatic)
+		case .move:
+			guard let newIndexPath = newIndexPath else {
+				return
+			}
+			tableView.moveRow(at: indexPath, to: newIndexPath)
+		default: break
+		}
+
+	}
+	
+	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+		tableView.endUpdates()
 	}
 }

@@ -22,9 +22,19 @@ final class DatabaseManager {
 		return container
 	}()
 	
-	private lazy var viewContext = persistentContainer.viewContext
+	lazy var viewContext = persistentContainer.viewContext
 	
 	private init() {}
+	
+	func saveContext(_ context: NSManagedObjectContext, completion: @escaping ResultClosure<Bool>) {
+		context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+		do {
+			try context.save()
+			completion(.success(true))
+		} catch {
+			completion(.failure(DatabaseError.failureSaving))
+		}
+	}
 	
 	func fetchChannels(completion: @escaping ResultClosure<[Channel]>) {
 		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.DatabaseKey.channel)
@@ -52,26 +62,20 @@ final class DatabaseManager {
 	}
 	
 	func save(channels: [Channel], completion: @escaping ResultClosure<Bool>) {
-		persistentContainer.performBackgroundTask { context in
+		persistentContainer.performBackgroundTask { [weak self] context in
 			channels.forEach { channel in
 				let dbChannel = DBChannel(context: context)
 				dbChannel.identifier = channel.identifier
 				dbChannel.lastMessage = channel.lastMessage
 				dbChannel.lastActivity = channel.lastActivity
 				dbChannel.name = channel.name
-				context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-				do {
-					try context.save()
-					completion(.success(true))
-				} catch {
-					completion(.failure(DatabaseError.failureSaving))
-				}
+				self?.saveContext(context, completion: completion)
 			}
 		}
 	}
 	
 	func save(messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>) {
-		persistentContainer.performBackgroundTask { context in
+		persistentContainer.performBackgroundTask { [weak self] context in
 			let dbMessages: [DBMessage] = messages.map { message in
 				let dbMessage = DBMessage(context: context)
 				dbMessage.content = message.content
@@ -83,14 +87,8 @@ final class DatabaseManager {
 			let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.DatabaseKey.channel)
 			fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
 			if let dbChannels = try? context.fetch(fetchRequest) as? [DBChannel], let dbChannel = dbChannels.first {
-				context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 				dbChannel.addToMessages(NSSet(array: dbMessages))
-				do {
-					try context.save()
-					completion(.success(true))
-				} catch {
-					completion(.failure(DatabaseError.failureSaving))
-				}
+				self?.saveContext(context, completion: completion)
 			} else {
 				completion(.failure(DatabaseError.failureFetching))
 			}
