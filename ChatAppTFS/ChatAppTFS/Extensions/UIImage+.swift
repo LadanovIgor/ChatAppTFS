@@ -27,7 +27,7 @@ extension UIImage {
 		let size = CGSize(width: 100, height: 100)
 		UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
 		let context = UIGraphicsGetCurrentContext()
-		let color = Constants.ImageBackgroundColor.allCases.randomElement()?.color ?? UIColor.brown
+		let color = Constants.ImageBackgroundColor.getColor(from: text?.first)
 		context?.setFillColor(color.cgColor)
 		context?.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
 		let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black,

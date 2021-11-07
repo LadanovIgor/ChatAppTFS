@@ -23,8 +23,6 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
 		fetchRequest.predicate = NSPredicate(format: "channel.identifier = %@", channelIdentifier)
 		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBMessage.created), ascending: true)
-//		fetchRequest.fetchLimit = 10
-//		fetchRequest.fetchOffset = 5
 		fetchRequest.sortDescriptors = [sortDescriptor]
 		let fetchResultController = NSFetchedResultsController(
 			fetchRequest: fetchRequest,
@@ -198,9 +196,18 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		guard let channel = channel, let channelId = channel.identifier else {
 			fatalError("Channel None!")
 		}
-		DatabaseManager.shared.save(messages: messages, toChannel: channelId) { result in
+		DatabaseManager.shared.save(messages: messages, toChannel: channelId) { [weak self] result in
 			switch result {
-			case .success: break
+			case .success:
+					do {
+						try self?.fetchResultController.performFetch()
+						DispatchQueue.main.async {
+							self?.tableView.reloadData()
+							self?.tableView.scrollToBottom()
+						}
+					} catch {
+						print(error.localizedDescription)
+					}
 			case .failure(let error): print(error.localizedDescription)
 			}
 		}
@@ -213,7 +220,6 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		DatabaseManager.shared.fetchMessagesFrom(channelId: channelId) { result in
 			switch result {
 			case .success: break
-//				messages?.forEach { print($0) }
 			case .failure(let error):
 				print(error.localizedDescription)
 			}
@@ -276,7 +282,9 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
 		
 		switch type {
 		case .insert: tableView.insertRows(at: [indexPath], with: .automatic)
-		case .delete: tableView.deleteRows(at: [indexPath], with: .automatic)
+		case .delete:
+				
+				tableView.deleteRows(at: [indexPath], with: .automatic)
 		case .update: tableView.reloadRows(at: [indexPath], with: .automatic)
 		case .move:
 			guard let newIndexPath = newIndexPath else {

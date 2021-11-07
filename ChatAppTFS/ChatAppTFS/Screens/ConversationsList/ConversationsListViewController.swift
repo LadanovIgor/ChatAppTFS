@@ -20,8 +20,6 @@ class ConversationsListViewController: UIViewController {
 	lazy var fetchResultController: NSFetchedResultsController<DBChannel> = {
 		let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
 		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBChannel.lastActivity), ascending: false)
-//		fetchRequest.fetchLimit = 10
-//		fetchRequest.fetchOffset = 5
 		fetchRequest.sortDescriptors = [sortDescriptor]
 		let fetchResultController = NSFetchedResultsController(
 			fetchRequest: fetchRequest,
@@ -45,9 +43,10 @@ class ConversationsListViewController: UIViewController {
 		setUpTableView()
 		setUpRightBarItem()
 		setUpLeftBarItem()
-		addFirestoreListener()
 		loadFromDatabase()
+		fetchResultController.delegate = self
 		performFetching()
+		addFirestoreListener()
 	}
 	
 	// MARK: - Private
@@ -151,19 +150,19 @@ class ConversationsListViewController: UIViewController {
 				print(error.localizedDescription)
 				return
 			}
-			guard let documents = snapshot?.documents else {
+			guard let documentChanges = snapshot?.documentChanges else {
 				print(CustomFirebaseError.snapshotNone.localizedDescription)
 				return
 			}
-			self?.getChannelsFrom(documents: documents)
+			
+			self?.getChannelsFrom(documentChanges: documentChanges)
 		}
 	}
 	
-	private func getChannelsFrom(documents: [QueryDocumentSnapshot]) {
-		documents.forEach { channels.append(Channel(with: $0)) }
-		channels.sort { ($0.lastActivity ?? Date()) > ($1.lastActivity ?? Date()) }
+	private func getChannelsFrom(documentChanges: [DocumentChange]) {
+		documentChanges.filter { $0.type != .removed }.forEach { channels.append(Channel(with: $0)) }
 		saveToDatabase()
-		tableView.reloadData()
+//		tableView.reloadData()
 	}
 	
 	private func loadFromDatabase() {
@@ -195,14 +194,34 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	private func createNewChannelWith(name: String) {
-		reference.addDocument(data: ["name": name])
-		tableView.reloadData()
+		reference.addDocument(data: ["name": name, "lastActivity": Timestamp(date: Date())])
+//		tableView.reloadData()
 	}
 	
+//	private func saveNewChannels() {
+//		guard let dbChannels = fetchResultController.fetchedObjects else {
+//			return
+//		}
+//		var ch = Set<Channel>()
+//		for dbChannel in dbChannels {
+//			ch.insert(Channel(with: dbChannel))
+//		}
+//		let set2 = Set(channels)
+//		let diff = ch.symmetricDifference(set2)
+//		print(diff)
+//	}
+//	
 	private func saveToDatabase() {
-		DatabaseManager.shared.save(channels: channels) { result in
+//		saveNewChannels()
+		
+		DatabaseManager.shared.save(channels: channels) { [weak self] result in
 			switch result {
-			case .success: break
+			case .success:
+					
+					self?.performFetching()
+					DispatchQueue.main.async {
+						self?.tableView.reloadData()
+					}
 			case .failure(let error):
 				print(error.localizedDescription)
 			}
@@ -210,7 +229,6 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	private func performFetching() {
-		fetchResultController.delegate = self
 		do {
 			try fetchResultController.performFetch()
 		} catch {
@@ -276,13 +294,17 @@ extension ConversationsListViewController: UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			let person = fetchResultController.object(at: indexPath)
-			DatabaseManager.shared.viewContext.delete(person)
+			let channel = fetchResultController.object(at: indexPath)
+			guard let id = channel.identifier else {
+				fatalError("Channel don't have identifier")
+			}
+			DatabaseManager.shared.viewContext.delete(channel)
 			DatabaseManager.shared.saveContext(DatabaseManager.shared.viewContext) { result in
+				self.reference.document(id).delete()
 				switch result {
 				case .failure(let error):
 					print(error.localizedDescription)
-				default: break
+				case .success: break
 				}
 			}
 		}

@@ -25,6 +25,21 @@ enum Constants {
 			case .cyan: return UIColor(red: 155 / 255, green: 221 / 255, blue: 255 / 255, alpha: 1.0)
 			}
 		}
+		
+		static func getColor(from character: Character?) -> UIColor {
+			let alphabet = "HJKDЮZQXMЗRЫIWEГТЧБФРЩЖTМШЯЕOАПYДLОBFGCКЦЭЬNЙСВЛЪPНVХЁAИSUУ"
+			guard let character = character, let index = Array(alphabet).firstIndex(of: character) else {
+				return ImageBackgroundColor.orange.color
+			}
+			switch index {
+			case 0...11: return ImageBackgroundColor.red.color
+			case 12...23: return ImageBackgroundColor.green.color
+			case 24...35: return ImageBackgroundColor.orange.color
+			case 36...47: return ImageBackgroundColor.violet.color
+			case 48...59: return ImageBackgroundColor.cyan.color
+			default: return ImageBackgroundColor.green.color
+			}
+		}
 	}
 		
 	enum ThemeScreen {

@@ -74,6 +74,16 @@ final class DatabaseManager {
 		}
 	}
 	
+	func delete(channel: Channel, completion: @escaping ResultClosure<Bool>) {
+		
+		persistentContainer.performBackgroundTask { [weak self] context in
+			let dbChannel = DBChannel(context: context)
+			dbChannel.identifier = channel.identifier
+			context.delete(dbChannel)
+			self?.saveContext(context, completion: completion)
+		}
+	}
+	
 	func save(messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>) {
 		persistentContainer.performBackgroundTask { [weak self] context in
 			let dbMessages: [DBMessage] = messages.map { message in
