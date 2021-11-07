@@ -7,9 +7,10 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestoreSwift
 
-struct Channel: Hashable {
-	let identifier: String
+struct Channel: Codable {
+	@DocumentID var identifier: String?
 	let name: String
 	let lastMessage: String?
 	let lastActivity: Date?
@@ -23,18 +24,6 @@ struct Channel: Hashable {
 }
 
 extension Channel {
-	
-	init(with document: DocumentChange) {
-		let dict = document.document.data()
-		let channelName = (dict["name"] as? String) ?? "No title"
-		let lastMessage = dict["lastMessage"] as? String
-		let lastActivity = (dict["lastActivity"] as? Timestamp)?.dateValue()
-		self.lastMessage = lastMessage
-		self.lastActivity = lastActivity
-		self.name = channelName
-		self.identifier = document.document.documentID
-	}
-	
 	init(with dbChannel: DBChannel) {
 		guard let name = dbChannel.name, let identifier = dbChannel.identifier else {
 			fatalError("invalid data from database")

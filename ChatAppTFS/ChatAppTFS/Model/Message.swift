@@ -7,9 +7,8 @@
 
 import Foundation
 import Firebase
-import UIKit
 
-struct Message {
+struct Message: Codable {
 	let content: String
 	let created: Date
 	let senderId: String
@@ -18,16 +17,22 @@ struct Message {
 
 extension Message {
 	
-	init(with document: QueryDocumentSnapshot) {
-		let dict = document.data()
-		let content = dict["content"] as? String ?? ""
-		let senderId = dict["senderId"] as? String ?? ""
-		let created = (dict["created"] as? Timestamp)?.dateValue() ?? Date(timeIntervalSinceReferenceDate: 10)
-		var senderName = dict["senderName"] as? String ?? ""
-		if senderName == "" { senderName = "Anonymous" }
+//	init(with document: QueryDocumentSnapshot) {
+//		let dict = document.data()
+//		let content = dict["content"] as? String ?? ""
+//		let senderId = dict["senderId"] as? String ?? ""
+//		let created = (dict["created"] as? Timestamp)?.dateValue() ?? Date(timeIntervalSinceReferenceDate: 10)
+//		var senderName = dict["senderName"] as? String ?? ""
+//		if senderName == "" { senderName = "Anonymous" }
+//		self.content = content
+//		self.created = created
+//		self.senderId = senderId
+//		self.senderName = senderName
+//	}
+	init(content: String, senderId: String, created: Date = Date(), senderName: String = "I.Ladanov") {
 		self.content = content
-		self.created = created
 		self.senderId = senderId
+		self.created = created
 		self.senderName = senderName
 	}
 	

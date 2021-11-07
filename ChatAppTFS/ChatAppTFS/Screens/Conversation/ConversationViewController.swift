@@ -80,13 +80,19 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		}
 	}
 	
-	private func createNewMessage(with text: String) {
+	private func createNewMessage(with content: String) {
 		guard let senderId = senderId else { return }
-		reference.addDocument(data: [
-			Constants.FirebaseKey.content: text,
-			Constants.FirebaseKey.data: Timestamp(date: Date()),
-			Constants.FirebaseKey.senderId: senderId,
-			Constants.FirebaseKey.senderName: "I.Ladanov"])
+		do {
+			_ = try reference.addDocument(from: Message(content: content, senderId: senderId))
+		} catch {
+			print(error.localizedDescription)
+		}
+		
+//		reference.addDocument(data: [
+//			Constants.FirebaseKey.content: text,
+//			Constants.FirebaseKey.data: Timestamp(date: Date()),
+//			Constants.FirebaseKey.senderId: senderId,
+//			Constants.FirebaseKey.senderName: "I.Ladanov"])
 		messages = [Message]()
 	}
 	
@@ -185,7 +191,18 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func getMessages(from documents: [QueryDocumentSnapshot]) {
-		documents.forEach { messages.append(Message(with: $0)) }
+		messages = documents.compactMap { (document) -> Message? in
+			do {
+				let message = try document.data(as: Message.self)
+				return message
+			} catch {
+				
+				print(error.localizedDescription)
+				return nil
+			}
+		}
+		
+//		documents.forEach { messages.append(Message(with: $0)) }
 		messages.sort { $0.created < $1.created }
 		saveToDatabase()
 		tableView.reloadData()

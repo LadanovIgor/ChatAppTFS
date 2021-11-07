@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import CoreData
+import FirebaseFirestoreSwift
 
 class ConversationsListViewController: UIViewController {
 	
@@ -154,15 +155,27 @@ class ConversationsListViewController: UIViewController {
 				print(CustomFirebaseError.snapshotNone.localizedDescription)
 				return
 			}
-			
 			self?.getChannelsFrom(documentChanges: documentChanges)
 		}
 	}
 	
 	private func getChannelsFrom(documentChanges: [DocumentChange]) {
-		documentChanges.filter { $0.type != .removed }.forEach { channels.append(Channel(with: $0)) }
+		documentChanges.forEach { documentChange in
+			switch documentChange.type {
+			case .removed: break
+			default:
+				do {
+					let channel = try documentChange.document.data(as: Channel.self)
+					guard let channel = channel else {
+						fatalError("Channel decoding error")
+					}
+					channels.append(channel)
+				} catch {
+					print(error.localizedDescription)
+				}
+			}
+		}
 		saveToDatabase()
-//		tableView.reloadData()
 	}
 	
 	private func loadFromDatabase() {
@@ -195,7 +208,6 @@ class ConversationsListViewController: UIViewController {
 	
 	private func createNewChannelWith(name: String) {
 		reference.addDocument(data: ["name": name, "lastActivity": Timestamp(date: Date())])
-//		tableView.reloadData()
 	}
 	
 //	private func saveNewChannels() {
