@@ -310,6 +310,8 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 	}
 }
 
+// MARK: - UITextFieldDelegate
+
 extension UserProfileViewController: UITextFieldDelegate {
 	
 	func textFieldDidEndEditing(_ textField: UITextField) {

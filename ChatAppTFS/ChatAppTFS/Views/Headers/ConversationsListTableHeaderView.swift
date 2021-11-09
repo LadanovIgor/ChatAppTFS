@@ -9,12 +9,16 @@ import UIKit
 
 class ConversationsListTableHeaderView: UITableViewHeaderFooterView {
 	
+	// MARK: - Outlets and Properties
+	
 	static let preferredHeight: CGFloat = 40
 	static let identifier = "ConversationsListTableHeaderView"
 	
 	private let addButton = UIButton()
 	
 	var addingChannel: (() -> Void)?
+	
+	// MARK: - Init
 	
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
@@ -29,6 +33,8 @@ class ConversationsListTableHeaderView: UITableViewHeaderFooterView {
 		super.layoutSubviews()
 		setUpConstraints()
 	}
+	
+	// MARK: - Private
 	
 	private func setUpConstraints() {
 		NSLayoutConstraint.activate([

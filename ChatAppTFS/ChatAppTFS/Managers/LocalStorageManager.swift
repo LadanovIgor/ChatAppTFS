@@ -15,7 +15,9 @@ final class LocalStorageManager: StoredLocally {
 	
 	private init() { }
 	
-	func saveLocally(_ plist: [String: Data], completion: @escaping ResultClosure<Bool>) {
+	// MARK: - Public
+	
+	public func saveLocally(_ plist: [String: Data], completion: @escaping ResultClosure<Bool>) {
 		queue.async { [weak self] in
 			self?.savePlist(plist) { result in
 				DispatchQueue.main.async {
@@ -25,7 +27,7 @@ final class LocalStorageManager: StoredLocally {
 		}
 	}
 	
-	func loadLocally(completion: @escaping ResultClosure<[String: Data]>) {
+	public func loadLocally(completion: @escaping ResultClosure<[String: Data]>) {
 		queue.async { [weak self] in
 			self?.getPlist { result in
 				DispatchQueue.main.async {
@@ -35,7 +37,7 @@ final class LocalStorageManager: StoredLocally {
 		}
 	}
 	
-	func loadTheme(completion: @escaping ResultClosure<Data>) {
+	public func loadTheme(completion: @escaping ResultClosure<Data>) {
 		queue.async { [weak self] in
 			self?.getValue(for: Constants.LocalStorage.themeKey) { result in
 				DispatchQueue.main.async {

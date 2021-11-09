@@ -22,11 +22,13 @@ class ConversationsListViewController: UIViewController {
 		let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
 		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBChannel.lastActivity), ascending: false)
 		fetchRequest.sortDescriptors = [sortDescriptor]
+		fetchRequest.fetchBatchSize = 10
 		let fetchResultController = NSFetchedResultsController(
 			fetchRequest: fetchRequest,
 			managedObjectContext: DatabaseManager.shared.viewContext,
 			sectionNameKeyPath: nil,
 			cacheName: nil)
+		fetchResultController.delegate = self
 		return fetchResultController
 	}()
 	
@@ -42,7 +44,6 @@ class ConversationsListViewController: UIViewController {
 		setUpTableView()
 		setUpRightBarItem()
 		setUpLeftBarItem()
-		delegating()
 		performFetching()
 		addFirestoreListener()
 	}
@@ -147,29 +148,25 @@ class ConversationsListViewController: UIViewController {
 				print(error.localizedDescription)
 				return
 			}
-			guard let documentChanges = snapshot?.documents else {
+			guard let documents = snapshot?.documents else {
 				print(CustomFirebaseError.snapshotNone.localizedDescription)
 				return
 			}
-			self?.getChannelsFrom(documentChanges: documentChanges)
+			self?.getChannelsFrom(documents: documents)
 		}
 	}
 	
-	private func getChannelsFrom(documentChanges: [QueryDocumentSnapshot]) {
-		documentChanges.forEach { documentChange in
-//			switch documentChange.type {
-//			case .removed: break
-//			default:
-				do {
-					let channel = try documentChange.data(as: Channel.self)
-					guard let channel = channel else {
-						fatalError("Channel decoding error")
-					}
-					self.saveToDatabase(channel: channel)
-				} catch {
-					print(error.localizedDescription)
+	private func getChannelsFrom(documents: [QueryDocumentSnapshot]) {
+		documents.forEach { document in
+			do {
+				let channel = try document.data(as: Channel.self)
+				guard let channel = channel else {
+					fatalError("Channel decoding error")
 				}
-//			}
+				self.saveToDatabase(channel: channel)
+			} catch {
+				print(error.localizedDescription)
+			}
 		}
 	}
 	
@@ -177,10 +174,10 @@ class ConversationsListViewController: UIViewController {
 		DatabaseManager.shared.save(channel: channel) { [weak self] result in
 			switch result {
 			case .success:
-					self?.performFetching()
-					DispatchQueue.main.async {
-						self?.tableView.reloadData()
-					}
+				self?.performFetching()
+				DispatchQueue.main.async {
+					self?.tableView.reloadData()
+				}
 			case .failure(let error):
 				print(error.localizedDescription)
 			}
@@ -206,10 +203,6 @@ class ConversationsListViewController: UIViewController {
 	
 	private func createNewChannelWith(name: String) {
 		reference.addDocument(data: ["name": name, "lastActivity": Timestamp(date: Date())])
-	}
-	
-	private func delegating() {
-		fetchResultController.delegate = self
 	}
 	
 	private func performFetching() {
@@ -249,8 +242,11 @@ extension ConversationsListViewController: UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let sectionInfo = fetchResultController.sections?[section]
-		return sectionInfo?.numberOfObjects ?? 0
+		guard let sections = fetchResultController.sections else {
+			fatalError("No sections in fetchedResultController")
+		}
+		let sectionInfo = sections[section]
+		return sectionInfo.numberOfObjects
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -282,14 +278,12 @@ extension ConversationsListViewController: UITableViewDataSource {
 			guard let id = channel.identifier else {
 				fatalError("Channel don't have identifier")
 			}
-			DatabaseManager.shared.viewContext.delete(channel)
-			DatabaseManager.shared.saveContext(DatabaseManager.shared.viewContext) { result in
-				self.reference.document(id).delete()
+			DatabaseManager.shared.delete(channel: channel) { [weak self] result in
 				switch result {
-				case .failure(let error):
-					print(error.localizedDescription)
-				case .success: break
+				case .success: self?.reference.document(id).delete()
+				case .failure(let error): print(error.localizedDescription)
 				}
+				
 			}
 		}
 	}
@@ -305,13 +299,20 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
 	func controller(
 		_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any,
 		at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-		guard let indexPath = indexPath else { return }
 		switch type {
-		case .insert: tableView.insertRows(at: [indexPath], with: .automatic)
-		case .delete: tableView.deleteRows(at: [indexPath], with: .automatic)
-		case .update: tableView.reloadRows(at: [indexPath], with: .automatic)
+		case .insert:
+			guard let newIndexPath = newIndexPath else { fatalError("Insert object error! NewIndexPath none") }
+			tableView.insertRows(at: [newIndexPath], with: .automatic)
+		case .delete:
+			guard let indexPath = indexPath else { fatalError("Delete object error! IndexPath none") }
+			tableView.deleteRows(at: [indexPath], with: .automatic)
+		case .update:
+			guard let indexPath = indexPath else { fatalError("Update object error! IndexPath none") }
+			tableView.reloadRows(at: [indexPath], with: .automatic)
 		case .move:
-			guard let newIndexPath = newIndexPath else { return }
+			guard let newIndexPath = newIndexPath, let indexPath = indexPath else {
+				fatalError("Move object error! IndexPath or newIndexPath none")
+			}
 			tableView.moveRow(at: indexPath, to: newIndexPath)
 		default: break
 		}

@@ -35,6 +35,8 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 		senderImageView.image = nil
 	}
 	
+	// MARK: - Public
+	
 	public func configure(with model: DBMessage, senderId: String) {
 		nameLabel.text = model.senderId == senderId ? nil : model.senderName
 		contentLabel.text = model.content

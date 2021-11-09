@@ -8,6 +8,8 @@
 import UIKit
 
 class ThemeViewController: UIViewController {
+	
+	// MARK: - Outlets and Properties
 
 	@IBOutlet private weak var champagneThemeButton: AppButton!
 	@IBOutlet private weak var darkThemeButton: AppButton!
@@ -16,11 +18,15 @@ class ThemeViewController: UIViewController {
 	
 	var themeSelected: ThemeClosure?
 	
+	// MARK: - Lifecycle
+	
 	override func viewDidLoad() {
         super.viewDidLoad()
 		decorateButtons()
 		addTargets()
     }
+	
+	// MARK: - Private
 
 	private func decorateButtons() {
 		champagneThemeButton.layer.cornerRadius = Constants.ThemeScreen.buttonCornerRadius

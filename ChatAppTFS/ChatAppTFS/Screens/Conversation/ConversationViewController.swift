@@ -19,16 +19,18 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}()
 	
 	lazy var fetchResultController: NSFetchedResultsController<DBMessage> = {
-		guard let channelIdentifier = channel?.identifier else { fatalError("Channel None!") }
+		guard let channelId = channel?.identifier else { fatalError("Channel None!") }
 		let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
-		fetchRequest.predicate = NSPredicate(format: "channel.identifier = %@", channelIdentifier)
+		fetchRequest.predicate = NSPredicate(format: "channel.identifier = %@", channelId)
 		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBMessage.created), ascending: true)
 		fetchRequest.sortDescriptors = [sortDescriptor]
+		fetchRequest.fetchBatchSize = 10
 		let fetchResultController = NSFetchedResultsController(
 			fetchRequest: fetchRequest,
 			managedObjectContext: DatabaseManager.shared.viewContext,
 			sectionNameKeyPath: nil,
 			cacheName: nil)
+		fetchResultController.delegate = self
 		return fetchResultController
 	}()
 	
@@ -65,7 +67,6 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		setUpConstraints()
 		addKeyboardObservers()
 		loadMessages()
-		delegating()
 		performFetching()
 	}
 	
@@ -123,7 +124,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 			} completion: { [weak self] _ in
 				guard let self = self else { return }
 				if isKeyboardShowing {
-					self.tableView.scrollToBottom()
+					self.tableView.scrollToBottom(isAnimated: false)
 				}
 			}
 		}
@@ -216,11 +217,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 			}
 		}
 	}
-	
-	private func delegating() {
-		fetchResultController.delegate = self
-	}
-	
+
 	private func performFetching() {
 		do {
 			try fetchResultController.performFetch()
@@ -255,8 +252,11 @@ extension ConversationViewController: UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let sectionInfo = fetchResultController.sections?[section]
-		return sectionInfo?.numberOfObjects ?? 0
+		guard let sections = fetchResultController.sections else {
+			fatalError("No sections in fetchedResultController")
+		}
+		let sectionInfo = sections[section]
+		return sectionInfo.numberOfObjects
 	}
 }
 
@@ -270,17 +270,19 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
 	func controller(
 		_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any,
 		at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-		guard let indexPath = indexPath else {
-			return
-		}
-		
 		switch type {
-		case .insert: tableView.insertRows(at: [indexPath], with: .automatic)
-		case .delete: tableView.deleteRows(at: [indexPath], with: .automatic)
-		case .update: tableView.reloadRows(at: [indexPath], with: .automatic)
+		case .insert:
+			guard let newIndexPath = newIndexPath else { fatalError("Insert object error! NewIndexPath none") }
+			tableView.insertRows(at: [newIndexPath], with: .automatic)
+		case .delete:
+			guard let indexPath = indexPath else { fatalError("Delete object error! IndexPath none") }
+			tableView.deleteRows(at: [indexPath], with: .automatic)
+		case .update:
+			guard let indexPath = indexPath else { fatalError("Update object error! IndexPath none") }
+			tableView.reloadRows(at: [indexPath], with: .automatic)
 		case .move:
-			guard let newIndexPath = newIndexPath else {
-				return
+			guard let newIndexPath = newIndexPath, let indexPath = indexPath else {
+				fatalError("Move object error! IndexPath or newIndexPath none")
 			}
 			tableView.moveRow(at: indexPath, to: newIndexPath)
 		default: break

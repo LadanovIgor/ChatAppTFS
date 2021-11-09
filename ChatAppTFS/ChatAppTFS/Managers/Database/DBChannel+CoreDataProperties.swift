@@ -20,6 +20,14 @@ extension DBChannel {
     @NSManaged public var lastMessage: String?
     @NSManaged public var name: String?
     @NSManaged public var messages: NSSet?
+	
+	convenience init(with channel: Channel, context: NSManagedObjectContext) {
+		self.init(context: context)
+		self.identifier = channel.channelId
+		self.lastMessage = channel.lastMessage
+		self.lastActivity = channel.lastActivity
+		self.name = channel.name
+	}
 
 }
 

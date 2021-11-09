@@ -20,5 +20,13 @@ extension DBMessage {
     @NSManaged public var senderId: String?
     @NSManaged public var senderName: String?
     @NSManaged public var channel: DBChannel?
+	
+	convenience init(with message: Message, context: NSManagedObjectContext) {
+		self.init(context: context)
+		self.content = message.content
+		self.senderId = message.senderId ?? "no Id"
+		self.senderName = message.senderName ?? "Anonymous"
+		self.created = message.created?.dateValue()
+	}
 
 }
