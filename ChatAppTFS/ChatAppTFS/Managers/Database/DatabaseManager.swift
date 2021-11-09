@@ -61,16 +61,14 @@ final class DatabaseManager {
 		}
 	}
 	
-	func save(channels: [Channel], completion: @escaping ResultClosure<Bool>) {
+	func save(channel: Channel, completion: @escaping ResultClosure<Bool>) {
 		persistentContainer.performBackgroundTask { [weak self] context in
-			channels.forEach { channel in
-				let dbChannel = DBChannel(context: context)
-				dbChannel.identifier = channel.identifier
-				dbChannel.lastMessage = channel.lastMessage
-				dbChannel.lastActivity = channel.lastActivity
-				dbChannel.name = channel.name
-				self?.saveContext(context, completion: completion)
-			}
+			let dbChannel = DBChannel(context: context)
+			dbChannel.identifier = channel.channelId
+			dbChannel.lastMessage = channel.lastMessage
+			dbChannel.lastActivity = channel.lastActivity
+			dbChannel.name = channel.name
+			self?.saveContext(context, completion: completion)
 		}
 	}
 	
@@ -78,7 +76,7 @@ final class DatabaseManager {
 		
 		persistentContainer.performBackgroundTask { [weak self] context in
 			let dbChannel = DBChannel(context: context)
-			dbChannel.identifier = channel.identifier
+			dbChannel.identifier = channel.channelId
 			context.delete(dbChannel)
 			self?.saveContext(context, completion: completion)
 		}
@@ -90,8 +88,8 @@ final class DatabaseManager {
 				let dbMessage = DBMessage(context: context)
 				dbMessage.content = message.content
 				dbMessage.created = message.created
-				dbMessage.senderId = message.senderId
-				dbMessage.senderName = message.senderName
+				dbMessage.senderId = message.senderId ?? "no Id"
+				dbMessage.senderName = message.senderName ?? "Anonymous"
 				return dbMessage
 			}
 			let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.DatabaseKey.channel)

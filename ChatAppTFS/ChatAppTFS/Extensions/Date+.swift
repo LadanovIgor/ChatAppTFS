@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 extension Date {
 
@@ -24,5 +25,9 @@ extension Date {
 		let isToday = Calendar.current.isDateInToday(self)
 		dateFormatter.dateFormat = isToday ? "HH:mm" : "dd MMM"
 		return dateFormatter.string(from: self)
+	}
+	
+	var timestamp: Timestamp {
+		return Timestamp(date: self)
 	}
 }

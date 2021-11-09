@@ -29,7 +29,7 @@ enum Constants {
 		static func getColor(from character: Character?) -> UIColor {
 			let alphabet = "HJKDЮZQXMЗRЫIWEГТЧБФРЩЖTМШЯЕOАПYДLОBFGCКЦЭЬNЙСВЛЪPНVХЁAИSUУ"
 			guard let character = character, let index = Array(alphabet).firstIndex(of: character) else {
-				return ImageBackgroundColor.orange.color
+				return ImageBackgroundColor.violet.color
 			}
 			switch index {
 			case 0...11: return ImageBackgroundColor.red.color

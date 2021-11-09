@@ -36,7 +36,6 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	private let sendMessageView = SendMessageView()
 	private var bottomConstraint: NSLayoutConstraint?
 	private var channel: DBChannel?
-	private var messages = [Message]()
 	private var senderId: String?
 	
 	// MARK: - Init
@@ -66,7 +65,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		setUpConstraints()
 		addKeyboardObservers()
 		loadMessages()
-		fetchMessages()
+		delegating()
 		performFetching()
 	}
 	
@@ -87,13 +86,6 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		} catch {
 			print(error.localizedDescription)
 		}
-		
-//		reference.addDocument(data: [
-//			Constants.FirebaseKey.content: text,
-//			Constants.FirebaseKey.data: Timestamp(date: Date()),
-//			Constants.FirebaseKey.senderId: senderId,
-//			Constants.FirebaseKey.senderName: "I.Ladanov"])
-		messages = [Message]()
 	}
 	
 	private func getSenderId() {
@@ -130,9 +122,8 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 				self?.view.layoutIfNeeded()
 			} completion: { [weak self] _ in
 				guard let self = self else { return }
-				if isKeyboardShowing, self.messages.count > 0 {
-					let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
-					self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+				if isKeyboardShowing {
+					self.tableView.scrollToBottom()
 				}
 			}
 		}
@@ -191,8 +182,9 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	private func getMessages(from documents: [QueryDocumentSnapshot]) {
-		messages = documents.compactMap { (document) -> Message? in
+		let messages = documents.compactMap { (document) -> Message? in
 			do {
+				
 				let message = try document.data(as: Message.self)
 				return message
 			} catch {
@@ -201,15 +193,10 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 				return nil
 			}
 		}
-		
-//		documents.forEach { messages.append(Message(with: $0)) }
-		messages.sort { $0.created < $1.created }
-		saveToDatabase()
-		tableView.reloadData()
-		tableView.scrollToBottom()
+		saveToDatabase(messages)
 	}
 	
-	private func saveToDatabase() {
+	private func saveToDatabase(_ messages: [Message]) {
 		guard let channel = channel, let channelId = channel.identifier else {
 			fatalError("Channel None!")
 		}
@@ -230,21 +217,11 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		}
 	}
 	
-	private func fetchMessages() {
-		guard let channel = channel, let channelId = channel.identifier else {
-			fatalError("Channel None!")
-		}
-		DatabaseManager.shared.fetchMessagesFrom(channelId: channelId) { result in
-			switch result {
-			case .success: break
-			case .failure(let error):
-				print(error.localizedDescription)
-			}
-		}
+	private func delegating() {
+		fetchResultController.delegate = self
 	}
 	
 	private func performFetching() {
-		fetchResultController.delegate = self
 		do {
 			try fetchResultController.performFetch()
 		} catch {
@@ -299,9 +276,7 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
 		
 		switch type {
 		case .insert: tableView.insertRows(at: [indexPath], with: .automatic)
-		case .delete:
-				
-				tableView.deleteRows(at: [indexPath], with: .automatic)
+		case .delete: tableView.deleteRows(at: [indexPath], with: .automatic)
 		case .update: tableView.reloadRows(at: [indexPath], with: .automatic)
 		case .move:
 			guard let newIndexPath = newIndexPath else {
@@ -310,7 +285,6 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
 			tableView.moveRow(at: indexPath, to: newIndexPath)
 		default: break
 		}
-
 	}
 	
 	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

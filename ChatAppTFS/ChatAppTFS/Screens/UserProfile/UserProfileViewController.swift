@@ -20,7 +20,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	@IBOutlet weak var locationTextField: UITextField!
 	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet weak var cancelButton: AppButton!
-	
+
 	@IBOutlet var infoTextFieldTopConstraint: NSLayoutConstraint!
 	@IBOutlet var saveButtonBottomConstraint: NSLayoutConstraint!
 	@IBOutlet var nameTextFieldTopConstraint: NSLayoutConstraint!

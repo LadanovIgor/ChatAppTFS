@@ -30,8 +30,6 @@ class ConversationsListViewController: UIViewController {
 		return fetchResultController
 	}()
 	
-	var channels = [Channel]()
-	
 	private var tableView = UITableView(frame: .zero, style: .plain)
 	
 	private let barButtonSize = Constants.ConversationListScreen.barButtonSize
@@ -44,8 +42,7 @@ class ConversationsListViewController: UIViewController {
 		setUpTableView()
 		setUpRightBarItem()
 		setUpLeftBarItem()
-		loadFromDatabase()
-		fetchResultController.delegate = self
+		delegating()
 		performFetching()
 		addFirestoreListener()
 	}
@@ -79,8 +76,7 @@ class ConversationsListViewController: UIViewController {
 				guard let text = String(data: data, encoding: .utf8),
 					  let image = UIImage.textImage(text: text.getCapitalLetters()) else { return }
 				button.setImage(image.resize(width: self.barButtonSize, height: self.barButtonSize), for: .normal)
-			case .failure(let error):
-					print(error.localizedDescription)
+			default: break
 			}
 		}
 	}
@@ -151,7 +147,7 @@ class ConversationsListViewController: UIViewController {
 				print(error.localizedDescription)
 				return
 			}
-			guard let documentChanges = snapshot?.documentChanges else {
+			guard let documentChanges = snapshot?.documents else {
 				print(CustomFirebaseError.snapshotNone.localizedDescription)
 				return
 			}
@@ -159,30 +155,32 @@ class ConversationsListViewController: UIViewController {
 		}
 	}
 	
-	private func getChannelsFrom(documentChanges: [DocumentChange]) {
+	private func getChannelsFrom(documentChanges: [QueryDocumentSnapshot]) {
 		documentChanges.forEach { documentChange in
-			switch documentChange.type {
-			case .removed: break
-			default:
+//			switch documentChange.type {
+//			case .removed: break
+//			default:
 				do {
-					let channel = try documentChange.document.data(as: Channel.self)
+					let channel = try documentChange.data(as: Channel.self)
 					guard let channel = channel else {
 						fatalError("Channel decoding error")
 					}
-					channels.append(channel)
+					self.saveToDatabase(channel: channel)
 				} catch {
 					print(error.localizedDescription)
 				}
-			}
+//			}
 		}
-		saveToDatabase()
 	}
 	
-	private func loadFromDatabase() {
-		DatabaseManager.shared.fetchChannels {result in
+	private func saveToDatabase(channel: Channel) {
+		DatabaseManager.shared.save(channel: channel) { [weak self] result in
 			switch result {
-			case .success: break
-//					channels.forEach { print($0.name) }
+			case .success:
+					self?.performFetching()
+					DispatchQueue.main.async {
+						self?.tableView.reloadData()
+					}
 			case .failure(let error):
 				print(error.localizedDescription)
 			}
@@ -210,34 +208,8 @@ class ConversationsListViewController: UIViewController {
 		reference.addDocument(data: ["name": name, "lastActivity": Timestamp(date: Date())])
 	}
 	
-//	private func saveNewChannels() {
-//		guard let dbChannels = fetchResultController.fetchedObjects else {
-//			return
-//		}
-//		var ch = Set<Channel>()
-//		for dbChannel in dbChannels {
-//			ch.insert(Channel(with: dbChannel))
-//		}
-//		let set2 = Set(channels)
-//		let diff = ch.symmetricDifference(set2)
-//		print(diff)
-//	}
-//	
-	private func saveToDatabase() {
-//		saveNewChannels()
-		
-		DatabaseManager.shared.save(channels: channels) { [weak self] result in
-			switch result {
-			case .success:
-					
-					self?.performFetching()
-					DispatchQueue.main.async {
-						self?.tableView.reloadData()
-					}
-			case .failure(let error):
-				print(error.localizedDescription)
-			}
-		}
+	private func delegating() {
+		fetchResultController.delegate = self
 	}
 	
 	private func performFetching() {
@@ -333,22 +305,16 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
 	func controller(
 		_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any,
 		at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-		guard let indexPath = indexPath else {
-			return
-		}
-		
+		guard let indexPath = indexPath else { return }
 		switch type {
 		case .insert: tableView.insertRows(at: [indexPath], with: .automatic)
 		case .delete: tableView.deleteRows(at: [indexPath], with: .automatic)
 		case .update: tableView.reloadRows(at: [indexPath], with: .automatic)
 		case .move:
-			guard let newIndexPath = newIndexPath else {
-				return
-			}
+			guard let newIndexPath = newIndexPath else { return }
 			tableView.moveRow(at: indexPath, to: newIndexPath)
 		default: break
 		}
-
 	}
 	
 	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
