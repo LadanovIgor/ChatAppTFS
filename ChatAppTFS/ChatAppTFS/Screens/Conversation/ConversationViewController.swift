@@ -22,7 +22,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		guard let channelId = channel?.identifier else { fatalError("Channel None!") }
 		let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
 		fetchRequest.predicate = NSPredicate(format: "channel.identifier = %@", channelId)
-		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBMessage.created), ascending: true)
+		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBMessage.created), ascending: false)
 		fetchRequest.sortDescriptors = [sortDescriptor]
 		fetchRequest.fetchBatchSize = 10
 		let fetchResultController = NSFetchedResultsController(
@@ -68,6 +68,11 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		addKeyboardObservers()
 		loadMessages()
 		performFetching()
+	}
+	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		tableView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
 	}
 	
 	// MARK: - Private
@@ -121,11 +126,6 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 			self?.bottomConstraint?.constant = isKeyboardShowing ? -keyboardHeight : 0
 			UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut) {
 				self?.view.layoutIfNeeded()
-			} completion: { [weak self] _ in
-				guard let self = self else { return }
-				if isKeyboardShowing {
-					self.tableView.scrollToBottom(isAnimated: false)
-				}
 			}
 		}
 	}
@@ -150,11 +150,13 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	private func setUpConstraints() {
 		view.removeConstraints(view.constraints)
+		let statusBarHeight = UIApplication.shared.statusBarFrame.height
 		let views = ["tableView": tableView, "newMessageView": sendMessageView]
-		let metrics = ["viewHeight": Constants.ConversationScreen.messageViewHeight]
-		
+		let metrics = ["viewHeight": Constants.ConversationScreen.messageViewHeight,
+					   "offset": statusBarHeight
+		]
 		view.addConstraints(NSLayoutConstraint.constraints(
-			withNewVisualFormat: "H:|[tableView]|,V:|[tableView][newMessageView(viewHeight)]",
+			withNewVisualFormat: "H:|[tableView]|,V:|-offset-[tableView][newMessageView(viewHeight)]",
 			metrics: metrics,
 			views: views))
 		view.addConstraints(NSLayoutConstraint.constraints(
@@ -205,7 +207,6 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 				self?.performFetching()
 				DispatchQueue.main.async {
 					self?.tableView.reloadData()
-					self?.tableView.scrollToBottom()
 				}
 			case .failure(let error): print(error.localizedDescription)
 			}
@@ -242,6 +243,7 @@ extension ConversationViewController: UITableViewDataSource {
 			}
 		let message = fetchResultController.object(at: indexPath)
 		cell.configure(with: message, senderId: senderId ?? "")
+		cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
 		return cell
 	}
 	

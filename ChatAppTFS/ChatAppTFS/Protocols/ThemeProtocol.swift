@@ -28,6 +28,8 @@ extension ThemeProtocol {
 		UITableView.appearance().backgroundColor = backgroundColor
 		UILabel.appearance().textColor = textColor
 		UIView.appearance(whenContainedInInstancesOf: [UITableView.self]).backgroundColor = backgroundColor
+		UIView.appearance(whenContainedInInstancesOf: [ConversationViewController.self]).backgroundColor = backgroundColor
+		UIView.appearance(whenContainedInInstancesOf: [ConversationsListViewController.self]).backgroundColor = backgroundColor
 		AppView.appearance().backgroundColor = backgroundColor
 		ProfileHeaderView.appearance().backgroundColor = secondaryBackground
 		UIVisualEffectView.appearance().backgroundColor = backgroundColor
