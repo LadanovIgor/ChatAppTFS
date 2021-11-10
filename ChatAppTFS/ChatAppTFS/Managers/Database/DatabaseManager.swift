@@ -41,17 +41,16 @@ final class DatabaseManager {
 	
 	private func deleteChannelIfNeeded(_ channels: [Channel], completion: @escaping ResultClosure<Bool>) {
 		persistentContainer.performBackgroundTask { [weak self] context in
-			let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
+			guard let self = self else { return }
 			do {
-				
-				let dbChannels = try context.fetch(fetchRequest)
+				let dbChannels = try self.fetchChannelFromDatabase(context: context)
 				dbChannels.forEach { dbChannel in
 					guard let channelId = dbChannel.identifier else {
 						fatalError("Wrong fetching database. Channel does not have identifier")
 					}
 					if !channels.contains(channelId: channelId) {
 						context.delete(dbChannel)
-						self?.saveContext(context, completion: completion)
+						self.saveContext(context, completion: completion)
 					}
 				}
 			} catch {
@@ -60,21 +59,32 @@ final class DatabaseManager {
 		}
 	}
 	
+	private func fetchChannelFromDatabase(with channelId: String? = nil, context: NSManagedObjectContext) throws -> [DBChannel] {
+		let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
+		if let channelId = channelId {
+			fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
+		}
+		do {
+			return try context.fetch(fetchRequest)
+		} catch {
+			throw error
+		}
+	}
+	
 	// MARK: - Public
 	
 	public func updateDatabase(with channels: [Channel], completion: @escaping ResultClosure<Bool>) {
 		persistentContainer.performBackgroundTask { [weak self] context in
+			guard let self = self else { return }
 			channels.forEach { channel in
 				guard let channelId = channel.id else {
 					fatalError("Channel has no identifier")
 				}
-				let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
-				fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
 				do {
-					let dbChannels = try context.fetch(fetchRequest)
+					let dbChannels = try self.fetchChannelFromDatabase(with: channelId, context: context)
 					if dbChannels.count == 0 {
 						_ = DBChannel(with: channel, context: context)
-						self?.saveContext(context, completion: completion)
+						self.saveContext(context, completion: completion)
 					} else {
 						guard let dbChannel = dbChannels.first else {
 							fatalError("Compiler cannot count")
@@ -83,7 +93,7 @@ final class DatabaseManager {
 						dbChannel.lastMessage = channel.lastMessage
 						dbChannel.lastActivity = channel.lastActivity
 						
-						self?.saveContext(context, completion: completion)
+						self.saveContext(context, completion: completion)
 					}
 				} catch {
 					completion(.failure(error))
@@ -94,12 +104,10 @@ final class DatabaseManager {
 	}
 	
 	public func updateDatabase(with messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>) {
-		
 		persistentContainer.performBackgroundTask { [weak self] context in
-			let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
-			fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
+			guard let self = self else { return }
 			do {
-				let dbChannels = try context.fetch(fetchRequest)
+				let dbChannels = try self.fetchChannelFromDatabase(with: channelId, context: context)
 				guard let dbChannel = dbChannels.first else {
 					fatalError("There is no channel with this identifier in the database")
 				}
@@ -112,7 +120,7 @@ final class DatabaseManager {
 						let dbMessage = DBMessage(with: message, context: context)
 						dbChannel.addToMessages(dbMessage)
 					}
-					self?.saveContext(context, completion: completion)
+					self.saveContext(context, completion: completion)
 					return
 				}
 				let newMessages = messages.filter { message in
@@ -125,7 +133,7 @@ final class DatabaseManager {
 					let dbMessage = DBMessage(with: message, context: context)
 					dbChannel.addToMessages(dbMessage)
 				}
-				self?.saveContext(context, completion: completion)
+				self.saveContext(context, completion: completion)
 			} catch {
 				completion(.failure(error))
 			}
