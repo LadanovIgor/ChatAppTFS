@@ -185,11 +185,9 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	private func getMessages(from documents: [QueryDocumentSnapshot]) {
 		let messages = documents.compactMap { (document) -> Message? in
 			do {
-				
 				let message = try document.data(as: Message.self)
 				return message
 			} catch {
-				
 				print(error.localizedDescription)
 				return nil
 			}
@@ -201,18 +199,14 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		guard let channel = channel, let channelId = channel.identifier else {
 			fatalError("Channel None!")
 		}
-		DatabaseManager.shared.save(messages: messages, toChannel: channelId) { [weak self] result in
+		DatabaseManager.shared.updateDatabase(with: messages, toChannel: channelId) { [weak self] result in
 			switch result {
 			case .success:
-					do {
-						try self?.fetchResultController.performFetch()
-						DispatchQueue.main.async {
-							self?.tableView.reloadData()
-							self?.tableView.scrollToBottom()
-						}
-					} catch {
-						print(error.localizedDescription)
-					}
+				self?.performFetching()
+				DispatchQueue.main.async {
+					self?.tableView.reloadData()
+					self?.tableView.scrollToBottom()
+				}
 			case .failure(let error): print(error.localizedDescription)
 			}
 		}

@@ -58,6 +58,7 @@
 		8EB63AE926FDAB2E00548A19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EB63AE726FDAB2E00548A19 /* LaunchScreen.storyboard */; };
 		8ED5F085270EE3AC005CDA29 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED5F084270EE3AC005CDA29 /* ConfigurableView.swift */; };
 		8ED76E1F2721D45F004D7100 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8ED76E1E2721D45F004D7100 /* GoogleService-Info.plist */; };
+		8ED8D105273B5DB1004BDD23 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED8D104273B5DB1004BDD23 /* Array+.swift */; };
 		8EE62B3A271FBFA90011FE58 /* Data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EE62B39271FBFA90011FE58 /* Data.plist */; };
 		8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B3B271FEB0A0011FE58 /* LocalDataOperationError.swift */; };
 		8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */; };
@@ -131,6 +132,7 @@
 		8EB63AEA26FDAB2E00548A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ED5F084270EE3AC005CDA29 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		8ED76E1E2721D45F004D7100 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8ED8D104273B5DB1004BDD23 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
 		8EE62B39271FBFA90011FE58 /* Data.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Data.plist; sourceTree = "<group>"; };
 		8EE62B3B271FEB0A0011FE58 /* LocalDataOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataOperationError.swift; sourceTree = "<group>"; };
 		8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOperations.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				8E21E795271DA0280005F20F /* Character+.swift */,
 				8E0040B3272EBAEA00587E99 /* NSSet+.swift */,
 				8E184B11273173D600C352B9 /* String+.swift */,
+				8ED8D104273B5DB1004BDD23 /* Array+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EAAFE2E270E8F3600D7497B /* ConversationViewController.swift in Sources */,
+				8ED8D105273B5DB1004BDD23 /* Array+.swift in Sources */,
 				8E6B3549271E82E700653B8D /* ProfileStorageManagerOperation.swift in Sources */,
 				8E2E270A270DE61300BFE156 /* Date+.swift in Sources */,
 				8E15F8FE272E424100EE7918 /* DBChannel+CoreDataProperties.swift in Sources */,

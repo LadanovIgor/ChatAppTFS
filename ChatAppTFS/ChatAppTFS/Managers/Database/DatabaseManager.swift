@@ -31,7 +31,6 @@ final class DatabaseManager {
 	// MARK: - Private
 	
 	private func saveContext(_ context: NSManagedObjectContext, completion: @escaping ResultClosure<Bool>) {
-		context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 		do {
 			try context.save()
 			completion(.success(true))
@@ -40,32 +39,96 @@ final class DatabaseManager {
 		}
 	}
 	
-	// MARK: - Public
-	
-	public func save(channel: Channel, completion: @escaping ResultClosure<Bool>) {
+	private func deleteChannelIfNeeded(_ channels: [Channel], completion: @escaping ResultClosure<Bool>) {
 		persistentContainer.performBackgroundTask { [weak self] context in
-			_ = DBChannel(with: channel, context: context)
-			self?.saveContext(context, completion: completion)
+			let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
+			do {
+				
+				let dbChannels = try context.fetch(fetchRequest)
+				dbChannels.forEach { dbChannel in
+					guard let channelId = dbChannel.identifier else {
+						fatalError("Wrong fetching database. Channel does not have identifier")
+					}
+					if !channels.contains(channelId: channelId) {
+						context.delete(dbChannel)
+						self?.saveContext(context, completion: completion)
+					}
+				}
+			} catch {
+				completion(.failure(error))
+			}
 		}
 	}
 	
-	public func delete(channel: DBChannel, completion: @escaping ResultClosure<Bool>) {
-		viewContext.delete(channel)
-		saveContext(viewContext, completion: completion)
+	// MARK: - Public
+	
+	public func updateDatabase(with channels: [Channel], completion: @escaping ResultClosure<Bool>) {
+		persistentContainer.performBackgroundTask { [weak self] context in
+			channels.forEach { channel in
+				guard let channelId = channel.id else {
+					fatalError("Channel has no identifier")
+				}
+				let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
+				fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
+				do {
+					let dbChannels = try context.fetch(fetchRequest)
+					if dbChannels.count == 0 {
+						_ = DBChannel(with: channel, context: context)
+						self?.saveContext(context, completion: completion)
+					} else {
+						guard let dbChannel = dbChannels.first else {
+							fatalError("Compiler cannot count")
+						}
+						dbChannel.name = channel.name
+						dbChannel.lastMessage = channel.lastMessage
+						dbChannel.lastActivity = channel.lastActivity
+						
+						self?.saveContext(context, completion: completion)
+					}
+				} catch {
+					completion(.failure(error))
+				}
+			}
+		}
+		deleteChannelIfNeeded(channels, completion: completion)
 	}
 	
-	public func save(messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>) {
+	public func updateDatabase(with messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>) {
+		
 		persistentContainer.performBackgroundTask { [weak self] context in
-			let dbMessages: [DBMessage] = messages.map { DBMessage(with: $0, context: context) }
 			let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
 			fetchRequest.predicate = NSPredicate(format: "identifier = %@", channelId)
-			if let dbChannels = try? context.fetch(fetchRequest), let dbChannel = dbChannels.first {
-				dbChannel.addToMessages(NSSet(array: dbMessages))
+			do {
+				let dbChannels = try context.fetch(fetchRequest)
+				guard let dbChannel = dbChannels.first else {
+					fatalError("There is no channel with this identifier in the database")
+				}
+				let sortDescriptor = NSSortDescriptor(key: #keyPath(DBMessage.created), ascending: true)
+				guard let dbMessages = dbChannel.messages?.sortedArray(using: [sortDescriptor]) as? [DBMessage] else {
+					fatalError("DatabaseError! Channel has no array of messages")
+				}
+				guard let lastMessage = dbMessages.last, let lastMessageCreated = lastMessage.created else {
+					messages.forEach { message in
+						let dbMessage = DBMessage(with: message, context: context)
+						dbChannel.addToMessages(dbMessage)
+					}
+					self?.saveContext(context, completion: completion)
+					return
+				}
+				let newMessages = messages.filter { message in
+					guard let created = message.created?.dateValue() else {
+						fatalError("Wrong data from firestore. Message has no created date")
+					}
+					return created > lastMessageCreated
+				}
+				newMessages.forEach { message in
+					let dbMessage = DBMessage(with: message, context: context)
+					dbChannel.addToMessages(dbMessage)
+				}
 				self?.saveContext(context, completion: completion)
-			} else {
-				completion(.failure(DatabaseError.failureFetching))
+			} catch {
+				completion(.failure(error))
 			}
-			
 		}
 	}
 }

@@ -11,7 +11,7 @@ class ConversationsListTableHeaderView: UITableViewHeaderFooterView {
 	
 	// MARK: - Outlets and Properties
 	
-	static let preferredHeight: CGFloat = 40
+	static let preferredHeight: CGFloat = 50
 	static let identifier = "ConversationsListTableHeaderView"
 	
 	private let addButton = UIButton()

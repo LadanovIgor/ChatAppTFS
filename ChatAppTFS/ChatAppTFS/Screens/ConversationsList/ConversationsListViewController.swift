@@ -116,20 +116,7 @@ class ConversationsListViewController: UIViewController {
 			metrics: nil,
 			views: ["tableView": tableView]))
 	}
-	
-	private func logThemeChanging(selectedTheme: Theme) {
-		print("Выбрана тема: \(selectedTheme.description() ?? "")")
-		let color = selectedTheme.color()
-		UINavigationBar.appearance().barTintColor = color
-		UINavigationBar.appearance().backgroundColor = color
-		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
-		UITableView.appearance().backgroundColor = color
-		UIView.appearance(whenContainedInInstancesOf: [UITableView.self]).backgroundColor = color
-		UIVisualEffectView.appearance().backgroundColor = color
-		UILabel.appearance().textColor = .black
-		UIApplication.shared.windows.reload()
-	}
-	
+
 	private func changeTheme(for theme: ThemeProtocol) {
 		theme.apply(for: UIApplication.shared)
 		let themeName = String(describing: type(of: theme).self)
@@ -137,8 +124,11 @@ class ConversationsListViewController: UIViewController {
 			return
 		}
 		let dict = [Constants.LocalStorage.themeKey: themeNameData]
-		LocalStorageManager.shared.saveLocally(dict) { _ in
-			
+		LocalStorageManager.shared.saveLocally(dict) { result in
+			switch result {
+			case .failure(let error): print(error.localizedDescription)
+			case .success: break
+			}
 		}
 	}
 	
@@ -157,21 +147,23 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	private func getChannelsFrom(documents: [QueryDocumentSnapshot]) {
-		documents.forEach { document in
+		let channels = documents.compactMap { (document) -> Channel? in
 			do {
 				let channel = try document.data(as: Channel.self)
 				guard let channel = channel else {
 					fatalError("Channel decoding error")
 				}
-				self.saveToDatabase(channel: channel)
+				return channel
 			} catch {
-				print(error.localizedDescription)
+				print("Some joker created channel with the wrong value type")
+				return nil
 			}
 		}
+		updateDatabase(with: channels)
 	}
 	
-	private func saveToDatabase(channel: Channel) {
-		DatabaseManager.shared.save(channel: channel) { [weak self] result in
+	private func updateDatabase(with channels: [Channel]) {
+		DatabaseManager.shared.updateDatabase(with: channels) { [weak self] result in
 			switch result {
 			case .success:
 				self?.performFetching()
@@ -184,7 +176,7 @@ class ConversationsListViewController: UIViewController {
 		}
 	}
 	
-	private func presentNewChannelAlert() {
+	private func presentCreateChannelAlert() {
 		var textField = UITextField()
 		let alert = UIAlertController(title: "New channel", message: nil, preferredStyle: .alert)
 		alert.addTextField { alertTextField in
@@ -212,6 +204,18 @@ class ConversationsListViewController: UIViewController {
 			print(error.localizedDescription)
 		}
 	}
+	
+	private func validateIndexPath(_ indexPath: IndexPath) -> Bool {
+		guard let sections = fetchResultController.sections else {
+			fatalError("No sections in fetchedResultController")
+		}
+		if indexPath.section < sections.count {
+		   if indexPath.row < sections[indexPath.section].numberOfObjects {
+			  return true
+		   }
+		}
+		return false
+	}
 }
 
 // MARK: - UITableViewDelegate
@@ -230,7 +234,7 @@ extension ConversationsListViewController: UITableViewDelegate {
 	}
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return UITableView.automaticDimension
+		return ConversationsListTableHeaderView.preferredHeight
 	}
 }
 
@@ -255,9 +259,11 @@ extension ConversationsListViewController: UITableViewDataSource {
 			for: indexPath) as? ConversationsListTableViewCell else {
 				return UITableViewCell()
 			}
-		let channel = fetchResultController.object(at: indexPath)
-		cell.configure(with: .init(with: channel))
-		cell.layoutIfNeeded()
+		if validateIndexPath(indexPath) {
+			let channel = fetchResultController.object(at: indexPath)
+			cell.configure(with: .init(with: channel))
+			cell.layoutIfNeeded()
+		}
 		return cell
 	}
 	
@@ -267,7 +273,7 @@ extension ConversationsListViewController: UITableViewDataSource {
 			return UIView()
 		}
 		headerView.addingChannel = { [weak self] in
-			self?.presentNewChannelAlert()
+			self?.presentCreateChannelAlert()
 		}
 		return headerView
 	}
@@ -278,13 +284,7 @@ extension ConversationsListViewController: UITableViewDataSource {
 			guard let id = channel.identifier else {
 				fatalError("Channel don't have identifier")
 			}
-			DatabaseManager.shared.delete(channel: channel) { [weak self] result in
-				switch result {
-				case .success: self?.reference.document(id).delete()
-				case .failure(let error): print(error.localizedDescription)
-				}
-				
-			}
+			reference.document(id).delete()
 		}
 	}
 }

@@ -23,9 +23,9 @@ extension DBChannel {
 	
 	convenience init(with channel: Channel, context: NSManagedObjectContext) {
 		self.init(context: context)
-		self.identifier = channel.channelId
+		self.identifier = channel.id
 		self.lastMessage = channel.lastMessage
-		self.lastActivity = channel.lastActivity
+		self.lastActivity = channel.lastActivity ?? Date()
 		self.name = channel.name
 	}
 

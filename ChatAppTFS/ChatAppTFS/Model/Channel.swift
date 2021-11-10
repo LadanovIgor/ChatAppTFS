@@ -10,13 +10,13 @@ import Firebase
 import FirebaseFirestoreSwift
 
 struct Channel: Codable {
-	@DocumentID var channelId: String?
+	@DocumentID var id: String?
 	let name: String?
 	let lastMessage: String?
 	let lastActivity: Date?
 	
 	init(identifier: String, name: String, lastMessage: String?, lastActivity: Date?) {
-		self.channelId = identifier
+		self.id = identifier
 		self.lastActivity = lastActivity
 		self.lastMessage = lastMessage
 		self.name = name
@@ -31,6 +31,6 @@ extension Channel {
 		self.name = name
 		self.lastMessage = dbChannel.lastMessage
 		self.lastActivity = dbChannel.lastActivity
-		self.channelId = identifier
+		self.id = identifier
 	}
 }
