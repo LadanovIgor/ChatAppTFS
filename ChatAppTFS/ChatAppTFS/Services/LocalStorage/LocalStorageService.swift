@@ -32,10 +32,10 @@ final class LocalStorageService: StoredLocally {
 			}
 		}
 	}
-	
-	public func loadTheme(completion: @escaping ResultClosure<Data>) {
+
+	public func loadData(for key: String, completion: @escaping ResultClosure<Data>) {
 		queue.async { [weak self] in
-			self?.getValue(for: Constants.LocalStorage.themeKey) { result in
+			self?.getValue(for: key) { result in
 				DispatchQueue.main.async {
 					completion(result)
 				}

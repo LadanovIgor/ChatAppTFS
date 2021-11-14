@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	private func loadThemeFor(application: UIApplication) {
-		localStorage.loadTheme { result in
+		localStorage.loadData(for: Constants.LocalStorage.themeKey) { result in
 			switch result {
 			case .success(let data):
 				data.setTheme(for: application)

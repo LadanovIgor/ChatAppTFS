@@ -5,38 +5,16 @@
 //  Created by Ladanov Igor on 13.11.2021.
 //
 
-import UIKit
 import Firebase
 import FirebaseAuth
 import CoreData
 import FirebaseFirestoreSwift
 
-protocol ConversationsListViewProtocol: AnyObject {
-	var presenter: ConversationsListPresenterProtocol? { get set }
-}
+class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 
-protocol ConversationsListPresenterProtocol: AnyObject {
-	var view: ConversationsListViewProtocol? { get set }
-	var localStorage: StoredLocally? { get set }
-	var router: RouterProtocol? { get set }
-	var dataSource: ConversationDataSource { get set }
-	var tableView: UITableView? { get set }
-	init(router: RouterProtocol)
-	func set(view: ConversationsListViewProtocol)
-	func changeTheme(for theme: ThemeProtocol)
-	func createNewChannel(with name: String)
-	func leftBarButtonTapped()
-	func rightBarButtonTapped()
-	func getUserName(completion: ResultClosure<String>)
-}
-
-class ConversationsListPresenter: NSObject {
-	weak var view: ConversationsListViewProtocol?
-	
 	private lazy var db = Firestore.firestore()
 	lazy var reference = db.collection("channels")
-	weak var viewController: ConversationsListViewController?
-	
+	weak var view: ConversationsListViewProtocol?
 	var router: RouterProtocol?
 	var localStorage: StoredLocally?
 	
@@ -45,7 +23,7 @@ class ConversationsListPresenter: NSObject {
 		self.localStorage = localStorage
 	}
 	
-	private lazy var dataSource: ConversationListDataSource = {
+	lazy var dataSource: ConversationListDataSource = {
 		let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
 		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBChannel.lastActivity), ascending: false)
 		fetchRequest.sortDescriptors = [sortDescriptor]
@@ -56,42 +34,35 @@ class ConversationsListPresenter: NSObject {
 			sectionNameKeyPath: nil,
 			cacheName: nil)
 		fetchResultController.delegate = self
-		guard let viewController = viewController else {
+		guard let viewController = view else {
 			fatalError("ConversationListVC None!")
 		}
 		return ConversationListDataSource(fetchResultController: fetchResultController, controller: self)
 	}()
 	
-	private lazy var tableView = viewController?.tableView
-
 	func viewDidLoad() {
 		addFirestoreListener()
-		delegating()
 	}
 	
-	func set(viewController: ConversationsListViewController) {
-		self.viewController = viewController
-	}
-	
-	private func delegating() {
-		tableView?.delegate = self
-		tableView?.dataSource = dataSource
-	}
-
-	func leftBarButtonTapped() {
-		router?.presentThemeScreen(from: viewController) { [weak self] theme in
-			self?.changeTheme(for: theme)
-		}
-	}
-	
-	func rightBarButtonTapped() {
-		router?.presentUserProfileScreen(from: viewController, with: localStorage)
+	func didTapAt(indexPath: IndexPath) {
+		let channel = dataSource.fetchResultController.object(at: indexPath)
+		router?.goToConversationScreen(channel: channel)
 	}
 	
 	func set(view: ConversationsListViewProtocol) {
 		self.view = view
 	}
 	
+	func leftBarButtonTapped() {
+		router?.presentThemeScreen(from: view) { [weak self] theme in
+			self?.changeTheme(for: theme)
+		}
+	}
+	
+	func rightBarButtonTapped() {
+		router?.presentUserProfileScreen(from: view, with: localStorage)
+	}
+
 	func createNewChannel(with name: String) {
 		reference.addDocument(data: ["name": name, "lastActivity": Timestamp(date: Date())])
 	}
@@ -163,7 +134,7 @@ class ConversationsListPresenter: NSObject {
 			case .success:
 					self?.dataSource.performFetching()
 				DispatchQueue.main.async {
-					self?.viewController?.tableView.reloadData()
+					self?.view?.reload()
 				}
 			case .failure(let error):
 				print(error.localizedDescription)
@@ -172,40 +143,11 @@ class ConversationsListPresenter: NSObject {
 	}
 }
 
-// MARK: - UITableViewDelegate
-
-extension ConversationsListPresenter: UITableViewDelegate {
-	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return ConversationsListTableViewCell.preferredHeight
-	}
-	
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-		let channel = dataSource.fetchResultController.object(at: indexPath)
-		router?.goToConversationScreen(channel: channel)
-	}
-	
-	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return ConversationsListTableHeaderView.preferredHeight
-	}
-	
-	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		 guard let headerView = tableView.dequeueReusableHeaderFooterView(
-			withIdentifier: ConversationsListTableHeaderView.identifier) as? ConversationsListTableHeaderView else {
-			return UIView()
-		}
-		headerView.addingChannel = { [weak self] in
-			self?.viewController?.presentCreateChannelAlert()
-		}
-		return headerView
-	}
-}
-
 // MARK: - NSFetchedResultsControllerDelegate
 
 extension ConversationsListPresenter: NSFetchedResultsControllerDelegate {
 	func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-		tableView?.beginUpdates()
+		view?.beginUpdates()
 	}
 	
 	func controller(
@@ -214,23 +156,23 @@ extension ConversationsListPresenter: NSFetchedResultsControllerDelegate {
 		switch type {
 		case .insert:
 			guard let newIndexPath = newIndexPath else { fatalError("Insert object error! NewIndexPath none") }
-			tableView?.insertRows(at: [newIndexPath], with: .automatic)
+			view?.insert(at: newIndexPath)
 		case .delete:
 			guard let indexPath = indexPath else { fatalError("Delete object error! IndexPath none") }
-			tableView?.deleteRows(at: [indexPath], with: .automatic)
+			view?.delete(at: indexPath)
 		case .update:
 			guard let indexPath = indexPath else { fatalError("Update object error! IndexPath none") }
-			tableView?.reloadRows(at: [indexPath], with: .automatic)
+			view?.update(at: indexPath)
 		case .move:
 			guard let newIndexPath = newIndexPath, let indexPath = indexPath else {
 				fatalError("Move object error! IndexPath or newIndexPath none")
 			}
-			tableView?.moveRow(at: indexPath, to: newIndexPath)
+			view?.move(at: indexPath, to: newIndexPath)
 		default: break
 		}
 	}
 	
 	func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-		tableView?.endUpdates()
+		view?.endUpdates()
 	}
 }

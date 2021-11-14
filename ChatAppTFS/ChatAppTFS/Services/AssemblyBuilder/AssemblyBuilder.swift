@@ -19,7 +19,7 @@ class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 	func createConversationsListModule(localStorage: StoredLocally?, router: RouterProtocol) -> UIViewController {
 		let presenter = ConversationsListPresenter(router: router, localStorage: localStorage)
 		let viewController = ConversationsListViewController(presenter: presenter)
-		presenter.set(viewController: viewController)
+		presenter.set(view: viewController)
 		return viewController
 	}
 	

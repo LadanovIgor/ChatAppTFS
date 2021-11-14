@@ -15,8 +15,6 @@ class ConversationListDataSource: NSObject {
 	
 	let fetchResultController: NSFetchedResultsController<DBChannel>
 	weak var controller: ConversationsListPresenter?
-
-	private let cellIdentifier = "UserCell"
 	
 	init(
 		fetchResultController: NSFetchedResultsController<DBChannel>,

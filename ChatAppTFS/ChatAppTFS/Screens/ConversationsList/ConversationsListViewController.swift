@@ -7,18 +7,18 @@
 
 import UIKit
 
-class ConversationsListViewController: UIViewController {
+class ConversationsListViewController: UIViewController, ConversationsListViewProtocol {
 	
 	// MARK: - Properties
 	
-	var presenter: ConversationsListPresenter?
+	var presenter: ConversationsListPresenterProtocol?
 	let tableView = UITableView(frame: .zero, style: .plain)
 	let leftBarButton = UIButton()
 	let rightBarButton = UIButton()
 	
 	private let barButtonSize = Constants.ConversationListScreen.barButtonSize
 	
-	convenience init(presenter: ConversationsListPresenter) {
+	convenience init(presenter: ConversationsListPresenterProtocol) {
 		self.init()
 		self.presenter = presenter
 	}
@@ -33,6 +33,7 @@ class ConversationsListViewController: UIViewController {
 		setUpTableView()
 		setUpRightBarItem()
 		setUpLeftBarItem()
+		delegating()
 	}
 	
 	override func viewDidLayoutSubviews() {
@@ -41,6 +42,11 @@ class ConversationsListViewController: UIViewController {
 	}
 	
 	// MARK: - Private
+	
+	private func delegating() {
+		tableView.delegate = self
+		tableView.dataSource = presenter?.dataSource
+	}
 	
 	private func setUpLeftBarItem() {
 		let image = UIImage(named: "themes")
@@ -60,12 +66,12 @@ class ConversationsListViewController: UIViewController {
 		presenter?.getUserName { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-				case .success(let text):
-					guard let image = UIImage.textImage(text: text.getCapitalLetters()) else {
-						return
-					}
-					self.rightBarButton.setImage(image.resize(width: self.barButtonSize, height: self.barButtonSize), for: .normal)
-				case .failure: break
+			case .success(let text):
+				guard let image = UIImage.textImage(text: text.getCapitalLetters()) else {
+					return
+				}
+				self.rightBarButton.setImage(image.resize(width: self.barButtonSize, height: self.barButtonSize), for: .normal)
+			case .failure: break
 			}
 		}
 	}
@@ -117,4 +123,60 @@ class ConversationsListViewController: UIViewController {
 		present(alert, animated: true, completion: nil)
 	}
 	
+	func insert(at newIndexPath: IndexPath) {
+		tableView.insertRows(at: [newIndexPath], with: .automatic)
+	}
+	
+	func delete(at indexPath: IndexPath) {
+		tableView.deleteRows(at: [indexPath], with: .automatic)
+	}
+	
+	func update(at indexPath: IndexPath) {
+		tableView.reloadRows(at: [indexPath], with: .automatic)
+	}
+	
+	func move(at indexPath: IndexPath, to newIndexPath: IndexPath) {
+		tableView.moveRow(at: indexPath, to: newIndexPath)
+	}
+	
+	func beginUpdates() {
+		tableView.beginUpdates()
+	}
+	
+	func endUpdates() {
+		tableView.endUpdates()
+	}
+	
+	func reload() {
+		tableView.reloadData()
+	}
+	
+}
+
+// MARK: - UITableViewDelegate
+
+extension ConversationsListViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return ConversationsListTableViewCell.preferredHeight
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+		presenter?.didTapAt(indexPath: indexPath)
+	}
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return ConversationsListTableHeaderView.preferredHeight
+	}
+	
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		 guard let headerView = tableView.dequeueReusableHeaderFooterView(
+			withIdentifier: ConversationsListTableHeaderView.identifier) as? ConversationsListTableHeaderView else {
+			return UIView()
+		}
+		headerView.addingChannel = { [weak self] in
+			self?.presentCreateChannelAlert()
+		}
+		return headerView
+	}
 }

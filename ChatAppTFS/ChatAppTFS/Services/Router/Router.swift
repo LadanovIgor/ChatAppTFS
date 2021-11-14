@@ -15,8 +15,8 @@ protocol RouterMain {
 protocol RouterProtocol: RouterMain {
 	func initialViewController(localStorage: StoredLocally?)
 	func goToConversationScreen(channel: DBChannel)
-	func presentThemeScreen(from viewController: UIViewController?, themeSelected: ThemeClosure?)
-	func presentUserProfileScreen(from viewController: UIViewController?, with localStorage: StoredLocally?)
+	func presentThemeScreen(from view: ConversationsListViewProtocol?, themeSelected: ThemeClosure?)
+	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with localStorage: StoredLocally?)
 	func popToRoot()
 	func dismiss(_ viewController: UIViewController?)
 }
@@ -47,16 +47,16 @@ class Router: RouterProtocol {
 		navigationController.pushViewController(conversationViewController, animated: true)
 	}
 	
-	func presentThemeScreen(from viewController: UIViewController?, themeSelected: ThemeClosure?) {
-		guard let viewController = viewController,
+	func presentThemeScreen(from view: ConversationsListViewProtocol?, themeSelected: ThemeClosure?) {
+		guard let viewController = view as? UIViewController,
 			  let themeViewController = assemblyBuilder?.createThemeModule(themeSelected: themeSelected) else {
 				  return
 			  }
 		viewController.present(themeViewController, animated: true)
 	}
 	
-	func presentUserProfileScreen(from viewController: UIViewController?, with localStorage: StoredLocally?) {
-		guard let viewController = viewController,
+	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with localStorage: StoredLocally?) {
+		guard let viewController = view as? UIViewController,
 			  let userProfileViewController = assemblyBuilder?.createUserProfileModule(localStorage: localStorage) else {
 				  return
 			  }
