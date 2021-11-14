@@ -15,4 +15,5 @@ enum StoredLocallyError: Error {
 	case invalidData
 	case couldNotGetData
 	case couldNotSaveData
+	case failureEncodingData
 }

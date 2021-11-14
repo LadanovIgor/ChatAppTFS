@@ -36,6 +36,13 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	private var changedValues = [String: Data]()
 	private var loadedValues = [String: Data]()
 	
+	var localStorage: StoredLocally?
+	
+	convenience init(localStorage: StoredLocally?) {
+		self.init()
+		self.localStorage = localStorage
+	}
+	
 	// MARK: - Lifecycle
 	
 	override func viewDidLoad() {
@@ -80,7 +87,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	
 	private func fetchProfileData() {
 		activityStartedAnimation()
-		LocalStorageManager.shared.loadLocally { [weak self] result in
+		localStorage?.loadLocally { [weak self] result in
 			switch result {
 			case .success(let dict):
 				self?.loadedValues = dict
@@ -191,7 +198,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	private func saveProfile() {
 		activityStartedAnimation()
 		changeButtonState(with: false)
-		LocalStorageManager.shared.saveLocally(changedValues) { [weak self] result in
+		localStorage?.saveLocally(changedValues) { [weak self] result in
 			self?.activityFinishedAnimation()
 			switch result {
 			case .success:

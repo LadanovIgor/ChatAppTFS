@@ -7,13 +7,9 @@
 
 import Foundation
 
-final class LocalStorageManager: StoredLocally {
-	
-	static let shared = LocalStorageManager()
+final class LocalStorageService: StoredLocally {
 	
 	private let queue = DispatchQueue.global(qos: .utility)
-	
-	private init() { }
 	
 	// MARK: - Public
 	

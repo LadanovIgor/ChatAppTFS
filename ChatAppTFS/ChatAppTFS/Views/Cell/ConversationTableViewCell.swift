@@ -46,5 +46,6 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 		dateLabel.text = created.todayOrEarlier
 		selectionStyle = .none
 		senderImageView.image = UIImage.textImage(text: senderName.getCapitalLetters())
+		transform = CGAffineTransform(rotationAngle: CGFloat.pi)
 	}
 }

@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	var window: UIWindow?
 	var orientationLock = UIInterfaceOrientationMask.portrait
+	var localStorage = LocalStorageService()
 	
 	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 		loadThemeFor(application: application)
@@ -24,7 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		FirebaseApp.configure()
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.makeKeyAndVisible()
-		let navVC = UINavigationController(rootViewController: ConversationsListViewController())
+		let navVC = UINavigationController()
+		let assemblyBuilder = AssemblyModuleBuilder()
+		let router = Router(navigationController: navVC, assemblyBuilder: assemblyBuilder)
+		router.initialViewController(localStorage: localStorage)
 		window?.rootViewController = navVC
 		return true
 	}
@@ -34,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	private func loadThemeFor(application: UIApplication) {
-		LocalStorageManager.shared.loadTheme { result in
+		localStorage.loadTheme { result in
 			switch result {
 			case .success(let data):
 				data.setTheme(for: application)
