@@ -7,8 +7,8 @@
 
 import UIKit
 
-class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, KeyboardObservable {
-	
+class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, KeyboardObservable, ProfileViewProtocol {
+
 	// MARK: - Outlets and Properties
 	
 	@IBOutlet weak var profileImageView: CircleImageView!
@@ -32,28 +32,25 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 			updateScreenLayoutDependingOn(isEditing: isProfileEditing)
 		}
 	}
+
+	var presenter: ProfilePresenterProtocol?
 	
-	private var changedValues = [String: Data]()
-	private var loadedValues = [String: Data]()
-	
-	var localStorage: StoredLocally?
-	
-	convenience init(localStorage: StoredLocally?) {
+	convenience init(presenter: ProfilePresenterProtocol) {
 		self.init()
-		self.localStorage = localStorage
+		self.presenter = presenter
 	}
 	
 	// MARK: - Lifecycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		presenter?.viewDidLoad()
 		setUpSaveButton()
 		addButtonTargets()
 		setUpProfileImageView()
 		delegating()
 		setUpConstraints()
 		addKeyboardObservers()
-		fetchProfileData()
 	}
 	
 	override func viewDidLayoutSubviews() {
@@ -83,50 +80,6 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		profileImageView.clipsToBounds = true
 		let gesture = UITapGestureRecognizer(target: self, action: #selector(didProfileImageViewTapped))
 		profileImageView.addGestureRecognizer(gesture)
-	}
-	
-	private func fetchProfileData() {
-		activityStartedAnimation()
-		localStorage?.loadLocally { [weak self] result in
-			switch result {
-			case .success(let dict):
-				self?.loadedValues = dict
-				self?.updateScreen(with: dict)
-			case .failure(let error):
-				print(error.localizedDescription)
-			}
-			self?.activityFinishedAnimation()
-		}
-	}
-	
-	private func updateScreen(with values: [String: Data]) {
-		DispatchQueue.global(qos: .userInteractive).async {
-			let nameText: String
-			let infoText: String
-			let locationText: String
-			if let nameData = values[Constants.LocalStorage.nameKey], let name = String(data: nameData, encoding: .utf8) {
-				nameText = name
-			} else {
-				nameText = "Full name"
-			}
-			if let infoData = values[Constants.LocalStorage.infoKey], let info = String(data: infoData, encoding: .utf8) {
-				infoText = info
-			} else {
-				infoText = "About youself"
-			}
-			if let locationData = values[Constants.LocalStorage.locationKey], let location = String(data: locationData, encoding: .utf8) {
-				locationText = location
-			} else {
-				locationText = "Location"
-			}
-			let imageData = values[Constants.LocalStorage.imageKey]
-			DispatchQueue.main.async { [weak self] in
-				self?.nameTextField.text = nameText
-				self?.locationTextField.text = locationText
-				self?.infoTextField.text = infoText
-				self?.updateProfileImageView(with: imageData)
-			}
-		}
 	}
 	
 	private func updateProfileImageView(with data: Data?) {
@@ -169,7 +122,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	@objc private func didCancelButtonTapped() {
-		updateScreen(with: loadedValues)
+		presenter?.cancel()
 		isProfileEditing = false
 	}
 	
@@ -177,8 +130,8 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		locationTextField.resignFirstResponder()
 		infoTextField.resignFirstResponder()
 		nameTextField.resignFirstResponder()
-		guard !changedValues.isEmpty else { return }
-		saveProfile()
+		changeButtonState(with: false)
+		presenter?.save()
 	}
 	
 	@objc private func didEditButtonTapped() {
@@ -195,37 +148,12 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		saveButton.isEnabled = true
 	}
 	
-	private func saveProfile() {
-		activityStartedAnimation()
-		changeButtonState(with: false)
-		localStorage?.saveLocally(changedValues) { [weak self] result in
-			self?.activityFinishedAnimation()
-			switch result {
-			case .success:
-				self?.presentSuccessLoadAlert()
-				self?.updateValues(with: self?.changedValues)
-			case .failure:
-				self?.presentFailureLoadAlert(handler: self?.saveProfile)
-			}
-		}
-	}
-	
 	private func changeButtonState(with isEnable: Bool) {
 		cancelButton.isEnabled = isEnable
 		saveButton.isEnabled = isEnable
 	}
 	
-	private func updateValues(with values: [String: Data]?) {
-		guard let values = values else {
-			return
-		}
-		for key in values.keys {
-			loadedValues[key] = values[key]
-		}
-		changedValues = [String: Data]()
-	}
-	
-	private func presentSuccessLoadAlert() {
+	func presentSuccessLoadAlert() {
 		let alert = UIAlertController(title: "Data saved", message: nil, preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { [weak self] _ in
 			self?.isProfileEditing = false
@@ -233,7 +161,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		present(alert, animated: true)
 	}
 	
-	private func presentFailureLoadAlert(handler: (() -> Void)?) {
+	func presentFailureLoadAlert(handler: (() -> Void)?) {
 		let alert = UIAlertController(title: "Error!", message: "Failed to save data.", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { [weak self] _ in
 			self?.isProfileEditing = false
@@ -246,12 +174,22 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		present(alert, animated: true)
 	}
 	
-	private func activityStartedAnimation() {
+	func updateScreen(name: String, location: String, info: String, imageData: Data?) {
+		nameTextField.text = name
+		locationTextField.text = location
+		infoTextField.text = info
+		guard let imageData = imageData, let image = UIImage(data: imageData) else {
+			return
+		}
+		profileImageView.image = image
+	}
+	
+	func activityStartedAnimation() {
 		activityIndicator.isHidden = false
 		activityIndicator.startAnimating()
 	}
 	
-	private func activityFinishedAnimation() {
+	func activityFinishedAnimation() {
 		activityIndicator.isHidden = true
 		activityIndicator.stopAnimating()
 	}
@@ -313,7 +251,7 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 		guard let imageData = image.jpegData(compressionQuality: 1.0) else {
 			return
 		}
-		changedValues[Constants.LocalStorage.imageKey] = imageData
+		presenter?.changedValues[Constants.LocalStorage.imageKey] = imageData
 	}
 }
 
@@ -327,11 +265,11 @@ extension UserProfileViewController: UITextFieldDelegate {
 		}
 		let data = (textField.text ?? "").data(using: .utf8)
 		if textField == nameTextField {
-			changedValues[Constants.LocalStorage.nameKey] = data
+			presenter?.changedValues[Constants.LocalStorage.nameKey] = data
 		} else if textField == locationTextField {
-			changedValues[Constants.LocalStorage.locationKey] = data
+			presenter?.changedValues[Constants.LocalStorage.locationKey] = data
 		} else if textField == infoTextField {
-			changedValues[Constants.LocalStorage.infoKey] = data
+			presenter?.changedValues[Constants.LocalStorage.infoKey] = data
 		}
 		textField.placeholder = textField.text
 	}

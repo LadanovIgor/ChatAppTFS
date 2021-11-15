@@ -8,7 +8,12 @@
 import Foundation
 import CoreData
 
-class ConversationDataSource: NSObject {
+protocol ConversationDataSourceProtocol: UITableViewDataSource {
+	var fetchResultController: NSFetchedResultsController<DBMessage> { get }
+	func performFetching()
+}
+
+final class ConversationDataSource: NSObject, ConversationDataSourceProtocol {
 	
 	let fetchResultController: NSFetchedResultsController<DBMessage>
 	private var senderId: String?
@@ -30,7 +35,7 @@ class ConversationDataSource: NSObject {
 	
 }
 
-extension ConversationDataSource: UITableViewDataSource {
+extension ConversationDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(
 			withIdentifier: ConversationTableViewCell.name,

@@ -18,7 +18,7 @@ protocol ConversationsListViewProtocol: AnyObject {
 }
 
 protocol ConversationsListPresenterProtocol: AnyObject, LifeCycleProtocol {
-	var dataSource: ConversationListDataSource { get }
+	var dataSource: ConversationsListDataSourceProtocol { get }
 	func changeTheme(for theme: ThemeProtocol)
 	func createNewChannel(with name: String)
 	func leftBarButtonTapped()

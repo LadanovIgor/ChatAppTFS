@@ -13,15 +13,15 @@ protocol RouterMain {
 }
 
 protocol RouterProtocol: RouterMain {
-	func initialViewController(localStorage: StoredLocally?)
-	func goToConversationScreen(channelId: String)
+	func initialScreen(localStorage: StoredLocally?)
+	func pushConversationScreen(channelId: String, userId: String)
 	func presentThemeScreen(from view: ConversationsListViewProtocol?, themeSelected: ThemeClosure?)
 	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with localStorage: StoredLocally?)
 	func popToRoot()
 	func dismiss(_ viewController: UIViewController?)
 }
 
-class Router: RouterProtocol {
+final class Router: RouterProtocol {
 	
 	var navigationController: UINavigationController?
 	var assemblyBuilder: AssemblyBuilderProtocol?
@@ -31,7 +31,7 @@ class Router: RouterProtocol {
 		self.navigationController = navigationController
 	}
 	
-	func initialViewController(localStorage: StoredLocally?) {
+	func initialScreen(localStorage: StoredLocally?) {
 		guard let navigationController = navigationController,
 			  let conversationsListViewController = assemblyBuilder?.createConversationsListModule(localStorage: localStorage, router: self) else {
 			return
@@ -39,9 +39,9 @@ class Router: RouterProtocol {
 		navigationController.viewControllers = [conversationsListViewController]
 	}
 	
-	func goToConversationScreen(channelId: String) {
+	func pushConversationScreen(channelId: String, userId: String) {
 		guard let navigationController = navigationController,
-			  let conversationViewController = assemblyBuilder?.createConversationModule(channelId: channelId, router: self) else {
+			  let conversationViewController = assemblyBuilder?.createConversationModule(channelId: channelId, userId: userId, router: self) else {
 			return
 		}
 		navigationController.pushViewController(conversationViewController, animated: true)
@@ -57,7 +57,7 @@ class Router: RouterProtocol {
 	
 	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with localStorage: StoredLocally?) {
 		guard let viewController = view as? UIViewController,
-			  let userProfileViewController = assemblyBuilder?.createUserProfileModule(localStorage: localStorage) else {
+			  let userProfileViewController = assemblyBuilder?.createUserProfileModule(localStorage: localStorage, router: self) else {
 				  return
 			  }
 		viewController.present(userProfileViewController, animated: true)

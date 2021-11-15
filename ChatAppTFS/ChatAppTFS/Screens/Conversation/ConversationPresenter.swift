@@ -15,8 +15,11 @@ class ConversationPresenter: NSObject, DatabaseUpdatable, ConversationPresenterP
 	
 	var router: RouterProtocol?
 	
-	lazy var dataSource: ConversationDataSource = {
+	lazy var dataSource: ConversationDataSourceProtocol = {
 		guard let channelId = channelId else { fatalError("Channel None!") }
+		guard let viewContext = firestoreService?.databaseManager?.viewContext else {
+			fatalError("DatabaseManager None")
+		}
 		let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
 		fetchRequest.predicate = NSPredicate(format: "channel.identifier = %@", channelId)
 		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBMessage.created), ascending: false)
@@ -24,53 +27,27 @@ class ConversationPresenter: NSObject, DatabaseUpdatable, ConversationPresenterP
 		fetchRequest.fetchBatchSize = 10
 		let fetchResultController = NSFetchedResultsController(
 			fetchRequest: fetchRequest,
-			managedObjectContext: DatabaseManager.shared.viewContext,
+			managedObjectContext: viewContext,
 			sectionNameKeyPath: nil,
 			cacheName: nil)
 		fetchResultController.delegate = self
-		return ConversationDataSource(fetchResultController: fetchResultController, senderId: senderId)
+		return ConversationDataSource(fetchResultController: fetchResultController, senderId: userId)
 	}()
 	
 	private var channelId: String?
-	private var senderId: String?
+	private var userId: String?
 	private var firestoreService: FirestoreServiceProtocol?
 	
-	init(channelId: String, firestoreService: FirestoreServiceProtocol, router: RouterProtocol) {
+	init(channelId: String, userId: String, firestoreService: FirestoreServiceProtocol, router: RouterProtocol) {
 		self.channelId = channelId
+		self.userId = userId
 		self.router = router
 		self.firestoreService = firestoreService
 		super.init()
-		getSenderId()
 	}
 	
 	func set(viewController: ConversationViewController) {
 		self.view = viewController
-	}
-	
-	private func getSenderId() {
-		let key = Constants.LocalStorage.idKey
-		LocalStorageService().getValue(for: key, completion: { [weak self] result in
-			switch result {
-			case .success(let data):
-				guard let senderId = String(data: data, encoding: .utf8) else {
-					self?.createNewId()
-					return
-				}
-				self?.senderId = senderId
-			case .failure:
-				self?.createNewId()
-			}
-		})
-	}
-	private func createNewId() {
-		senderId = UUID().uuidString
-		guard let dataId = senderId?.data(using: .utf8) else {
-			return
-		}
-		let dict = [Constants.LocalStorage.idKey: dataId]
-		LocalStorageService().saveLocally(dict) { _ in
-			
-		}
 	}
 	
 	func updateData() {
@@ -81,7 +58,7 @@ class ConversationPresenter: NSObject, DatabaseUpdatable, ConversationPresenterP
 	}
 	
 	func createNewMessage(with content: String) {
-		guard let senderId = senderId else { return }
+		guard let senderId = userId else { return }
 		firestoreService?.addMessage(with: content, senderId: senderId)
 	}
 	

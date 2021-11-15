@@ -11,39 +11,44 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol, 
 	
 	weak var view: ConversationsListViewProtocol?
 	var router: RouterProtocol?
-	var localStorage: StoredLocally?
+	var localStorageService: StoredLocally?
 	var firestoreService: FirestoreServiceProtocol?
+	var userId: String?
 	
 	init(router: RouterProtocol, localStorage: StoredLocally?, firestoreService: FirestoreServiceProtocol?) {
 		self.router = router
-		self.localStorage = localStorage
+		self.localStorageService = localStorage
 		self.firestoreService = firestoreService
 		super.init()
+		getUserId()
 	}
 	
-	lazy var dataSource: ConversationListDataSource = {
+	lazy var dataSource: ConversationsListDataSourceProtocol = {
+		guard let viewContext = firestoreService?.databaseManager?.viewContext else {
+			fatalError("Couldn't get context")
+		}
 		let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
 		let sortDescriptor = NSSortDescriptor(key: #keyPath(DBChannel.lastActivity), ascending: false)
 		fetchRequest.sortDescriptors = [sortDescriptor]
 		fetchRequest.fetchBatchSize = 10
 		let fetchResultController = NSFetchedResultsController(
 			fetchRequest: fetchRequest,
-			managedObjectContext: DatabaseManager.shared.viewContext,
+			managedObjectContext: viewContext,
 			sectionNameKeyPath: nil,
 			cacheName: nil)
 		fetchResultController.delegate = self
 		guard let viewController = view else {
 			fatalError("ConversationListVC None!")
 		}
-		return ConversationListDataSource(fetchResultController: fetchResultController, presenter: self)
+		return ConversationsListDataSource(fetchResultController: fetchResultController, presenter: self)
 	}()
 
 	func didTapAt(indexPath: IndexPath) {
 		let channel = dataSource.fetchResultController.object(at: indexPath)
-		guard let router = router, let channelId = channel.identifier else {
+		guard let router = router, let channelId = channel.identifier, let userId = userId else {
 			return
 		}
-		router.goToConversationScreen(channelId: channelId)
+		router.pushConversationScreen(channelId: channelId, userId: userId)
 	}
 	
 	func set(view: ConversationsListViewProtocol) {
@@ -57,7 +62,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol, 
 	}
 	
 	func rightBarButtonTapped() {
-		router?.presentUserProfileScreen(from: view, with: localStorage)
+		router?.presentUserProfileScreen(from: view, with: localStorageService)
 	}
 
 	func createNewChannel(with name: String) {
@@ -69,7 +74,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol, 
 	}
 	
 	func getUserName(completion: @escaping (ResultClosure<String>)) {
-		localStorage?.getValue(for: Constants.LocalStorage.nameKey) { result in
+		localStorageService?.getValue(for: Constants.LocalStorage.nameKey) { result in
 			DispatchQueue.main.async {
 				switch result {
 				case .success(let data):
@@ -98,10 +103,37 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol, 
 			return
 		}
 		let dict = [Constants.LocalStorage.themeKey: themeNameData]
-		localStorage?.saveLocally(dict) { result in
+		localStorageService?.saveLocally(dict) { result in
 			switch result {
 			case .failure(let error): print(error.localizedDescription)
 			case .success: break
+			}
+		}
+	}
+
+	private func createNewId() {
+		userId = UUID().uuidString
+		guard let dataId = userId?.data(using: .utf8) else {
+			return
+		}
+		let dict = [Constants.LocalStorage.idKey: dataId]
+		localStorageService?.saveLocally(dict) { _ in
+			
+		}
+	}
+	
+	private func getUserId() {
+		let key = Constants.LocalStorage.idKey
+		localStorageService?.getValue(for: key) { [weak self] result in
+			switch result {
+			case .success(let data):
+				guard let senderId = String(data: data, encoding: .utf8) else {
+					self?.createNewId()
+					return
+				}
+				self?.userId = senderId
+			case .failure:
+				self?.createNewId()
 			}
 		}
 	}

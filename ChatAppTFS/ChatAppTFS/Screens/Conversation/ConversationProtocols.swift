@@ -18,6 +18,6 @@ protocol ConversationViewProtocol: AnyObject {
 }
 
 protocol ConversationPresenterProtocol: AnyObject, LifeCycleProtocol {
-	var dataSource: ConversationDataSource { get }
+	var dataSource: ConversationDataSourceProtocol { get }
 	func createNewMessage(with content: String)
 }

@@ -9,15 +9,21 @@ import UIKit
 
 protocol AssemblyBuilderProtocol: AnyObject {
 	func createConversationsListModule(localStorage: StoredLocally?, router: RouterProtocol) -> UIViewController 
-	func createConversationModule(channelId: String, router: RouterProtocol) -> UIViewController
+	func createConversationModule(channelId: String, userId: String, router: RouterProtocol) -> UIViewController
 	func createThemeModule(themeSelected: ThemeClosure?, router: RouterProtocol) -> UIViewController
-	func createUserProfileModule(localStorage: StoredLocally?) -> UIViewController
+	func createUserProfileModule(localStorage: StoredLocally?, router: RouterProtocol) -> UIViewController
 }
 
-class AssemblyModuleBuilder: AssemblyBuilderProtocol {
+final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
+	
+	var databaseManager: DatabaseProtocol?
+	
+	init(databaseManager: DatabaseProtocol?) {
+		self.databaseManager = databaseManager
+	}
 
 	func createConversationsListModule(localStorage: StoredLocally?, router: RouterProtocol) -> UIViewController {
-		let firestoreService = FirestoreService()
+		let firestoreService = FirestoreService(databaseManager: databaseManager)
 		let presenter = ConversationsListPresenter(router: router, localStorage: localStorage, firestoreService: firestoreService)
 		firestoreService.databaseUpdater = presenter
 		let viewController = ConversationsListViewController(presenter: presenter)
@@ -25,9 +31,9 @@ class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 		return viewController
 	}
 	
-	func createConversationModule(channelId: String, router: RouterProtocol) -> UIViewController {
-		let firestoreService = FirestoreService(with: channelId)
-		let presenter = ConversationPresenter(channelId: channelId, firestoreService: firestoreService, router: router)
+	func createConversationModule(channelId: String, userId: String, router: RouterProtocol) -> UIViewController {
+		let firestoreService = FirestoreService(with: channelId, databaseManager: databaseManager)
+		let presenter = ConversationPresenter(channelId: channelId, userId: userId, firestoreService: firestoreService, router: router)
 		firestoreService.databaseUpdater = presenter
 		let viewController = ConversationViewController(presenter: presenter)
 		presenter.set(viewController: viewController)
@@ -42,8 +48,10 @@ class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 		return viewController
 	}
 	
-	func createUserProfileModule(localStorage: StoredLocally?) -> UIViewController {
-		let viewController = UserProfileViewController(localStorage: localStorage)
+	func createUserProfileModule(localStorage: StoredLocally?, router: RouterProtocol) -> UIViewController {
+		let presenter = ProfilePresenter(localStorage: localStorage, router: router)
+		let viewController = UserProfileViewController(presenter: presenter)
+		presenter.view = viewController
 		return viewController
 	}
 }

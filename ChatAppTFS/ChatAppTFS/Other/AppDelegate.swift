@@ -26,9 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.makeKeyAndVisible()
 		let navVC = UINavigationController()
-		let assemblyBuilder = AssemblyModuleBuilder()
+		let databaseManager = DatabaseManager()
+		let assemblyBuilder = AssemblyModuleBuilder(databaseManager: databaseManager)
 		let router = Router(navigationController: navVC, assemblyBuilder: assemblyBuilder)
-		router.initialViewController(localStorage: localStorage)
+		router.initialScreen(localStorage: localStorage)
 		window?.rootViewController = navVC
 		return true
 	}

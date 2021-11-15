@@ -8,11 +8,15 @@
 import Foundation
 import CoreData
 
-final class DatabaseManager {
+protocol DatabaseProtocol: AnyObject {
+	func updateDatabase(with channels: [Channel], completion: @escaping ResultClosure<Bool>)
+	func updateDatabase(with messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>)
+	var viewContext: NSManagedObjectContext { get }
+}
+
+final class DatabaseManager: DatabaseProtocol {
 	
 	// MARK: - Properties
-	
-	static let shared = DatabaseManager()
 	
 	private lazy var persistentContainer: NSPersistentContainer = {
 		let container = NSPersistentContainer(name: "ChatDB")
@@ -25,8 +29,6 @@ final class DatabaseManager {
 	}()
 	
 	lazy var viewContext = persistentContainer.viewContext
-	
-	private init() {}
 	
 	// MARK: - Private
 	

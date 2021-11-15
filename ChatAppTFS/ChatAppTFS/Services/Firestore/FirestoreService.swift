@@ -14,9 +14,10 @@ protocol FirestoreServiceProtocol: AnyObject {
 	func addChannel(with name: String)
 	func deleteChannel(with channelId: String)
 	func addMessage(with content: String, senderId: String)
+	var databaseManager: DatabaseProtocol? { get set }
 }
 
-class FirestoreService: FirestoreServiceProtocol {
+final class FirestoreService: FirestoreServiceProtocol {
 
 	private lazy var db = Firestore.firestore()
 	private lazy var channelReference = db.collection("channels")
@@ -27,12 +28,15 @@ class FirestoreService: FirestoreServiceProtocol {
 	
 	private var channelId: String?
 	weak var databaseUpdater: DatabaseUpdatable?
+	var databaseManager: DatabaseProtocol?
 		
-	init() {
+	init(databaseManager: DatabaseProtocol?) {
+		self.databaseManager = databaseManager
 		addChannelListener()
 	}
 	
-	init(with channelId: String) {
+	init(with channelId: String, databaseManager: DatabaseProtocol?) {
+		self.databaseManager = databaseManager
 		self.channelId = channelId
 		addMessageListener()
 	}
@@ -68,7 +72,7 @@ class FirestoreService: FirestoreServiceProtocol {
 		guard let channelId = channelId else {
 			fatalError("Channel None!")
 		}
-		DatabaseManager.shared.updateDatabase(with: messages, toChannel: channelId) { [weak self] result in
+		databaseManager?.updateDatabase(with: messages, toChannel: channelId) { [weak self] result in
 			switch result {
 			case .success:
 				self?.databaseUpdater?.updateData()
@@ -124,7 +128,7 @@ class FirestoreService: FirestoreServiceProtocol {
 	}
 
 	private func updateDatabase(with channels: [Channel]) {
-		DatabaseManager.shared.updateDatabase(with: channels) { [weak self] result in
+		databaseManager?.updateDatabase(with: channels) { [weak self] result in
 			switch result {
 			case .success:
 				self?.databaseUpdater?.updateData()

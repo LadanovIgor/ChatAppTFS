@@ -8,15 +8,17 @@
 import UIKit
 import CoreData
 
-class ConversationListDataSource: NSObject {
+protocol ConversationsListDataSourceProtocol: UITableViewDataSource {
+	var fetchResultController: NSFetchedResultsController<DBChannel> { get }
+	func performFetching()
+}
+
+class ConversationsListDataSource: NSObject, ConversationsListDataSourceProtocol {
 	
 	let fetchResultController: NSFetchedResultsController<DBChannel>
 	weak var presenter: ConversationsListPresenter?
 	
-	init(
-		fetchResultController: NSFetchedResultsController<DBChannel>,
-		presenter: ConversationsListPresenter
-	) {
+	init(fetchResultController: NSFetchedResultsController<DBChannel>, presenter: ConversationsListPresenter) {
 		self.presenter = presenter
 		self.fetchResultController = fetchResultController
 		super.init()
@@ -47,7 +49,7 @@ class ConversationListDataSource: NSObject {
 
 // MARK: - UITableViewDataSource
 
-extension ConversationListDataSource: UITableViewDataSource {
+extension ConversationsListDataSource {
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return fetchResultController.sections?.count ?? 0
 	}
