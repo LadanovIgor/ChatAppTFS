@@ -5,22 +5,20 @@
 //  Created by Ladanov Igor on 13.11.2021.
 //
 
-import Firebase
-import FirebaseAuth
 import CoreData
-import FirebaseFirestoreSwift
 
-class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
-
-	private lazy var db = Firestore.firestore()
-	lazy var reference = db.collection("channels")
+class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol, DatabaseUpdatable {
+	
 	weak var view: ConversationsListViewProtocol?
 	var router: RouterProtocol?
 	var localStorage: StoredLocally?
+	var firestoreService: FirestoreServiceProtocol?
 	
-	init(router: RouterProtocol, localStorage: StoredLocally?) {
+	init(router: RouterProtocol, localStorage: StoredLocally?, firestoreService: FirestoreServiceProtocol?) {
 		self.router = router
 		self.localStorage = localStorage
+		self.firestoreService = firestoreService
+		super.init()
 	}
 	
 	lazy var dataSource: ConversationListDataSource = {
@@ -37,16 +35,15 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 		guard let viewController = view else {
 			fatalError("ConversationListVC None!")
 		}
-		return ConversationListDataSource(fetchResultController: fetchResultController, controller: self)
+		return ConversationListDataSource(fetchResultController: fetchResultController, presenter: self)
 	}()
-	
-	func viewDidLoad() {
-		addFirestoreListener()
-	}
-	
+
 	func didTapAt(indexPath: IndexPath) {
 		let channel = dataSource.fetchResultController.object(at: indexPath)
-		router?.goToConversationScreen(channel: channel)
+		guard let router = router, let channelId = channel.identifier else {
+			return
+		}
+		router.goToConversationScreen(channelId: channelId)
 	}
 	
 	func set(view: ConversationsListViewProtocol) {
@@ -64,7 +61,11 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	}
 
 	func createNewChannel(with name: String) {
-		reference.addDocument(data: ["name": name, "lastActivity": Timestamp(date: Date())])
+		firestoreService?.addChannel(with: name)
+	}
+	
+	func deleteChannel(with channelId: String) {
+		firestoreService?.deleteChannel(with: channelId)
 	}
 	
 	func getUserName(completion: @escaping (ResultClosure<String>)) {
@@ -83,6 +84,13 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 		}
 	}
 	
+	func updateData() {
+		dataSource.performFetching()
+		DispatchQueue.main.async {
+			self.view?.reload()
+		}
+	}
+	
 	func changeTheme(for theme: ThemeProtocol) {
 		theme.apply(for: UIApplication.shared)
 		let themeName = String(describing: type(of: theme).self)
@@ -94,50 +102,6 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 			switch result {
 			case .failure(let error): print(error.localizedDescription)
 			case .success: break
-			}
-		}
-	}
-	
-	private func addFirestoreListener() {
-		reference.addSnapshotListener { [weak self] snapshot, error in
-			if let error = error {
-				print(error.localizedDescription)
-				return
-			}
-			guard let documents = snapshot?.documents else {
-				print(CustomFirebaseError.snapshotNone.localizedDescription)
-				return
-			}
-			self?.getChannelsFrom(documents: documents)
-		}
-	}
-	
-	private func getChannelsFrom(documents: [QueryDocumentSnapshot]) {
-		let channels = documents.compactMap { (document) -> Channel? in
-			do {
-				let channel = try document.data(as: Channel.self)
-				guard let channel = channel else {
-					fatalError("Channel decoding error")
-				}
-				return channel
-			} catch {
-				print("Some joker created channel with the wrong value type")
-				return nil
-			}
-		}
-		updateDatabase(with: channels)
-	}
-
-	private func updateDatabase(with channels: [Channel]) {
-		DatabaseManager.shared.updateDatabase(with: channels) { [weak self] result in
-			switch result {
-			case .success:
-					self?.dataSource.performFetching()
-				DispatchQueue.main.async {
-					self?.view?.reload()
-				}
-			case .failure(let error):
-				print(error.localizedDescription)
 			}
 		}
 	}

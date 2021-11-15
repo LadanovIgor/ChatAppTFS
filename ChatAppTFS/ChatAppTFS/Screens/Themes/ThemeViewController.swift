@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ThemeViewController: UIViewController {
+class ThemeViewController: UIViewController, ThemeViewProtocol {
 	
 	// MARK: - Outlets and Properties
 
@@ -16,7 +16,14 @@ class ThemeViewController: UIViewController {
 	@IBOutlet private weak var lightThemeButton: AppButton!
 	@IBOutlet private weak var closeButton: UIButton!
 	
-	var themeSelected: ThemeClosure?
+	var presenter: ThemePresenterProtocol?
+	
+	// MARK: Init
+	
+	convenience init(presenter: ThemePresenterProtocol) {
+		self.init()
+		self.presenter = presenter
+	}
 	
 	// MARK: - Lifecycle
 	
@@ -42,22 +49,21 @@ class ThemeViewController: UIViewController {
 	}
 	
 	@objc private func didTapCloseButton() {
-		dismiss(animated: true, completion: nil)
+		presenter?.close()
 	}
 	
 	@objc private func didTapLightThemeButton() {
-		themeSelected?(LightTheme())
-		dismiss(animated: true, completion: nil)
+
+		presenter?.lightThemeSelected()
 	}
 	
 	@objc private func didTapChampagneThemeButton() {
-		themeSelected?(ChampagneTheme())
-		dismiss(animated: true, completion: nil)
+		presenter?.champagneThemeSelected()
 	}
 	
 	@objc private func didTapDarkThemeButton(_ button: UIButton) {
-		themeSelected?(DarkTheme())
-		dismiss(animated: true, completion: nil)
+		presenter?.darkThemeSelected()
+
 	}
 
 }

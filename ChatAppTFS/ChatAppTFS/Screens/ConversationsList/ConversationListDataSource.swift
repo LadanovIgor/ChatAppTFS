@@ -6,21 +6,18 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseAuth
 import CoreData
-import FirebaseFirestoreSwift
 
 class ConversationListDataSource: NSObject {
 	
 	let fetchResultController: NSFetchedResultsController<DBChannel>
-	weak var controller: ConversationsListPresenter?
+	weak var presenter: ConversationsListPresenter?
 	
 	init(
 		fetchResultController: NSFetchedResultsController<DBChannel>,
-		controller: ConversationsListPresenter
+		presenter: ConversationsListPresenter
 	) {
-		self.controller = controller
+		self.presenter = presenter
 		self.fetchResultController = fetchResultController
 		super.init()
 		self.performFetching()
@@ -83,7 +80,7 @@ extension ConversationListDataSource: UITableViewDataSource {
 			guard let id = channel.identifier else {
 				fatalError("Channel don't have identifier")
 			}
-			controller?.reference.document(id).delete()
+			presenter?.deleteChannel(with: id)
 		}
 	}
 }

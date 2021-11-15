@@ -7,11 +7,11 @@
 
 import UIKit
 
-class ConversationViewController: UIViewController, KeyboardObservable {
+class ConversationViewController: UIViewController, ConversationViewProtocol, KeyboardObservable {
 	
 	// MARK: - Properties
 	
-	var controller: ConversationController?
+	var presenter: ConversationPresenterProtocol?
 	
 	let tableView = UITableView(frame: .zero, style: .grouped)
 	let sendMessageView = SendMessageView()
@@ -19,9 +19,9 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	// MARK: - Init
 	
-	convenience init(controller: ConversationController) {
+	convenience init(presenter: ConversationPresenterProtocol) {
 		self.init()
-		self.controller = controller
+		self.presenter = presenter
 	}
 	
 	deinit {
@@ -32,13 +32,13 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		controller?.viewDidLoad()
 		setUpBackButton()
 		setUpTableView()
 		setUpSendMessageView()
 		setUpConstraints()
 		addKeyboardObservers()
-		
+		delegating()
+		monitoringMessageSending()
 	}
 	
 	override func viewDidLayoutSubviews() {
@@ -47,6 +47,11 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	}
 	
 	// MARK: - Private
+	
+	private func delegating() {
+		tableView.delegate = self
+		tableView.dataSource = presenter?.dataSource
+	}
 	
 	private func setUpSendMessageView() {
 		view.addSubview(sendMessageView)
@@ -99,5 +104,50 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 			return
 		}
 		view.addConstraint(constraint)
-	}	
+	}
+	
+	private func monitoringMessageSending() {
+		sendMessageView.messageSent = { [weak self] text in
+			self?.presenter?.createNewMessage(with: text)
+		}
+	}
+	
+	func insert(at newIndexPath: IndexPath) {
+		tableView.insertRows(at: [newIndexPath], with: .automatic)
+	}
+	
+	func delete(at indexPath: IndexPath) {
+		tableView.deleteRows(at: [indexPath], with: .automatic)
+	}
+	
+	func update(at indexPath: IndexPath) {
+		tableView.reloadRows(at: [indexPath], with: .automatic)
+	}
+	
+	func move(at indexPath: IndexPath, to newIndexPath: IndexPath) {
+		tableView.moveRow(at: indexPath, to: newIndexPath)
+	}
+	
+	func beginUpdates() {
+		tableView.beginUpdates()
+	}
+	
+	func endUpdates() {
+		tableView.endUpdates()
+	}
+	
+	func reload() {
+		tableView.reloadData()
+	}
+	
+}
+
+extension ConversationViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		sendMessageView.stopEditing()
+	}
 }
