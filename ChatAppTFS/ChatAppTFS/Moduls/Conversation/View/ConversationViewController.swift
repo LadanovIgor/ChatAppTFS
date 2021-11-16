@@ -41,6 +41,16 @@ class ConversationViewController: UIViewController, ConversationViewProtocol, Ke
 		monitoringMessageSending()
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		presenter?.viewWillAppear()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		presenter?.viewWillDisappear()
+	}
+	
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		tableView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)

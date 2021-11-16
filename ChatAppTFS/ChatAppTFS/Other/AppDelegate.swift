@@ -27,7 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window?.makeKeyAndVisible()
 		let navVC = UINavigationController()
 		let databaseManager = DatabaseManager()
-		let assemblyBuilder = AssemblyModuleBuilder(databaseManager: databaseManager)
+		let firestoreManager = FireStoreManager()
+		let assemblyBuilder = AssemblyModuleBuilder(databaseManager: databaseManager, firestoreManager: firestoreManager)
 		let router = Router(navigationController: navVC, assemblyBuilder: assemblyBuilder)
 		router.initialScreen(localStorage: localStorage)
 		window?.rootViewController = navVC

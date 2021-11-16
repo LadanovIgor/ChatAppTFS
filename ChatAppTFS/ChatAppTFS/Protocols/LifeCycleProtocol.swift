@@ -10,9 +10,11 @@ import Foundation
 protocol LifeCycleProtocol {
 	func viewDidLoad()
 	func viewWillAppear()
+	func viewWillDisappear()
 }
 
 extension LifeCycleProtocol {
 	func viewDidLoad() { }
 	func viewWillAppear() { }
+	func viewWillDisappear() { }
 }

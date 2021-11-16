@@ -12,19 +12,23 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol, 
 	weak var view: ConversationsListViewProtocol?
 	var router: RouterProtocol?
 	var localStorageService: StoredLocally?
-	var firestoreService: FirestoreServiceProtocol?
+	var databaseService: DatabaseServiceProtocol?
 	var userId: String?
 	
-	init(router: RouterProtocol, localStorage: StoredLocally?, firestoreService: FirestoreServiceProtocol?) {
+	init(router: RouterProtocol, localStorage: StoredLocally?, databaseService: DatabaseServiceProtocol?) {
 		self.router = router
 		self.localStorageService = localStorage
-		self.firestoreService = firestoreService
+		self.databaseService = databaseService
 		super.init()
+	}
+	
+	func viewDidLoad() {
 		getUserId()
+		self.databaseService?.startFetchingChannels()
 	}
 	
 	lazy var dataSource: ConversationsListDataSourceProtocol = {
-		guard let viewContext = firestoreService?.databaseManager?.viewContext else {
+		guard let viewContext = databaseService?.databaseManager.viewContext else {
 			fatalError("Couldn't get context")
 		}
 		let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
@@ -66,11 +70,11 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol, 
 	}
 
 	func createNewChannel(with name: String) {
-		firestoreService?.addChannel(with: name)
+		databaseService?.addChannel(with: name)
 	}
 	
 	func deleteChannel(with channelId: String) {
-		firestoreService?.deleteChannel(with: channelId)
+		databaseService?.deleteChannel(with: channelId)
 	}
 	
 	func getUserName(completion: @escaping (ResultClosure<String>)) {

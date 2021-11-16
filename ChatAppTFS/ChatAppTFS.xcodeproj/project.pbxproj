@@ -43,7 +43,7 @@
 		8E418FE3273408CC00FB9B45 /* CustomFirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E418FE2273408CC00FB9B45 /* CustomFirebaseError.swift */; };
 		8E5EC5AB26FDB05E008FC472 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */; };
 		8E6B3547271E82D300653B8D /* LocalStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B3546271E82D300653B8D /* LocalStorageService.swift */; };
-		8E6B3549271E82E700653B8D /* ProfileStorageManagerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B3548271E82E700653B8D /* ProfileStorageManagerOperation.swift */; };
+		8E6B3549271E82E700653B8D /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B3548271E82E700653B8D /* FirestoreManager.swift */; };
 		8E6B354D271E935300653B8D /* StoredLocally.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B354C271E935300653B8D /* StoredLocally.swift */; };
 		8E6B3550271E939200653B8D /* StoredLocallyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B354F271E939200653B8D /* StoredLocallyError.swift */; };
 		8E72BC792717C2B60046870F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E72BC782717C2B60046870F /* Constants.swift */; };
@@ -83,7 +83,7 @@
 		8EF079A02726C8F800C88771 /* TableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0799F2726C8F800C88771 /* TableView+.swift */; };
 		8EF0D00F272AA97500F9D485 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0D00E272AA97500F9D485 /* UIImage+.swift */; };
 		8EF3AA1C272D606200BCA00E /* ChatDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EF3AA1A272D606200BCA00E /* ChatDB.xcdatamodeld */; };
-		8EF72DF6274207DB004DD7D9 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF72DF5274207DB004DD7D9 /* FirestoreService.swift */; };
+		8EF72DF6274207DB004DD7D9 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF72DF5274207DB004DD7D9 /* DatabaseService.swift */; };
 		8EF72DF827421F64004DD7D9 /* DatabaseUpdatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF72DF727421F64004DD7D9 /* DatabaseUpdatable.swift */; };
 		8EF72DFA274226DF004DD7D9 /* ConversationProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF72DF9274226DF004DD7D9 /* ConversationProtocols.swift */; };
 /* End PBXBuildFile section */
@@ -131,7 +131,7 @@
 		8E418FE2273408CC00FB9B45 /* CustomFirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFirebaseError.swift; sourceTree = "<group>"; };
 		8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservable.swift; sourceTree = "<group>"; };
 		8E6B3546271E82D300653B8D /* LocalStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageService.swift; sourceTree = "<group>"; };
-		8E6B3548271E82E700653B8D /* ProfileStorageManagerOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorageManagerOperation.swift; sourceTree = "<group>"; };
+		8E6B3548271E82E700653B8D /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		8E6B354C271E935300653B8D /* StoredLocally.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredLocally.swift; sourceTree = "<group>"; };
 		8E6B354F271E939200653B8D /* StoredLocallyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredLocallyError.swift; sourceTree = "<group>"; };
 		8E72BC782717C2B60046870F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 		8EF0799F2726C8F800C88771 /* TableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableView+.swift"; sourceTree = "<group>"; };
 		8EF0D00E272AA97500F9D485 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		8EF3AA1B272D606200BCA00E /* ChatDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatDB.xcdatamodel; sourceTree = "<group>"; };
-		8EF72DF5274207DB004DD7D9 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		8EF72DF5274207DB004DD7D9 /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		8EF72DF727421F64004DD7D9 /* DatabaseUpdatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseUpdatable.swift; sourceTree = "<group>"; };
 		8EF72DF9274226DF004DD7D9 /* ConversationProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationProtocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -380,6 +380,7 @@
 		8E27D42927439FF7009A3425 /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
+				8E6B3548271E82E700653B8D /* FirestoreManager.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -645,7 +646,6 @@
 		8EE62B3D271FEB6B0011FE58 /* Operation */ = {
 			isa = PBXGroup;
 			children = (
-				8E6B3548271E82E700653B8D /* ProfileStorageManagerOperation.swift */,
 				8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */,
 			);
 			path = Operation;
@@ -654,7 +654,7 @@
 		8EF72DF42742079A004DD7D9 /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
-				8EF72DF5274207DB004DD7D9 /* FirestoreService.swift */,
+				8EF72DF5274207DB004DD7D9 /* DatabaseService.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -804,7 +804,7 @@
 				8ED8D105273B5DB1004BDD23 /* Array+.swift in Sources */,
 				8E0B6702273FDCCC0092D5E5 /* UIViewController+.swift in Sources */,
 				8EF72DFA274226DF004DD7D9 /* ConversationProtocols.swift in Sources */,
-				8E6B3549271E82E700653B8D /* ProfileStorageManagerOperation.swift in Sources */,
+				8E6B3549271E82E700653B8D /* FirestoreManager.swift in Sources */,
 				8E2E270A270DE61300BFE156 /* Date+.swift in Sources */,
 				8E15F8FE272E424100EE7918 /* DBChannel+CoreDataProperties.swift in Sources */,
 				8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */,
@@ -858,7 +858,7 @@
 				8E15F8FB272E424100EE7918 /* DBMessage+CoreDataProperties.swift in Sources */,
 				8E15F8FD272E424100EE7918 /* DBChannel+CoreDataClass.swift in Sources */,
 				8E72BC792717C2B60046870F /* Constants.swift in Sources */,
-				8EF72DF6274207DB004DD7D9 /* FirestoreService.swift in Sources */,
+				8EF72DF6274207DB004DD7D9 /* DatabaseService.swift in Sources */,
 				8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */,
 				8EAB38A92717023500A1FF98 /* ThemeProtocol.swift in Sources */,
 				8E0B66FE273FC6120092D5E5 /* ConversationDataSource.swift in Sources */,

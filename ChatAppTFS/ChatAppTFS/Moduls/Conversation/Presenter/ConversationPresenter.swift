@@ -17,8 +17,8 @@ class ConversationPresenter: NSObject, DatabaseUpdatable, ConversationPresenterP
 	
 	lazy var dataSource: ConversationDataSourceProtocol = {
 		guard let channelId = channelId else { fatalError("Channel None!") }
-		guard let viewContext = firestoreService?.databaseManager?.viewContext else {
-			fatalError("DatabaseManager None")
+		guard let viewContext = databaseService?.databaseManager.viewContext else {
+			fatalError("FirestoreService None")
 		}
 		let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
 		fetchRequest.predicate = NSPredicate(format: "channel.identifier = %@", channelId)
@@ -36,14 +36,24 @@ class ConversationPresenter: NSObject, DatabaseUpdatable, ConversationPresenterP
 	
 	private var channelId: String?
 	private var userId: String?
-	private var firestoreService: FirestoreServiceProtocol?
+	private var databaseService: DatabaseServiceProtocol?
 	
-	init(channelId: String, userId: String, firestoreService: FirestoreServiceProtocol, router: RouterProtocol) {
+	init(channelId: String, userId: String, databaseService: DatabaseServiceProtocol, router: RouterProtocol) {
 		self.channelId = channelId
 		self.userId = userId
 		self.router = router
-		self.firestoreService = firestoreService
+		self.databaseService = databaseService
 		super.init()
+		
+	}
+	
+	func viewWillAppear() {
+		guard let channelId = channelId else { fatalError("Channel None!") }
+		self.databaseService?.startFetchingMessages(from: channelId)
+	}
+	
+	func viewWillDisappear() {
+		databaseService?.stopFetchingMessages()
 	}
 	
 	func set(viewController: ConversationViewController) {
@@ -59,7 +69,7 @@ class ConversationPresenter: NSObject, DatabaseUpdatable, ConversationPresenterP
 	
 	func createNewMessage(with content: String) {
 		guard let senderId = userId else { return }
-		firestoreService?.addMessage(with: content, senderId: senderId)
+		databaseService?.addMessage(with: content, senderId: senderId)
 	}
 	
 }

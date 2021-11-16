@@ -16,25 +16,27 @@ protocol AssemblyBuilderProtocol: AnyObject {
 
 final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 	
-	var databaseManager: DatabaseProtocol?
+	var databaseManager: DatabaseProtocol
+	var firestoreManager: FireStorable
 	
-	init(databaseManager: DatabaseProtocol?) {
+	init(databaseManager: DatabaseProtocol, firestoreManager: FireStorable) {
 		self.databaseManager = databaseManager
+		self.firestoreManager = firestoreManager
 	}
 
 	func createConversationsListModule(localStorage: StoredLocally?, router: RouterProtocol) -> UIViewController {
-		let firestoreService = FirestoreService(databaseManager: databaseManager)
-		let presenter = ConversationsListPresenter(router: router, localStorage: localStorage, firestoreService: firestoreService)
-		firestoreService.databaseUpdater = presenter
+		let databaseService = DatabaseService(databaseManager: databaseManager, firestoreManager: firestoreManager)
+		let presenter = ConversationsListPresenter(router: router, localStorage: localStorage, databaseService: databaseService)
+		databaseService.databaseUpdater = presenter
 		let viewController = ConversationsListViewController(presenter: presenter)
 		presenter.set(view: viewController)
 		return viewController
 	}
 	
 	func createConversationModule(channelId: String, userId: String, router: RouterProtocol) -> UIViewController {
-		let firestoreService = FirestoreService(with: channelId, databaseManager: databaseManager)
-		let presenter = ConversationPresenter(channelId: channelId, userId: userId, firestoreService: firestoreService, router: router)
-		firestoreService.databaseUpdater = presenter
+		let databaseService = DatabaseService(with: channelId, databaseManager: databaseManager, firestoreManager: firestoreManager)
+		let presenter = ConversationPresenter(channelId: channelId, userId: userId, databaseService: databaseService, router: router)
+		databaseService.databaseUpdater = presenter
 		let viewController = ConversationViewController(presenter: presenter)
 		presenter.set(viewController: viewController)
 		return viewController
