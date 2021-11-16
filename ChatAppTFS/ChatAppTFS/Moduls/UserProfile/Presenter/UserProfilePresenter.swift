@@ -5,30 +5,8 @@
 //  Created by Ladanov Igor on 13.11.2021.
 //
 
-protocol ProfilePresenterProtocol: AnyObject, LifeCycleProtocol {
-	func cancel()
-	func save()
-	var changedValues: [String: Data] { get set }
-}
-
-protocol ProfileViewProtocol: AnyObject {
-	func activityStartedAnimation()
-	func activityFinishedAnimation()
-	func updateScreen(name: String, location: String, info: String, imageData: Data?)
-	func presentFailureLoadAlert(handler: (() -> Void)?)
-	func presentSuccessLoadAlert()
-}
-
 class ProfilePresenter: ProfilePresenterProtocol {
-	func save() {
-		guard !changedValues.isEmpty else { return }
-		saveProfile()
-	}
-	
-	func cancel() {
-		getValues(from: loadedValues)
-	}
-	
+
 	weak var view: ProfileViewProtocol?
 	var localStorage: StoredLocally?
 	var router: RouterProtocol?
@@ -45,6 +23,19 @@ class ProfilePresenter: ProfilePresenterProtocol {
 		fetchProfileData()
 	}
 	
+	func close() {
+		router?.dismiss(view)
+	}
+	
+	func save() {
+		guard !changedValues.isEmpty else { return }
+		saveProfile()
+	}
+	
+	func cancel() {
+		getValues(from: loadedValues)
+	}
+		
 	private func fetchProfileData() {
 		view?.activityStartedAnimation()
 		localStorage?.loadLocally { [weak self] result in

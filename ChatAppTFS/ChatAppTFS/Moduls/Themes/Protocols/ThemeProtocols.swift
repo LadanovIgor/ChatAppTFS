@@ -14,6 +14,6 @@ protocol ThemePresenterProtocol: AnyObject {
 	func champagneThemeSelected()
 }
 
-protocol ThemeViewProtocol: AnyObject {
+protocol ThemeViewProtocol where Self: UIViewController {
 	
 }

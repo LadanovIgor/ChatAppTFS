@@ -7,6 +7,6 @@
 
 import UIKit
 
-class ProfileHeaderView: UIView {
+class AppHeaderView: UIView {
 
 }

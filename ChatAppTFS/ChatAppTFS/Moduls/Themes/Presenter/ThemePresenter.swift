@@ -19,21 +19,21 @@ class ThemePresenter: ThemePresenterProtocol {
 	}
 	
 	func close() {
-		guard let router = router, let viewController = view as? UIViewController else {
-			return
-		}
-		router.dismiss(viewController)
+		router?.dismiss(view)
 	}
 	
 	func lightThemeSelected() {
 		themeSelected?(LightTheme())
+		close()
 	}
 	
 	func darkThemeSelected() {
 		themeSelected?(DarkTheme())
+		close()
 	}
 	
 	func champagneThemeSelected() {
 		themeSelected?(ChampagneTheme())
+		close()
 	}
 }

@@ -141,7 +141,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	@objc private func didCloseButtonTapped() {
-		dismiss(animated: true, completion: nil)
+		presenter?.close()
 	}
 	
 	@objc private func didTextFieldDidChange() {
@@ -179,6 +179,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		locationTextField.text = location
 		infoTextField.text = info
 		guard let imageData = imageData, let image = UIImage(data: imageData) else {
+			profileImageView.image = UIImage.textImage(text: "FN")
 			return
 		}
 		profileImageView.image = image

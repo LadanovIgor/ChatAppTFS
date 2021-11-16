@@ -14,7 +14,7 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 	@IBOutlet private weak var nameLabel: UILabel!
 	@IBOutlet private weak var dateLabel: UILabel!
 	@IBOutlet private weak var contentLabel: UILabel!
-	@IBOutlet private weak var messageView: MessageView!
+	@IBOutlet private weak var messageView: AppMessageView!
 	@IBOutlet private weak var senderImageView: UIImageView!
 	
 	override func layoutSubviews() {

@@ -53,7 +53,6 @@ class ThemeViewController: UIViewController, ThemeViewProtocol {
 	}
 	
 	@objc private func didTapLightThemeButton() {
-
 		presenter?.lightThemeSelected()
 	}
 	

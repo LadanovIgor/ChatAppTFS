@@ -7,6 +7,6 @@
 
 import UIKit
 
-class MessageView: UIView {
+class AppMessageView: UIView {
 
 }
