@@ -15,7 +15,8 @@ protocol FireStorable: AnyObject {
 	func addMessage(with content: String, senderId: String)
 	func addChannel(with name: String)
 	func deleteChannel(with channelId: String)
-	func stopListener()
+	func stopMessageListener()
+	func stopChannelListener()
 }
 
 final class FireStoreManager: FireStorable {
@@ -24,6 +25,7 @@ final class FireStoreManager: FireStorable {
 	private lazy var channelReference = db.collection("channels")
 	
 	private var messageListener: ListenerRegistration?
+	private var channelListener: ListenerRegistration?
 	
 	private var channelId: String?
 	
@@ -36,8 +38,12 @@ final class FireStoreManager: FireStorable {
 		addMessageListener(completion: completion)
 	}
 	
-	func stopListener() {
+	func stopMessageListener() {
 		messageListener?.remove()
+	}
+	
+	func stopChannelListener() {
+		channelListener?.remove()
 	}
 
 	private func addMessageListener(completion: @escaping ResultClosure<[Message]>) {
@@ -69,7 +75,7 @@ final class FireStoreManager: FireStorable {
 	}
 	
 	private func addChannelListener(completion: @escaping ResultClosure<[Channel]>) {
-		channelReference.addSnapshotListener { [weak self] snapshot, error in
+		channelListener = channelReference.addSnapshotListener { [weak self] snapshot, error in
 			if let error = error {
 				completion(.failure(error))
 				return

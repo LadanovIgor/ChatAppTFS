@@ -42,4 +42,25 @@ final class LocalStorageService: StoredLocally {
 			}
 		}
 	}
+	
+	public func loadThemeFor(application: UIApplication) {
+		loadData(for: Constants.LocalStorage.themeKey) { result in
+			switch result {
+			case .success(let data):
+				data.setTheme(for: application)
+			case .failure:
+				LightTheme().apply(for: application)
+			}
+		}
+	}
+	
+	public func createFileLocallyIfNeeded() {
+		guard let sourcePath = Bundle.main.path(forResource: Constants.LocalStorage.plistFileName, ofType: "plist"),
+			  let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+			  FileManager.default.fileExists(atPath: sourcePath) else { return }
+		let fileURL = directory.appendingPathComponent("\(Constants.LocalStorage.plistFileName).plist")
+		if !FileManager.default.fileExists(atPath: fileURL.path) {
+			try? FileManager.default.copyItem(atPath: sourcePath, toPath: fileURL.path)
+		}
+	}
 }

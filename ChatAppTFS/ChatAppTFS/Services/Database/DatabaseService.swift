@@ -11,31 +11,27 @@ protocol DatabaseServiceProtocol: AnyObject {
 	func addChannel(with name: String)
 	func deleteChannel(with channelId: String)
 	func addMessage(with content: String, senderId: String)
-	var databaseManager: DatabaseProtocol { get }
+	var coreDataManager: CoreDataManagerProtocol { get }
 	var firestoreManager: FireStorable { get }
 	func startFetchingChannels()
 	func startFetchingMessages(from channelId: String)
 	func stopFetchingMessages()
+	func stopFetchingChannels()
+	var databaseUpdater: DatabaseUpdatable? { get set }
 }
 
 final class DatabaseService: DatabaseServiceProtocol {
-
+	
 	private var channelId: String?
 	weak var databaseUpdater: DatabaseUpdatable?
-	var databaseManager: DatabaseProtocol
+	var coreDataManager: CoreDataManagerProtocol
 	var firestoreManager: FireStorable
 		
-	init(databaseManager: DatabaseProtocol, firestoreManager: FireStorable) {
-		self.databaseManager = databaseManager
+	init(coreDataManager: CoreDataManagerProtocol, firestoreManager: FireStorable) {
+		self.coreDataManager = coreDataManager
 		self.firestoreManager = firestoreManager
 	}
-	
-	init(with channelId: String, databaseManager: DatabaseProtocol, firestoreManager: FireStorable) {
-		self.databaseManager = databaseManager
-		self.firestoreManager = firestoreManager
-		self.channelId = channelId
-	}
-	
+
 	func startFetchingChannels() {
 		firestoreManager.getChannels { [weak self] result in
 			switch result {
@@ -48,6 +44,7 @@ final class DatabaseService: DatabaseServiceProtocol {
 	}
 	
 	func startFetchingMessages(from channelId: String) {
+		self.channelId = channelId
 		firestoreManager.getMessages(from: channelId) { [weak self] result in
 			switch result {
 			case .success(let messages):
@@ -59,7 +56,11 @@ final class DatabaseService: DatabaseServiceProtocol {
 	}
 	
 	func stopFetchingMessages() {
-		firestoreManager.stopListener()
+		firestoreManager.stopMessageListener()
+	}
+	
+	func stopFetchingChannels() {
+		firestoreManager.stopChannelListener()
 	}
 	
 	func addMessage(with content: String, senderId: String) {
@@ -75,7 +76,7 @@ final class DatabaseService: DatabaseServiceProtocol {
 	}
 	
 	private func updateDatabase(with channels: [Channel]) {
-		databaseManager.updateDatabase(with: channels) { [weak self] result in
+		coreDataManager.updateDatabase(with: channels) { [weak self] result in
 			switch result {
 			case .success:
 				self?.databaseUpdater?.updateData()
@@ -89,7 +90,7 @@ final class DatabaseService: DatabaseServiceProtocol {
 		guard let channelId = channelId else {
 			fatalError("Channel None!")
 		}
-		databaseManager.updateDatabase(with: messages, toChannel: channelId) { [weak self] result in
+		coreDataManager.updateDatabase(with: messages, toChannel: channelId) { [weak self] result in
 			switch result {
 			case .success:
 				self?.databaseUpdater?.updateData()

@@ -8,13 +8,13 @@
 import Foundation
 import CoreData
 
-protocol DatabaseProtocol: AnyObject {
+protocol CoreDataManagerProtocol: AnyObject {
 	func updateDatabase(with channels: [Channel], completion: @escaping ResultClosure<Bool>)
 	func updateDatabase(with messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>)
 	var viewContext: NSManagedObjectContext { get }
 }
 
-final class DatabaseManager: DatabaseProtocol {
+final class CoreDataManager: CoreDataManagerProtocol {
 	
 	// MARK: - Properties
 	
@@ -27,7 +27,6 @@ final class DatabaseManager: DatabaseProtocol {
 		}
 		return container
 	}()
-	
 	lazy var viewContext = persistentContainer.viewContext
 	
 	// MARK: - Private

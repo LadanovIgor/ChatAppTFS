@@ -16,19 +16,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var localStorage = LocalStorageService()
 	
 	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-		loadThemeFor(application: application)
+		localStorage.loadThemeFor(application: application)
 		return true
 	}
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		createFileLocallyIfNeeded()
+		localStorage.createFileLocallyIfNeeded()
 		FirebaseApp.configure()
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.makeKeyAndVisible()
 		let navVC = UINavigationController()
-		let databaseManager = DatabaseManager()
+		let coreDataManager = CoreDataManager()
 		let firestoreManager = FireStoreManager()
-		let assemblyBuilder = AssemblyModuleBuilder(databaseManager: databaseManager, firestoreManager: firestoreManager)
+		let databaseService = DatabaseService(coreDataManager: coreDataManager, firestoreManager: firestoreManager)
+		let assemblyBuilder = AssemblyModuleBuilder(databaseService: databaseService)
 		let router = Router(navigationController: navVC, assemblyBuilder: assemblyBuilder)
 		router.initialScreen(localStorage: localStorage)
 		window?.rootViewController = navVC
@@ -37,26 +38,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
 		return orientationLock
-	}
-	
-	private func loadThemeFor(application: UIApplication) {
-		localStorage.loadData(for: Constants.LocalStorage.themeKey) { result in
-			switch result {
-			case .success(let data):
-				data.setTheme(for: application)
-			case .failure:
-				LightTheme().apply(for: application)
-			}
-		}
-	}
-	
-	private func createFileLocallyIfNeeded() {
-		guard let sourcePath = Bundle.main.path(forResource: Constants.LocalStorage.plistFileName, ofType: "plist"),
-			  let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
-			  FileManager.default.fileExists(atPath: sourcePath) else { return }
-		let fileURL = directory.appendingPathComponent("\(Constants.LocalStorage.plistFileName).plist")
-		if !FileManager.default.fileExists(atPath: fileURL.path) {
-			try? FileManager.default.copyItem(atPath: sourcePath, toPath: fileURL.path)
-		}
 	}
 }

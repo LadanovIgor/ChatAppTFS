@@ -14,7 +14,7 @@ protocol RouterMain {
 
 protocol RouterProtocol: RouterMain {
 	func initialScreen(localStorage: StoredLocally?)
-	func pushConversationScreen(channelId: String, userId: String)
+	func pushConversationScreen(channelId: String, userId: String, databaseService: DatabaseServiceProtocol?)
 	func presentThemeScreen(from view: ConversationsListViewProtocol?, themeSelected: ThemeClosure?)
 	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with localStorage: StoredLocally?)
 	func popToRoot()
@@ -39,9 +39,9 @@ final class Router: RouterProtocol {
 		navigationController.viewControllers = [conversationsListViewController]
 	}
 	
-	func pushConversationScreen(channelId: String, userId: String) {
+	func pushConversationScreen(channelId: String, userId: String, databaseService: DatabaseServiceProtocol?) {
 		guard let navigationController = navigationController,
-			  let conversationViewController = assemblyBuilder?.createConversationModule(channelId: channelId, userId: userId, router: self) else {
+			  let conversationViewController = assemblyBuilder?.createConversationModule(channelId: channelId, userId: userId, databaseService: databaseService, router: self) else {
 			return
 		}
 		navigationController.pushViewController(conversationViewController, animated: true)

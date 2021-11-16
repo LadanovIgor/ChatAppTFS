@@ -41,6 +41,16 @@ class ConversationsListViewController: UIViewController, ConversationsListViewPr
 		rightBarButton.round()
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		presenter?.viewWillAppear()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		presenter?.viewWillDisappear()
+	}
+	
 	// MARK: - Private
 	
 	private func delegating() {

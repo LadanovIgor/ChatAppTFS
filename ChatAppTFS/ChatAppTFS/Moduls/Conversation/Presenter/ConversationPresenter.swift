@@ -11,13 +11,13 @@ import CoreData
 
 class ConversationPresenter: NSObject, DatabaseUpdatable, ConversationPresenterProtocol {
 	
-	weak var view: ConversationViewController?
+	weak var view: ConversationViewProtocol?
 	
 	var router: RouterProtocol?
 	
 	lazy var dataSource: ConversationDataSourceProtocol = {
 		guard let channelId = channelId else { fatalError("Channel None!") }
-		guard let viewContext = databaseService?.databaseManager.viewContext else {
+		guard let viewContext = databaseService?.coreDataManager.viewContext else {
 			fatalError("FirestoreService None")
 		}
 		let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
@@ -38,7 +38,7 @@ class ConversationPresenter: NSObject, DatabaseUpdatable, ConversationPresenterP
 	private var userId: String?
 	private var databaseService: DatabaseServiceProtocol?
 	
-	init(channelId: String, userId: String, databaseService: DatabaseServiceProtocol, router: RouterProtocol) {
+	init(channelId: String, userId: String, databaseService: DatabaseServiceProtocol?, router: RouterProtocol) {
 		self.channelId = channelId
 		self.userId = userId
 		self.router = router
@@ -50,14 +50,15 @@ class ConversationPresenter: NSObject, DatabaseUpdatable, ConversationPresenterP
 	func viewWillAppear() {
 		guard let channelId = channelId else { fatalError("Channel None!") }
 		self.databaseService?.startFetchingMessages(from: channelId)
+		databaseService?.databaseUpdater = self
 	}
 	
 	func viewWillDisappear() {
 		databaseService?.stopFetchingMessages()
 	}
 	
-	func set(viewController: ConversationViewController) {
-		self.view = viewController
+	func set(view: ConversationViewProtocol) {
+		self.view = view
 	}
 	
 	func updateData() {

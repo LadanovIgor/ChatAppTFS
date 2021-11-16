@@ -7,10 +7,10 @@
 
 import Foundation
 
-class ThemePresenter: ThemePresenterProtocol {
+class ThemePresenter {
 
-	var router: RouterProtocol?
-	weak var view: ThemeViewProtocol?
+	private var router: RouterProtocol?
+	private weak var view: ThemeViewProtocol?
 	
 	var themeSelected: ThemeClosure?
 	
@@ -18,21 +18,29 @@ class ThemePresenter: ThemePresenterProtocol {
 		self.router = router
 	}
 	
-	func close() {
+	public func set(view: ThemeViewProtocol) {
+		self.view = view
+	}
+}
+
+// MARK: - ThemePresenterProtocol
+
+extension ThemePresenter: ThemePresenterProtocol {
+	public func close() {
 		router?.dismiss(view)
 	}
 	
-	func lightThemeSelected() {
+	public func lightThemeSelected() {
 		themeSelected?(LightTheme())
 		close()
 	}
 	
-	func darkThemeSelected() {
+	public func darkThemeSelected() {
 		themeSelected?(DarkTheme())
 		close()
 	}
 	
-	func champagneThemeSelected() {
+	public func champagneThemeSelected() {
 		themeSelected?(ChampagneTheme())
 		close()
 	}

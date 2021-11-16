@@ -24,11 +24,19 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol, 
 	
 	func viewDidLoad() {
 		getUserId()
-		self.databaseService?.startFetchingChannels()
+	}
+	
+	func viewWillAppear() {
+		databaseService?.startFetchingChannels()
+		databaseService?.databaseUpdater = self
+	}
+	
+	func viewWillDisappear() {
+		databaseService?.stopFetchingChannels()
 	}
 	
 	lazy var dataSource: ConversationsListDataSourceProtocol = {
-		guard let viewContext = databaseService?.databaseManager.viewContext else {
+		guard let viewContext = databaseService?.coreDataManager.viewContext else {
 			fatalError("Couldn't get context")
 		}
 		let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
@@ -52,7 +60,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol, 
 		guard let router = router, let channelId = channel.identifier, let userId = userId else {
 			return
 		}
-		router.pushConversationScreen(channelId: channelId, userId: userId)
+		router.pushConversationScreen(channelId: channelId, userId: userId, databaseService: databaseService)
 	}
 	
 	func set(view: ConversationsListViewProtocol) {
