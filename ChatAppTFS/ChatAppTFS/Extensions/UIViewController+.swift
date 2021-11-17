@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIViewController {
-	func showAlert(with title: String?, message: String?, actions: [UIAlertAction], completion: (() -> Void)? = nil
+	func presentAlert(title: String?, message: String?, actions: [UIAlertAction], completion: (() -> Void)? = nil
 	) {
 		let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 		actions.forEach { alert.addAction($0) }

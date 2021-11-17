@@ -8,13 +8,7 @@
 import Foundation
 import CoreData
 
-protocol CoreDataManagerProtocol: AnyObject {
-	func updateDatabase(with channels: [Channel], completion: @escaping ResultClosure<Bool>)
-	func updateDatabase(with messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>)
-	var viewContext: NSManagedObjectContext { get }
-}
-
-final class CoreDataManager: CoreDataManagerProtocol {
+final class CoreDataManager {
 	
 	// MARK: - Properties
 	
@@ -71,9 +65,11 @@ final class CoreDataManager: CoreDataManagerProtocol {
 			throw error
 		}
 	}
-	
-	// MARK: - Public
-	
+}
+
+	// MARK: - CoreDataManagerProtocol
+
+extension CoreDataManager: CoreDataManagerProtocol {
 	public func updateDatabase(with channels: [Channel], completion: @escaping ResultClosure<Bool>) {
 		persistentContainer.performBackgroundTask { [weak self] context in
 			guard let self = self else { return }

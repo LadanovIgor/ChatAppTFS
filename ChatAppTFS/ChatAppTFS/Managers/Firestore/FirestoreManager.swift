@@ -9,42 +9,17 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestoreSwift
 
-protocol FireStorable: AnyObject {
-	func getChannels(completion: @escaping ResultClosure<[Channel]>)
-	func getMessages(from channelId: String, completion: @escaping ResultClosure<[Message]>)
-	func addMessage(with content: String, senderId: String)
-	func addChannel(with name: String)
-	func deleteChannel(with channelId: String)
-	func stopMessageListener()
-	func stopChannelListener()
-}
-
-final class FireStoreManager: FireStorable {
+final class FireStoreManager {
 	
+	// MARK: - Properties
+
 	private lazy var db = Firestore.firestore()
 	private lazy var channelReference = db.collection("channels")
-	
 	private var messageListener: ListenerRegistration?
 	private var channelListener: ListenerRegistration?
-	
 	private var channelId: String?
 	
-	func getChannels(completion: @escaping ResultClosure<[Channel]>) {
-		addChannelListener(completion: completion)
-	}
-	
-	func getMessages(from channelId: String, completion: @escaping ResultClosure<[Message]>) {
-		self.channelId = channelId
-		addMessageListener(completion: completion)
-	}
-	
-	func stopMessageListener() {
-		messageListener?.remove()
-	}
-	
-	func stopChannelListener() {
-		channelListener?.remove()
-	}
+	// MARK: - Private
 
 	private func addMessageListener(completion: @escaping ResultClosure<[Message]>) {
 		guard let channelId = channelId else { fatalError("Channel None!") }
@@ -106,7 +81,32 @@ final class FireStoreManager: FireStorable {
 		}
 		completion(.success(channels))
 	}
+}
 
+	// MARK: - FireStorable
+
+extension FireStoreManager: FireStorable {
+	func getChannels(completion: @escaping ResultClosure<[Channel]>) {
+		addChannelListener(completion: completion)
+	}
+	
+	func addChannel(with name: String) {
+		channelReference.addDocument(data: ["name": name, "lastActivity": Timestamp(date: Date())])
+	}
+	
+	func stopChannelListener() {
+		channelListener?.remove()
+	}
+	
+	func deleteChannel(with channelId: String) {
+		channelReference.document(channelId).delete()
+	}
+	
+	func getMessages(from channelId: String, completion: @escaping ResultClosure<[Message]>) {
+		self.channelId = channelId
+		addMessageListener(completion: completion)
+	}
+	
 	func addMessage(with content: String, senderId: String) {
 		guard let channelId = channelId else { fatalError("Channel None!") }
 		do {
@@ -116,11 +116,7 @@ final class FireStoreManager: FireStorable {
 		}
 	}
 	
-	func addChannel(with name: String) {
-		channelReference.addDocument(data: ["name": name, "lastActivity": Timestamp(date: Date())])
-	}
-	
-	func deleteChannel(with channelId: String) {
-		channelReference.document(channelId).delete()
+	func stopMessageListener() {
+		messageListener?.remove()
 	}
 }
