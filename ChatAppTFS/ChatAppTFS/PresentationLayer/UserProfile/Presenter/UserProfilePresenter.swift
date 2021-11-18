@@ -88,7 +88,7 @@ class ProfilePresenter {
 	
 	// MARK: - Public
 
-	func set(view: ProfileViewProtocol?) {
+	public func set(view: ProfileViewProtocol?) {
 		self.view = view
 	}
 }
@@ -97,25 +97,25 @@ class ProfilePresenter {
 
 extension ProfilePresenter: ProfilePresenterProtocol {
 	
-	func viewDidLoad() {
+	public func viewDidLoad() {
 		fetchProfileData()
 	}
 	
-	func update(key: String, value: Data?) {
+	public func update(key: String, value: Data?) {
 		guard let value = value else { return }
 		updated.updateValue(value, forKey: key)
 	}
 	
-	func close() {
+	public func close() {
 		router?.dismiss(view)
 	}
 	
-	func save() {
+	public func save() {
 		guard !updated.isEmpty else { return }
 		saveProfile()
 	}
 	
-	func cancel() {
+	public func cancel() {
 		getValues(from: stored)
 	}
 }

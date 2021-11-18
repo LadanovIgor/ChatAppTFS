@@ -30,7 +30,7 @@ final class CoreDataManager {
 			try context.save()
 			completion(.success(true))
 		} catch {
-			completion(.failure(DatabaseError.failureSaving))
+			completion(.failure(CustomCoreDataError.failureSaving))
 		}
 	}
 	
@@ -89,7 +89,6 @@ extension CoreDataManager: CoreDataManagerProtocol {
 						dbChannel.name = channel.name
 						dbChannel.lastMessage = channel.lastMessage
 						dbChannel.lastActivity = channel.lastActivity
-						
 						self.saveContext(context, completion: completion)
 					}
 				} catch {

@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum CustomFirebaseError: Error {
+enum CustomFirestoreError: Error {
 	case snapshotNone
 }

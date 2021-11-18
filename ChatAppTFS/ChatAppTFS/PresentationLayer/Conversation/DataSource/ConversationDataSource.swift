@@ -38,7 +38,7 @@ final class ConversationDataSource: NSObject, ConversationDataSourceProtocol {
 	// MARK: - UITableViewDataSource
 
 extension ConversationDataSource {
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(
 			withIdentifier: ConversationTableViewCell.name,
 			for: indexPath) as? ConversationTableViewCell else {
@@ -49,7 +49,7 @@ extension ConversationDataSource {
 		return cell
 	}
 	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard let sections = fetchResultController.sections else {
 			fatalError("No sections in fetchedResultController")
 		}

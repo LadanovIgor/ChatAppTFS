@@ -40,7 +40,7 @@ class ConversationsListDataSource: NSObject, ConversationsListDataSourceProtocol
 	
 	// MARK: - Public
 	
-	func performFetching() {
+	public func performFetching() {
 		do {
 			try fetchResultController.performFetch()
 		} catch {
@@ -52,11 +52,11 @@ class ConversationsListDataSource: NSObject, ConversationsListDataSourceProtocol
 // MARK: - UITableViewDataSource
 
 extension ConversationsListDataSource {
-	func numberOfSections(in tableView: UITableView) -> Int {
+	public func numberOfSections(in tableView: UITableView) -> Int {
 		return fetchResultController.sections?.count ?? 0
 	}
 	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard let sections = fetchResultController.sections else {
 			fatalError("No sections in fetchedResultController")
 		}
@@ -64,7 +64,7 @@ extension ConversationsListDataSource {
 		return sectionInfo.numberOfObjects
 	}
 	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(
 			withIdentifier: ConversationsListTableViewCell.name,
 			for: indexPath) as? ConversationsListTableViewCell else {
@@ -78,7 +78,7 @@ extension ConversationsListDataSource {
 		return cell
 	}
 	
-	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+	public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
 			let channel = fetchResultController.object(at: indexPath)
 			guard let id = channel.identifier else {

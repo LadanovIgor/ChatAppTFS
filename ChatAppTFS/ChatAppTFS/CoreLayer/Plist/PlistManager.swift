@@ -78,7 +78,7 @@ final class PlistManager {
 	// MARK: - PlistManagerProtocol
 
 extension PlistManager: PlistManagerProtocol {
-	func save(_ plist: [String: Data], completion: ResultClosure<Bool>) {
+	public func save(_ plist: [String: Data], completion: ResultClosure<Bool>) {
 		for key in plist.keys {
 			save(plist[key], forKey: key) { result in
 				switch result {
@@ -92,7 +92,7 @@ extension PlistManager: PlistManagerProtocol {
 		completion(.success(true))
 	}
 
-	func getPlist(completion: ResultClosure<[String: Data]>) {
+	public func getPlist(completion: ResultClosure<[String: Data]>) {
 		guard let fileURL = fileURL, FileManager.default.fileExists(atPath: fileURL.path) else {
 			completion(.failure(StoredLocallyError.fileDoesNotExist))
 			return
@@ -105,7 +105,7 @@ extension PlistManager: PlistManagerProtocol {
 		completion(.success(plist))
 	}
 	
-	func getValue(for key: String, completion: @escaping ResultClosure<Data>) {
+	public func getValue(for key: String, completion: @escaping ResultClosure<Data>) {
 		guard let fileURL = fileURL, FileManager.default.fileExists(atPath: fileURL.path) else {
 			completion(.failure(StoredLocallyError.fileDoesNotExist))
 			return

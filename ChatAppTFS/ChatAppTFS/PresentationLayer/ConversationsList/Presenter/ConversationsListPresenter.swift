@@ -92,24 +92,24 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	
 	// MARK: - Public
 	
-	func set(view: ConversationsListViewProtocol) {
+	public func set(view: ConversationsListViewProtocol) {
 		self.view = view
 	}
 	
-	func viewDidLoad() {
+	public func viewDidLoad() {
 		getUserId()
 	}
 	
-	func viewWillAppear() {
+	public func viewWillAppear() {
 		channelsService?.startFetchingChannels()
 		channelsService?.databaseUpdater = self
 	}
 	
-	func viewWillDisappear() {
+	public func viewWillDisappear() {
 		channelsService?.stopFetchingChannels()
 	}
 	
-	func didTapAt(indexPath: IndexPath) {
+	public func didTapAt(indexPath: IndexPath) {
 		let channel = dataSource.fetchResultController.object(at: indexPath)
 		guard let router = router, let channelId = channel.identifier, let userId = userId else {
 			return
@@ -117,25 +117,25 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 		router.pushConversationScreen(channelId: channelId, userId: userId)
 	}
 	
-	func leftBarButtonTapped() {
+	public func leftBarButtonTapped() {
 		router?.presentThemeScreen(from: view) { [weak self] theme in
 			self?.changeTheme(for: theme)
 		}
 	}
 	
-	func rightBarButtonTapped() {
+	public func rightBarButtonTapped() {
 		router?.presentUserProfileScreen(from: view, with: storageService)
 	}
 
-	func createNewChannel(with name: String) {
+	public func createNewChannel(with name: String) {
 		channelsService?.addChannel(with: name)
 	}
 	
-	func deleteChannel(with channelId: String) {
+	public func deleteChannel(with channelId: String) {
 		channelsService?.deleteChannel(with: channelId)
 	}
 	
-	func getUserName(completion: @escaping (ResultClosure<String>)) {
+	public func getUserName(completion: @escaping (ResultClosure<String>)) {
 		storageService?.loadValue(for: Constants.LocalStorage.nameKey) { result in
 			DispatchQueue.main.async {
 				switch result {
@@ -155,7 +155,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	// MARK: - DatabaseUpdatable
 
 extension ConversationsListPresenter: DatabaseUpdatable {
-	func updateData() {
+	public func updateData() {
 		dataSource.performFetching()
 		DispatchQueue.main.async {
 			self.view?.reload()

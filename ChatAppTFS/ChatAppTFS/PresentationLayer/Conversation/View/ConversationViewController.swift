@@ -125,31 +125,31 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	// MARK: - ConversationViewProtocol
 
 extension ConversationViewController: ConversationViewProtocol {
-	func insert(at newIndexPath: IndexPath) {
+	public func insert(at newIndexPath: IndexPath) {
 		tableView.insertRows(at: [newIndexPath], with: .automatic)
 	}
 	
-	func delete(at indexPath: IndexPath) {
+	public func delete(at indexPath: IndexPath) {
 		tableView.deleteRows(at: [indexPath], with: .automatic)
 	}
 	
-	func update(at indexPath: IndexPath) {
+	public func update(at indexPath: IndexPath) {
 		tableView.reloadRows(at: [indexPath], with: .automatic)
 	}
 	
-	func move(at indexPath: IndexPath, to newIndexPath: IndexPath) {
+	public func move(at indexPath: IndexPath, to newIndexPath: IndexPath) {
 		tableView.moveRow(at: indexPath, to: newIndexPath)
 	}
 	
-	func beginUpdates() {
+	public func beginUpdates() {
 		tableView.beginUpdates()
 	}
 	
-	func endUpdates() {
+	public func endUpdates() {
 		tableView.endUpdates()
 	}
 	
-	func reload() {
+	public func reload() {
 		tableView.reloadData()
 	}
 }

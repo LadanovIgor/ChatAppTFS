@@ -29,7 +29,7 @@ final class FireStoreManager {
 				return
 			}
 			guard let documents = snapshot?.documents else {
-				completion(.failure(CustomFirebaseError.snapshotNone))
+				completion(.failure(CustomFirestoreError.snapshotNone))
 				return
 			}
 			self?.getMessages(from: documents, completion: completion)
@@ -56,7 +56,7 @@ final class FireStoreManager {
 				return
 			}
 			guard let documents = snapshot?.documents else {
-				completion(.failure(CustomFirebaseError.snapshotNone))
+				completion(.failure(CustomFirestoreError.snapshotNone))
 				return
 			}
 			self?.getChannelsFrom(documents: documents, completion: completion)
@@ -92,28 +92,28 @@ final class FireStoreManager {
 	// MARK: - FireStorable
 
 extension FireStoreManager: FireStorable {
-	func getChannels(completion: @escaping ResultClosure<[Channel]>) {
+	public func getChannels(completion: @escaping ResultClosure<[Channel]>) {
 		addChannelListener(completion: completion)
 	}
 	
-	func addChannel(with name: String) {
+	public func addChannel(with name: String) {
 		channelReference.addDocument(data: ["name": name, "lastActivity": Timestamp(date: Date())])
 	}
 	
-	func stopChannelListener() {
+	public func stopChannelListener() {
 		channelListener?.remove()
 	}
 	
-	func deleteChannel(with channelId: String) {
+	public func deleteChannel(with channelId: String) {
 		channelReference.document(channelId).delete()
 	}
 	
-	func getMessages(from channelId: String, completion: @escaping ResultClosure<[Message]>) {
+	public func getMessages(from channelId: String, completion: @escaping ResultClosure<[Message]>) {
 		self.channelId = channelId
 		addMessageListener(completion: completion)
 	}
 	
-	func addMessage(with content: String, senderId: String) {
+	public func addMessage(with content: String, senderId: String) {
 		guard let channelId = channelId else { fatalError("Channel None!") }
 		let message = Message(content: content, senderId: senderId, created: Date(), senderName: "🍔 + 🍺 = 🤤")
 		do {
@@ -123,7 +123,7 @@ extension FireStoreManager: FireStorable {
 		}
 	}
 	
-	func stopMessageListener() {
+	public func stopMessageListener() {
 		messageListener?.remove()
 	}
 }

@@ -195,14 +195,14 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	// MARK: - ProfileViewProtocol
 
 extension UserProfileViewController: ProfileViewProtocol {
-	func presentSuccessLoadAlert() {
+	public func presentSuccessLoadAlert() {
 		let action = UIAlertAction(title: "Ok", style: .cancel, handler: { [weak self] _ in
 			self?.isProfileEditing = false
 		})
 		presentAlert(title: "Data saved", message: nil, actions: [action])
 	}
 	
-	func presentFailureLoadAlert(handler: (() -> Void)?) {
+	public func presentFailureLoadAlert(handler: (() -> Void)?) {
 		let actions = [
 			UIAlertAction(title: "Ok", style: .cancel, handler: { [weak self] _ in
 				self?.isProfileEditing = false
@@ -216,7 +216,7 @@ extension UserProfileViewController: ProfileViewProtocol {
 		presentAlert(title: "Error!", message: "Failed to save data.", actions: actions)
 	}
 	
-	func updateScreen(name: String, location: String, info: String, imageData: Data?) {
+	public func updateScreen(name: String, location: String, info: String, imageData: Data?) {
 		nameTextField.text = name
 		locationTextField.text = location
 		infoTextField.text = info
@@ -227,12 +227,12 @@ extension UserProfileViewController: ProfileViewProtocol {
 		profileImageView.image = image
 	}
 	
-	func activityStartedAnimation() {
+	public func activityStartedAnimation() {
 		activityIndicator.isHidden = false
 		activityIndicator.startAnimating()
 	}
 	
-	func activityFinishedAnimation() {
+	public func activityFinishedAnimation() {
 		activityIndicator.isHidden = true
 		activityIndicator.stopAnimating()
 	}

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DatabaseError: Error {
+enum CustomCoreDataError: Error {
 	case failureSaving
 	case failureFetching
 	case invalidData

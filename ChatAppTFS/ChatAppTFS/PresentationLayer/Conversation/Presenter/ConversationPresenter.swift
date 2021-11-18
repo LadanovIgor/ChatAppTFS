@@ -51,21 +51,21 @@ class ConversationPresenter: NSObject, ConversationPresenterProtocol {
 	
 	// MARK: - Public
 	
-	func viewWillAppear() {
+	public func viewWillAppear() {
 		guard let channelId = channelId else { fatalError("Channel None!") }
 		self.messagesService?.startFetchingMessages(from: channelId)
 		messagesService?.databaseUpdater = self
 	}
 	
-	func viewWillDisappear() {
+	public func viewWillDisappear() {
 		messagesService?.stopFetchingMessages()
 	}
 	
-	func set(view: ConversationViewProtocol) {
+	public func set(view: ConversationViewProtocol) {
 		self.view = view
 	}
 	
-	func createNewMessage(with content: String) {
+	public func createNewMessage(with content: String) {
 		guard let senderId = userId else { return }
 		messagesService?.addMessage(with: content, senderId: senderId)
 	}
@@ -109,7 +109,7 @@ extension ConversationPresenter: NSFetchedResultsControllerDelegate {
 	// MARK: - DatabaseUpdatable
 
 extension ConversationPresenter: DatabaseUpdatable {
-	func updateData() {
+	public func updateData() {
 		dataSource.performFetching()
 		DispatchQueue.main.async {
 			self.view?.reload()
