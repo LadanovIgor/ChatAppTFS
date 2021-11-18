@@ -16,8 +16,8 @@ extension String {
 			guard let character = splitArray.first?.first, character.isAlphabetical else { return nil }
 			return String(character)
 		default:
-			guard let character1 = splitArray.first?.first, character1.isAlphabetical,
-				  let character2 = splitArray[1].first, character2.isAlphabetical else { return nil }
+			guard let character1 = splitArray.first?.first, character1.isAlphabetical else { return nil }
+			guard let character2 = splitArray[1].first, character2.isAlphabetical else { return String(character1)}
 			return String(character1) + String(character2)
 		}
 	}

@@ -13,7 +13,7 @@ protocol RouterMain {
 }
 
 protocol RouterProtocol: RouterMain {
-	func initialScreen(storageService: StoredLocally?)
+	func initialScreen()
 	func pushConversationScreen(channelId: String, userId: String)
 	func presentThemeScreen(from view: ConversationsListViewProtocol?, themeSelected: ThemeClosure?)
 	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with storageService: StoredLocally?)

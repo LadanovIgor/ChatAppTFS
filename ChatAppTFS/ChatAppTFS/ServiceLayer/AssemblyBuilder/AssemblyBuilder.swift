@@ -13,16 +13,18 @@ final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 	
 	// MARK: - Properties & Init
 
-	private var chatService: ChatServiceProtocol
+	private let chatService: ChatServiceProtocol
+	private let storageService: StoredLocally
 	
-	init(chatService: ChatServiceProtocol) {
+	init(chatService: ChatServiceProtocol, storageService: StoredLocally) {
 		self.chatService = chatService
+		self.storageService = storageService
 	}
 	
 	// MARK: - Public
 
-	func createConversationsListModule(localStorage: StoredLocally?, router: RouterProtocol) -> UIViewController {
-		let presenter = ConversationsListPresenter(router: router, localStorage: localStorage, channelsService: chatService)
+	func createConversationsListModule(router: RouterProtocol) -> UIViewController {
+		let presenter = ConversationsListPresenter(router: router, storageService: storageService, channelsService: chatService)
 		let viewController = ConversationsListViewController(presenter: presenter)
 		presenter.set(view: viewController)
 		return viewController
@@ -43,7 +45,7 @@ final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 		return viewController
 	}
 	
-	func createUserProfileModule(storageService: StoredLocally?, router: RouterProtocol) -> UIViewController {
+	func createUserProfileModule(router: RouterProtocol) -> UIViewController {
 		let presenter = ProfilePresenter(storageService: storageService, router: router)
 		let viewController = UserProfileViewController(presenter: presenter)
 		presenter.set(view: viewController)

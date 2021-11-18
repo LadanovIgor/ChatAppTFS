@@ -53,6 +53,8 @@
 		8E6B354D271E935300653B8D /* StoredLocally.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B354C271E935300653B8D /* StoredLocally.swift */; };
 		8E6B3550271E939200653B8D /* StoredLocallyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B354F271E939200653B8D /* StoredLocallyError.swift */; };
 		8E72BC792717C2B60046870F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E72BC782717C2B60046870F /* Constants.swift */; };
+		8EA19D762746538100B8429C /* PlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA19D752746538100B8429C /* PlistManager.swift */; };
+		8EA19D78274654EA00B8429C /* PlistManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA19D77274654EA00B8429C /* PlistManagerProtocol.swift */; };
 		8EAAFE22270E8A7000D7497B /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE21270E8A7000D7497B /* NibLoadable.swift */; };
 		8EAAFE25270E8AF100D7497B /* ConversationsListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EAAFE24270E8AF100D7497B /* ConversationsListTableViewCell.xib */; };
 		8EAAFE27270E8BA500D7497B /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE26270E8BA500D7497B /* CircleImageView.swift */; };
@@ -147,6 +149,8 @@
 		8E6B354C271E935300653B8D /* StoredLocally.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredLocally.swift; sourceTree = "<group>"; };
 		8E6B354F271E939200653B8D /* StoredLocallyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredLocallyError.swift; sourceTree = "<group>"; };
 		8E72BC782717C2B60046870F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8EA19D752746538100B8429C /* PlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistManager.swift; sourceTree = "<group>"; };
+		8EA19D77274654EA00B8429C /* PlistManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistManagerProtocol.swift; sourceTree = "<group>"; };
 		8EAAFE21270E8A7000D7497B /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		8EAAFE24270E8AF100D7497B /* ConversationsListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConversationsListTableViewCell.xib; sourceTree = "<group>"; };
 		8EAAFE26270E8BA500D7497B /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
@@ -231,7 +235,6 @@
 		8E184B0C2731576100C352B9 /* Trash */ = {
 			isa = PBXGroup;
 			children = (
-				8E40D9852714395600406AD4 /* CoreLayer */,
 				8E64EED72743D6E000A72CF1 /* AppDependency */,
 				8E40D9862714396400406AD4 /* ObjC */,
 				8E40D990271444C600406AD4 /* ThemesViewControllerDelegate.h */,
@@ -494,11 +497,13 @@
 			path = Themes;
 			sourceTree = "<group>";
 		};
-		8E40D9852714395600406AD4 /* CoreLayer */ = {
+		8E40D9852714395600406AD4 /* Plist */ = {
 			isa = PBXGroup;
 			children = (
+				8EA19D752746538100B8429C /* PlistManager.swift */,
+				8EA19D77274654EA00B8429C /* PlistManagerProtocol.swift */,
 			);
-			path = CoreLayer;
+			path = Plist;
 			sourceTree = "<group>";
 		};
 		8E40D9862714396400406AD4 /* ObjC */ = {
@@ -521,6 +526,7 @@
 		8E6B3544271E81C400653B8D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				8E40D9852714395600406AD4 /* Plist */,
 				8E15F8F6272E40F500EE7918 /* Database */,
 				8E27D42927439FF7009A3425 /* Firestore */,
 			);
@@ -827,6 +833,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EAAFE2E270E8F3600D7497B /* ConversationViewController.swift in Sources */,
+				8EA19D78274654EA00B8429C /* PlistManagerProtocol.swift in Sources */,
 				8ED8D105273B5DB1004BDD23 /* Array+.swift in Sources */,
 				8E2CE37F2744C2FB008F460C /* ChatServiceProtocol.swift in Sources */,
 				8E0B6702273FDCCC0092D5E5 /* UIViewController+.swift in Sources */,
@@ -850,6 +857,7 @@
 				8E0040B2272EAA5F00587E99 /* DatabaseError.swift in Sources */,
 				8E2E2703270DE53400BFE156 /* Channel.swift in Sources */,
 				8EAAFE27270E8BA500D7497B /* CircleImageView.swift in Sources */,
+				8EA19D762746538100B8429C /* PlistManager.swift in Sources */,
 				8EE62B48272036510011FE58 /* AppView.swift in Sources */,
 				8E2CE3852744C5DC008F460C /* CoreDataManagerProtococ.swift in Sources */,
 				8EAB38AF27171B0600A1FF98 /* UITableViewCell+.swift in Sources */,

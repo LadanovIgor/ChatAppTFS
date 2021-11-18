@@ -84,7 +84,7 @@ final class FireStoreManager {
 	
 	// MARK: - Public
 	
-	func configure() {
+	public func configure() {
 		FirebaseApp.configure()
 	}
 }

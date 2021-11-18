@@ -21,9 +21,9 @@ final class Router: RouterProtocol {
 	
 	// MARK: - Public
 	
-	func initialScreen(storageService: StoredLocally?) {
+	func initialScreen() {
 		guard let navigationController = navigationController,
-			  let conversationsListViewController = assemblyBuilder?.createConversationsListModule(localStorage: storageService, router: self) else {
+			  let conversationsListViewController = assemblyBuilder?.createConversationsListModule(router: self) else {
 			return
 		}
 		navigationController.viewControllers = [conversationsListViewController]
@@ -47,7 +47,7 @@ final class Router: RouterProtocol {
 	
 	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with storageService: StoredLocally?) {
 		guard let viewController = view as? UIViewController,
-			  let userProfileViewController = assemblyBuilder?.createUserProfileModule(storageService: storageService, router: self) else {
+			  let userProfileViewController = assemblyBuilder?.createUserProfileModule(router: self) else {
 				  return
 			  }
 		viewController.present(userProfileViewController, animated: true)

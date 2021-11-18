@@ -12,7 +12,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	// MARK: - Properties
 	
 	private weak var view: ConversationsListViewProtocol?
-	private var localStorageService: StoredLocally?
+	private var storageService: StoredLocally?
 	private var channelsService: ChannelsServiceProtocol?
 	private var router: RouterProtocol?
 	private var userId: String?
@@ -39,9 +39,9 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	
 	// MARK: - Init
 	
-	init(router: RouterProtocol, localStorage: StoredLocally?, channelsService: ChannelsServiceProtocol?) {
+	init(router: RouterProtocol, storageService: StoredLocally?, channelsService: ChannelsServiceProtocol?) {
 		self.router = router
-		self.localStorageService = localStorage
+		self.storageService = storageService
 		self.channelsService = channelsService
 		super.init()
 	}
@@ -54,14 +54,14 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 			return
 		}
 		let dict = [Constants.LocalStorage.idKey: dataId]
-		localStorageService?.save(dict) { _ in
+		storageService?.save(dict) { _ in
 			
 		}
 	}
 	
 	private func getUserId() {
 		let key = Constants.LocalStorage.idKey
-		localStorageService?.getValue(for: key) { [weak self] result in
+		storageService?.loadValue(for: key) { [weak self] result in
 			switch result {
 			case .success(let data):
 				guard let senderId = String(data: data, encoding: .utf8) else {
@@ -82,7 +82,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 			return
 		}
 		let dict = [Constants.LocalStorage.themeKey: themeNameData]
-		localStorageService?.save(dict) { result in
+		storageService?.save(dict) { result in
 			switch result {
 			case .failure(let error): print(error.localizedDescription)
 			case .success: break
@@ -124,7 +124,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	}
 	
 	func rightBarButtonTapped() {
-		router?.presentUserProfileScreen(from: view, with: localStorageService)
+		router?.presentUserProfileScreen(from: view, with: storageService)
 	}
 
 	func createNewChannel(with name: String) {
@@ -136,7 +136,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	}
 	
 	func getUserName(completion: @escaping (ResultClosure<String>)) {
-		localStorageService?.getValue(for: Constants.LocalStorage.nameKey) { result in
+		storageService?.loadValue(for: Constants.LocalStorage.nameKey) { result in
 			DispatchQueue.main.async {
 				switch result {
 				case .success(let data):
