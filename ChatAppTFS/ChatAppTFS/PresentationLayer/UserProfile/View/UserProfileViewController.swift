@@ -134,7 +134,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		locationTextField.resignFirstResponder()
 		infoTextField.resignFirstResponder()
 		nameTextField.resignFirstResponder()
-		changeButtonState(with: false)
+		changeButtonState(isEnable: false)
 		presenter?.save()
 	}
 	
@@ -152,7 +152,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		saveButton.isEnabled = true
 	}
 	
-	private func changeButtonState(with isEnable: Bool) {
+	private func changeButtonState(isEnable: Bool) {
 		cancelButton.isEnabled = isEnable
 		saveButton.isEnabled = isEnable
 	}
@@ -251,11 +251,11 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 		editProfileButton.isHidden = true
 		saveButton.isHidden = false
 		cancelButton.isHidden = false
-		changeButtonState(with: true)
+		changeButtonState(isEnable: true)
 		guard let imageData = image.jpegData(compressionQuality: 1.0) else {
 			return
 		}
-		presenter?.updated[Constants.LocalStorage.imageKey] = imageData
+		presenter?.update(key: Constants.LocalStorage.imageKey, value: imageData)
 	}
 }
 
@@ -268,11 +268,11 @@ extension UserProfileViewController: UITextFieldDelegate {
 		}
 		let data = (textField.text ?? "").data(using: .utf8)
 		if textField == nameTextField {
-			presenter?.updated[Constants.LocalStorage.nameKey] = data
+			presenter?.update(key: Constants.LocalStorage.nameKey, value: data)
 		} else if textField == locationTextField {
-			presenter?.updated[Constants.LocalStorage.locationKey] = data
+			presenter?.update(key: Constants.LocalStorage.locationKey, value: data)
 		} else if textField == infoTextField {
-			presenter?.updated[Constants.LocalStorage.infoKey] = data
+			presenter?.update(key: Constants.LocalStorage.infoKey, value: data)
 		}
 		textField.placeholder = textField.text
 	}

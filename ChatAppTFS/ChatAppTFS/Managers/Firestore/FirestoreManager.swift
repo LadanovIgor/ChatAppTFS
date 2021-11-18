@@ -81,6 +81,12 @@ final class FireStoreManager {
 		}
 		completion(.success(channels))
 	}
+	
+	// MARK: - Public
+	
+	func configure() {
+		FirebaseApp.configure()
+	}
 }
 
 	// MARK: - FireStorable
@@ -109,8 +115,9 @@ extension FireStoreManager: FireStorable {
 	
 	func addMessage(with content: String, senderId: String) {
 		guard let channelId = channelId else { fatalError("Channel None!") }
+		let message = Message(content: content, senderId: senderId, created: Date(), senderName: "🍔 + 🍺 = 🤤")
 		do {
-			_ = try channelReference.document(channelId).collection("messages").addDocument(from: Message(content: content, senderId: senderId))
+			_ = try channelReference.document(channelId).collection("messages").addDocument(from: message)
 		} catch {
 			print(error.localizedDescription)
 		}

@@ -17,7 +17,7 @@ struct Message: Codable {
 }
 
 extension Message {
-	init(content: String, senderId: String, created: Date = Date(), senderName: String = "🥷🏾") {
+	init(content: String, senderId: String, created: Date, senderName: String) {
 		self.content = content
 		self.senderId = senderId
 		self.created = created.timestamp

@@ -10,15 +10,15 @@ class ProfilePresenter {
 	// MARK: - Properties
 
 	private weak var view: ProfileViewProtocol?
-	private var localStorage: StoredLocally?
+	private var storageService: StoredLocally?
 	private var router: RouterProtocol?
 	private var stored = [String: Data]()
 	var updated = [String: Data]()
 	
 	// MARK: - Init
 	
-	init(localStorage: StoredLocally?, router: RouterProtocol) {
-		self.localStorage = localStorage
+	init(storageService: StoredLocally?, router: RouterProtocol) {
+		self.storageService = storageService
 		self.router = router
 	}
 	
@@ -26,7 +26,7 @@ class ProfilePresenter {
 	
 	private func fetchProfileData() {
 		view?.activityStartedAnimation()
-		localStorage?.loadLocally { [weak self] result in
+		storageService?.load { [weak self] result in
 			switch result {
 			case .success(let dict):
 				self?.stored = dict
@@ -40,7 +40,7 @@ class ProfilePresenter {
 	
 	private func saveProfile() {
 		view?.activityStartedAnimation()
-		localStorage?.saveLocally(updated) { [weak self] result in
+		storageService?.save(updated) { [weak self] result in
 			guard let self = self else { return }
 			self.view?.activityFinishedAnimation()
 			switch result {
@@ -99,6 +99,11 @@ extension ProfilePresenter: ProfilePresenterProtocol {
 	
 	func viewDidLoad() {
 		fetchProfileData()
+	}
+	
+	func update(key: String, value: Data?) {
+		guard let value = value else { return }
+		updated.updateValue(value, forKey: key)
 	}
 	
 	func close() {

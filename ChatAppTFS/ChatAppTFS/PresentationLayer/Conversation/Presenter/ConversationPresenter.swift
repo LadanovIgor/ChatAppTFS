@@ -13,7 +13,7 @@ class ConversationPresenter: NSObject, ConversationPresenterProtocol {
 	
 	// MARK: - Properties
 	
-	private var databaseService: DatabaseServiceProtocol?
+	private var messagesService: MessagesServiceProtocol?
 	private weak var view: ConversationViewProtocol?
 	private var router: RouterProtocol?
 	private var channelId: String?
@@ -21,7 +21,7 @@ class ConversationPresenter: NSObject, ConversationPresenterProtocol {
 	
 	lazy var dataSource: ConversationDataSourceProtocol = {
 		guard let channelId = channelId else { fatalError("Channel None!") }
-		guard let viewContext = databaseService?.coreDataManager.viewContext else {
+		guard let viewContext = messagesService?.coreDataManager.viewContext else {
 			fatalError("FirestoreService None")
 		}
 		let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
@@ -40,11 +40,11 @@ class ConversationPresenter: NSObject, ConversationPresenterProtocol {
 	
 	// MARK: - Init
 	
-	init(channelId: String, userId: String, databaseService: DatabaseServiceProtocol?, router: RouterProtocol) {
+	init(channelId: String, userId: String, messagesService: MessagesServiceProtocol?, router: RouterProtocol) {
 		self.channelId = channelId
 		self.userId = userId
 		self.router = router
-		self.databaseService = databaseService
+		self.messagesService = messagesService
 		super.init()
 		
 	}
@@ -53,12 +53,12 @@ class ConversationPresenter: NSObject, ConversationPresenterProtocol {
 	
 	func viewWillAppear() {
 		guard let channelId = channelId else { fatalError("Channel None!") }
-		self.databaseService?.startFetchingMessages(from: channelId)
-		databaseService?.databaseUpdater = self
+		self.messagesService?.startFetchingMessages(from: channelId)
+		messagesService?.databaseUpdater = self
 	}
 	
 	func viewWillDisappear() {
-		databaseService?.stopFetchingMessages()
+		messagesService?.stopFetchingMessages()
 	}
 	
 	func set(view: ConversationViewProtocol) {
@@ -67,7 +67,7 @@ class ConversationPresenter: NSObject, ConversationPresenterProtocol {
 	
 	func createNewMessage(with content: String) {
 		guard let senderId = userId else { return }
-		databaseService?.addMessage(with: content, senderId: senderId)
+		messagesService?.addMessage(with: content, senderId: senderId)
 	}
 	
 }

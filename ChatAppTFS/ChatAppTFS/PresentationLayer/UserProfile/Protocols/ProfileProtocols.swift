@@ -11,7 +11,7 @@ protocol ProfilePresenterProtocol: AnyObject, LifeCycleProtocol {
 	func cancel()
 	func save()
 	func close()
-	var updated: [String: Data] { get set }
+	func update(key: String, value: Data?)
 }
 
 protocol ProfileViewProtocol where Self: UIViewController {

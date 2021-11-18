@@ -8,14 +8,20 @@
 import Foundation
 
 protocol DatabaseServiceProtocol: AnyObject {
-	func addChannel(with name: String)
-	func deleteChannel(with channelId: String)
-	func addMessage(with content: String, senderId: String)
 	var coreDataManager: CoreDataManagerProtocol { get }
 	var firestoreManager: FireStorable { get }
+	var databaseUpdater: DatabaseUpdatable? { get set }
+}
+
+protocol ChannelsServiceProtocol: DatabaseServiceProtocol {
+	func addChannel(with name: String)
+	func deleteChannel(with channelId: String)
 	func startFetchingChannels()
+	func stopFetchingChannels()
+}
+
+protocol MessagesServiceProtocol: DatabaseServiceProtocol {
+	func addMessage(with content: String, senderId: String)
 	func startFetchingMessages(from channelId: String)
 	func stopFetchingMessages()
-	func stopFetchingChannels()
-	var databaseUpdater: DatabaseUpdatable? { get set }
 }

@@ -13,12 +13,12 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	
 	private weak var view: ConversationsListViewProtocol?
 	private var localStorageService: StoredLocally?
-	private var databaseService: DatabaseServiceProtocol?
+	private var channelsService: ChannelsServiceProtocol?
 	private var router: RouterProtocol?
 	private var userId: String?
 	
 	lazy var dataSource: ConversationsListDataSourceProtocol = {
-		guard let viewContext = databaseService?.coreDataManager.viewContext else {
+		guard let viewContext = channelsService?.coreDataManager.viewContext else {
 			fatalError("Couldn't get context")
 		}
 		let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
@@ -39,10 +39,10 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	
 	// MARK: - Init
 	
-	init(router: RouterProtocol, localStorage: StoredLocally?, databaseService: DatabaseServiceProtocol?) {
+	init(router: RouterProtocol, localStorage: StoredLocally?, channelsService: ChannelsServiceProtocol?) {
 		self.router = router
 		self.localStorageService = localStorage
-		self.databaseService = databaseService
+		self.channelsService = channelsService
 		super.init()
 	}
 	
@@ -54,7 +54,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 			return
 		}
 		let dict = [Constants.LocalStorage.idKey: dataId]
-		localStorageService?.saveLocally(dict) { _ in
+		localStorageService?.save(dict) { _ in
 			
 		}
 	}
@@ -82,7 +82,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 			return
 		}
 		let dict = [Constants.LocalStorage.themeKey: themeNameData]
-		localStorageService?.saveLocally(dict) { result in
+		localStorageService?.save(dict) { result in
 			switch result {
 			case .failure(let error): print(error.localizedDescription)
 			case .success: break
@@ -101,12 +101,12 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	}
 	
 	func viewWillAppear() {
-		databaseService?.startFetchingChannels()
-		databaseService?.databaseUpdater = self
+		channelsService?.startFetchingChannels()
+		channelsService?.databaseUpdater = self
 	}
 	
 	func viewWillDisappear() {
-		databaseService?.stopFetchingChannels()
+		channelsService?.stopFetchingChannels()
 	}
 	
 	func didTapAt(indexPath: IndexPath) {
@@ -114,7 +114,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 		guard let router = router, let channelId = channel.identifier, let userId = userId else {
 			return
 		}
-		router.pushConversationScreen(channelId: channelId, userId: userId, databaseService: databaseService)
+		router.pushConversationScreen(channelId: channelId, userId: userId)
 	}
 	
 	func leftBarButtonTapped() {
@@ -128,11 +128,11 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	}
 
 	func createNewChannel(with name: String) {
-		databaseService?.addChannel(with: name)
+		channelsService?.addChannel(with: name)
 	}
 	
 	func deleteChannel(with channelId: String) {
-		databaseService?.deleteChannel(with: channelId)
+		channelsService?.deleteChannel(with: channelId)
 	}
 	
 	func getUserName(completion: @escaping (ResultClosure<String>)) {

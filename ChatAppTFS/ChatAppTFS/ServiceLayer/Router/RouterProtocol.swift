@@ -13,10 +13,9 @@ protocol RouterMain {
 }
 
 protocol RouterProtocol: RouterMain {
-	func initialScreen(localStorage: StoredLocally?)
-	func pushConversationScreen(channelId: String, userId: String, databaseService: DatabaseServiceProtocol?)
+	func initialScreen(storageService: StoredLocally?)
+	func pushConversationScreen(channelId: String, userId: String)
 	func presentThemeScreen(from view: ConversationsListViewProtocol?, themeSelected: ThemeClosure?)
-	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with localStorage: StoredLocally?)
-	func popToRoot()
+	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with storageService: StoredLocally?)
 	func dismiss(_ viewController: UIViewController?)
 }

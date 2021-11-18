@@ -8,9 +8,9 @@
 import Foundation
 
 protocol StoredLocally: AnyObject {
-	func saveLocally(_ plist: [String: Data], completion: @escaping ResultClosure<Bool>)
-	func loadLocally(completion: @escaping ResultClosure<[String: Data]>)
-	func loadData(for key: String, completion: @escaping ResultClosure<Data>)
+	func save(_ plist: [String: Data], completion: @escaping ResultClosure<Bool>)
+	func load(completion: @escaping ResultClosure<[String: Data]>)
+	func loadValue(for key: String, completion: @escaping ResultClosure<Data>)
 }
 
 extension StoredLocally {

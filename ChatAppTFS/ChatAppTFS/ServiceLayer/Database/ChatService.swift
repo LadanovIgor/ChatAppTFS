@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class DatabaseService {
+final class ChatService {
 	
 	// MARK: - Properties
 	
@@ -50,9 +50,9 @@ final class DatabaseService {
 	}
 }
 
-	// MARK: - DatabaseServiceProtocol
+	// MARK: - ChannelsServiceProtocol
 
-extension DatabaseService: DatabaseServiceProtocol {
+extension ChatService: ChannelsServiceProtocol {
 	func startFetchingChannels() {
 		firestoreManager.getChannels { [weak self] result in
 			switch result {
@@ -64,6 +64,23 @@ extension DatabaseService: DatabaseServiceProtocol {
 		}
 	}
 	
+	func stopFetchingChannels() {
+		firestoreManager.stopChannelListener()
+	}
+
+	func addChannel(with name: String) {
+		firestoreManager.addChannel(with: name)
+	}
+	
+	func deleteChannel(with channelId: String) {
+		firestoreManager.deleteChannel(with: channelId)
+	}
+	
+}
+
+	// MARK: - MessagesServiceProtocol
+
+extension ChatService: MessagesServiceProtocol {
 	func startFetchingMessages(from channelId: String) {
 		self.channelId = channelId
 		firestoreManager.getMessages(from: channelId) { [weak self] result in
@@ -80,20 +97,7 @@ extension DatabaseService: DatabaseServiceProtocol {
 		firestoreManager.stopMessageListener()
 	}
 	
-	func stopFetchingChannels() {
-		firestoreManager.stopChannelListener()
-	}
-	
 	func addMessage(with content: String, senderId: String) {
 		firestoreManager.addMessage(with: content, senderId: senderId)
 	}
-
-	func addChannel(with name: String) {
-		firestoreManager.addChannel(with: name)
-	}
-	
-	func deleteChannel(with channelId: String) {
-		firestoreManager.deleteChannel(with: channelId)
-	}
-	
 }

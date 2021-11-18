@@ -9,25 +9,27 @@ import UIKit
 
 final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 	
+	typealias ChatServiceProtocol = MessagesServiceProtocol & ChannelsServiceProtocol
+	
 	// MARK: - Properties & Init
 
-	private var databaseService: DatabaseServiceProtocol
+	private var chatService: ChatServiceProtocol
 	
-	init(databaseService: DatabaseServiceProtocol) {
-		self.databaseService = databaseService
+	init(chatService: ChatServiceProtocol) {
+		self.chatService = chatService
 	}
 	
 	// MARK: - Public
 
 	func createConversationsListModule(localStorage: StoredLocally?, router: RouterProtocol) -> UIViewController {
-		let presenter = ConversationsListPresenter(router: router, localStorage: localStorage, databaseService: databaseService)
+		let presenter = ConversationsListPresenter(router: router, localStorage: localStorage, channelsService: chatService)
 		let viewController = ConversationsListViewController(presenter: presenter)
 		presenter.set(view: viewController)
 		return viewController
 	}
 	
-	func createConversationModule(channelId: String, userId: String, databaseService: DatabaseServiceProtocol?, router: RouterProtocol) -> UIViewController {
-		let presenter = ConversationPresenter(channelId: channelId, userId: userId, databaseService: databaseService, router: router)
+	func createConversationModule(channelId: String, userId: String, router: RouterProtocol) -> UIViewController {
+		let presenter = ConversationPresenter(channelId: channelId, userId: userId, messagesService: chatService, router: router)
 		let viewController = ConversationViewController(presenter: presenter)
 		presenter.set(view: viewController)
 		return viewController
@@ -41,8 +43,8 @@ final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 		return viewController
 	}
 	
-	func createUserProfileModule(localStorage: StoredLocally?, router: RouterProtocol) -> UIViewController {
-		let presenter = ProfilePresenter(localStorage: localStorage, router: router)
+	func createUserProfileModule(storageService: StoredLocally?, router: RouterProtocol) -> UIViewController {
+		let presenter = ProfilePresenter(storageService: storageService, router: router)
 		let viewController = UserProfileViewController(presenter: presenter)
 		presenter.set(view: viewController)
 		return viewController

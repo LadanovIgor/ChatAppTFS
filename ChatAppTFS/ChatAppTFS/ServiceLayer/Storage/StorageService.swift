@@ -7,13 +7,13 @@
 
 import Foundation
 
-final class LocalStorageService: StoredLocally {
+final class StorageService: StoredLocally {
 	
 	private let queue = DispatchQueue.global(qos: .utility)
 	
 	// MARK: - Public
 	
-	public func saveLocally(_ plist: [String: Data], completion: @escaping ResultClosure<Bool>) {
+	public func save(_ plist: [String: Data], completion: @escaping ResultClosure<Bool>) {
 		queue.async { [weak self] in
 			self?.savePlist(plist) { result in
 				DispatchQueue.main.async {
@@ -23,7 +23,7 @@ final class LocalStorageService: StoredLocally {
 		}
 	}
 	
-	public func loadLocally(completion: @escaping ResultClosure<[String: Data]>) {
+	public func load(completion: @escaping ResultClosure<[String: Data]>) {
 		queue.async { [weak self] in
 			self?.getPlist { result in
 				DispatchQueue.main.async {
@@ -33,7 +33,7 @@ final class LocalStorageService: StoredLocally {
 		}
 	}
 
-	public func loadData(for key: String, completion: @escaping ResultClosure<Data>) {
+	public func loadValue(for key: String, completion: @escaping ResultClosure<Data>) {
 		queue.async { [weak self] in
 			self?.getValue(for: key) { result in
 				DispatchQueue.main.async {
@@ -44,7 +44,7 @@ final class LocalStorageService: StoredLocally {
 	}
 	
 	public func loadThemeFor(application: UIApplication) {
-		loadData(for: Constants.LocalStorage.themeKey) { result in
+		loadValue(for: Constants.LocalStorage.themeKey) { result in
 			switch result {
 			case .success(let data):
 				data.setTheme(for: application)

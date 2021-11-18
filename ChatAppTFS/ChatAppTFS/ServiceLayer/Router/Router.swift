@@ -21,17 +21,17 @@ final class Router: RouterProtocol {
 	
 	// MARK: - Public
 	
-	func initialScreen(localStorage: StoredLocally?) {
+	func initialScreen(storageService: StoredLocally?) {
 		guard let navigationController = navigationController,
-			  let conversationsListViewController = assemblyBuilder?.createConversationsListModule(localStorage: localStorage, router: self) else {
+			  let conversationsListViewController = assemblyBuilder?.createConversationsListModule(localStorage: storageService, router: self) else {
 			return
 		}
 		navigationController.viewControllers = [conversationsListViewController]
 	}
 	
-	func pushConversationScreen(channelId: String, userId: String, databaseService: DatabaseServiceProtocol?) {
+	func pushConversationScreen(channelId: String, userId: String) {
 		guard let navigationController = navigationController,
-			  let conversationViewController = assemblyBuilder?.createConversationModule(channelId: channelId, userId: userId, databaseService: databaseService, router: self) else {
+			  let conversationViewController = assemblyBuilder?.createConversationModule(channelId: channelId, userId: userId, router: self) else {
 			return
 		}
 		navigationController.pushViewController(conversationViewController, animated: true)
@@ -45,9 +45,9 @@ final class Router: RouterProtocol {
 		viewController.present(themeViewController, animated: true)
 	}
 	
-	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with localStorage: StoredLocally?) {
+	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with storageService: StoredLocally?) {
 		guard let viewController = view as? UIViewController,
-			  let userProfileViewController = assemblyBuilder?.createUserProfileModule(localStorage: localStorage, router: self) else {
+			  let userProfileViewController = assemblyBuilder?.createUserProfileModule(storageService: storageService, router: self) else {
 				  return
 			  }
 		viewController.present(userProfileViewController, animated: true)
@@ -55,9 +55,5 @@ final class Router: RouterProtocol {
 	
 	func dismiss(_ viewController: UIViewController?) {
 		viewController?.dismiss(animated: true, completion: nil)
-	}
-	
-	func popToRoot() {
-		navigationController?.popViewController(animated: true)
 	}
 }

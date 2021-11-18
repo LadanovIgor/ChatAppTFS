@@ -6,32 +6,31 @@
 //
 
 import UIKit
-import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	var window: UIWindow?
-	var orientationLock = UIInterfaceOrientationMask.portrait
-	var localStorage = LocalStorageService()
+	private var orientationLock = UIInterfaceOrientationMask.portrait
+	private var storageService = StorageService()
 	
 	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-		localStorage.loadThemeFor(application: application)
+		storageService.loadThemeFor(application: application)
 		return true
 	}
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		localStorage.createFileLocallyIfNeeded()
-		FirebaseApp.configure()
+		storageService.createFileLocallyIfNeeded()
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.makeKeyAndVisible()
 		let navVC = UINavigationController()
 		let coreDataManager = CoreDataManager()
 		let firestoreManager = FireStoreManager()
-		let databaseService = DatabaseService(coreDataManager: coreDataManager, firestoreManager: firestoreManager)
-		let assemblyBuilder = AssemblyModuleBuilder(databaseService: databaseService)
+		firestoreManager.configure()
+		let databaseService = ChatService(coreDataManager: coreDataManager, firestoreManager: firestoreManager)
+		let assemblyBuilder = AssemblyModuleBuilder(chatService: databaseService)
 		let router = Router(navigationController: navVC, assemblyBuilder: assemblyBuilder)
-		router.initialScreen(localStorage: localStorage)
+		router.initialScreen(storageService: storageService)
 		window?.rootViewController = navVC
 		return true
 	}
