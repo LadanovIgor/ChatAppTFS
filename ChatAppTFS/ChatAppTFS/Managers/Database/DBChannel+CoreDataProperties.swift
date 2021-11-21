@@ -9,6 +9,11 @@
 import Foundation
 import CoreData
 
+@objc(DBChannel)
+public class DBChannel: NSManagedObject {
+
+}
+
 extension DBChannel {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<DBChannel> {

@@ -9,6 +9,11 @@
 import Foundation
 import CoreData
 
+@objc(DBMessage)
+public class DBMessage: NSManagedObject {
+
+}
+
 extension DBMessage {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<DBMessage> {

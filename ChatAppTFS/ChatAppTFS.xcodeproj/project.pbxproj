@@ -18,10 +18,6 @@
 		8E0B6700273FDAC00092D5E5 /* UserProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B66FF273FDAC00092D5E5 /* UserProfilePresenter.swift */; };
 		8E0B6702273FDCCC0092D5E5 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B6701273FDCCC0092D5E5 /* UIViewController+.swift */; };
 		8E15F8F5272E40BD00EE7918 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E15F8F4272E40BD00EE7918 /* CoreDataManager.swift */; };
-		8E15F8FB272E424100EE7918 /* DBMessage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E15F8FA272E424100EE7918 /* DBMessage+CoreDataProperties.swift */; };
-		8E15F8FC272E424100EE7918 /* DBMessage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E15F8F8272E424100EE7918 /* DBMessage+CoreDataClass.swift */; };
-		8E15F8FD272E424100EE7918 /* DBChannel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E15F8F7272E424100EE7918 /* DBChannel+CoreDataClass.swift */; };
-		8E15F8FE272E424100EE7918 /* DBChannel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E15F8F9272E424100EE7918 /* DBChannel+CoreDataProperties.swift */; };
 		8E184B12273173D600C352B9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E184B11273173D600C352B9 /* String+.swift */; };
 		8E21E796271DA0280005F20F /* Character+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21E795271DA0280005F20F /* Character+.swift */; };
 		8E27D41D27439A91009A3425 /* ProfileProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E27D41C27439A91009A3425 /* ProfileProtocols.swift */; };
@@ -88,6 +84,8 @@
 		8EECB738273F8D8B00FA2D74 /* ConversationsListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECB737273F8D8B00FA2D74 /* ConversationsListPresenter.swift */; };
 		8EECB73A273F8E6000FA2D74 /* ConversationsListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EECB739273F8E6000FA2D74 /* ConversationsListDataSource.swift */; };
 		8EEF17E627156A0800AFE370 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF17E527156A0800AFE370 /* UIWindow+.swift */; };
+		8EEF20152749E3310027B03D /* DBMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF20142749E3310027B03D /* DBMessage.swift */; };
+		8EEF20182749E42E0027B03D /* DBChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEF20172749E42E0027B03D /* DBChannel.swift */; };
 		8EF079A02726C8F800C88771 /* TableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0799F2726C8F800C88771 /* TableView+.swift */; };
 		8EF0D00F272AA97500F9D485 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0D00E272AA97500F9D485 /* UIImage+.swift */; };
 		8EF3AA1C272D606200BCA00E /* ChatDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EF3AA1A272D606200BCA00E /* ChatDB.xcdatamodeld */; };
@@ -110,10 +108,6 @@
 		8E0B66FF273FDAC00092D5E5 /* UserProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePresenter.swift; sourceTree = "<group>"; };
 		8E0B6701273FDCCC0092D5E5 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		8E15F8F4272E40BD00EE7918 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		8E15F8F7272E424100EE7918 /* DBChannel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBChannel+CoreDataClass.swift"; path = "/Users/ladanov/Documents/Developer/ChatAppTFS/ChatAppTFS/ChatAppTFS/Managers/Database/DBChannel+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		8E15F8F8272E424100EE7918 /* DBMessage+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBMessage+CoreDataClass.swift"; path = "/Users/ladanov/Documents/Developer/ChatAppTFS/ChatAppTFS/ChatAppTFS/Managers/Database/DBMessage+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		8E15F8F9272E424100EE7918 /* DBChannel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBChannel+CoreDataProperties.swift"; path = "/Users/ladanov/Documents/Developer/ChatAppTFS/ChatAppTFS/ChatAppTFS/Managers/Database/DBChannel+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		8E15F8FA272E424100EE7918 /* DBMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBMessage+CoreDataProperties.swift"; path = "/Users/ladanov/Documents/Developer/ChatAppTFS/ChatAppTFS/ChatAppTFS/Managers/Database/DBMessage+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		8E184B11273173D600C352B9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		8E21E795271DA0280005F20F /* Character+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+.swift"; sourceTree = "<group>"; };
 		8E27D41C27439A91009A3425 /* ProfileProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileProtocols.swift; sourceTree = "<group>"; };
@@ -186,6 +180,8 @@
 		8EECB737273F8D8B00FA2D74 /* ConversationsListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListPresenter.swift; sourceTree = "<group>"; };
 		8EECB739273F8E6000FA2D74 /* ConversationsListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListDataSource.swift; sourceTree = "<group>"; };
 		8EEF17E527156A0800AFE370 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
+		8EEF20142749E3310027B03D /* DBMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBMessage.swift; sourceTree = "<group>"; };
+		8EEF20172749E42E0027B03D /* DBChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBChannel.swift; sourceTree = "<group>"; };
 		8EF0799F2726C8F800C88771 /* TableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableView+.swift"; sourceTree = "<group>"; };
 		8EF0D00E272AA97500F9D485 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		8EF3AA1B272D606200BCA00E /* ChatDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatDB.xcdatamodel; sourceTree = "<group>"; };
@@ -221,13 +217,6 @@
 				5BBFB8ECD74D694F2D53E2F4 /* Pods-ChatAppTFS.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		8E15F8F6272E40F500EE7918 /* Database */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Database;
 			sourceTree = "<group>";
 		};
 		8E184B0C2731576100C352B9 /* Trash */ = {
@@ -374,24 +363,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		8E27D42727439C98009A3425 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				8E15F8FA272E424100EE7918 /* DBMessage+CoreDataProperties.swift */,
-				8E15F8F8272E424100EE7918 /* DBMessage+CoreDataClass.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		8E27D42827439CBE009A3425 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				8E15F8F7272E424100EE7918 /* DBChannel+CoreDataClass.swift */,
-				8E15F8F9272E424100EE7918 /* DBChannel+CoreDataProperties.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		8E27D42927439FF7009A3425 /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
@@ -464,8 +435,8 @@
 		8E2E2715270DF05700BFE156 /* ConversationsList */ = {
 			isa = PBXGroup;
 			children = (
+				8EEF20162749E41A0027B03D /* Models */,
 				8E27D42527439C04009A3425 /* DataSource */,
-				8E27D42827439CBE009A3425 /* Model */,
 				8E2E270E270DE6A300BFE156 /* Presenter */,
 				8E27D42627439C16009A3425 /* Protocols */,
 				8E27D42227439B9F009A3425 /* View */,
@@ -523,14 +494,6 @@
 			path = CoreLayer;
 			sourceTree = "<group>";
 		};
-		8E6B3544271E81C400653B8D /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				8E15F8F6272E40F500EE7918 /* Database */,
-			);
-			path = Managers;
-			sourceTree = "<group>";
-		};
 		8E6B3545271E81E500653B8D /* Other */ = {
 			isa = PBXGroup;
 			children = (
@@ -579,8 +542,8 @@
 		8EAAFE2C270E8EE400D7497B /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
+				8EEF20132749E3140027B03D /* Models */,
 				8E27D41F27439AFD009A3425 /* DataSource */,
-				8E27D42727439C98009A3425 /* Model */,
 				8E27D41E27439AF0009A3425 /* Presenter */,
 				8E27D42027439B0A009A3425 /* Protocols */,
 				8E27D4182743992D009A3425 /* View */,
@@ -624,7 +587,6 @@
 				8E2E2706270DE5C600BFE156 /* Extensions */,
 				8ED76E1E2721D45F004D7100 /* GoogleService-Info.plist */,
 				8EB63AEA26FDAB2E00548A19 /* Info.plist */,
-				8E6B3544271E81C400653B8D /* Managers */,
 				8E6B3545271E81E500653B8D /* Other */,
 				8E2E2713270DF02700BFE156 /* PresentationLayer */,
 				8EAAFE23270E8A8F00D7497B /* Protocols */,
@@ -687,6 +649,22 @@
 				8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */,
 			);
 			path = Operation;
+			sourceTree = "<group>";
+		};
+		8EEF20132749E3140027B03D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8EEF20142749E3310027B03D /* DBMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8EEF20162749E41A0027B03D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8EEF20172749E42E0027B03D /* DBChannel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		8EF72DF42742079A004DD7D9 /* Chat */ = {
@@ -849,7 +827,6 @@
 				8E6B3549271E82E700653B8D /* FirestoreManager.swift in Sources */,
 				8E2E270A270DE61300BFE156 /* Date+.swift in Sources */,
 				8E64EED92743D70500A72CF1 /* TableViewUpdatable.swift in Sources */,
-				8E15F8FE272E424100EE7918 /* DBChannel+CoreDataProperties.swift in Sources */,
 				8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */,
 				8EF3AA1C272D606200BCA00E /* ChatDB.xcdatamodeld in Sources */,
 				8E03E7F32726466B007F1B2B /* AppMessageView.swift in Sources */,
@@ -858,6 +835,7 @@
 				8EAB38A52717022200A1FF98 /* ChampagneTheme.swift in Sources */,
 				8EAAFE2A270E8E9000D7497B /* ConversationsListTableHeaderView.swift in Sources */,
 				8E2E271A270DF08A00BFE156 /* UserProfileViewController.swift in Sources */,
+				8EEF20182749E42E0027B03D /* DBChannel.swift in Sources */,
 				8E2E2708270DE5EA00BFE156 /* UIView+.swift in Sources */,
 				8E2CE3832744C4E5008F460C /* RouterProtocol.swift in Sources */,
 				8E27D41D27439A91009A3425 /* ProfileProtocols.swift in Sources */,
@@ -881,6 +859,7 @@
 				8E2CE3892744C96E008F460C /* FirestoreManagerProtocol.swift in Sources */,
 				8EF079A02726C8F800C88771 /* TableView+.swift in Sources */,
 				8EBA40F127413771005323FE /* ConversationsListProtocols.swift in Sources */,
+				8EEF20152749E3310027B03D /* DBMessage.swift in Sources */,
 				8E418FE3273408CC00FB9B45 /* CustomFirestoreError.swift in Sources */,
 				8E40D99327146AC700406AD4 /* ThemeViewController.swift in Sources */,
 				8E2F671A2742360800B02E0A /* ThemeProtocols.swift in Sources */,
@@ -902,8 +881,6 @@
 				8EE62B4A272036680011FE58 /* AppHeaderView.swift in Sources */,
 				8E40D98A2714399700406AD4 /* ThemesViewController.m in Sources */,
 				8E0040B4272EBAEA00587E99 /* NSSet+.swift in Sources */,
-				8E15F8FB272E424100EE7918 /* DBMessage+CoreDataProperties.swift in Sources */,
-				8E15F8FD272E424100EE7918 /* DBChannel+CoreDataClass.swift in Sources */,
 				8E72BC792717C2B60046870F /* Constants.swift in Sources */,
 				8EF72DF6274207DB004DD7D9 /* ChatService.swift in Sources */,
 				8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */,
@@ -916,7 +893,6 @@
 				8EAB38A72717022900A1FF98 /* LightTheme.swift in Sources */,
 				8EECB73A273F8E6000FA2D74 /* ConversationsListDataSource.swift in Sources */,
 				8EAAFE30270E979600D7497B /* ConversationTableViewCell.swift in Sources */,
-				8E15F8FC272E424100EE7918 /* DBMessage+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
