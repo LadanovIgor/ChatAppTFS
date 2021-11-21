@@ -96,6 +96,20 @@ class ProfilePresenter {
 	// MARK: - ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
+	func loadedPicturesTapped() {
+		router?.presentPicturesScreen(for: view) { [weak self] result in
+			switch result {
+			case .success(let data):
+				DispatchQueue.main.async {
+					self?.updated[Constants.LocalStorage.imageKey] = data
+					self?.view?.updateProfileImage(with: data)
+					// TODO: add edit mode
+				}
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+		}
+	}
 	
 	public func viewDidLoad() {
 		fetchProfileData()

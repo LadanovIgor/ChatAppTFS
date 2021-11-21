@@ -121,6 +121,9 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		actionSheet.addAction(UIAlertAction(title: "Камера", style: .default, handler: {[weak self] _ in
 			self?.useCameraForPhoto()
 		}))
+		actionSheet.addAction(UIAlertAction(title: "Загрузить", style: .default, handler: { [weak self] _ in
+			self?.presenter?.loadedPicturesTapped()
+		}))
 		actionSheet.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
 		present(actionSheet, animated: true)
 	}
@@ -237,6 +240,12 @@ extension UserProfileViewController: ProfileViewProtocol {
 		activityIndicator.stopAnimating()
 	}
 	
+	public func updateProfileImage(with data: Data) {
+		guard let image = UIImage(data: data) else {
+			return
+		}
+		profileImageView.image = image
+	}
 }
 
 	// MARK: - UIImagePickerController

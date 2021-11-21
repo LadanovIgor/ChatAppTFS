@@ -51,4 +51,12 @@ final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 		presenter.set(view: viewController)
 		return viewController
 	}
+	
+	func createPicturesModule(pictureSelected: @escaping ResultClosure<Data>, router: RouterProtocol) -> UIViewController {
+		let presenter = PicturesPresenter(router: router)
+		let viewController = PicturesViewController(presenter: presenter)
+		presenter.set(view: viewController)
+		presenter.pictureSelected = pictureSelected
+		return viewController
+	}
 }

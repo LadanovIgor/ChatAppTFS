@@ -18,4 +18,5 @@ protocol RouterProtocol: RouterMain {
 	func presentThemeScreen(from view: ConversationsListViewProtocol?, themeSelected: ThemeClosure?)
 	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with storageService: StoredLocally?)
 	func dismiss(_ viewController: UIViewController?)
+	func presentPicturesScreen(for view: ProfileViewProtocol?, pictureSelected: @escaping ResultClosure<Data>)
 }

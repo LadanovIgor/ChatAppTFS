@@ -12,6 +12,7 @@ protocol ProfilePresenterProtocol: AnyObject, LifeCycleProtocol {
 	func save()
 	func close()
 	func update(key: String, value: Data?)
+	func loadedPicturesTapped()
 }
 
 protocol ProfileViewProtocol where Self: UIViewController {
@@ -20,4 +21,5 @@ protocol ProfileViewProtocol where Self: UIViewController {
 	func updateScreen(name: String, location: String, info: String, imageData: Data?)
 	func presentFailureLoadAlert(handler: (() -> Void)?)
 	func presentSuccessLoadAlert()
+	func updateProfileImage(with data: Data)
 }
