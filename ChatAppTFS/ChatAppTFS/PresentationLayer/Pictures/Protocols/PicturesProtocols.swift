@@ -8,10 +8,12 @@
 import Foundation
 
 protocol PicturesViewProtocol where Self: UIViewController {
-	
+	func runSpinner()
+	func stopSpinner()
 }
 
-protocol PicturesPresenterProtocol: AnyObject {
-	var pictureSelected: ResultClosure<Data>? { get set }
-	func dismiss()
+protocol PicturesPresenterProtocol: AnyObject, LifeCycleProtocol {
+	func didTapAt(indexPath: IndexPath)
+	var pictures: [Picture] { get }
+	func getImageData(urlString: String, completion: @escaping (Result<Data, Error>) -> Void)
 }

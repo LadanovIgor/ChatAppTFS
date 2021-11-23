@@ -71,6 +71,12 @@
 		8EBA40EB274102FB005323FE /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBA40EA274102FB005323FE /* Router.swift */; };
 		8EBA40EE27410375005323FE /* AssemblyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBA40ED27410375005323FE /* AssemblyBuilder.swift */; };
 		8EBA40F127413771005323FE /* ConversationsListProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBA40F027413771005323FE /* ConversationsListProtocols.swift */; };
+		8EC68B6E274A64BB00BEB00C /* ColumnFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC68B6D274A64BB00BEB00C /* ColumnFlowLayout.swift */; };
+		8EC68B71274A657E00BEB00C /* RequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC68B70274A657E00BEB00C /* RequestSender.swift */; };
+		8EC68B73274A661300BEB00C /* ParsingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC68B72274A661300BEB00C /* ParsingError.swift */; };
+		8EC68B75274A663A00BEB00C /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC68B74274A663A00BEB00C /* Requests.swift */; };
+		8EC68B77274A667800BEB00C /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC68B76274A667800BEB00C /* RequestFactory.swift */; };
+		8EC68B79274A66AD00BEB00C /* PixabyParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC68B78274A66AD00BEB00C /* PixabyParser.swift */; };
 		8ED5F085270EE3AC005CDA29 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED5F084270EE3AC005CDA29 /* ConfigurableView.swift */; };
 		8ED76E1F2721D45F004D7100 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8ED76E1E2721D45F004D7100 /* GoogleService-Info.plist */; };
 		8ED8D105273B5DB1004BDD23 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED8D104273B5DB1004BDD23 /* Array+.swift */; };
@@ -173,6 +179,12 @@
 		8EBA40EA274102FB005323FE /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		8EBA40ED27410375005323FE /* AssemblyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyBuilder.swift; sourceTree = "<group>"; };
 		8EBA40F027413771005323FE /* ConversationsListProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListProtocols.swift; sourceTree = "<group>"; };
+		8EC68B6D274A64BB00BEB00C /* ColumnFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnFlowLayout.swift; sourceTree = "<group>"; };
+		8EC68B70274A657E00BEB00C /* RequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSender.swift; sourceTree = "<group>"; };
+		8EC68B72274A661300BEB00C /* ParsingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingError.swift; sourceTree = "<group>"; };
+		8EC68B74274A663A00BEB00C /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
+		8EC68B76274A667800BEB00C /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
+		8EC68B78274A66AD00BEB00C /* PixabyParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabyParser.swift; sourceTree = "<group>"; };
 		8ED5F084270EE3AC005CDA29 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		8ED76E1E2721D45F004D7100 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8ED8D104273B5DB1004BDD23 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
@@ -527,6 +539,7 @@
 				8EE62B3B271FEB0A0011FE58 /* LocalDataOperationError.swift */,
 				8E6B354F271E939200653B8D /* StoredLocallyError.swift */,
 				8EFB2D6D2749EBE40005B271 /* NetworkError.swift */,
+				8EC68B72274A661300BEB00C /* ParsingError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -613,6 +626,7 @@
 		8EBA40E8274102E0005323FE /* ServiceLayer */ = {
 			isa = PBXGroup;
 			children = (
+				8EC68B6F274A655E00BEB00C /* Network */,
 				8EBA40EC2741035F005323FE /* AssemblyBuilder */,
 				8EF72DF42742079A004DD7D9 /* Chat */,
 				8EBA40E9274102EC005323FE /* Router */,
@@ -655,6 +669,17 @@
 				8E15F8F4272E40BD00EE7918 /* CoreDataManager.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		8EC68B6F274A655E00BEB00C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				8EC68B70274A657E00BEB00C /* RequestSender.swift */,
+				8EC68B74274A663A00BEB00C /* Requests.swift */,
+				8EC68B76274A667800BEB00C /* RequestFactory.swift */,
+				8EC68B78274A66AD00BEB00C /* PixabyParser.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		8EE62B3D271FEB6B0011FE58 /* Operation */ = {
@@ -731,6 +756,7 @@
 			children = (
 				8EFB2D6A2749EA770005B271 /* Cell */,
 				8EFB2D682749EA6A0005B271 /* PicturesViewController.swift */,
+				8EC68B6D274A64BB00BEB00C /* ColumnFlowLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -909,11 +935,13 @@
 				8E15F8F5272E40BD00EE7918 /* CoreDataManager.swift in Sources */,
 				8E0040B2272EAA5F00587E99 /* CustomCoreDataError.swift in Sources */,
 				8E2E2703270DE53400BFE156 /* Channel.swift in Sources */,
+				8EC68B71274A657E00BEB00C /* RequestSender.swift in Sources */,
 				8EAAFE27270E8BA500D7497B /* CircleImageView.swift in Sources */,
 				8EA19D762746538100B8429C /* PlistManager.swift in Sources */,
 				8EE62B48272036510011FE58 /* AppView.swift in Sources */,
 				8E2CE3852744C5DC008F460C /* CoreDataManagerProtococ.swift in Sources */,
 				8EAB38AF27171B0600A1FF98 /* UITableViewCell+.swift in Sources */,
+				8EC68B73274A661300BEB00C /* ParsingError.swift in Sources */,
 				8EF0D00F272AA97500F9D485 /* UIImage+.swift in Sources */,
 				8EB63AE126FDAB2D00548A19 /* ConversationsListViewController.swift in Sources */,
 				8E0B66FC273FC5D30092D5E5 /* ConversationPresenter.swift in Sources */,
@@ -924,7 +952,9 @@
 				8EF72DF827421F64004DD7D9 /* DatabaseUpdatable.swift in Sources */,
 				8EAAFE32270EB32500D7497B /* SendMessageView.swift in Sources */,
 				8E2CE3892744C96E008F460C /* FirestoreManagerProtocol.swift in Sources */,
+				8EC68B79274A66AD00BEB00C /* PixabyParser.swift in Sources */,
 				8EF079A02726C8F800C88771 /* TableView+.swift in Sources */,
+				8EC68B75274A663A00BEB00C /* Requests.swift in Sources */,
 				8EFB2D722749F0F40005B271 /* PicturesPresenter.swift in Sources */,
 				8EBA40F127413771005323FE /* ConversationsListProtocols.swift in Sources */,
 				8EEF20152749E3310027B03D /* DBMessage.swift in Sources */,
@@ -957,9 +987,11 @@
 				8EE62B3C271FEB0A0011FE58 /* LocalDataOperationError.swift in Sources */,
 				8EAB38A92717023500A1FF98 /* ThemeProtocol.swift in Sources */,
 				8E0B66FE273FC6120092D5E5 /* ConversationDataSource.swift in Sources */,
+				8EC68B6E274A64BB00BEB00C /* ColumnFlowLayout.swift in Sources */,
 				8EBA40EE27410375005323FE /* AssemblyBuilder.swift in Sources */,
 				8E2CE3812744C444008F460C /* AssemblyBuilderProtocol.swift in Sources */,
 				8E5EC5AB26FDB05E008FC472 /* KeyboardObservable.swift in Sources */,
+				8EC68B77274A667800BEB00C /* RequestFactory.swift in Sources */,
 				8E2E270C270DE65D00BFE156 /* NSLayoutConstraint+.swift in Sources */,
 				8EAB38A72717022900A1FF98 /* LightTheme.swift in Sources */,
 				8EFB2D6E2749EBE40005B271 /* NetworkError.swift in Sources */,

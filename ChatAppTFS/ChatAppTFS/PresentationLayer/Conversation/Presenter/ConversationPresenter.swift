@@ -46,7 +46,6 @@ class ConversationPresenter: NSObject, ConversationPresenterProtocol {
 		self.router = router
 		self.messagesService = messagesService
 		super.init()
-		
 	}
 	
 	// MARK: - Public

@@ -20,8 +20,6 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 	
 	private let spinner = UIActivityIndicatorView()
 	
-	var pictures = [Picture]()
-	
 	private var presenter: PicturesPresenterProtocol?
 	
 	convenience init(presenter: PicturesPresenterProtocol) {
@@ -33,9 +31,8 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 		super.viewDidLoad()
 		setUpActivityIndicator()
 		setUpCollectionView()
-		view.backgroundColor = .brown
+		presenter?.viewDidLoad()
 		delegating()
-		callForImages()
 	}
 	
 	override func viewDidLayoutSubviews() {
@@ -43,64 +40,12 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 		setUpConstraints()
 	}
 	
-	func getImageData(from url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
-		DispatchQueue.global().async {
-			let request = URLRequest(url: url)
-			let task = URLSession.shared.dataTask(with: request) { data, _, error in
-				if let error = error {
-					completion(.failure(error))
-					return
-				}
-				guard let data = data else {
-					completion(.failure(NetworkError.dataNone))
-					return
-				}
-				completion(.success(data))
-			}
-			task.resume()
-		}
-		
-	}
-	
-	func callForImages() {
-		let urlString = "https://pixabay.com/api/?key=24419822-84c709773b61819bb83958ec7&q=yellow+flowers&image_type=photo&pretty=true&per_page=100"
-		guard let url = URL(string: urlString) else {
-			fatalError()
-		}
-		let request = URLRequest(url: url)
-
-		let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
-			if let error = error {
-				print(error.localizedDescription)
-				return
-			}
-			guard let data = data else {
-				// TODO: error
-				return
-			}
-			do {
-				let result = try JSONDecoder().decode(Response.self, from: data)
-				self?.pictures = result.hits
-				DispatchQueue.main.async {
-					self?.spinner.stopAnimating()
-					self?.collectionView.isHidden = false
-					self?.collectionView.reloadData()
-				}
-			} catch {
-				print(error.localizedDescription)
-			}
-		}
-		task.resume()
-	}
-	
 	private func setUpCollectionView() {
-		collectionView.isHidden = true
 		view.addSubview(collectionView)
 	}
 	
 	private func setUpActivityIndicator() {
 		spinner.hidesWhenStopped = true
-		spinner.startAnimating()
 		spinner.translatesAutoresizingMaskIntoConstraints = false
 		view.addSubview(spinner)
 	}
@@ -122,64 +67,42 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 			spinner.widthAnchor.constraint(equalToConstant: 100)
 		])
 	}
+	
+	func runSpinner() {
+		collectionView.isHidden = true
+		spinner.startAnimating()
+	}
+	
+	func stopSpinner() {
+		spinner.stopAnimating()
+		collectionView.isHidden = false
+		collectionView.reloadData()
+	}
 }
 
 // MARK: - UICollectionViewDelegate
 
 extension PicturesViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let url = URL(string: pictures[indexPath.row].webformatURL) else {
-			fatalError("Wrong image URL")
-		}
-		guard let pictureSelected = presenter?.pictureSelected else {
-			fatalError()
-		}
-		getImageData(from: url, completion: pictureSelected)
-		presenter?.dismiss()
+		presenter?.didTapAt(indexPath: indexPath)
 	}
 	
 }
 
 extension PicturesViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return pictures.count
+		return presenter?.pictures.count ?? 0
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PictureCollectionViewCell.identifier, for: indexPath) as? PictureCollectionViewCell else {
 			fatalError()
 		}
-		guard let url = URL(string: pictures[indexPath.row].previewURL) else {
-			fatalError("Wrong image URL")
-		}
 		cell.configure()
-		getImageData(from: url, completion: cell.imageLoaded)
+		guard let urlString = presenter?.pictures[indexPath.row].previewURL else {
+			return cell
+		}
+		presenter?.getImageData(urlString: urlString, completion: cell.imageLoaded)
 		return cell
-	}
-}
-
-class ColumnFlowLayout: UICollectionViewFlowLayout {
-
-	let cellsPerRow: Int
-
-	init(cellsPerRow: Int, minimumInteritemSpacing: CGFloat, minimumLineSpacing: CGFloat, sectionInset: UIEdgeInsets) {
-		self.cellsPerRow = cellsPerRow
-		super.init()
-		self.minimumInteritemSpacing = minimumInteritemSpacing
-		self.minimumLineSpacing = minimumLineSpacing
-		self.sectionInset = sectionInset
-	}
-
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-
-	override func prepare() {
-		super.prepare()
-		guard let collectionView = collectionView else { return }
-		let interItemSpacing = minimumInteritemSpacing * CGFloat(cellsPerRow - 1)
-		let marginsAndInsets = sectionInset.left + sectionInset.right + collectionView.safeAreaInsets.left + collectionView.safeAreaInsets.right + interItemSpacing
-		let itemWidth = ((collectionView.bounds.size.width - marginsAndInsets) / CGFloat(cellsPerRow)).rounded(.down)
-		itemSize = CGSize(width: itemWidth, height: itemWidth)
 	}
 }

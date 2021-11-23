@@ -103,7 +103,6 @@ extension ProfilePresenter: ProfilePresenterProtocol {
 				DispatchQueue.main.async {
 					self?.updated[Constants.LocalStorage.imageKey] = data
 					self?.view?.updateProfileImage(with: data)
-					// TODO: add edit mode
 				}
 			case .failure(let error):
 				print(error.localizedDescription)

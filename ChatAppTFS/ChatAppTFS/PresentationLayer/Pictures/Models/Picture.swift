@@ -8,7 +8,11 @@
 import Foundation
 
 struct Response: Codable {
-	let hits: [Picture]
+	let pictures: [Picture]
+	
+	private enum CodingKeys: String, CodingKey {
+		case pictures = "hits"
+	}
 }
 
 struct Picture: Codable {

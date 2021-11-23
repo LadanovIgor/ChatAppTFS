@@ -194,6 +194,14 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 			}
 		}
 	}
+	
+	private func addProfileImage(_ image: UIImage) {
+		profileImageView.image = image
+		editProfileButton.isHidden = true
+		saveButton.isHidden = false
+		cancelButton.isHidden = false
+		changeButtonState(isEnable: true)
+	}
 }
 	// MARK: - ProfileViewProtocol
 
@@ -244,7 +252,7 @@ extension UserProfileViewController: ProfileViewProtocol {
 		guard let image = UIImage(data: data) else {
 			return
 		}
-		profileImageView.image = image
+		addProfileImage(image)
 	}
 }
 
@@ -256,11 +264,7 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
 		guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
 			return
 		}
-		profileImageView.image = image
-		editProfileButton.isHidden = true
-		saveButton.isHidden = false
-		cancelButton.isHidden = false
-		changeButtonState(isEnable: true)
+		addProfileImage(image)
 		guard let imageData = image.jpegData(compressionQuality: 1.0) else {
 			return
 		}

@@ -15,10 +15,12 @@ final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 
 	private let chatService: ChatServiceProtocol
 	private let storageService: StoredLocally
+	private let requestSender: RequestSenderProtocol
 	
-	init(chatService: ChatServiceProtocol, storageService: StoredLocally) {
+	init(chatService: ChatServiceProtocol, storageService: StoredLocally, requestSender: RequestSenderProtocol) {
 		self.chatService = chatService
 		self.storageService = storageService
+		self.requestSender = requestSender
 	}
 	
 	// MARK: - Public
@@ -53,7 +55,7 @@ final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 	}
 	
 	func createPicturesModule(pictureSelected: @escaping ResultClosure<Data>, router: RouterProtocol) -> UIViewController {
-		let presenter = PicturesPresenter(router: router)
+		let presenter = PicturesPresenter(requestSender: requestSender, router: router)
 		let viewController = PicturesViewController(presenter: presenter)
 		presenter.set(view: viewController)
 		presenter.pictureSelected = pictureSelected

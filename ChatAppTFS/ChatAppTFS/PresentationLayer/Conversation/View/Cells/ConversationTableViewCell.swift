@@ -16,15 +16,24 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 	@IBOutlet private weak var contentLabel: UILabel!
 	@IBOutlet private weak var messageView: AppMessageView!
 	@IBOutlet private weak var senderImageView: UIImageView!
-	
-	override func layoutSubviews() {
-		super.layoutSubviews()
+	@IBOutlet private weak var contentImageView: UIImageView!
+	@IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
+
+	override func didMoveToSuperview() {
+		super.didMoveToSuperview()
+		imageViewHeightConstraint.constant = 0
 		messageView.layer.masksToBounds = true
 		messageView.layer.cornerRadius = Constants.ConversationCell.messageViewCornerRadius
 		messageView.clipsToBounds = true
 		messageView.layer.borderWidth = Constants.ConversationCell.messageViewBorderWidth
 		messageView.layer.borderColor = UIColor.black.cgColor
 		senderImageView.round()
+		contentImageView.clipsToBounds = true
+		contentImageView.contentMode = .scaleAspectFill
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
 	}
 	
 	override func prepareForReuse() {
@@ -33,13 +42,22 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 		dateLabel.text = nil
 		contentLabel.text = nil
 		senderImageView.image = nil
+		contentImageView.image = nil
+		imageViewHeightConstraint.constant = 0
 	}
-	
+
 	// MARK: - Public
 	
 	public func configure(with model: DBMessage, senderId: String) {
 		nameLabel.text = model.senderId == senderId ? nil : model.senderName
-		contentLabel.text = model.content
+		if let content = model.content, let url = URL(string: content) {
+			contentLabel.isHidden = true
+			contentImageView.isHidden = false
+			imageViewHeightConstraint.constant = 100
+			contentImageView.image = UIImage(named: "chatNew")
+		} else {
+			contentLabel.text = model.content
+		}
 		guard let senderName = model.senderName, let created = model.created else {
 			fatalError("Wrong DBMessage")
 		}
@@ -47,5 +65,6 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 		selectionStyle = .none
 		senderImageView.image = UIImage.textImage(text: senderName.getCapitalLetters())
 		transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+		layoutIfNeeded()
 	}
 }
