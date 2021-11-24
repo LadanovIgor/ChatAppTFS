@@ -9,6 +9,16 @@ import UIKit
 
 enum Constants {
 	
+	enum AppColors {
+		case buttonTitle
+		
+		var color: UIColor {
+			switch self {
+			case .buttonTitle: return UIColor(hex: 0x0079FF)
+			}
+		}
+	}
+	
 	enum PixabayAPI {
 		static let apiKey = "24419822-84c709773b61819bb83958ec7"
 		static let baseUrl = "https://pixabay.com/api/"
@@ -29,11 +39,11 @@ enum Constants {
 		
 		var color: UIColor {
 			switch self {
-			case .red: return UIColor(red: 204 / 255, green: 78 / 255, blue: 92 / 255, alpha: 1.0)
-			case .orange: return UIColor(red: 255 / 255, green: 127 / 255, blue: 80 / 255, alpha: 1.0)
-			case .green: return UIColor(red: 143 / 255, green: 188 / 255, blue: 143 / 255, alpha: 1.0)
-			case .violet: return UIColor(red: 136 / 255, green: 120 / 255, blue: 195 / 255, alpha: 1.0)
-			case .cyan: return UIColor(red: 155 / 255, green: 221 / 255, blue: 255 / 255, alpha: 1.0)
+			case .red: return UIColor(hex: 0xCC4E5C)
+			case .orange: return  UIColor(hex: 0xFF7F50)
+			case .green: return UIColor(hex: 0x8FBC8F)
+			case .violet: return UIColor(hex: 0x8878C3)
+			case .cyan: return UIColor(hex: 0x9BDDE1)
 			}
 		}
 		
@@ -73,10 +83,10 @@ enum Constants {
 	}
 	
 	enum SendMessageView {
-		static let offset: CGFloat = 18.0
+		static let offset: CGFloat = 14.0
 		static let textFieldCornerRadius: CGFloat = 11.0
 		static let textFieldBorderWidth: CGFloat = 0.3
-		static let sendButtonWidth: CGFloat = 50
+		static let sendButtonWidth: CGFloat = 30
 	}
 	
 	enum ConversationCell {

@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct RequestConfig<Parser> where Parser: ParserProtocol {
-	let request: RequestProtocol
-	let parser: Parser
-}
-
 protocol RequestSenderProtocol {
 	func send<Parser>(config: RequestConfig<Parser>, completion: @escaping ResultClosure<Parser.Model>)
 	func send(request: RequestProtocol?, completion: @escaping ResultClosure<Data>)

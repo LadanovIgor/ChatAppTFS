@@ -51,7 +51,7 @@
 		8E72BC792717C2B60046870F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E72BC782717C2B60046870F /* Constants.swift */; };
 		8E7F4FD7274DD48200B7E3B2 /* PictureMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7F4FD5274DD48200B7E3B2 /* PictureMessageTableViewCell.swift */; };
 		8E7F4FD8274DD48200B7E3B2 /* PictureMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E7F4FD6274DD48200B7E3B2 /* PictureMessageTableViewCell.xib */; };
-		8EA157F7274CC5C300583E62 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA157F6274CC5C300583E62 /* UIImageView+.swift */; };
+		8EA157F7274CC5C300583E62 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA157F6274CC5C300583E62 /* UIColor+.swift */; };
 		8EA157F9274CF8C400583E62 /* Dismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA157F8274CF8C400583E62 /* Dismissable.swift */; };
 		8EA19D762746538100B8429C /* PlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA19D752746538100B8429C /* PlistManager.swift */; };
 		8EA19D78274654EA00B8429C /* PlistManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA19D77274654EA00B8429C /* PlistManagerProtocol.swift */; };
@@ -161,7 +161,7 @@
 		8E72BC782717C2B60046870F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8E7F4FD5274DD48200B7E3B2 /* PictureMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureMessageTableViewCell.swift; sourceTree = "<group>"; };
 		8E7F4FD6274DD48200B7E3B2 /* PictureMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PictureMessageTableViewCell.xib; sourceTree = "<group>"; };
-		8EA157F6274CC5C300583E62 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		8EA157F6274CC5C300583E62 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		8EA157F8274CF8C400583E62 /* Dismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dismissable.swift; sourceTree = "<group>"; };
 		8EA19D752746538100B8429C /* PlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistManager.swift; sourceTree = "<group>"; };
 		8EA19D77274654EA00B8429C /* PlistManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistManagerProtocol.swift; sourceTree = "<group>"; };
@@ -431,7 +431,7 @@
 				8E2E2707270DE5EA00BFE156 /* UIView+.swift */,
 				8E0B6701273FDCCC0092D5E5 /* UIViewController+.swift */,
 				8EEF17E527156A0800AFE370 /* UIWindow+.swift */,
-				8EA157F6274CC5C300583E62 /* UIImageView+.swift */,
+				8EA157F6274CC5C300583E62 /* UIColor+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -943,7 +943,7 @@
 				8E64EED92743D70500A72CF1 /* TableViewUpdatable.swift in Sources */,
 				8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */,
 				8EF3AA1C272D606200BCA00E /* ChatDB.xcdatamodeld in Sources */,
-				8EA157F7274CC5C300583E62 /* UIImageView+.swift in Sources */,
+				8EA157F7274CC5C300583E62 /* UIColor+.swift in Sources */,
 				8E03E7F32726466B007F1B2B /* AppMessageView.swift in Sources */,
 				8E21E796271DA0280005F20F /* Character+.swift in Sources */,
 				8EAB38AB2717052900A1FF98 /* typealiases.swift in Sources */,

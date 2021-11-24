@@ -40,7 +40,6 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = .gray
 		presenter.viewDidLoad()
 		setUpButtons()
 		setUpStackView()
@@ -60,20 +59,21 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 	}
 	
 	private func setUpButtons() {
+		let color = Constants.AppColors.buttonTitle.color
 		natureButton.setTitle("Nature", for: .normal)
-		natureButton.setTitleColor(.blue, for: .normal)
+		natureButton.setTitleColor(color, for: .normal)
 		natureButton.addTarget(self, action: #selector(didTapNatureButton), for: .touchUpInside)
 		animalsButton.setTitle("Animals", for: .normal)
-		animalsButton.setTitleColor(.blue, for: .normal)
+		animalsButton.setTitleColor(color, for: .normal)
 		animalsButton.addTarget(self, action: #selector(didTapAnimalsButton), for: .touchUpInside)
 		sportsButton.setTitle("Sports", for: .normal)
-		sportsButton.setTitleColor(.blue, for: .normal)
+		sportsButton.setTitleColor(color, for: .normal)
 		sportsButton.addTarget(self, action: #selector(didTapSportsButton), for: .touchUpInside)
 		peopleButton.setTitle("People", for: .normal)
-		peopleButton.setTitleColor(.blue, for: .normal)
+		peopleButton.setTitleColor(color, for: .normal)
 		peopleButton.addTarget(self, action: #selector(didTapPeopleButton), for: .touchUpInside)
 		flowersButton.setTitle("Flowers", for: .normal)
-		flowersButton.setTitleColor(.blue, for: .normal)
+		flowersButton.setTitleColor(color, for: .normal)
 		flowersButton.addTarget(self, action: #selector(didTapFlowersButton), for: .touchUpInside)
 	}
 	

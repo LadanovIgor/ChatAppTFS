@@ -7,9 +7,13 @@
 
 import Foundation
 
+struct RequestConfig<Parser> where Parser: ParserProtocol {
+	let request: RequestProtocol
+	let parser: Parser
+}
+
 struct RequestsFactory {
-	struct PixabayRequestConfig {
-		
+	struct PixabayRequestConfig {		
 		static func pictures(with type: Constants.PicturesScreen.PicturesType) -> RequestConfig<PixabyParser> {
 			let request: PixabayRequest
 			switch type {

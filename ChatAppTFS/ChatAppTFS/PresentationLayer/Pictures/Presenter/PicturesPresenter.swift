@@ -25,7 +25,7 @@ class PicturesPresenter: NSObject {
 	}
 	
 	func viewDidLoad() {
-		fetchingData(with: .sports)
+		fetchingData(with: .people)
 	}
 	
 	func set(view: PicturesViewProtocol) {
@@ -59,6 +59,8 @@ class PicturesPresenter: NSObject {
 	}
 }
 
+	// MARK: - PicturesPresenterProtocol
+
 extension PicturesPresenter: PicturesPresenterProtocol {
 	func didTapAt(indexPath: IndexPath) {
 		if let pictureSelected = pictureSelected {
@@ -68,6 +70,8 @@ extension PicturesPresenter: PicturesPresenterProtocol {
 		router.dismiss(view)
 	}
 }
+
+	// MARK: - UICollectionViewDataSource
 
 extension PicturesPresenter {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

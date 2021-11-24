@@ -30,6 +30,8 @@ extension ThemeProtocol {
 		UIView.appearance(whenContainedInInstancesOf: [UITableView.self]).backgroundColor = backgroundColor
 		UIView.appearance(whenContainedInInstancesOf: [ConversationViewController.self]).backgroundColor = backgroundColor
 		UIView.appearance(whenContainedInInstancesOf: [ConversationsListViewController.self]).backgroundColor = backgroundColor
+		UIView.appearance(whenContainedInInstancesOf: [PicturesViewController.self]).backgroundColor = backgroundColor
+		UICollectionView.appearance().backgroundColor = backgroundColor
 		AppView.appearance().backgroundColor = backgroundColor
 		AppHeaderView.appearance().backgroundColor = secondaryBackground
 		UIVisualEffectView.appearance().backgroundColor = backgroundColor

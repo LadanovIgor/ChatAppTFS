@@ -37,17 +37,17 @@ class SendMessageView: UIView {
 	private func setUpSendButton() {
 		sendButton.translatesAutoresizingMaskIntoConstraints = false
 		sendButton.addTarget(self, action: #selector(didTapSendButton), for: .touchUpInside)
-		let attributedString = NSAttributedString(
-			string: "Send",
-			attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold),
-						 NSAttributedString.Key.foregroundColor: UIColor(named: "buttonTitle") ?? .blue])
-		sendButton.setAttributedTitle(attributedString, for: .normal)
+		let image = UIImage(named: "send")
+		sendButton.setImage(image, for: .normal)
+		sendButton.clipsToBounds = true
+		sendButton.layer.masksToBounds = true
+		sendButton.backgroundColor = .clear
 	}
 	
 	private func setUpPictureButton() {
 		picturesButton.translatesAutoresizingMaskIntoConstraints = false
 		picturesButton.addTarget(self, action: #selector(didTapPicturesButton), for: .touchUpInside)
-		let image = UIImage(named: "themes")
+		let image = UIImage(named: "clip")
 		picturesButton.setImage(image, for: .normal)
 		picturesButton.clipsToBounds = true
 		picturesButton.layer.masksToBounds = true
@@ -71,12 +71,12 @@ class SendMessageView: UIView {
 		let metrics = ["offset": Constants.SendMessageView.offset, "width": Constants.SendMessageView.sendButtonWidth ]
 		let views = ["textField": textField, "send": sendButton, "pictures": picturesButton]
 		addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "H:|-offset-[pictures(50)]-offset-[textField]-offset-[send(width)]-offset-|",
+			withVisualFormat: "H:|-offset-[pictures(width)]-offset-[textField]-offset-[send(width)]-offset-|",
 			options: [.alignAllCenterY],
 			metrics: metrics,
 			views: views))
 		addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-offset-[send]-offset-|",
+			withVisualFormat: "V:|-25-[send]-25-|",
 			options: [],
 			metrics: metrics,
 			views: views))
@@ -86,7 +86,7 @@ class SendMessageView: UIView {
 			metrics: metrics,
 			views: views))
 		addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-offset-[pictures]-offset-|",
+			withVisualFormat: "V:|-25-[pictures]-25-|",
 			options: [],
 			metrics: metrics,
 			views: views))
