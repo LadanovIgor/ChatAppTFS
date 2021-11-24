@@ -7,6 +7,11 @@
 
 import Foundation
 
+protocol ParserProtocol {
+	associatedtype Model
+	func parse(data: Data) -> Model?
+}
+
 class PixabyParser: ParserProtocol {
 	typealias Model = Response
 	func parse(data: Data) -> Response? {

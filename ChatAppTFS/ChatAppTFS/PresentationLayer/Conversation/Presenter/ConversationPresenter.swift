@@ -15,6 +15,7 @@ class ConversationPresenter: NSObject, ConversationPresenterProtocol {
 	
 	private var messagesService: MessagesServiceProtocol?
 	private weak var view: ConversationViewProtocol?
+	private var requestSender: RequestSenderProtocol
 	private var router: RouterProtocol?
 	private var channelId: String?
 	private var userId: String?
@@ -35,16 +36,17 @@ class ConversationPresenter: NSObject, ConversationPresenterProtocol {
 			sectionNameKeyPath: nil,
 			cacheName: nil)
 		fetchResultController.delegate = self
-		return ConversationDataSource(fetchResultController: fetchResultController, senderId: userId)
+		return ConversationDataSource(fetchResultController: fetchResultController, requestSender: requestSender, senderId: userId)
 	}()
 	
 	// MARK: - Init
 	
-	init(channelId: String, userId: String, messagesService: MessagesServiceProtocol?, router: RouterProtocol) {
+	init(channelId: String, userId: String, messagesService: MessagesServiceProtocol?, requestSender: RequestSenderProtocol, router: RouterProtocol) {
 		self.channelId = channelId
 		self.userId = userId
 		self.router = router
 		self.messagesService = messagesService
+		self.requestSender = requestSender
 		super.init()
 		
 	}

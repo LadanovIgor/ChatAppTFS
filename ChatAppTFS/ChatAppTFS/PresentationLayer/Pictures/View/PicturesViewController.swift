@@ -18,20 +18,34 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 		return collectionView
 	}()
 	
+	private let stackView = UIStackView()
+	private let animalsButton = UIButton()
+	private let natureButton = UIButton()
+	private let flowersButton = UIButton()
+	private let sportsButton = UIButton()
+	private let peopleButton = UIButton()
+
 	private let spinner = UIActivityIndicatorView()
 	
-	private var presenter: PicturesPresenterProtocol?
+	private var presenter: PicturesPresenterProtocol
 	
-	convenience init(presenter: PicturesPresenterProtocol) {
-		self.init()
+	init(presenter: PicturesPresenterProtocol) {
 		self.presenter = presenter
+		super.init(nibName: nil, bundle: nil)
 	}
-
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.backgroundColor = .gray
+		presenter.viewDidLoad()
+		setUpButtons()
+		setUpStackView()
 		setUpActivityIndicator()
 		setUpCollectionView()
-		presenter?.viewDidLoad()
 		delegating()
 	}
 	
@@ -41,7 +55,39 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 	}
 	
 	private func setUpCollectionView() {
+		collectionView.translatesAutoresizingMaskIntoConstraints = false
 		view.addSubview(collectionView)
+	}
+	
+	private func setUpButtons() {
+		natureButton.setTitle("Nature", for: .normal)
+		natureButton.setTitleColor(.blue, for: .normal)
+		natureButton.addTarget(self, action: #selector(didTapNatureButton), for: .touchUpInside)
+		animalsButton.setTitle("Animals", for: .normal)
+		animalsButton.setTitleColor(.blue, for: .normal)
+		animalsButton.addTarget(self, action: #selector(didTapAnimalsButton), for: .touchUpInside)
+		sportsButton.setTitle("Sports", for: .normal)
+		sportsButton.setTitleColor(.blue, for: .normal)
+		sportsButton.addTarget(self, action: #selector(didTapSportsButton), for: .touchUpInside)
+		peopleButton.setTitle("People", for: .normal)
+		peopleButton.setTitleColor(.blue, for: .normal)
+		peopleButton.addTarget(self, action: #selector(didTapPeopleButton), for: .touchUpInside)
+		flowersButton.setTitle("Flowers", for: .normal)
+		flowersButton.setTitleColor(.blue, for: .normal)
+		flowersButton.addTarget(self, action: #selector(didTapFlowersButton), for: .touchUpInside)
+	}
+	
+	private func setUpStackView() {
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		stackView.addArrangedSubview(peopleButton)
+		stackView.addArrangedSubview(natureButton)
+		stackView.addArrangedSubview(flowersButton)
+		stackView.addArrangedSubview(sportsButton)
+		stackView.addArrangedSubview(animalsButton)
+		stackView.alignment = .fill
+		stackView.axis = .horizontal
+		stackView.distribution = .fillEqually
+		view.addSubview(stackView)
 	}
 	
 	private func setUpActivityIndicator() {
@@ -52,12 +98,16 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 	
 	private func delegating() {
 		collectionView.delegate = self
-		collectionView.dataSource = self
+		collectionView.dataSource = presenter
 	}
 
 	private func setUpConstraints() {
 		NSLayoutConstraint.activate([
-			collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			stackView.heightAnchor.constraint(equalToConstant: 50),
+			collectionView.topAnchor.constraint(equalTo: stackView.bottomAnchor),
 			collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 			collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
 			collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -66,6 +116,30 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 			spinner.heightAnchor.constraint(equalToConstant: 100),
 			spinner.widthAnchor.constraint(equalToConstant: 100)
 		])
+	}
+	
+	@objc private func didTapNatureButton() {
+		presenter.didTap(at: .nature)
+	}
+	
+	@objc private func didTapAnimalsButton() {
+		presenter.didTap(at: .animals)
+	}
+	
+	@objc private func didTapSportsButton() {
+		presenter.didTap(at: .sports)
+	}
+	
+	@objc private func didTapPeopleButton() {
+		presenter.didTap(at: .people)
+	}
+	
+	@objc private func didTapFlowersButton() {
+		presenter.didTap(at: .flowers)
+	}
+	
+	func reload() {
+		collectionView.reloadData()
 	}
 	
 	func runSpinner() {
@@ -84,32 +158,6 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 
 extension PicturesViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		presenter?.didTapAt(indexPath: indexPath)
-	}
-	
-}
-
-extension PicturesViewController: UICollectionViewDataSource {
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return presenter?.pictures.count ?? 0
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PictureCollectionViewCell.identifier, for: indexPath) as? PictureCollectionViewCell else {
-			fatalError()
-		}
-		cell.configure()
-		guard let urlString = presenter?.pictures[indexPath.row].previewURL else {
-			return cell
-		}
-		cell.tag = indexPath.row
-		presenter?.getImageData(urlString: urlString) { result in
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-				if cell.tag == indexPath.row {
-					cell.imageLoaded(result)
-				}
-			}
-		}
-		return cell
+		presenter.didTapAt(indexPath: indexPath)
 	}
 }

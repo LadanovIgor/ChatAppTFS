@@ -523,6 +523,7 @@
 		8E64EED72743D6E000A72CF1 /* CoreLayer */ = {
 			isa = PBXGroup;
 			children = (
+				8E7F4FD9274DFE1300B7E3B2 /* Parser */,
 				8EC3A735274679E800356294 /* CoreData */,
 				8E40D9852714395600406AD4 /* Plist */,
 				8E27D42927439FF7009A3425 /* Firestore */,
@@ -553,6 +554,14 @@
 				8EC68B72274A661300BEB00C /* ParsingError.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		8E7F4FD9274DFE1300B7E3B2 /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				8EC68B78274A66AD00BEB00C /* PixabyParser.swift */,
+			);
+			path = Parser;
 			sourceTree = "<group>";
 		};
 		8EAAFE23270E8A8F00D7497B /* Protocols */ = {
@@ -689,7 +698,6 @@
 				8EC68B70274A657E00BEB00C /* RequestSender.swift */,
 				8EC68B74274A663A00BEB00C /* Requests.swift */,
 				8EC68B76274A667800BEB00C /* RequestFactory.swift */,
-				8EC68B78274A66AD00BEB00C /* PixabyParser.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";

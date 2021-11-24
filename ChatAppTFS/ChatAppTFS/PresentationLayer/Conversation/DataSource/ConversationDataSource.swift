@@ -14,13 +14,14 @@ final class ConversationDataSource: NSObject, ConversationDataSourceProtocol {
 	
 	let fetchResultController: NSFetchedResultsController<DBMessage>
 	private var senderId: String?
-	private let senderRequest = RequestSender()
+	private var requestSender: RequestSenderProtocol
 	
 	// MARK: - Init
 
-	init(fetchResultController: NSFetchedResultsController<DBMessage>, senderId: String?) {
+	init(fetchResultController: NSFetchedResultsController<DBMessage>, requestSender: RequestSenderProtocol, senderId: String?) {
 		self.fetchResultController = fetchResultController
 		self.senderId = senderId
+		self.requestSender = requestSender
 		super.init()
 		self.performFetching()
 	}
@@ -35,9 +36,9 @@ final class ConversationDataSource: NSObject, ConversationDataSourceProtocol {
 		}
 	}
 	
-	func getImageData(urlString: String, completion: @escaping ResultClosure<Data>) {
-		let request = RequestsFactory.DataRequest.imageRequest(url: urlString)
-		senderRequest.send(request: request, completion: completion)
+	private func getData(url: String, completion: @escaping ResultClosure<Data>) {
+		let request = RequestsFactory.DataRequest.imageRequest(url: url)
+		requestSender.send(request: request, completion: completion)
 	}
 }
 
@@ -54,7 +55,7 @@ extension ConversationDataSource {
 				}
 			cell.configure(with: message, senderId: senderId ?? "")
 			cell.tag = indexPath.row
-			getImageData(urlString: content) { result in
+			getData(url: content) { result in
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
 					if cell.tag == indexPath.row {
 						cell.imageLoaded(result)

@@ -10,10 +10,10 @@ import Foundation
 protocol PicturesViewProtocol: Dismissable {
 	func runSpinner()
 	func stopSpinner()
+	func reload()
 }
 
-protocol PicturesPresenterProtocol: AnyObject, LifeCycleProtocol {
+protocol PicturesPresenterProtocol: LifeCycleProtocol, UICollectionViewDataSource {
 	func didTapAt(indexPath: IndexPath)
-	var pictures: [Picture] { get }
-	func getImageData(urlString: String, completion: @escaping (Result<Data, Error>) -> Void)
+	func didTap(at type: Constants.PicturesScreen.PicturesType)
 }

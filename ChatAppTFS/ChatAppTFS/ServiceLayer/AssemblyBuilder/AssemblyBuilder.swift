@@ -33,7 +33,7 @@ final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 	}
 	
 	func createConversationModule(channelId: String, userId: String, router: RouterProtocol) -> UIViewController {
-		let presenter = ConversationPresenter(channelId: channelId, userId: userId, messagesService: chatService, router: router)
+		let presenter = ConversationPresenter(channelId: channelId, userId: userId, messagesService: chatService, requestSender: requestSender, router: router)
 		let viewController = ConversationViewController(presenter: presenter)
 		presenter.set(view: viewController)
 		return viewController

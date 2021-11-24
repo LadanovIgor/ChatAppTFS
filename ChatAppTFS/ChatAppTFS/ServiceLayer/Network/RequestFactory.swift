@@ -9,8 +9,16 @@ import Foundation
 
 struct RequestsFactory {
 	struct PixabayRequestConfig {
-		static func yellowFlowers() -> RequestConfig<PixabyParser> {
-			let request = PixabayRequest(apiKey: "24419822-84c709773b61819bb83958ec7")
+		
+		static func pictures(with type: Constants.PicturesScreen.PicturesType) -> RequestConfig<PixabyParser> {
+			let request: PixabayRequest
+			switch type {
+			case .sports: request = PixabayRequest(endPoint: .sports)
+			case .nature: request = PixabayRequest(endPoint: .nature)
+			case .flowers: request = PixabayRequest(endPoint: .flowers)
+			case .people: request = PixabayRequest(endPoint: .people)
+			case .animals: request = PixabayRequest(endPoint: .animals)
+			}
 			return RequestConfig<PixabyParser>(request: request, parser: PixabyParser())
 		}
 	}

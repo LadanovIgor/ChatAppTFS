@@ -7,20 +7,39 @@
 
 import Foundation
 
+protocol RequestProtocol {
+	var urlRequest: URLRequest? { get }
+}
+
 class PixabayRequest: RequestProtocol {
 	lazy var urlRequest: URLRequest? = {
-		let urlString = "https://pixabay.com/api/?key=" + apiKey + "&q=yellow+flowers&image_type=photo&pretty=true&per_page=100"
-		guard let url = URL(string: urlString) else {
+		guard let url = url(
+			queryParams: ["q": endPoint.rawValue, "per_page": "100"]
+		) else {
 			return nil
 		}
 		let request = URLRequest(url: url)
 		return request
 	}()
 	
-	private let apiKey: String
+	enum Endpoint: String {
+		case sports, flowers, nature, people, animals
+	}
 	
-	init(apiKey: String) {
-		self.apiKey = apiKey
+	private let endPoint: Endpoint
+	
+	init(endPoint: Endpoint) {
+		self.endPoint = endPoint
+	}
+	
+	private func url(queryParams: [String: String] = [:] ) -> URL? {
+		var queryItems = [URLQueryItem]()
+		queryItems.append(.init(name: "key", value: Constants.PixabayAPI.apiKey))
+		for (name, value) in queryParams {
+			queryItems.append(.init(name: name, value: value))
+		}
+		let urlString = Constants.PixabayAPI.baseUrl + "?" + queryItems.map {"\($0.name)=\($0.value ?? "")"}.joined(separator: "&")
+		return URL(string: urlString)
 	}
 }
 

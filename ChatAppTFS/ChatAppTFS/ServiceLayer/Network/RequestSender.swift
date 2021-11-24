@@ -7,15 +7,6 @@
 
 import Foundation
 
-protocol RequestProtocol {
-	var urlRequest: URLRequest? { get }
-}
-
-protocol ParserProtocol {
-	associatedtype Model
-	func parse(data: Data) -> Model?
-}
-
 struct RequestConfig<Parser> where Parser: ParserProtocol {
 	let request: RequestProtocol
 	let parser: Parser
@@ -34,7 +25,6 @@ class RequestSender: RequestSenderProtocol {
 				completion(.failure(error))
 				return
 			}
-
 			guard let data = data else {
 				completion(.failure(NetworkError.failureGettingData))
 				return

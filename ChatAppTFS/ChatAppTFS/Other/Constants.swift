@@ -9,6 +9,17 @@ import UIKit
 
 enum Constants {
 	
+	enum PixabayAPI {
+		static let apiKey = "24419822-84c709773b61819bb83958ec7"
+		static let baseUrl = "https://pixabay.com/api/"
+	}
+	
+	enum PicturesScreen {
+		enum PicturesType {
+			case flowers, sports, nature, animals, people
+		}
+	}
+	
 	enum ImageBackgroundColor: CaseIterable {
 		case red
 		case orange
