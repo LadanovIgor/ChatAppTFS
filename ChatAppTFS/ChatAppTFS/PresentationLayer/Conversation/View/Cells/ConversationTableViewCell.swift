@@ -16,48 +16,30 @@ class ConversationTableViewCell: UITableViewCell, NibLoadable {
 	@IBOutlet private weak var contentLabel: UILabel!
 	@IBOutlet private weak var messageView: AppMessageView!
 	@IBOutlet private weak var senderImageView: UIImageView!
-	@IBOutlet private weak var contentImageView: UIImageView!
-	@IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
 
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
-		imageViewHeightConstraint.constant = 0
 		messageView.layer.masksToBounds = true
 		messageView.layer.cornerRadius = Constants.ConversationCell.messageViewCornerRadius
 		messageView.clipsToBounds = true
 		messageView.layer.borderWidth = Constants.ConversationCell.messageViewBorderWidth
 		messageView.layer.borderColor = UIColor.black.cgColor
 		senderImageView.round()
-		contentImageView.clipsToBounds = true
-		contentImageView.contentMode = .scaleAspectFill
 	}
-	
-	override func layoutSubviews() {
-		super.layoutSubviews()
-	}
-	
+
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		nameLabel.text = nil
 		dateLabel.text = nil
 		contentLabel.text = nil
 		senderImageView.image = nil
-		contentImageView.image = nil
-		imageViewHeightConstraint.constant = 0
 	}
 
 	// MARK: - Public
 	
 	public func configure(with model: DBMessage, senderId: String) {
 		nameLabel.text = model.senderId == senderId ? nil : model.senderName
-		if let content = model.content, let url = URL(string: content) {
-			contentLabel.isHidden = true
-			contentImageView.isHidden = false
-			imageViewHeightConstraint.constant = 100
-			contentImageView.image = UIImage(named: "chatNew")
-		} else {
-			contentLabel.text = model.content
-		}
+		contentLabel.text = model.content
 		guard let senderName = model.senderName, let created = model.created else {
 			fatalError("Wrong DBMessage")
 		}

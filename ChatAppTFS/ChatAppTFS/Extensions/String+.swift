@@ -22,3 +22,13 @@ extension String {
 		}
 	}
 }
+
+extension String {
+	var isValidURL: Bool {
+		guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue),
+			  let match = detector.firstMatch(in: self, options: [], range: NSRange(location: 0, length: self.utf16.count)) else {
+			return false
+		}
+		return match.range.length == self.utf16.count
+	}
+}

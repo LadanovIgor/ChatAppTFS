@@ -12,4 +12,5 @@ enum NetworkError: Error {
 	case badURL
 	case failureGettingData
 	case httpResponseStatusCode(Int)
+	case wrongDataFromURL
 }

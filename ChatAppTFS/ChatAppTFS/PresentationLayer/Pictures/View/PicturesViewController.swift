@@ -102,7 +102,14 @@ extension PicturesViewController: UICollectionViewDataSource {
 		guard let urlString = presenter?.pictures[indexPath.row].previewURL else {
 			return cell
 		}
-		presenter?.getImageData(urlString: urlString, completion: cell.imageLoaded)
+		cell.tag = indexPath.row
+		presenter?.getImageData(urlString: urlString) { result in
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+				if cell.tag == indexPath.row {
+					cell.imageLoaded(result)
+				}
+			}
+		}
 		return cell
 	}
 }

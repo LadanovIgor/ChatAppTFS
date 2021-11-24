@@ -46,6 +46,7 @@ class ConversationPresenter: NSObject, ConversationPresenterProtocol {
 		self.router = router
 		self.messagesService = messagesService
 		super.init()
+		
 	}
 	
 	// MARK: - Public
@@ -113,5 +114,13 @@ extension ConversationPresenter: DatabaseUpdatable {
 		DispatchQueue.main.async {
 			self.view?.reload()
 		}
+	}
+}
+
+	// MARK: - SendMessageDelegate
+
+extension ConversationPresenter {
+	func didTappedPresentPictures(completion: @escaping (String) -> Void) {
+		router?.presentPicturesScreen(for: view, pictureSelectedUrl: completion)
 	}
 }

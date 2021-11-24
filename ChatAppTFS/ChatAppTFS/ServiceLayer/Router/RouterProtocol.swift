@@ -19,4 +19,5 @@ protocol RouterProtocol: RouterMain {
 	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with storageService: StoredLocally?)
 	func dismiss(_ viewController: UIViewController?)
 	func presentPicturesScreen(for view: ProfileViewProtocol?, pictureSelected: @escaping ResultClosure<Data>)
+	func presentPicturesScreen(for view: ConversationViewProtocol?, pictureSelectedUrl: @escaping (String) -> Void) 
 }

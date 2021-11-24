@@ -12,7 +12,7 @@ protocol ConversationViewProtocol: TableViewUpdatable {
 	
 }
 
-protocol ConversationPresenterProtocol: AnyObject, LifeCycleProtocol {
+protocol ConversationPresenterProtocol: SendMessageDelegate, LifeCycleProtocol {
 	var dataSource: ConversationDataSourceProtocol { get }
 	func createNewMessage(with content: String)
 }

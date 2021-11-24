@@ -13,4 +13,5 @@ protocol AssemblyBuilderProtocol: AnyObject {
 	func createThemeModule(themeSelected: ThemeClosure?, router: RouterProtocol) -> UIViewController
 	func createUserProfileModule(router: RouterProtocol) -> UIViewController
 	func createPicturesModule(pictureSelected: @escaping ResultClosure<Data>, router: RouterProtocol) -> UIViewController
+	func createPicturesModule(pictureSelectedURL: @escaping (String) -> Void, router: RouterProtocol) -> UIViewController 
 }

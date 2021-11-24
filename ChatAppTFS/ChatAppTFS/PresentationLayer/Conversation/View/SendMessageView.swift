@@ -7,21 +7,29 @@
 
 import UIKit
 
+protocol SendMessageDelegate: AnyObject {
+	func didTappedPresentPictures(completion: @escaping (String) -> Void)
+}
+
 class SendMessageView: UIView {
 	
 	// MARK: - Properties
 
-	private var textField = UITextField()
-	private var sendButton = UIButton()
+	private let textField = UITextField()
+	private let sendButton = UIButton()
+	private let picturesButton = UIButton()
 	
 	var messageSent: ((String) -> Void)?
+	
+	weak var delegate: SendMessageDelegate?
 		
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
-		addSubViews(textField, sendButton)
+		addSubViews(textField, sendButton, picturesButton)
 		setUpSendButton()
 		setUpTextField()
 		setUpConstraints()
+		setUpPictureButton()
 	}
 	
 	// MARK: - Private
@@ -34,6 +42,16 @@ class SendMessageView: UIView {
 			attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold),
 						 NSAttributedString.Key.foregroundColor: UIColor(named: "buttonTitle") ?? .blue])
 		sendButton.setAttributedTitle(attributedString, for: .normal)
+	}
+	
+	private func setUpPictureButton() {
+		picturesButton.translatesAutoresizingMaskIntoConstraints = false
+		picturesButton.addTarget(self, action: #selector(didTapPicturesButton), for: .touchUpInside)
+		let image = UIImage(named: "themes")
+		picturesButton.setImage(image, for: .normal)
+		picturesButton.clipsToBounds = true
+		picturesButton.layer.masksToBounds = true
+		picturesButton.backgroundColor = .clear
 	}
 	
 	private func setUpTextField() {
@@ -51,14 +69,14 @@ class SendMessageView: UIView {
 	
 	private func setUpConstraints() {
 		let metrics = ["offset": Constants.SendMessageView.offset, "width": Constants.SendMessageView.sendButtonWidth ]
-		let views = ["textField": textField, "button": sendButton]
+		let views = ["textField": textField, "send": sendButton, "pictures": picturesButton]
 		addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "H:|-offset-[textField]-offset-[button(width)]-offset-|",
+			withVisualFormat: "H:|-offset-[pictures(50)]-offset-[textField]-offset-[send(width)]-offset-|",
 			options: [.alignAllCenterY],
 			metrics: metrics,
 			views: views))
 		addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "V:|-offset-[button]-offset-|",
+			withVisualFormat: "V:|-offset-[send]-offset-|",
 			options: [],
 			metrics: metrics,
 			views: views))
@@ -67,6 +85,17 @@ class SendMessageView: UIView {
 			options: [],
 			metrics: metrics,
 			views: views))
+		addConstraints(NSLayoutConstraint.constraints(
+			withVisualFormat: "V:|-offset-[pictures]-offset-|",
+			options: [],
+			metrics: metrics,
+			views: views))
+	}
+	
+	@objc private func didTapPicturesButton() {
+		delegate?.didTappedPresentPictures { [weak self] text in
+			self?.textField.text = text
+		}
 	}
 	
 	@objc private func didTapSendButton() {

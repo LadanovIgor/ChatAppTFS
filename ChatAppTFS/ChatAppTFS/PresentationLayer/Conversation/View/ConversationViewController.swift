@@ -60,6 +60,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	private func delegating() {
 		tableView.delegate = self
 		tableView.dataSource = presenter?.dataSource
+		sendMessageView.delegate = presenter
 	}
 	
 	private func setUpSendMessageView() {
@@ -83,11 +84,14 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 		backButton.tintColor = UIColor(named: "buttonTitle") ?? .blue
 		navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
 	}
-
+	
 	private func setUpTableView() {
+		tableView.estimatedRowHeight = 100.0
 		tableView.separatorStyle = .none
 		tableView.register(ConversationTableViewCell.nib,
 						   forCellReuseIdentifier: ConversationTableViewCell.name)
+		tableView.register(PictureMessageTableViewCell.nib,
+						   forCellReuseIdentifier: PictureMessageTableViewCell.name)
 		view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		

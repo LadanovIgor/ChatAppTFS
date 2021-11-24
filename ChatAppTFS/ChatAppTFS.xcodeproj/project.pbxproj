@@ -49,6 +49,10 @@
 		8E6B354D271E935300653B8D /* StoredLocally.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B354C271E935300653B8D /* StoredLocally.swift */; };
 		8E6B3550271E939200653B8D /* StoredLocallyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B354F271E939200653B8D /* StoredLocallyError.swift */; };
 		8E72BC792717C2B60046870F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E72BC782717C2B60046870F /* Constants.swift */; };
+		8E7F4FD7274DD48200B7E3B2 /* PictureMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7F4FD5274DD48200B7E3B2 /* PictureMessageTableViewCell.swift */; };
+		8E7F4FD8274DD48200B7E3B2 /* PictureMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E7F4FD6274DD48200B7E3B2 /* PictureMessageTableViewCell.xib */; };
+		8EA157F7274CC5C300583E62 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA157F6274CC5C300583E62 /* UIImageView+.swift */; };
+		8EA157F9274CF8C400583E62 /* Dismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA157F8274CF8C400583E62 /* Dismissable.swift */; };
 		8EA19D762746538100B8429C /* PlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA19D752746538100B8429C /* PlistManager.swift */; };
 		8EA19D78274654EA00B8429C /* PlistManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA19D77274654EA00B8429C /* PlistManagerProtocol.swift */; };
 		8EAAFE22270E8A7000D7497B /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAFE21270E8A7000D7497B /* NibLoadable.swift */; };
@@ -155,6 +159,10 @@
 		8E6B354C271E935300653B8D /* StoredLocally.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredLocally.swift; sourceTree = "<group>"; };
 		8E6B354F271E939200653B8D /* StoredLocallyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredLocallyError.swift; sourceTree = "<group>"; };
 		8E72BC782717C2B60046870F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8E7F4FD5274DD48200B7E3B2 /* PictureMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureMessageTableViewCell.swift; sourceTree = "<group>"; };
+		8E7F4FD6274DD48200B7E3B2 /* PictureMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PictureMessageTableViewCell.xib; sourceTree = "<group>"; };
+		8EA157F6274CC5C300583E62 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		8EA157F8274CF8C400583E62 /* Dismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dismissable.swift; sourceTree = "<group>"; };
 		8EA19D752746538100B8429C /* PlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistManager.swift; sourceTree = "<group>"; };
 		8EA19D77274654EA00B8429C /* PlistManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistManagerProtocol.swift; sourceTree = "<group>"; };
 		8EAAFE21270E8A7000D7497B /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
@@ -348,6 +356,8 @@
 			children = (
 				8E03E7F42726511D007F1B2B /* ConversationTableViewCell.xib */,
 				8EAAFE2F270E979600D7497B /* ConversationTableViewCell.swift */,
+				8E7F4FD5274DD48200B7E3B2 /* PictureMessageTableViewCell.swift */,
+				8E7F4FD6274DD48200B7E3B2 /* PictureMessageTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -421,6 +431,7 @@
 				8E2E2707270DE5EA00BFE156 /* UIView+.swift */,
 				8E0B6701273FDCCC0092D5E5 /* UIViewController+.swift */,
 				8EEF17E527156A0800AFE370 /* UIWindow+.swift */,
+				8EA157F6274CC5C300583E62 /* UIImageView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -554,6 +565,7 @@
 				8EAAFE21270E8A7000D7497B /* NibLoadable.swift */,
 				8E64EED82743D70500A72CF1 /* TableViewUpdatable.swift */,
 				8EAB38AA2717052900A1FF98 /* typealiases.swift */,
+				8EA157F8274CF8C400583E62 /* Dismissable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -831,6 +843,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E7F4FD8274DD48200B7E3B2 /* PictureMessageTableViewCell.xib in Resources */,
 				8EE62B3A271FBFA90011FE58 /* Data.plist in Resources */,
 				8E40D99427146AC700406AD4 /* ThemeViewController.xib in Resources */,
 				8EAAFE25270E8AF100D7497B /* ConversationsListTableViewCell.xib in Resources */,
@@ -922,6 +935,7 @@
 				8E64EED92743D70500A72CF1 /* TableViewUpdatable.swift in Sources */,
 				8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */,
 				8EF3AA1C272D606200BCA00E /* ChatDB.xcdatamodeld in Sources */,
+				8EA157F7274CC5C300583E62 /* UIImageView+.swift in Sources */,
 				8E03E7F32726466B007F1B2B /* AppMessageView.swift in Sources */,
 				8E21E796271DA0280005F20F /* Character+.swift in Sources */,
 				8EAB38AB2717052900A1FF98 /* typealiases.swift in Sources */,
@@ -937,6 +951,7 @@
 				8E2E2703270DE53400BFE156 /* Channel.swift in Sources */,
 				8EC68B71274A657E00BEB00C /* RequestSender.swift in Sources */,
 				8EAAFE27270E8BA500D7497B /* CircleImageView.swift in Sources */,
+				8E7F4FD7274DD48200B7E3B2 /* PictureMessageTableViewCell.swift in Sources */,
 				8EA19D762746538100B8429C /* PlistManager.swift in Sources */,
 				8EE62B48272036510011FE58 /* AppView.swift in Sources */,
 				8E2CE3852744C5DC008F460C /* CoreDataManagerProtococ.swift in Sources */,
@@ -947,6 +962,7 @@
 				8E0B66FC273FC5D30092D5E5 /* ConversationPresenter.swift in Sources */,
 				8EEF17E627156A0800AFE370 /* UIWindow+.swift in Sources */,
 				8EBA40EB274102FB005323FE /* Router.swift in Sources */,
+				8EA157F9274CF8C400583E62 /* Dismissable.swift in Sources */,
 				8EAB38A32717021700A1FF98 /* DarkTheme.swift in Sources */,
 				8EAAFE22270E8A7000D7497B /* NibLoadable.swift in Sources */,
 				8EF72DF827421F64004DD7D9 /* DatabaseUpdatable.swift in Sources */,

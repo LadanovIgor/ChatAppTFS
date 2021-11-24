@@ -61,6 +61,14 @@ final class Router: RouterProtocol {
 		viewController.present(picturesViewController, animated: true)
 	}
 	
+	func presentPicturesScreen(for view: ConversationViewProtocol?, pictureSelectedUrl: @escaping (String) -> Void) {
+		guard let viewController = view as? UIViewController,
+			  let picturesViewController = assemblyBuilder?.createPicturesModule(pictureSelectedURL: pictureSelectedUrl, router: self) else {
+				  return
+			  }
+		viewController.present(picturesViewController, animated: true)
+	}
+	
 	func dismiss(_ viewController: UIViewController?) {
 		viewController?.dismiss(animated: true, completion: nil)
 	}

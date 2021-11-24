@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol PicturesViewProtocol where Self: UIViewController {
+protocol PicturesViewProtocol: Dismissable {
 	func runSpinner()
 	func stopSpinner()
 }

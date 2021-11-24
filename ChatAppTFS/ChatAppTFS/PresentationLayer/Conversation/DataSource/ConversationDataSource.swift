@@ -14,6 +14,7 @@ final class ConversationDataSource: NSObject, ConversationDataSourceProtocol {
 	
 	let fetchResultController: NSFetchedResultsController<DBMessage>
 	private var senderId: String?
+	private let senderRequest = RequestSender()
 	
 	// MARK: - Init
 
@@ -33,20 +34,43 @@ final class ConversationDataSource: NSObject, ConversationDataSourceProtocol {
 			print(error.localizedDescription)
 		}
 	}
+	
+	func getImageData(urlString: String, completion: @escaping ResultClosure<Data>) {
+		let request = RequestsFactory.DataRequest.imageRequest(url: urlString)
+		senderRequest.send(request: request, completion: completion)
+	}
 }
 
 	// MARK: - UITableViewDataSource
 
 extension ConversationDataSource {
 	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
-			withIdentifier: ConversationTableViewCell.name,
-			for: indexPath) as? ConversationTableViewCell else {
-				return UITableViewCell()
-			}
 		let message = fetchResultController.object(at: indexPath)
-		cell.configure(with: message, senderId: senderId ?? "")
-		return cell
+		if let content = message.content, content.isValidURL {
+			guard let cell = tableView.dequeueReusableCell(
+				withIdentifier: PictureMessageTableViewCell.name,
+				for: indexPath) as? PictureMessageTableViewCell else {
+					return UITableViewCell()
+				}
+			cell.configure(with: message, senderId: senderId ?? "")
+			cell.tag = indexPath.row
+			getImageData(urlString: content) { result in
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+					if cell.tag == indexPath.row {
+						cell.imageLoaded(result)
+					}
+				}
+			}
+			return cell
+		} else {
+			guard let cell = tableView.dequeueReusableCell(
+				withIdentifier: ConversationTableViewCell.name,
+				for: indexPath) as? ConversationTableViewCell else {
+					return UITableViewCell()
+				}
+			cell.configure(with: message, senderId: senderId ?? "")
+			return cell
+		}
 	}
 	
 	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

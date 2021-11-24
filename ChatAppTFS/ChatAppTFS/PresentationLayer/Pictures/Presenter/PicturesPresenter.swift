@@ -17,6 +17,7 @@ class PicturesPresenter: PicturesPresenterProtocol {
 	var pictures = [Picture]()
 	
 	var pictureSelected: ResultClosure<Data>?
+	var pictureSelectedURL: ((String) -> Void)?
 	
 	init(requestSender: RequestSenderProtocol, router: RouterProtocol) {
 		self.router = router
@@ -32,14 +33,14 @@ class PicturesPresenter: PicturesPresenterProtocol {
 	}
 
 	func didTapAt(indexPath: IndexPath) {
-		guard let pictureSelected = pictureSelected else {
-			return
+		if let pictureSelected = pictureSelected {
+			getImageData(urlString: pictures[indexPath.row].webformatURL, completion: pictureSelected)
 		}
-		getImageData(urlString: pictures[indexPath.row].webformatURL, completion: pictureSelected)
+		pictureSelectedURL?(pictures[indexPath.row].previewURL)
 		router.dismiss(view)
 	}
 	
-	func getImageData(urlString: String, completion: @escaping (Result<Data, Error>) -> Void) {
+	func getImageData(urlString: String, completion: @escaping ResultClosure<Data>) {
 		let request = RequestsFactory.DataRequest.imageRequest(url: urlString)
 		requestSender.send(request: request, completion: completion)
 	}

@@ -18,12 +18,10 @@ class PictureCollectionViewCell: UICollectionViewCell {
 		return imageView
 	}()
 	
-	lazy var imageLoaded: ((Result<Data, Error>) -> Void) = { [weak self] result in
+	lazy var imageLoaded: ResultClosure<Data> = { [weak self] result in
 		switch result {
 		case .success(let data):
-			DispatchQueue.main.async {
-				self?.imageView.image = UIImage(data: data)
-			}
+			self?.imageView.image = UIImage(data: data)
 		case .failure(let error):
 			print(error.localizedDescription)
 		}
