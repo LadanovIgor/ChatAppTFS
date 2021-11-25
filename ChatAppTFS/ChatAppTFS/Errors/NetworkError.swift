@@ -10,7 +10,7 @@ import Foundation
 enum NetworkError: Error {
 	case dataNone
 	case badURL
-	case failureGettingData
-	case httpResponseStatusCode(Int)
+	case badData
+	case badResponse(URLResponse?)
 	case wrongDataFromURL
 }

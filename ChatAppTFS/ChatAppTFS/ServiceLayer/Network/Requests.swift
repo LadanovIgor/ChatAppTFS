@@ -12,33 +12,34 @@ protocol RequestProtocol {
 }
 
 class PixabayRequest: RequestProtocol {
+	
+	enum SearchTerm: String {
+		case sports, flowers, nature, people, animals
+	}
+	
 	lazy var urlRequest: URLRequest? = {
-		guard let url = url(
-			queryParams: ["q": endPoint.rawValue, "per_page": "100"]
-		) else {
+		var queryParams = Constants.PixabayAPI.queryParams
+		queryParams["q"] = searchTerm.rawValue
+		guard let url = getURL(with: queryParams) else {
 			return nil
 		}
 		let request = URLRequest(url: url)
 		return request
 	}()
 	
-	enum Endpoint: String {
-		case sports, flowers, nature, people, animals
+	private let searchTerm: SearchTerm
+	
+	init(searchTerm: SearchTerm) {
+		self.searchTerm = searchTerm
 	}
 	
-	private let endPoint: Endpoint
-	
-	init(endPoint: Endpoint) {
-		self.endPoint = endPoint
-	}
-	
-	private func url(queryParams: [String: String] = [:] ) -> URL? {
+	private func getURL(with queryParams: [String: String]) -> URL? {
+		var urlString = Constants.PixabayAPI.baseUrl
 		var queryItems = [URLQueryItem]()
-		queryItems.append(.init(name: "key", value: Constants.PixabayAPI.apiKey))
 		for (name, value) in queryParams {
 			queryItems.append(.init(name: name, value: value))
 		}
-		let urlString = Constants.PixabayAPI.baseUrl + "?" + queryItems.map {"\($0.name)=\($0.value ?? "")"}.joined(separator: "&")
+		urlString += queryItems.map {"\($0.name)=\($0.value ?? "")"}.joined(separator: "&")
 		return URL(string: urlString)
 	}
 }

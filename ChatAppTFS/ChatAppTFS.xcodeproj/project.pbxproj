@@ -354,10 +354,8 @@
 		8E27D42127439B4F009A3425 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				8E03E7F42726511D007F1B2B /* ConversationTableViewCell.xib */,
-				8EAAFE2F270E979600D7497B /* ConversationTableViewCell.swift */,
-				8E7F4FD5274DD48200B7E3B2 /* PictureMessageTableViewCell.swift */,
-				8E7F4FD6274DD48200B7E3B2 /* PictureMessageTableViewCell.xib */,
+				8EEE313F274F6325000C4413 /* Conversation */,
+				8EEE3140274F6333000C4413 /* PictureMessage */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -708,6 +706,24 @@
 				8EE62B3E271FF16E0011FE58 /* CustomOperations.swift */,
 			);
 			path = Operation;
+			sourceTree = "<group>";
+		};
+		8EEE313F274F6325000C4413 /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				8E03E7F42726511D007F1B2B /* ConversationTableViewCell.xib */,
+				8EAAFE2F270E979600D7497B /* ConversationTableViewCell.swift */,
+			);
+			path = Conversation;
+			sourceTree = "<group>";
+		};
+		8EEE3140274F6333000C4413 /* PictureMessage */ = {
+			isa = PBXGroup;
+			children = (
+				8E7F4FD5274DD48200B7E3B2 /* PictureMessageTableViewCell.swift */,
+				8E7F4FD6274DD48200B7E3B2 /* PictureMessageTableViewCell.xib */,
+			);
+			path = PictureMessage;
 			sourceTree = "<group>";
 		};
 		8EEF20132749E3140027B03D /* Models */ = {

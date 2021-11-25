@@ -17,19 +17,17 @@ struct RequestsFactory {
 		static func pictures(with type: Constants.PicturesScreen.PicturesType) -> RequestConfig<PixabyParser> {
 			let request: PixabayRequest
 			switch type {
-			case .sports: request = PixabayRequest(endPoint: .sports)
-			case .nature: request = PixabayRequest(endPoint: .nature)
-			case .flowers: request = PixabayRequest(endPoint: .flowers)
-			case .people: request = PixabayRequest(endPoint: .people)
-			case .animals: request = PixabayRequest(endPoint: .animals)
+			case .sports: request = PixabayRequest(searchTerm: .sports)
+			case .nature: request = PixabayRequest(searchTerm: .nature)
+			case .flowers: request = PixabayRequest(searchTerm: .flowers)
+			case .people: request = PixabayRequest(searchTerm: .people)
+			case .animals: request = PixabayRequest(searchTerm: .animals)
 			}
 			return RequestConfig<PixabyParser>(request: request, parser: PixabyParser())
 		}
 	}
 	
-	struct DataRequest {
-		static func imageRequest(url: String) -> Request {
-			return Request(urlString: url)
-		}
+	static func dataRequest(url: String) -> Request {
+		return Request(urlString: url)
 	}
 }

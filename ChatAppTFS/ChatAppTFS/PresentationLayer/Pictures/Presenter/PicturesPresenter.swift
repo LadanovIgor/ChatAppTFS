@@ -37,13 +37,13 @@ class PicturesPresenter: NSObject {
 	}
 	
 	private func getData(url: String, completion: @escaping ResultClosure<Data>) {
-		let request = RequestsFactory.DataRequest.imageRequest(url: url)
+		let request = RequestsFactory.dataRequest(url: url)
 		requestSender.send(request: request, completion: completion)
 	}
 	
 	private func fetchingData(with type: Constants.PicturesScreen.PicturesType) {
-		view?.runSpinner()
 		let requestConfig = RequestsFactory.PixabayRequestConfig.pictures(with: type)
+		view?.runSpinner()
 		requestSender.send(config: requestConfig) { [weak self] result in
 			switch result {
 			case .success(let model):

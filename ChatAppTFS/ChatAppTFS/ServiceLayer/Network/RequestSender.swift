@@ -13,15 +13,21 @@ protocol RequestSenderProtocol {
 }
 
 class RequestSender: RequestSenderProtocol {
+	
 	let session = URLSession.shared
+	
 	private func getDataFrom(urlRequest: URLRequest, completion: @escaping ResultClosure<Data>) {
-		let task = session.dataTask(with: urlRequest) { data, _, error in
+		let task = session.dataTask(with: urlRequest) { data, response, error in
 			if let error = error {
 				completion(.failure(error))
 				return
 			}
+			guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+				completion(.failure(NetworkError.badResponse(response)))
+				return
+			}
 			guard let data = data else {
-				completion(.failure(NetworkError.failureGettingData))
+				completion(.failure(NetworkError.badData))
 				return
 			}
 			completion(.success(data))
@@ -29,7 +35,7 @@ class RequestSender: RequestSenderProtocol {
 		task.resume()
 	}
 	
-	func send<Parser>(config: RequestConfig<Parser>, completion: @escaping ResultClosure<Parser.Model>) where Parser: ParserProtocol {
+	public func send<Parser>(config: RequestConfig<Parser>, completion: @escaping ResultClosure<Parser.Model>) where Parser: ParserProtocol {
 		guard let urlRequest = config.request.urlRequest else {
 			completion(.failure(NetworkError.badURL))
 			return
@@ -48,7 +54,7 @@ class RequestSender: RequestSenderProtocol {
 		}
 	}
 	
-	func send(request: RequestProtocol?, completion: @escaping ResultClosure<Data>) {
+	public func send(request: RequestProtocol?, completion: @escaping ResultClosure<Data>) {
 		guard let urlRequest = request?.urlRequest else {
 			completion(.failure(NetworkError.badURL))
 			return

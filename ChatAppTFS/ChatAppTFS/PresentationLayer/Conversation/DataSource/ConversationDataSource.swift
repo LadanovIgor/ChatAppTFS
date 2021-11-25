@@ -26,6 +26,13 @@ final class ConversationDataSource: NSObject, ConversationDataSourceProtocol {
 		self.performFetching()
 	}
 	
+	// MARK: - Private
+	
+	private func getData(url: String, completion: @escaping ResultClosure<Data>) {
+		let request = RequestsFactory.dataRequest(url: url)
+		requestSender.send(request: request, completion: completion)
+	}
+	
 	// MARK: - Public
 	
 	func performFetching() {
@@ -34,11 +41,6 @@ final class ConversationDataSource: NSObject, ConversationDataSourceProtocol {
 		} catch {
 			print(error.localizedDescription)
 		}
-	}
-	
-	private func getData(url: String, completion: @escaping ResultClosure<Data>) {
-		let request = RequestsFactory.DataRequest.imageRequest(url: url)
-		requestSender.send(request: request, completion: completion)
 	}
 }
 
