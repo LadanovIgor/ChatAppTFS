@@ -14,7 +14,7 @@ struct RequestConfig<Parser> where Parser: ParserProtocol {
 
 struct RequestsFactory {
 	struct PixabayRequestConfig {		
-		static func pictures(with type: Constants.PicturesScreen.PicturesType) -> RequestConfig<PixabyParser> {
+		static func pictures(with type: Constants.PicturesScreen.PictureCategory) -> RequestConfig<PixabyParser> {
 			let request: PixabayRequest
 			switch type {
 			case .sports: request = PixabayRequest(searchTerm: .sports)

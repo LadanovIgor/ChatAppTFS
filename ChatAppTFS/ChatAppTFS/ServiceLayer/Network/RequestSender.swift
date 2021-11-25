@@ -17,6 +17,8 @@ class RequestSender: RequestSenderProtocol {
 	private let cacheURL = URLCache.shared
 	private let session = URLSession.shared
 	
+	// MARK: - Private
+	
 	private func getDataFrom(urlRequest: URLRequest, completion: @escaping ResultClosure<Data>) {
 		if let cachedResponse = cacheURL.cachedResponse(for: urlRequest) {
 			completion(.success(cachedResponse.data))
@@ -41,6 +43,8 @@ class RequestSender: RequestSenderProtocol {
 		}
 		task.resume()
 	}
+	
+	// MARK: - Public
 	
 	public func send<Parser>(config: RequestConfig<Parser>, completion: @escaping ResultClosure<Parser.Model>) where Parser: ParserProtocol {
 		guard let urlRequest = config.request.urlRequest else {

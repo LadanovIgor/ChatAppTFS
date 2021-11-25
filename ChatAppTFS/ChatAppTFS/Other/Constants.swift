@@ -25,7 +25,7 @@ enum Constants {
 	}
 	
 	enum PicturesScreen {
-		enum PicturesType {
+		enum PictureCategory {
 			case flowers, sports, nature, animals, people
 		}
 	}

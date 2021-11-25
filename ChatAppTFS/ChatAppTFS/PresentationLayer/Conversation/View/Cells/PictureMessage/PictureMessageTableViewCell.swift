@@ -38,6 +38,7 @@ class PictureMessageTableViewCell: UITableViewCell, NibLoadable {
 	
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
+		selectionStyle = .none
 		messageView.layer.masksToBounds = true
 		messageView.layer.cornerRadius = Constants.ConversationCell.messageViewCornerRadius
 		messageView.clipsToBounds = true
@@ -48,6 +49,11 @@ class PictureMessageTableViewCell: UITableViewCell, NibLoadable {
 		contentImageView.layer.masksToBounds = true
 		contentLabel.isHidden = true
 		contentImageView.isHidden = true
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		transform = CGAffineTransform(rotationAngle: CGFloat.pi)
 	}
 	
 	override func prepareForReuse() {
@@ -75,14 +81,10 @@ class PictureMessageTableViewCell: UITableViewCell, NibLoadable {
 		nameLabel.text = model.senderId == senderId ? nil : model.senderName
 		contentImageView.image = UIImage(named: "image")
 		content = model.content
-		guard let senderName = model.senderName, let created = model.created else {
-			fatalError("Wrong DBMessage")
+		if let senderName = model.senderName, let created = model.created {
+			dateLabel.text = created.todayOrEarlier
+			senderImageView.image = UIImage.textImage(text: senderName.getCapitalLetters())
 		}
-		dateLabel.text = created.todayOrEarlier
-		selectionStyle = .none
-		senderImageView.image = UIImage.textImage(text: senderName.getCapitalLetters())
-		transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-		layoutIfNeeded()
 	}
     
 }

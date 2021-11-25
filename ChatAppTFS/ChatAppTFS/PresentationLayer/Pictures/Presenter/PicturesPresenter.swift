@@ -32,7 +32,7 @@ class PicturesPresenter: NSObject {
 		self.view = view
 	}
 	
-	func didTap(at type: Constants.PicturesScreen.PicturesType) {
+	func didTap(at type: Constants.PicturesScreen.PictureCategory) {
 		fetchingData(with: type)
 	}
 	
@@ -41,13 +41,13 @@ class PicturesPresenter: NSObject {
 		requestSender.send(request: request, completion: completion)
 	}
 	
-	private func fetchingData(with type: Constants.PicturesScreen.PicturesType) {
+	private func fetchingData(with type: Constants.PicturesScreen.PictureCategory) {
 		let requestConfig = RequestsFactory.PixabayRequestConfig.pictures(with: type)
 		view?.runSpinner()
 		requestSender.send(config: requestConfig) { [weak self] result in
 			switch result {
 			case .success(let model):
-				DispatchQueue.main.async {
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
 					self?.pictures = model.pictures
 					self?.view?.reload()
 					self?.view?.stopSpinner()

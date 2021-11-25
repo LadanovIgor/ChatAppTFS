@@ -15,5 +15,5 @@ protocol PicturesViewProtocol: Dismissable {
 
 protocol PicturesPresenterProtocol: LifeCycleProtocol, UICollectionViewDataSource {
 	func didTapAt(indexPath: IndexPath)
-	func didTap(at type: Constants.PicturesScreen.PicturesType)
+	func didTap(at type: Constants.PicturesScreen.PictureCategory)
 }
