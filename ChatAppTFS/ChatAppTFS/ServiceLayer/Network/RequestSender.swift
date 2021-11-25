@@ -14,10 +14,15 @@ protocol RequestSenderProtocol {
 
 class RequestSender: RequestSenderProtocol {
 	
-	let session = URLSession.shared
+	private let cacheURL = URLCache.shared
+	private let session = URLSession.shared
 	
 	private func getDataFrom(urlRequest: URLRequest, completion: @escaping ResultClosure<Data>) {
-		let task = session.dataTask(with: urlRequest) { data, response, error in
+		if let cachedResponse = cacheURL.cachedResponse(for: urlRequest) {
+			completion(.success(cachedResponse.data))
+			return
+		}
+		let task = session.dataTask(with: urlRequest) { [weak self] data, response, error in
 			if let error = error {
 				completion(.failure(error))
 				return
@@ -30,6 +35,8 @@ class RequestSender: RequestSenderProtocol {
 				completion(.failure(NetworkError.badData))
 				return
 			}
+			let cachedResponse = CachedURLResponse(response: httpResponse, data: data)
+			self?.cacheURL.storeCachedResponse(cachedResponse, for: urlRequest)
 			completion(.success(data))
 		}
 		task.resume()

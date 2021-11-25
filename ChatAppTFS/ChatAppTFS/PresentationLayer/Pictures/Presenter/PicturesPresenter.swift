@@ -47,7 +47,7 @@ class PicturesPresenter: NSObject {
 		requestSender.send(config: requestConfig) { [weak self] result in
 			switch result {
 			case .success(let model):
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+				DispatchQueue.main.async {
 					self?.pictures = model.pictures
 					self?.view?.reload()
 					self?.view?.stopSpinner()
@@ -86,7 +86,7 @@ extension PicturesPresenter {
 		let url = pictures[indexPath.row].previewURL
 		cell.tag = indexPath.row
 		getData(url: url) { result in
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+			DispatchQueue.main.async {
 				if cell.tag == indexPath.row {
 					cell.imageLoaded(result)
 				}

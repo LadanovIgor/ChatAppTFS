@@ -58,7 +58,7 @@ extension ConversationDataSource {
 			cell.configure(with: message, senderId: senderId ?? "")
 			cell.tag = indexPath.row
 			getData(url: content) { result in
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+				DispatchQueue.main.async {
 					if cell.tag == indexPath.row {
 						cell.imageLoaded(result)
 					}
