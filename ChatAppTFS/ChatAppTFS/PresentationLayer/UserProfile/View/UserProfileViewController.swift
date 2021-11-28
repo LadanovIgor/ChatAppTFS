@@ -129,11 +129,13 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	@objc private func didCancelButtonTapped() {
+		editProfileButton.layer.removeAllAnimations()
 		presenter?.cancel()
 		isProfileEditing = false
 	}
 	
 	@objc private func didSaveButtonTapped(_ button: UIButton) {
+		editProfileButton.layer.removeAllAnimations()
 		locationTextField.resignFirstResponder()
 		infoTextField.resignFirstResponder()
 		nameTextField.resignFirstResponder()
@@ -142,17 +144,42 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	@objc private func didEditButtonTapped() {
+		animateEditButton()
 		cancelButton.isEnabled = true
 		isProfileEditing = true
 		self.nameTextField.becomeFirstResponder()
 	}
 	
 	@objc private func didCloseButtonTapped() {
+		editProfileButton.layer.removeAllAnimations()
 		presenter?.close()
 	}
 	
 	@objc private func didTextFieldDidChange() {
 		saveButton.isEnabled = true
+	}
+	
+	private func animateEditButton() {
+		let rotation = CAKeyframeAnimation()
+		rotation.keyPath = #keyPath(CALayer.transform)
+		rotation.valueFunction = CAValueFunction(name: CAValueFunctionName.rotateZ)
+		rotation.values = [0, -CGFloat(Double.pi / 10), 0, CGFloat(Double.pi / 10), 0]
+		rotation.keyTimes = [0, 0.25, 0.5, 0.75, 1]
+		let position = editProfileButton.layer.position
+		let positionAnimation = CAKeyframeAnimation()
+		positionAnimation.keyPath = #keyPath(CALayer.position)
+		positionAnimation.values = [position,
+									CGPoint(x: position.x, y: position.y - 5),
+									CGPoint(x: position.x, y: position.y + 5),
+									CGPoint(x: position.x - 5, y: position.y),
+									CGPoint(x: position.x + 5, y: position.y),
+									position]
+		positionAnimation.keyTimes = [0, 0.2, 0.4, 0.6, 0.8, 1.0]
+		let group = CAAnimationGroup()
+		group.duration = 0.3
+		group.repeatCount = .infinity
+		group.animations = [rotation, positionAnimation]
+		editProfileButton.layer.add(group, forKey: nil)
 	}
 	
 	private func changeButtonState(isEnable: Bool) {
@@ -162,7 +189,6 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	
 	private func updateScreenLayoutDependingOn(isEditing: Bool) {
 		saveButton.isHidden = !isEditing
-		editProfileButton.isHidden = isEditing
 		cancelButton.isHidden = !isEditing
 		nameTextField.isEnabled = isEditing
 		locationTextField.isEnabled = isEditing
