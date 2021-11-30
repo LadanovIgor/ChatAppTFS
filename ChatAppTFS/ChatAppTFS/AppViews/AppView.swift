@@ -29,21 +29,42 @@ class AppCircleView: UIView {
 	
 }
 
-class AppTableViewCell: UITableViewCell, TouchAnimatable {
-	var emitterLayer: CAEmitterLayer { CAEmitterLayer() }
+class AppTableView: UITableView, TouchAnimatable {
+	var emitterLayer = CAEmitterLayer()
 	
-	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+	open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		super.touchesBegan(touches, with: event)
-		print("touch begin")
 		guard let touch = touches.first else {
 			return
 		}
+		clipsToBounds = false
 		startTouchAnimate(with: touch.location(in: self))
-		self.layer.addSublayer(emitterLayer)
+		layer.addSublayer(emitterLayer)
 	}
 	
-	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+	open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		super.touchesEnded(touches, with: event)
+		clipsToBounds = true
+		stopTouchAnimate()
+	}
+}
+
+class AnimatableButton: UIButton, TouchAnimatable {
+	var emitterLayer = CAEmitterLayer()
+	
+	open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		super.touchesBegan(touches, with: event)
+		guard let touch = touches.first else {
+			return
+		}
+		clipsToBounds = false
+		startTouchAnimate(with: touch.location(in: self))
+		layer.addSublayer(emitterLayer)
+	}
+	
+	open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+		super.touchesEnded(touches, with: event)
+		clipsToBounds = true
 		stopTouchAnimate()
 	}
 }

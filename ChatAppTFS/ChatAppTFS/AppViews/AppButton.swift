@@ -25,7 +25,7 @@ class AppButton: UIButton, TouchAnimatable {
 	}
 }
 
-protocol TouchAnimatable: AnyObject {
+protocol TouchAnimatable where Self: UIView {
 	func startTouchAnimate(with position: CGPoint)
 	func stopTouchAnimate()
 	var emitterLayer: CAEmitterLayer { get }
@@ -35,10 +35,10 @@ extension TouchAnimatable {
 
 	func startTouchAnimate(with position: CGPoint) {
 		let cell = CAEmitterCell()
-		cell.contents = UIImage(named: "clip")?.cgImage
-		cell.birthRate = 8
-		cell.lifetime = 1
-		cell.velocity = 30
+		cell.contents = UIImage(named: "tinkoff")?.resize(width: 40, height: 40)?.cgImage
+		cell.birthRate = 6
+		cell.lifetime = 0.5
+		cell.velocity = 50
 		cell.scale = 0.3
 		cell.emissionRange = CGFloat.pi * 2.0
 		cell.spin = 0.5

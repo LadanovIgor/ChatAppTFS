@@ -31,6 +31,7 @@ class AnimationController: NSObject {
 	}
 	
 	private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView) {
+		circle = AppCircleView()
 		let viewCenter = viewToAnimate.center
 		let viewSize = viewToAnimate.frame.size
 		circle.frame = frameForCircle(with: viewCenter, size: viewSize, startingPoint: startingPoint)
@@ -66,8 +67,8 @@ class AnimationController: NSObject {
 		let duration = transitionDuration(using: transitionContext)
 		
 		UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
-			self.circle.transform = CGAffineTransform(scaleX: 0, y: 0)
-			viewToAnimate.transform = CGAffineTransform(scaleX: 0, y: 0)
+			self.circle.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+			viewToAnimate.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
 			viewToAnimate.center = self.startingPoint
 		} completion: { success in
 			viewToAnimate.center = viewCenter
@@ -102,13 +103,12 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
 		switch animationType {
 		case .present:
 			transitionContext.containerView.addSubview(toViewController.view)
-				toViewController.view.layer.anchorPoint = CGPoint(x: 1, y: 0)
-				toViewController.view.frame = UIScreen.main.bounds
+			toViewController.view.layer.anchorPoint = CGPoint(x: 1, y: 0)
+			toViewController.view.frame = UIScreen.main.bounds
 			presentAnimation(with: transitionContext, viewToAnimate: toViewController.view)
 		case .dismiss:
-				transitionContext.containerView.addSubview(toViewController.view)
-				transitionContext.containerView.addSubview(fromViewController.view)
-				dismissAnimation(with: transitionContext, viewToAnimate: toViewController.view)
+			transitionContext.containerView.addSubview(fromViewController.view)
+			dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view)
 				
 		}
 	}

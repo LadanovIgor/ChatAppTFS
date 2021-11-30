@@ -12,9 +12,9 @@ class ConversationsListViewController: UIViewController {
 	// MARK: - Properties
 	
 	private var presenter: ConversationsListPresenterProtocol?
-	private let tableView = UITableView(frame: .zero, style: .plain)
-	private let leftBarButton = UIButton()
-	private let rightBarButton = UIButton()
+	private let tableView = AppTableView(frame: .zero, style: .plain)
+	private let leftBarButton = AnimatableButton()
+	private let rightBarButton = AnimatableButton()
 	private let barButtonSize = Constants.ConversationListScreen.barButtonSize
 	
 	private let animationController = AnimationController()
@@ -65,7 +65,7 @@ class ConversationsListViewController: UIViewController {
 	private func setUpLeftBarItem() {
 		let image = UIImage(named: "themes")
 		leftBarButton.setImage(image, for: .normal)
-		leftBarButton.clipsToBounds = true
+		leftBarButton.clipsToBounds = false
 		leftBarButton.layer.masksToBounds = true
 		leftBarButton.backgroundColor = .clear
 		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarButton)
@@ -200,16 +200,14 @@ extension ConversationsListViewController: UITableViewDelegate {
 
 extension ConversationsListViewController: UIViewControllerTransitioningDelegate {
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		let navBarWidth = navigationController?.navigationBar.frame.width ?? 0
-		let statusBarHeight = UIApplication.shared.statusBarFrame.height
-		animationController.set(animationDuration: 2.5, animationType: .present, startingPoint: CGPoint(x: navBarWidth * 0.91, y: 22 + statusBarHeight))
+		let point = rightBarButton.convert(rightBarButton.center, to: view)
+		animationController.set(animationDuration: 2.5, animationType: .present, startingPoint: point)
 		return animationController
 	}
 	
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		let navBarWidth = navigationController?.navigationBar.frame.width ?? 0
-		let statusBarHeight = UIApplication.shared.statusBarFrame.height
-		animationController.set(animationDuration: 2.5, animationType: .dismiss, startingPoint: CGPoint(x: navBarWidth * 0.91, y: 22 + statusBarHeight))
+		let point = rightBarButton.convert(rightBarButton.center, to: view)
+		animationController.set(animationDuration: 2.5, animationType: .dismiss, startingPoint: point)
 		return animationController
 	}
 }

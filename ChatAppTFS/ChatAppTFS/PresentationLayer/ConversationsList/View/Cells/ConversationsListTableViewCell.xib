@@ -71,10 +71,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="dateLabel" destination="qho-K1-6GO" id="aYU-XP-8I2"/>
-                <outlet property="lastMessageLabel" destination="YHp-v5-7Gx" id="JRz-fv-Flj"/>
-                <outlet property="nameLabel" destination="WTB-y8-zlb" id="D5B-FF-ww8"/>
-                <outlet property="profileImageView" destination="BMr-OV-at6" id="yPv-MF-v1S"/>
+                <outlet property="dateLabel" destination="qho-K1-6GO" id="rF2-dc-xQO"/>
+                <outlet property="lastMessageLabel" destination="YHp-v5-7Gx" id="vfD-rY-lcT"/>
+                <outlet property="nameLabel" destination="WTB-y8-zlb" id="uQU-Qn-o5c"/>
+                <outlet property="profileImageView" destination="BMr-OV-at6" id="SnJ-pr-45s"/>
             </connections>
             <point key="canvasLocation" x="82.608695652173921" y="87.388392857142847"/>
         </tableViewCell>
