@@ -50,6 +50,7 @@ final class AssemblyModuleBuilder: AssemblyBuilderProtocol {
 	func createUserProfileModule(router: RouterProtocol) -> UIViewController {
 		let presenter = ProfilePresenter(storageService: storageService, router: router)
 		let viewController = UserProfileViewController(presenter: presenter)
+		viewController.modalPresentationStyle = .custom
 		presenter.set(view: viewController)
 		return viewController
 	}

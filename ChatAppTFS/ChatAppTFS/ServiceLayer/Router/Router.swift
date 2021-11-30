@@ -46,10 +46,11 @@ final class Router: RouterProtocol {
 	}
 	
 	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with storageService: StoredLocally?) {
-		guard let viewController = view as? UIViewController,
+		guard let viewController = view as? ConversationsListViewController,
 			  let userProfileViewController = assemblyBuilder?.createUserProfileModule(router: self) else {
 				  return
 			  }
+		userProfileViewController.transitioningDelegate = viewController
 		viewController.present(userProfileViewController, animated: true)
 	}
 	

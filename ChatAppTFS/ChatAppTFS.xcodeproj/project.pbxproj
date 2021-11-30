@@ -42,6 +42,7 @@
 		8E40D99327146AC700406AD4 /* ThemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40D99127146AC700406AD4 /* ThemeViewController.swift */; };
 		8E40D99427146AC700406AD4 /* ThemeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E40D99227146AC700406AD4 /* ThemeViewController.xib */; };
 		8E418FE3273408CC00FB9B45 /* CustomFirestoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E418FE2273408CC00FB9B45 /* CustomFirestoreError.swift */; };
+		8E5E63C42754929800C0A848 /* AnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5E63C32754929800C0A848 /* AnimationViewController.swift */; };
 		8E5EC5AB26FDB05E008FC472 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */; };
 		8E64EED92743D70500A72CF1 /* TableViewUpdatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E64EED82743D70500A72CF1 /* TableViewUpdatable.swift */; };
 		8E6B3547271E82D300653B8D /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B3546271E82D300653B8D /* StorageService.swift */; };
@@ -152,6 +153,7 @@
 		8E40D99127146AC700406AD4 /* ThemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewController.swift; sourceTree = "<group>"; };
 		8E40D99227146AC700406AD4 /* ThemeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeViewController.xib; sourceTree = "<group>"; };
 		8E418FE2273408CC00FB9B45 /* CustomFirestoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFirestoreError.swift; sourceTree = "<group>"; };
+		8E5E63C32754929800C0A848 /* AnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationViewController.swift; sourceTree = "<group>"; };
 		8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservable.swift; sourceTree = "<group>"; };
 		8E64EED82743D70500A72CF1 /* TableViewUpdatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewUpdatable.swift; sourceTree = "<group>"; };
 		8E6B3546271E82D300653B8D /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 		8E27D41A274399CE009A3425 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8E5E63C22754925700C0A848 /* Animator */,
 				8EAAFE26270E8BA500D7497B /* CircleImageView.swift */,
 				8E2E2719270DF08A00BFE156 /* UserProfileViewController.swift */,
 				8E2E2717270DF08400BFE156 /* UserProfileViewController.xib */,
@@ -516,6 +519,14 @@
 				8E40D98E27143C0600406AD4 /* ThemesViewController.xib */,
 			);
 			path = ObjC;
+			sourceTree = "<group>";
+		};
+		8E5E63C22754925700C0A848 /* Animator */ = {
+			isa = PBXGroup;
+			children = (
+				8E5E63C32754929800C0A848 /* AnimationViewController.swift */,
+			);
+			path = Animator;
 			sourceTree = "<group>";
 		};
 		8E64EED72743D6E000A72CF1 /* CoreLayer */ = {
@@ -978,6 +989,7 @@
 				8E2E2708270DE5EA00BFE156 /* UIView+.swift in Sources */,
 				8E2CE3832744C4E5008F460C /* RouterProtocol.swift in Sources */,
 				8E27D41D27439A91009A3425 /* ProfileProtocols.swift in Sources */,
+				8E5E63C42754929800C0A848 /* AnimationViewController.swift in Sources */,
 				8E15F8F5272E40BD00EE7918 /* CoreDataManager.swift in Sources */,
 				8E0040B2272EAA5F00587E99 /* CustomCoreDataError.swift in Sources */,
 				8E2E2703270DE53400BFE156 /* Channel.swift in Sources */,

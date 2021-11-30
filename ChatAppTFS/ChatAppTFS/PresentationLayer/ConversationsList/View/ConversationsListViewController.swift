@@ -16,6 +16,8 @@ class ConversationsListViewController: UIViewController {
 	private let leftBarButton = UIButton()
 	private let rightBarButton = UIButton()
 	private let barButtonSize = Constants.ConversationListScreen.barButtonSize
+	
+	private let animationController = AnimationController()
 
 	// MARK: - Lifecycle
 
@@ -57,6 +59,7 @@ class ConversationsListViewController: UIViewController {
 	private func delegating() {
 		tableView.delegate = self
 		tableView.dataSource = presenter?.dataSource
+		transitioningDelegate = self
 	}
 	
 	private func setUpLeftBarItem() {
@@ -192,5 +195,21 @@ extension ConversationsListViewController: UITableViewDelegate {
 			self?.presentCreateChannelAlert()
 		}
 		return headerView
+	}
+}
+
+extension ConversationsListViewController: UIViewControllerTransitioningDelegate {
+	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		let navBarWidth = navigationController?.navigationBar.frame.width ?? 0
+		let statusBarHeight = UIApplication.shared.statusBarFrame.height
+		animationController.set(animationDuration: 2.5, animationType: .present, startingPoint: CGPoint(x: navBarWidth * 0.91, y: 22 + statusBarHeight))
+		return animationController
+	}
+	
+	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		let navBarWidth = navigationController?.navigationBar.frame.width ?? 0
+		let statusBarHeight = UIApplication.shared.statusBarFrame.height
+		animationController.set(animationDuration: 2.5, animationType: .dismiss, startingPoint: CGPoint(x: navBarWidth * 0.91, y: 22 + statusBarHeight))
+		return animationController
 	}
 }

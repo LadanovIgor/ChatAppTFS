@@ -32,6 +32,7 @@ extension ThemeProtocol {
 		UIView.appearance(whenContainedInInstancesOf: [ConversationsListViewController.self]).backgroundColor = backgroundColor
 		UIView.appearance(whenContainedInInstancesOf: [PicturesViewController.self]).backgroundColor = backgroundColor
 		UICollectionView.appearance().backgroundColor = backgroundColor
+		AppCircleView.appearance().backgroundColor = backgroundColor
 		AppView.appearance().backgroundColor = backgroundColor
 		AppHeaderView.appearance().backgroundColor = secondaryBackground
 		UIVisualEffectView.appearance().backgroundColor = backgroundColor

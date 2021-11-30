@@ -32,16 +32,13 @@ extension ThemePresenter: ThemePresenterProtocol {
 	
 	public func lightThemeSelected() {
 		themeSelected?(LightTheme())
-		close()
 	}
 	
 	public func darkThemeSelected() {
 		themeSelected?(DarkTheme())
-		close()
 	}
 	
 	public func champagneThemeSelected() {
 		themeSelected?(ChampagneTheme())
-		close()
 	}
 }
