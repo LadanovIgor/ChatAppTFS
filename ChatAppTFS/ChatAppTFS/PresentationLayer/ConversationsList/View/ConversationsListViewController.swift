@@ -17,8 +17,12 @@ class ConversationsListViewController: UIViewController {
 	private let rightBarButton = AnimatableButton()
 	private let barButtonSize = Constants.ConversationListScreen.barButtonSize
 	
-	private let animationController = AnimationController()
-
+	lazy var animationController: AnimationController = {
+		let startingPoint = rightBarButton.convert(rightBarButton.center, to: view)
+		let animationController = AnimationController(duration: 1.5, startingPoint: startingPoint)
+		return animationController
+	}()
+		
 	// MARK: - Lifecycle
 
 	override func viewDidLoad() {
@@ -65,7 +69,7 @@ class ConversationsListViewController: UIViewController {
 	private func setUpLeftBarItem() {
 		let image = UIImage(named: "themes")
 		leftBarButton.setImage(image, for: .normal)
-		leftBarButton.clipsToBounds = false
+		leftBarButton.clipsToBounds = true
 		leftBarButton.layer.masksToBounds = true
 		leftBarButton.backgroundColor = .clear
 		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarButton)
@@ -198,16 +202,16 @@ extension ConversationsListViewController: UITableViewDelegate {
 	}
 }
 
+	// MARK: - UIViewControllerTransitioningDelegate
+
 extension ConversationsListViewController: UIViewControllerTransitioningDelegate {
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		let point = rightBarButton.convert(rightBarButton.center, to: view)
-		animationController.set(animationDuration: 2.5, animationType: .present, startingPoint: point)
+		animationController.set(animationType: .present)
 		return animationController
 	}
 	
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		let point = rightBarButton.convert(rightBarButton.center, to: view)
-		animationController.set(animationDuration: 2.5, animationType: .dismiss, startingPoint: point)
+		animationController.set(animationType: .dismiss)
 		return animationController
 	}
 }

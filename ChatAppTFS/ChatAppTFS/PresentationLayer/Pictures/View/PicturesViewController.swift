@@ -9,21 +9,21 @@ import UIKit
 
 class PicturesViewController: UIViewController, PicturesViewProtocol {
 	
-	private let collectionView: UICollectionView = {
+	private let collectionView: AppCollectionView = {
 		let sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		let layout = ColumnFlowLayout(cellsPerRow: 3, minimumInteritemSpacing: 10, minimumLineSpacing: 10, sectionInset: sectionInset)
-		let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+		let collectionView = AppCollectionView(frame: .zero, collectionViewLayout: layout)
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
 		collectionView.register(PictureCollectionViewCell.self, forCellWithReuseIdentifier: PictureCollectionViewCell.identifier)
 		return collectionView
 	}()
 	
 	private let stackView = UIStackView()
-	private let animalsButton = UIButton()
-	private let natureButton = UIButton()
-	private let flowersButton = UIButton()
-	private let sportsButton = UIButton()
-	private let peopleButton = UIButton()
+	private let animalsButton = AnimatableButton()
+	private let natureButton = AnimatableButton()
+	private let flowersButton = AnimatableButton()
+	private let sportsButton = AnimatableButton()
+	private let peopleButton = AnimatableButton()
 
 	private let spinner = UIActivityIndicatorView()
 	

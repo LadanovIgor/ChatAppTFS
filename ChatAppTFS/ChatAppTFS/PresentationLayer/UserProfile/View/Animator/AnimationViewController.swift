@@ -9,25 +9,25 @@ import UIKit
 
 class AnimationController: NSObject {
 	
-	private var animationDuration: Double = 0
-	private var animationType: AnimationType = .present
-	
-	var circle = AppCircleView()
-	
-	var startingPoint: CGPoint = .zero {
-		didSet {
-			circle.center = startingPoint
-		}
-	}
-	
 	enum AnimationType {
 		case present, dismiss
 	}
 	
-	func set(animationDuration: Double, animationType: AnimationType, startingPoint: CGPoint) {
-		self.animationDuration = animationDuration
-		self.animationType = animationType
+	private var animationDuration: TimeInterval
+	private var animationType: AnimationType = .present
+	private var circle = AppCircleView()
+	
+	private var startingPoint: CGPoint {
+		didSet { circle.center = startingPoint }
+	}
+	
+	init(duration: TimeInterval, startingPoint: CGPoint) {
+		self.animationDuration = duration
 		self.startingPoint = startingPoint
+	}
+	
+	func set(animationType: AnimationType) {
+		self.animationType = animationType
 	}
 	
 	private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView) {
@@ -38,7 +38,7 @@ class AnimationController: NSObject {
 		circle.round()
 		circle.center = startingPoint
 		circle.transform = CGAffineTransform(scaleX: 0, y: 0)
-		circle.layer.borderWidth = 5.0
+		circle.layer.borderWidth = 1.0
 		circle.layer.borderColor = UIColor.black.cgColor
 		transitionContext.containerView.addSubview(circle)
 		transitionContext.containerView.addSubview(viewToAnimate)
@@ -90,7 +90,7 @@ class AnimationController: NSObject {
 
 extension AnimationController: UIViewControllerAnimatedTransitioning {
 	func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-		return TimeInterval(exactly: animationDuration) ?? 0
+		return animationDuration
 	}
 	
 	func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -99,7 +99,6 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
 				  transitionContext.completeTransition(false)
 				  return
 			  }
-		
 		switch animationType {
 		case .present:
 			transitionContext.containerView.addSubview(toViewController.view)
@@ -109,7 +108,6 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
 		case .dismiss:
 			transitionContext.containerView.addSubview(fromViewController.view)
 			dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view)
-				
 		}
 	}
 }

@@ -29,7 +29,7 @@ extension UIImage {
 		let context = UIGraphicsGetCurrentContext()
 		let color = Constants.ImageBackgroundColor.getColor(from: text?.first)
 		context?.setFillColor(color.cgColor)
-		context?.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
+		context?.fillEllipse(in: CGRect(x: 1, y: 1, width: size.width - 2, height: size.height - 2))
 		let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
 						  NSAttributedString.Key.font: UIFont.systemFont(ofSize: 41.0, weight: .medium)]
 		if let text = text {

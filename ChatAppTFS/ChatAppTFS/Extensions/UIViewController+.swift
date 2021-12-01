@@ -16,22 +16,25 @@ extension UIViewController {
 	}
 }
 
-extension UIViewController {
-//	var emitterLayer: CAEmitterLayer {
-//		return CAEmitterLayer()
-//	}
-//	
-//	open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//		super.touchesBegan(touches, with: event)
-//		guard let touch = touches.first else {
-//			return
+//extension UINavigationController {
+//
+//	func setStatusBar() {
+//		let statusBarFrame: CGRect
+//		if #available(iOS 13.0, *) {
+//			statusBarFrame = navigationController?.view.window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero
+//		} else {
+//			statusBarFrame = UIApplication.shared.statusBarFrame
 //		}
-//		startTouchAnimate(with: touch.location(in: view))
-//		view.layer.addSublayer(emitterLayer)
+//		let statusBarView = UIView()
+//		statusBarView.backgroundColor = .green
+//		let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapped))
+//		statusBarView.addGestureRecognizer(gesture)
+//		statusBarView.frame = statusBarFrame
+//		view.addSubview(statusBarView)
 //	}
 //	
-//	open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//		super.touchesEnded(touches, with: event)
-//		stopTouchAnimate()
+//	@objc private func didTapped() {
+//		print("tapped")
 //	}
-}
+//
+//}

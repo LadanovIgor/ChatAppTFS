@@ -12,8 +12,8 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	// MARK: - Outlets and Properties
 	
 	@IBOutlet weak var profileImageView: CircleImageView!
-	@IBOutlet weak var closeProfileButton: UIButton!
-	@IBOutlet weak var editProfileButton: UIButton!
+	@IBOutlet weak var closeProfileButton: AnimatableButton!
+	@IBOutlet weak var editProfileButton: AnimatableButton!
 	@IBOutlet weak var saveButton: AppButton!
 	@IBOutlet weak var nameTextField: UITextField!
 	@IBOutlet weak var infoTextField: UITextField!
@@ -32,6 +32,8 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 			updateScreenLayoutDependingOn(isEditing: isProfileEditing)
 		}
 	}
+	
+	private var editButtonIsAnimated = false
 	
 	// MARK: - Init
 	
@@ -160,26 +162,30 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	private func animateEditButton() {
+		print("yes")
 		let rotation = CAKeyframeAnimation()
 		rotation.keyPath = #keyPath(CALayer.transform)
 		rotation.valueFunction = CAValueFunction(name: CAValueFunctionName.rotateZ)
-		rotation.values = [0, -CGFloat(Double.pi / 10), 0, CGFloat(Double.pi / 10), 0]
+		rotation.values = [0, -CGFloat.pi / 10, 0, CGFloat.pi / 10, 0]
 		rotation.keyTimes = [0, 0.25, 0.5, 0.75, 1]
 		let position = editProfileButton.layer.position
 		let positionAnimation = CAKeyframeAnimation()
 		positionAnimation.keyPath = #keyPath(CALayer.position)
-		positionAnimation.values = [position,
-									CGPoint(x: position.x, y: position.y - 5),
-									CGPoint(x: position.x, y: position.y + 5),
-									CGPoint(x: position.x - 5, y: position.y),
-									CGPoint(x: position.x + 5, y: position.y),
-									position]
+		positionAnimation.values = [
+			position,
+			CGPoint(x: position.x, y: position.y - 5),
+			CGPoint(x: position.x, y: position.y + 5),
+			CGPoint(x: position.x - 5, y: position.y),
+			CGPoint(x: position.x + 5, y: position.y),
+			position
+		]
 		positionAnimation.keyTimes = [0, 0.2, 0.4, 0.6, 0.8, 1.0]
 		let group = CAAnimationGroup()
 		group.duration = 0.3
 		group.repeatCount = .infinity
 		group.animations = [rotation, positionAnimation]
 		editProfileButton.layer.add(group, forKey: nil)
+		editButtonIsAnimated = true
 	}
 	
 	private func changeButtonState(isEnable: Bool) {
@@ -191,6 +197,7 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 		saveButton.isHidden = !isEditing
 		cancelButton.isHidden = !isEditing
 		nameTextField.isEnabled = isEditing
+		editProfileButton.isEnabled = !isEditing
 		locationTextField.isEnabled = isEditing
 		infoTextField.isEnabled = isEditing
 	}

@@ -7,6 +7,6 @@
 
 import UIKit
 
-class AppMessageView: UIView, TouchAnimatable {
-	var emitterLayer: CAEmitterLayer { CAEmitterLayer() }
+class AppMessageView: UIView {
+	
 }

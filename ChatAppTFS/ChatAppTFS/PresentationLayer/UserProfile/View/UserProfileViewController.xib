@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -11,8 +13,8 @@
             <connections>
                 <outlet property="activityIndicator" destination="Gej-b3-cEJ" id="KtK-ls-oPP"/>
                 <outlet property="cancelButton" destination="bbQ-nc-ey0" id="A5d-BE-O7j"/>
-                <outlet property="closeProfileButton" destination="PD1-uz-Sqs" id="K3y-iF-a9u"/>
-                <outlet property="editProfileButton" destination="C35-iA-nq7" id="Gr0-2V-6tJ"/>
+                <outlet property="closeProfileButton" destination="PD1-uz-Sqs" id="bZn-F7-wtN"/>
+                <outlet property="editProfileButton" destination="C35-iA-nq7" id="yN6-5Q-prO"/>
                 <outlet property="infoTextField" destination="Z63-nQ-afj" id="8RX-Gd-RbU"/>
                 <outlet property="infoTextFieldTopConstraint" destination="99f-JR-096" id="S1m-V5-ZaP"/>
                 <outlet property="locationTextField" destination="HL0-Go-4Qm" id="ZlW-bj-bCA"/>
@@ -26,11 +28,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AppView" customModule="ChatAppTFS" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PAX-gv-gE1" customClass="AppHeaderView" customModule="ChatAppTFS" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mmd-N5-SWD">
                             <rect key="frame" x="16" y="32.5" width="121.5" height="31.5"/>
@@ -38,8 +40,8 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PD1-uz-Sqs">
-                            <rect key="frame" x="255" y="31" width="48" height="34"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PD1-uz-Sqs" customClass="AnimatableButton" customModule="ChatAppTFS" customModuleProvider="target">
+                            <rect key="frame" x="349" y="31" width="48" height="34"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal" title="Close">
@@ -56,15 +58,15 @@
                     </constraints>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p9Y-NK-z1Q" customClass="CircleImageView" customModule="ChatAppTFS" customModuleProvider="target">
-                    <rect key="frame" x="50" y="103" width="220" height="220"/>
-                    <color key="backgroundColor" name="darkGrayColor"/>
+                    <rect key="frame" x="97" y="147" width="220" height="220"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="220" id="gCF-ta-EMr"/>
                         <constraint firstAttribute="width" secondItem="p9Y-NK-z1Q" secondAttribute="height" multiplier="1:1" id="tIy-R8-nic"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C35-iA-nq7">
-                    <rect key="frame" x="230" y="283" width="40" height="40"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C35-iA-nq7" customClass="AnimatableButton" customModule="ChatAppTFS" customModuleProvider="target">
+                    <rect key="frame" x="277" y="327" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="2L5-0N-tBf"/>
                         <constraint firstAttribute="width" constant="40" id="XXV-cS-tYn"/>
@@ -76,7 +78,7 @@
                     </state>
                 </button>
                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W26-pQ-q4b">
-                    <rect key="frame" x="157" y="339" width="6" height="30"/>
+                    <rect key="frame" x="204" y="383" width="6" height="30"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="B2L-4F-c66"/>
@@ -85,7 +87,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z63-nQ-afj">
-                    <rect key="frame" x="157.5" y="401" width="5" height="21"/>
+                    <rect key="frame" x="204.5" y="445" width="5" height="21"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="rWT-kq-SKC"/>
@@ -94,7 +96,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HL0-Go-4Qm">
-                    <rect key="frame" x="157.5" y="422" width="5" height="21"/>
+                    <rect key="frame" x="204.5" y="466" width="5" height="21"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="CmJ-4R-mTB"/>
@@ -103,10 +105,10 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Gej-b3-cEJ">
-                    <rect key="frame" x="150" y="446" width="20" height="6"/>
+                    <rect key="frame" x="197" y="490" width="20" height="256"/>
                 </activityIndicatorView>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbQ-nc-ey0" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
-                    <rect key="frame" x="50" y="455" width="220" height="40"/>
+                    <rect key="frame" x="97" y="749" width="220" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="CPD-d6-3uO"/>
                     </constraints>
@@ -117,7 +119,7 @@
                     </state>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqK-jj-oLu" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
-                    <rect key="frame" x="50" y="498" width="220" height="40"/>
+                    <rect key="frame" x="97" y="792" width="220" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="hMJ-sd-Y1P"/>
                     </constraints>
@@ -158,10 +160,7 @@
     </objects>
     <resources>
         <namedColor name="buttonTitle">
-            <color red="0.0" green="0.4779999852180481" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="darkGrayColor">
-            <color red="0.66299998760223389" green="0.66299998760223389" blue="0.66299998760223389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47450980392156861" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

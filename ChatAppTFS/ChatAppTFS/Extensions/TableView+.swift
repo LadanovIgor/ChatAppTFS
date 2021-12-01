@@ -8,7 +8,6 @@
 import Foundation
 
 extension UITableView {
-
 	func scrollToBottom(isAnimated: Bool = true) {
 		DispatchQueue.main.async {
 			guard self.numberOfSections > 0, self.numberOfRows(inSection: 0) > 0 else {

@@ -8,7 +8,6 @@
 import UIKit
 
 extension NSLayoutConstraint {
-	
 	static func constraints(withNewVisualFormat vf: String, metrics: [String: Any]?, views: [String: Any]) -> [NSLayoutConstraint] {
 		let  separatedArray = vf.split(separator: ",")
 		switch separatedArray.count {
