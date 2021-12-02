@@ -12,7 +12,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	// MARK: - Properties
 	
 	var presenter: ConversationPresenterProtocol?
-	let tableView = AppTableView(frame: .zero, style: .grouped)
+	let tableView = TouchAnimateTableView(frame: .zero, style: .grouped)
 	let sendMessageView = SendMessageView()
 	var bottomConstraint: NSLayoutConstraint?
 	
@@ -99,19 +99,15 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	
 	private func setUpConstraints() {
 		view.removeConstraints(view.constraints)
-		let statusBarHeight = UIApplication.shared.statusBarFrame.height
-		let views = ["tableView": tableView, "newMessageView": sendMessageView]
-		let metrics = ["viewHeight": Constants.ConversationScreen.messageViewHeight,
-					   "offset": statusBarHeight
-		]
-		view.addConstraints(NSLayoutConstraint.constraints(
-			withNewVisualFormat: "H:|[tableView]|,V:|-offset-[tableView][newMessageView(viewHeight)]",
-			metrics: metrics,
-			views: views))
-		view.addConstraints(NSLayoutConstraint.constraints(
-			withNewVisualFormat: "H:|[newMessageView]|",
-			metrics: metrics,
-			views: views))
+		NSLayoutConstraint.activate([
+			tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			sendMessageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			sendMessageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			sendMessageView.heightAnchor.constraint(equalToConstant: Constants.ConversationScreen.messageViewHeight),
+			sendMessageView.topAnchor.constraint(equalTo: tableView.bottomAnchor)
+		])
 		bottomConstraint = NSLayoutConstraint(item: sendMessageView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
 		guard let constraint = bottomConstraint else {
 			return

@@ -10,6 +10,7 @@ import Foundation
 protocol TouchAnimatable: AnyObject {
 	func startTouchAnimate(with position: CGPoint)
 	func stopTouchAnimate()
+	func moveTouchAnimate(with position: CGPoint)
 	var emitterLayer: CAEmitterLayer { get }
 }
 
@@ -25,6 +26,10 @@ extension TouchAnimatable {
 		cell.emissionRange = CGFloat.pi * 2.0
 		cell.spin = 0.5
 		emitterLayer.emitterCells = [cell]
+		emitterLayer.emitterPosition = position
+	}
+	
+	func moveTouchAnimate(with position: CGPoint) {
 		emitterLayer.emitterPosition = position
 	}
 	

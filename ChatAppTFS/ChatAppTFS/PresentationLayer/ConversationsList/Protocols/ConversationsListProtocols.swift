@@ -9,7 +9,7 @@ import Foundation
 import CoreData.NSFetchedResultsController
 
 protocol ConversationsListViewProtocol: TableViewUpdatable {
-	
+	func set(userName: String)
 }
 
 protocol ConversationsListPresenterProtocol: AnyObject, LifeCycleProtocol {
@@ -18,7 +18,6 @@ protocol ConversationsListPresenterProtocol: AnyObject, LifeCycleProtocol {
 	func leftBarButtonTapped()
 	func rightBarButtonTapped()
 	func didTapAt(indexPath: IndexPath)
-	func getUserName(completion: @escaping (ResultClosure<String>))
 }
 
 protocol ConversationsListDataSourceProtocol: UITableViewDataSource {

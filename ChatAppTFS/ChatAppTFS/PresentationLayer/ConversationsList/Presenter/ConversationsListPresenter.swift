@@ -90,6 +90,22 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 		}
 	}
 	
+	private func getUserName() {
+		storageService?.loadValue(for: Constants.LocalStorage.nameKey) { [weak self] result in
+			switch result {
+			case .success(let data):
+				guard let text = String(data: data, encoding: .utf8) else {
+					return
+				}
+				DispatchQueue.main.async {
+					self?.view?.set(userName: text)
+				}
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+		}
+	}
+	
 	// MARK: - Public
 	
 	public func set(view: ConversationsListViewProtocol) {
@@ -98,6 +114,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	
 	public func viewDidLoad() {
 		getUserId()
+		getUserName()
 	}
 	
 	public func viewWillAppear() {
@@ -133,22 +150,6 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	
 	public func deleteChannel(with channelId: String) {
 		channelsService?.deleteChannel(with: channelId)
-	}
-	
-	public func getUserName(completion: @escaping (ResultClosure<String>)) {
-		storageService?.loadValue(for: Constants.LocalStorage.nameKey) { result in
-			DispatchQueue.main.async {
-				switch result {
-				case .success(let data):
-					guard let text = String(data: data, encoding: .utf8) else {
-						completion(.failure(StoredLocallyError.failureEncodingData))
-						return
-					}
-					completion(.success(text))
-				case .failure(let error): completion(.failure(error))
-				}
-			}
-		}
 	}
 }
 

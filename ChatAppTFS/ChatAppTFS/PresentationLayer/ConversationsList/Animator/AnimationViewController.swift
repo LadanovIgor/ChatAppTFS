@@ -9,11 +9,13 @@ import UIKit
 
 class AnimationController: NSObject {
 	
+	// MARK: - Properties
+
 	enum AnimationType {
 		case present, dismiss
 	}
 	
-	private var animationDuration: TimeInterval
+	private var duration: TimeInterval
 	private var animationType: AnimationType = .present
 	private var circle = AppCircleView()
 	
@@ -21,8 +23,10 @@ class AnimationController: NSObject {
 		didSet { circle.center = startingPoint }
 	}
 	
+	// MARK: - Init
+	
 	init(duration: TimeInterval, startingPoint: CGPoint) {
-		self.animationDuration = duration
+		self.duration = duration
 		self.startingPoint = startingPoint
 	}
 	
@@ -30,49 +34,55 @@ class AnimationController: NSObject {
 		self.animationType = animationType
 	}
 	
-	private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView) {
+	// MARK: - Private
+	
+	private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, view: UIView) {
 		circle = AppCircleView()
-		let viewCenter = viewToAnimate.center
-		let viewSize = viewToAnimate.frame.size
+		let viewCenter = view.center
+		let viewSize = view.frame.size
+		
 		circle.frame = frameForCircle(with: viewCenter, size: viewSize, startingPoint: startingPoint)
 		circle.round()
 		circle.center = startingPoint
 		circle.transform = CGAffineTransform(scaleX: 0, y: 0)
 		circle.layer.borderWidth = 1.0
 		circle.layer.borderColor = UIColor.black.cgColor
+		
 		transitionContext.containerView.addSubview(circle)
-		transitionContext.containerView.addSubview(viewToAnimate)
-		viewToAnimate.center = startingPoint
-		viewToAnimate.transform = CGAffineTransform(scaleX: 0, y: 0)
+		transitionContext.containerView.addSubview(view)
+		view.center = startingPoint
+		view.transform = CGAffineTransform(scaleX: 0, y: 0)
 		
 		let duration = transitionDuration(using: transitionContext)
 		
-		UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
+		UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut) {
 			self.circle.transform = CGAffineTransform.identity
-			viewToAnimate.transform = CGAffineTransform.identity
-			viewToAnimate.center = viewCenter
+			view.transform = CGAffineTransform.identity
+			view.center = viewCenter
 		} completion: { success in
 			transitionContext.completeTransition(success)
 		}
 	}
-	
-	private func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView) {
-		let viewCenter = viewToAnimate.center
-		let viewSize = viewToAnimate.frame.size
+		
+	private func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, view: UIView) {
+		let viewCenter = view.center
+		let viewSize = view.frame.size
+		
 		circle.frame = frameForCircle(with: viewCenter, size: viewSize, startingPoint: startingPoint)
 		circle.round()
 		circle.center = startingPoint
-		transitionContext.containerView.addSubview(viewToAnimate)
+		
+		transitionContext.containerView.addSubview(view)
 
 		let duration = transitionDuration(using: transitionContext)
 		
-		UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
+		UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut) {
 			self.circle.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-			viewToAnimate.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-			viewToAnimate.center = self.startingPoint
+			view.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+			view.center = self.startingPoint
 		} completion: { success in
-			viewToAnimate.center = viewCenter
-			viewToAnimate.removeFromSuperview()
+			view.center = viewCenter
+			view.removeFromSuperview()
 			self.circle.removeFromSuperview()
 			transitionContext.completeTransition(success)
 		}
@@ -88,9 +98,11 @@ class AnimationController: NSObject {
 	
 }
 
+	// MARK: - UIViewControllerAnimatedTransitioning
+
 extension AnimationController: UIViewControllerAnimatedTransitioning {
 	func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-		return animationDuration
+		return duration
 	}
 	
 	func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -104,10 +116,10 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
 			transitionContext.containerView.addSubview(toViewController.view)
 			toViewController.view.layer.anchorPoint = CGPoint(x: 1, y: 0)
 			toViewController.view.frame = UIScreen.main.bounds
-			presentAnimation(with: transitionContext, viewToAnimate: toViewController.view)
+			presentAnimation(with: transitionContext, view: toViewController.view)
 		case .dismiss:
 			transitionContext.containerView.addSubview(fromViewController.view)
-			dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view)
+			dismissAnimation(with: transitionContext, view: fromViewController.view)
 		}
 	}
 }

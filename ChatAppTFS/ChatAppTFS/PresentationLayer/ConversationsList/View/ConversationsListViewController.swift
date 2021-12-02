@@ -12,14 +12,14 @@ class ConversationsListViewController: UIViewController {
 	// MARK: - Properties
 	
 	private var presenter: ConversationsListPresenterProtocol?
-	private let tableView = AppTableView(frame: .zero, style: .plain)
-	private let leftBarButton = AnimatableButton()
-	private let rightBarButton = AnimatableButton()
+	private let tableView = TouchAnimateTableView(frame: .zero, style: .plain)
+	private let leftBarButton = TouchAnimateButton()
+	private let rightBarButton = TouchAnimateButton()
 	private let barButtonSize = Constants.ConversationListScreen.barButtonSize
 	
 	lazy var animationController: AnimationController = {
 		let startingPoint = rightBarButton.convert(rightBarButton.center, to: view)
-		let animationController = AnimationController(duration: 1.5, startingPoint: startingPoint)
+		let animationController = AnimationController(duration: 1.0, startingPoint: startingPoint)
 		return animationController
 	}()
 		
@@ -28,10 +28,10 @@ class ConversationsListViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		title = "Channels"
+		setUpRightBarItem()
 		presenter?.viewDidLoad()
 		addTargets()
 		setUpTableView()
-		setUpRightBarItem()
 		setUpLeftBarItem()
 		delegating()
 	}
@@ -81,17 +81,6 @@ class ConversationsListViewController: UIViewController {
 		rightBarButton.clipsToBounds = true
 		rightBarButton.layer.masksToBounds = true
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBarButton)
-		presenter?.getUserName { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let text):
-				guard let image = UIImage.textImage(text: text.getCapitalLetters()) else {
-					return
-				}
-				self.rightBarButton.setImage(image.resize(width: self.barButtonSize, height: self.barButtonSize), for: .normal)
-			case .failure: break
-			}
-		}
 	}
 	
 	private func setUpTableView() {
@@ -171,6 +160,13 @@ extension ConversationsListViewController: ConversationsListViewProtocol {
 	
 	public func reload() {
 		tableView.reloadData()
+	}
+	
+	public func set(userName: String) {
+		guard let image = UIImage.textImage(text: userName.getCapitalLetters()) else {
+			return
+		}
+		self.rightBarButton.setImage(image.resize(width: self.barButtonSize, height: self.barButtonSize), for: .normal)
 	}
 }
 

@@ -14,7 +14,7 @@ class ConversationsListTableHeaderView: UITableViewHeaderFooterView {
 	static let preferredHeight: CGFloat = 50
 	static let identifier = "ConversationsListTableHeaderView"
 	
-	private let addButton = AnimatableButton()
+	private let addButton = TouchAnimateButton()
 	
 	var addingChannel: (() -> Void)?
 	

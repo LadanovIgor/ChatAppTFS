@@ -9,21 +9,21 @@ import UIKit
 
 class PicturesViewController: UIViewController, PicturesViewProtocol {
 	
-	private let collectionView: AppCollectionView = {
+	private let collectionView: TouchAnimateCollectionView = {
 		let sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		let layout = ColumnFlowLayout(cellsPerRow: 3, minimumInteritemSpacing: 10, minimumLineSpacing: 10, sectionInset: sectionInset)
-		let collectionView = AppCollectionView(frame: .zero, collectionViewLayout: layout)
+		let collectionView = TouchAnimateCollectionView(frame: .zero, collectionViewLayout: layout)
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
 		collectionView.register(PictureCollectionViewCell.self, forCellWithReuseIdentifier: PictureCollectionViewCell.identifier)
 		return collectionView
 	}()
 	
 	private let stackView = UIStackView()
-	private let animalsButton = AnimatableButton()
-	private let natureButton = AnimatableButton()
-	private let flowersButton = AnimatableButton()
-	private let sportsButton = AnimatableButton()
-	private let peopleButton = AnimatableButton()
+	private let animalsButton = TouchAnimateButton()
+	private let natureButton = TouchAnimateButton()
+	private let flowersButton = TouchAnimateButton()
+	private let sportsButton = TouchAnimateButton()
+	private let peopleButton = TouchAnimateButton()
 
 	private let spinner = UIActivityIndicatorView()
 	

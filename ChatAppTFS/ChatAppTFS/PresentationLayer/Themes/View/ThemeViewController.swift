@@ -14,7 +14,7 @@ class ThemeViewController: UIViewController, ThemeViewProtocol {
 	@IBOutlet private weak var champagneThemeButton: AppButton!
 	@IBOutlet private weak var darkThemeButton: AppButton!
 	@IBOutlet private weak var lightThemeButton: AppButton!
-	@IBOutlet private weak var closeButton: AnimatableButton!
+	@IBOutlet private weak var closeButton: TouchAnimateButton!
 	
 	private var presenter: ThemePresenterProtocol?
 	
