@@ -16,7 +16,7 @@ class PicturesPresenter: NSObject {
 	
 	var pictures = [Picture]()
 	
-	var pictureSelected: ResultClosure<Data>?
+	var pictureSelected: ((Data) -> Void)?
 	var pictureSelectedURL: ((String) -> Void)?
 	
 	init(requestSender: RequestSenderProtocol, router: RouterProtocol) {
@@ -36,9 +36,16 @@ class PicturesPresenter: NSObject {
 		fetchingData(with: type)
 	}
 	
-	private func getData(url: String, completion: @escaping ResultClosure<Data>) {
+	private func getData(url: String, completion: @escaping (Data) -> Void ) {
 		let request = RequestsFactory.dataRequest(url: url)
-		requestSender.send(request: request, completion: completion)
+		requestSender.send(request: request) { result in
+			switch result {
+			case .success(let data):
+				completion(data)
+			case .failure(let error):
+				print(error.localizedDescription)
+			}
+		}
 	}
 	
 	private func fetchingData(with type: Constants.PicturesScreen.PictureCategory) {
@@ -62,36 +69,19 @@ class PicturesPresenter: NSObject {
 	// MARK: - PicturesPresenterProtocol
 
 extension PicturesPresenter: PicturesPresenterProtocol {
+	func getData(at indexPath: IndexPath, completion: @escaping (Data) -> Void) {
+		let url = pictures[indexPath.row].previewURL
+		getData(url: url, completion: completion)
+	}
+	
+	var numberOfSection: Int {
+		return pictures.count
+	}
 	func didTapAt(indexPath: IndexPath) {
 		if let pictureSelected = pictureSelected {
 			getData(url: pictures[indexPath.row].webformatURL, completion: pictureSelected)
 		}
 		pictureSelectedURL?(pictures[indexPath.row].previewURL)
 		router.dismiss(view)
-	}
-}
-
-	// MARK: - UICollectionViewDataSource
-
-extension PicturesPresenter {
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return pictures.count
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PictureCollectionViewCell.identifier, for: indexPath) as? PictureCollectionViewCell else {
-			fatalError()
-		}
-		cell.configure()
-		let url = pictures[indexPath.row].previewURL
-		cell.tag = indexPath.row
-		getData(url: url) { result in
-			DispatchQueue.main.async {
-				if cell.tag == indexPath.row {
-					cell.imageLoaded(result)
-				}
-			}
-		}
-		return cell
 	}
 }

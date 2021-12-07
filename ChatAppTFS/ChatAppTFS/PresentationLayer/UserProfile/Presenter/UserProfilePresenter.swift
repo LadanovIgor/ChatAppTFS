@@ -97,15 +97,10 @@ class ProfilePresenter {
 
 extension ProfilePresenter: ProfilePresenterProtocol {
 	func loadedPicturesTapped() {
-		router?.presentPicturesScreen(for: view) { [weak self] result in
-			switch result {
-			case .success(let data):
-				DispatchQueue.main.async {
-					self?.updated[Constants.LocalStorage.imageKey] = data
-					self?.view?.updateProfileImage(with: data)
-				}
-			case .failure(let error):
-				print(error.localizedDescription)
+		router?.presentPicturesScreen(for: view) { [weak self] data in
+			DispatchQueue.main.async {
+				self?.updated[Constants.LocalStorage.imageKey] = data
+				self?.view?.updateProfileImage(with: data)
 			}
 		}
 	}

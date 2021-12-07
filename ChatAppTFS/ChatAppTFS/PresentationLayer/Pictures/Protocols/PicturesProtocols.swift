@@ -13,7 +13,9 @@ protocol PicturesViewProtocol: Dismissable {
 	func reload()
 }
 
-protocol PicturesPresenterProtocol: LifeCycleProtocol, UICollectionViewDataSource {
+protocol PicturesPresenterProtocol: LifeCycleProtocol {
 	func didTapAt(indexPath: IndexPath)
 	func didTap(at type: Constants.PicturesScreen.PictureCategory)
+	var numberOfSection: Int { get }
+	func getData(at indexPath: IndexPath, completion: @escaping (Data) -> Void)
 }

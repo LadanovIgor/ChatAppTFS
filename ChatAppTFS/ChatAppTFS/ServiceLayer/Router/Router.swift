@@ -54,7 +54,7 @@ final class Router: RouterProtocol {
 		viewController.present(userProfileViewController, animated: true)
 	}
 	
-	func presentPicturesScreen(for view: ProfileViewProtocol?, pictureSelected: @escaping ResultClosure<Data>) {
+	func presentPicturesScreen(for view: ProfileViewProtocol?, pictureSelected: @escaping (Data) -> Void) {
 		guard let viewController = view,
 			  let picturesViewController = assemblyBuilder?.createPicturesModule(pictureSelected: pictureSelected, router: self) else {
 				  return

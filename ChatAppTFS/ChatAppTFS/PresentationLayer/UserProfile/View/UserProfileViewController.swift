@@ -230,8 +230,8 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	
 	private func addProfileImage(_ image: UIImage) {
 		profileImageView.image = image
-		editProfileButton.isHidden = true
-		saveButton.isHidden = false
+		editProfileButton.isEnabled = false
+		saveButton.isHidden = falseso
 		cancelButton.isHidden = false
 		changeButtonState(isEnable: true)
 	}

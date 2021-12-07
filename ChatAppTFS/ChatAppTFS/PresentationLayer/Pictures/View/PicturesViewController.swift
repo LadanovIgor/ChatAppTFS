@@ -98,7 +98,7 @@ class PicturesViewController: UIViewController, PicturesViewProtocol {
 	
 	private func delegating() {
 		collectionView.delegate = self
-		collectionView.dataSource = presenter
+		collectionView.dataSource = self
 	}
 
 	private func setUpConstraints() {
@@ -160,4 +160,27 @@ extension PicturesViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		presenter.didTapAt(indexPath: indexPath)
 	}
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension PicturesViewController: UICollectionViewDataSource {
+func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	return presenter.numberOfSection
+}
+
+func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+	guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PictureCollectionViewCell.identifier, for: indexPath) as? PictureCollectionViewCell else {
+		fatalError()
+	}
+	cell.tag = indexPath.row
+	presenter.getData(at: indexPath) { data in
+		DispatchQueue.main.async {
+			if cell.tag == indexPath.row {
+				cell.imageLoaded(data)
+			}
+		}
+	}
+	return cell
+}
 }

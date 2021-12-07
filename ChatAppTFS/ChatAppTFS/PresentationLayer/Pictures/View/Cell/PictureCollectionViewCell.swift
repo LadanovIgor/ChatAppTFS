@@ -18,17 +18,13 @@ class PictureCollectionViewCell: UICollectionViewCell {
 		return imageView
 	}()
 	
-	lazy var imageLoaded: ResultClosure<Data> = { [weak self] result in
-		switch result {
-		case .success(let data):
+	lazy var imageLoaded: (Data) -> Void = { [weak self] data in
 			self?.imageView.image = UIImage(data: data)
-		case .failure(let error):
-			print(error.localizedDescription)
-		}
 	}
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
+		imageView.image = UIImage(named: "image")
 		contentView.addSubview(imageView)
 	}
 	
@@ -54,9 +50,5 @@ class PictureCollectionViewCell: UICollectionViewCell {
 			imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
 			imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
 		])
-	}
-	
-	func configure() {
-		imageView.image = UIImage(named: "image")
 	}
 }
