@@ -28,6 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8E93EB00275F4340006F9CC7"
+               BuildableName = "ChatAppTFSTUnitTests.xctest"
+               BlueprintName = "ChatAppTFSTUnitTests"
+               ReferencedContainer = "container:ChatAppTFS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
