@@ -67,6 +67,7 @@
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C35-iA-nq7" customClass="TouchAnimateButton" customModule="ChatAppTFS" customModuleProvider="target">
                     <rect key="frame" x="277" y="327" width="40" height="40"/>
+                    <accessibility key="accessibilityConfiguration" identifier="edit"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="2L5-0N-tBf"/>
                         <constraint firstAttribute="width" constant="40" id="XXV-cS-tYn"/>
@@ -80,6 +81,7 @@
                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W26-pQ-q4b">
                     <rect key="frame" x="204" y="383" width="6" height="30"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <accessibility key="accessibilityConfiguration" identifier="name"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="B2L-4F-c66"/>
                     </constraints>
@@ -89,6 +91,7 @@
                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z63-nQ-afj">
                     <rect key="frame" x="204.5" y="445" width="5" height="21"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <accessibility key="accessibilityConfiguration" identifier="info"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="rWT-kq-SKC"/>
                     </constraints>
@@ -98,6 +101,7 @@
                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HL0-Go-4Qm">
                     <rect key="frame" x="204.5" y="466" width="5" height="21"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <accessibility key="accessibilityConfiguration" identifier="location"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="CmJ-4R-mTB"/>
                     </constraints>
@@ -109,6 +113,7 @@
                 </activityIndicatorView>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbQ-nc-ey0" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
                     <rect key="frame" x="97" y="749" width="220" height="40"/>
+                    <accessibility key="accessibilityConfiguration" identifier="cancel"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="CPD-d6-3uO"/>
                     </constraints>
@@ -120,6 +125,7 @@
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqK-jj-oLu" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
                     <rect key="frame" x="97" y="792" width="220" height="40"/>
+                    <accessibility key="accessibilityConfiguration" identifier="save"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="hMJ-sd-Y1P"/>
                     </constraints>

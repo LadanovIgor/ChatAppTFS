@@ -38,6 +38,16 @@
                ReferencedContainer = "container:ChatAppTFS.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8E552EA727606D4900B300A5"
+               BuildableName = "ChatAppTFSUITests.xctest"
+               BlueprintName = "ChatAppTFSUITests"
+               ReferencedContainer = "container:ChatAppTFS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

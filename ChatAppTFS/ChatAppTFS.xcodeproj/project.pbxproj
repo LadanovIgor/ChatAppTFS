@@ -43,6 +43,7 @@
 		8E40D99327146AC700406AD4 /* ThemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40D99127146AC700406AD4 /* ThemeViewController.swift */; };
 		8E40D99427146AC700406AD4 /* ThemeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E40D99227146AC700406AD4 /* ThemeViewController.xib */; };
 		8E418FE3273408CC00FB9B45 /* CustomFirestoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E418FE2273408CC00FB9B45 /* CustomFirestoreError.swift */; };
+		8E552EAB27606D4900B300A5 /* ChatAppTFSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E552EAA27606D4900B300A5 /* ChatAppTFSUITests.swift */; };
 		8E5E63C42754929800C0A848 /* AnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5E63C32754929800C0A848 /* AnimationViewController.swift */; };
 		8E5EC5AB26FDB05E008FC472 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */; };
 		8E64EED92743D70500A72CF1 /* TableViewUpdatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E64EED82743D70500A72CF1 /* TableViewUpdatable.swift */; };
@@ -120,6 +121,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8E552EAE27606D4900B300A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8EB63AD126FDAB2D00548A19 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8EB63AD826FDAB2D00548A19;
+			remoteInfo = ChatAppTFS;
+		};
 		8E93EB05275F4340006F9CC7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8EB63AD126FDAB2D00548A19 /* Project object */;
@@ -172,6 +180,8 @@
 		8E40D99127146AC700406AD4 /* ThemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewController.swift; sourceTree = "<group>"; };
 		8E40D99227146AC700406AD4 /* ThemeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeViewController.xib; sourceTree = "<group>"; };
 		8E418FE2273408CC00FB9B45 /* CustomFirestoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFirestoreError.swift; sourceTree = "<group>"; };
+		8E552EA827606D4900B300A5 /* ChatAppTFSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatAppTFSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E552EAA27606D4900B300A5 /* ChatAppTFSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAppTFSUITests.swift; sourceTree = "<group>"; };
 		8E5E63C32754929800C0A848 /* AnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationViewController.swift; sourceTree = "<group>"; };
 		8E5EC5AA26FDB05E008FC472 /* KeyboardObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservable.swift; sourceTree = "<group>"; };
 		8E64EED82743D70500A72CF1 /* TableViewUpdatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewUpdatable.swift; sourceTree = "<group>"; };
@@ -252,6 +262,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8E552EA527606D4900B300A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E93EAFE275F4340006F9CC7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -557,6 +574,14 @@
 			path = ObjC;
 			sourceTree = "<group>";
 		};
+		8E552EA927606D4900B300A5 /* ChatAppTFSUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8E552EAA27606D4900B300A5 /* ChatAppTFSUITests.swift */,
+			);
+			path = ChatAppTFSUITests;
+			sourceTree = "<group>";
+		};
 		8E5E63C22754925700C0A848 /* Animator */ = {
 			isa = PBXGroup;
 			children = (
@@ -695,6 +720,7 @@
 			children = (
 				8EB63ADB26FDAB2D00548A19 /* ChatAppTFS */,
 				8E93EB02275F4340006F9CC7 /* ChatAppTFSTUnitTests */,
+				8E552EA927606D4900B300A5 /* ChatAppTFSUITests */,
 				8EB63ADA26FDAB2D00548A19 /* Products */,
 				701371B07B59E16EA1486D35 /* Pods */,
 				1065FE5AC35ACB59B3E249DE /* Frameworks */,
@@ -706,6 +732,7 @@
 			children = (
 				8EB63AD926FDAB2D00548A19 /* ChatAppTFS.app */,
 				8E93EB01275F4340006F9CC7 /* ChatAppTFSTUnitTests.xctest */,
+				8E552EA827606D4900B300A5 /* ChatAppTFSUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -902,6 +929,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8E552EA727606D4900B300A5 /* ChatAppTFSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E552EB227606D4900B300A5 /* Build configuration list for PBXNativeTarget "ChatAppTFSUITests" */;
+			buildPhases = (
+				8E552EA427606D4900B300A5 /* Sources */,
+				8E552EA527606D4900B300A5 /* Frameworks */,
+				8E552EA627606D4900B300A5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8E552EAF27606D4900B300A5 /* PBXTargetDependency */,
+			);
+			name = ChatAppTFSUITests;
+			productName = ChatAppTFSUITests;
+			productReference = 8E552EA827606D4900B300A5 /* ChatAppTFSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		8E93EB00275F4340006F9CC7 /* ChatAppTFSTUnitTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E93EB09275F4340006F9CC7 /* Build configuration list for PBXNativeTarget "ChatAppTFSTUnitTests" */;
@@ -950,6 +995,10 @@
 				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					8E552EA727606D4900B300A5 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 8EB63AD826FDAB2D00548A19;
+					};
 					8E93EB00275F4340006F9CC7 = {
 						CreatedOnToolsVersion = 13.1;
 						TestTargetID = 8EB63AD826FDAB2D00548A19;
@@ -975,11 +1024,19 @@
 			targets = (
 				8EB63AD826FDAB2D00548A19 /* ChatAppTFS */,
 				8E93EB00275F4340006F9CC7 /* ChatAppTFSTUnitTests */,
+				8E552EA727606D4900B300A5 /* ChatAppTFSUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8E552EA627606D4900B300A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E93EAFF275F4340006F9CC7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1067,6 +1124,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8E552EA427606D4900B300A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E552EAB27606D4900B300A5 /* ChatAppTFSUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E93EAFD275F4340006F9CC7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1183,6 +1248,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8E552EAF27606D4900B300A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8EB63AD826FDAB2D00548A19 /* ChatAppTFS */;
+			targetProxy = 8E552EAE27606D4900B300A5 /* PBXContainerItemProxy */;
+		};
 		8E93EB06275F4340006F9CC7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8EB63AD826FDAB2D00548A19 /* ChatAppTFS */;
@@ -1202,6 +1272,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8E552EB027606D4900B300A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K8F8VH947T;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "messer87-mail.com.ChatAppTFSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChatAppTFS;
+			};
+			name = Debug;
+		};
+		8E552EB127606D4900B300A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K8F8VH947T;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "messer87-mail.com.ChatAppTFSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChatAppTFS;
+			};
+			name = Release;
+		};
 		8E93EB07275F4340006F9CC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1446,6 +1562,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8E552EB227606D4900B300A5 /* Build configuration list for PBXNativeTarget "ChatAppTFSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E552EB027606D4900B300A5 /* Debug */,
+				8E552EB127606D4900B300A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8E93EB09275F4340006F9CC7 /* Build configuration list for PBXNativeTarget "ChatAppTFSTUnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -77,6 +77,7 @@ class ConversationsListViewController: UIViewController {
 
 	private func setUpRightBarItem() {
 		let resizeImage = UIImage.textImage(text: "FN")?.resize(width: barButtonSize, height: barButtonSize)
+		rightBarButton.accessibilityIdentifier = "profile"
 		rightBarButton.setImage(resizeImage, for: .normal)
 		rightBarButton.clipsToBounds = true
 		rightBarButton.layer.masksToBounds = true
