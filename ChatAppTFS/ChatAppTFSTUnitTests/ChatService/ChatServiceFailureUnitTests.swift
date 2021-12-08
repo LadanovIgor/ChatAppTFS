@@ -28,7 +28,7 @@ class ChatServiceFailureUnitTests: XCTestCase {
 		chatService = nil
 	}
 	
-	func testSuccessGetChannelsFromFirestore() {
+	func testFailureGetChannelsFromFirestore() {
 		chatService.startFetchingChannels()
 		mockFireStoreManager.getChannels { result in
 			switch result {
@@ -39,7 +39,7 @@ class ChatServiceFailureUnitTests: XCTestCase {
 		}
 	}
 
-	func testSuccessGetMessagesFromFirestore() throws {
+	func testFailureGetMessagesFromFirestore() throws {
 		let channelId = "Foo"
 		chatService.startFetchingMessages(from: channelId)
 		mockFireStoreManager.getMessages(from: channelId) { result in

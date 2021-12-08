@@ -25,35 +25,48 @@ class StorageServiceSuccessUnitTests: XCTestCase {
 	
 	func testSuccessLoadValue() {
 		let key = "Foo"
-		storageService.loadValue(for: key) { [weak self] result in
+		let promise = XCTestExpectation()
+		var catchData: Data?
+		storageService.loadValue(for: key) { result in
 			switch result {
 			case .success(let data):
-				XCTAssertEqual(key, self?.mockPlistManager.key)
-				XCTAssertEqual(data, Data())
+				catchData = data
+				promise.fulfill()
 			case .failure: break
 			}
 		}
+		wait(for: [promise], timeout: 1)
+		XCTAssertEqual(key, mockPlistManager.key)
+		XCTAssertEqual(catchData, Data())
 	}
 	
 	func testSuccessSavePlist() {
+		let promise = XCTestExpectation()
 		let plist: [String: Data] = ["Foo": Data()]
-		storageService.save(plist) { [weak self] result in
+		storageService.save(plist) { result in
 			switch result {
-			case .success(let success):
-				XCTAssertEqual(plist, self?.mockPlistManager.plist)
-				XCTAssertTrue(success)
+			case .success:
+				promise.fulfill()
 			case .failure: break
 			}
 		}
+		wait(for: [promise], timeout: 1)
+		XCTAssertEqual(plist, mockPlistManager.plist)
 	}
 	
 	func testSuccessLoadPlist() {
+		let promise = XCTestExpectation()
+		var catchPlist: [String: Data]?
 		storageService.load { result in
 			switch result {
 			case .success(let plist):
-				XCTAssertEqual(plist, ["Foo": Data()])
+					catchPlist = plist
+					promise.fulfill()
+
 			case .failure: break
 			}
 		}
+		wait(for: [promise], timeout: 1)
+		XCTAssertEqual(catchPlist, ["Foo": Data()])
 	}
 }

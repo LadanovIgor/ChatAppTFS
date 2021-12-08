@@ -25,35 +25,50 @@ class StorageServiceFailureUnitTests: XCTestCase {
 	
 	func testFailureLoadValue() {
 		let key = "Foo"
-		storageService.loadValue(for: key) { [weak self] result in
+		let promise = XCTestExpectation()
+		var catchError: Error?
+		storageService.loadValue(for: key) { result in
 			switch result {
 			case .success: break
 			case .failure(let error):
-				XCTAssertEqual(key, self?.mockPlistManager.key)
-				XCTAssertTrue(error is MockError)
+				catchError = error
+				promise.fulfill()
 			}
 		}
+		wait(for: [promise], timeout: 1)
+		XCTAssertEqual(key, mockPlistManager.key)
+		XCTAssertTrue(catchError is MockError)
 	}
 	
 	func testFailureSavePlist() {
+		let promise = XCTestExpectation()
 		let plist: [String: Data] = ["Foo": Data()]
-		storageService.save(plist) { [weak self] result in
+		var catchError: Error?
+		storageService.save(plist) { result in
 			switch result {
 			case .success: break
 			case .failure(let error):
-				XCTAssertEqual(plist, self?.mockPlistManager.plist)
-				XCTAssertTrue(error is MockError)
+				catchError = error
+				promise.fulfill()
 			}
 		}
+		wait(for: [promise], timeout: 1)
+		XCTAssertEqual(plist, mockPlistManager.plist)
+		XCTAssertTrue(catchError is MockError)
 	}
 	
 	func testFailureLoadPlist() {
+		let promise = XCTestExpectation()
+		var catchError: Error?
 		storageService.load { result in
 			switch result {
 			case .success: break
 			case .failure(let error):
-				XCTAssertTrue(error is MockError)
+				catchError = error
+				promise.fulfill()
 			}
 		}
+		wait(for: [promise], timeout: 1)
+		XCTAssertTrue(catchError is MockError)
 	}
 }
