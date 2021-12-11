@@ -113,7 +113,7 @@
                 </activityIndicatorView>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbQ-nc-ey0" customClass="AppButton" customModule="ChatAppTFS" customModuleProvider="target">
                     <rect key="frame" x="97" y="749" width="220" height="40"/>
-                    <accessibility key="accessibilityConfiguration" identifier="cancel"/>
+                    <accessibility key="accessibilityConfiguration" identifier="cancelUpdate"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="CPD-d6-3uO"/>
                     </constraints>

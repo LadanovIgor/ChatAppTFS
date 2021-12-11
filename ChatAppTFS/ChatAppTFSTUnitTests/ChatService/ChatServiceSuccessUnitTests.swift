@@ -13,22 +13,27 @@ class ChatServiceSuccessUnitTests: XCTestCase {
 	var chatService: ChatService!
 	var mockCoreDataManager: MockCoreDataManager!
 	var mockFireStoreManager: MockFirestoreManager!
+	var mockDatabaseUpdater: MockDatabaseUpdater!
 
     override func setUpWithError() throws {
 		try super.setUpWithError()
 		mockCoreDataManager = MockCoreDataManager()
 		mockFireStoreManager = MockFirestoreManager()
+		mockDatabaseUpdater = MockDatabaseUpdater()
 		chatService = ChatService(coreDataManager: mockCoreDataManager, firestoreManager: mockFireStoreManager)
+		chatService.databaseUpdater = mockDatabaseUpdater
 	}
 
     override func tearDownWithError() throws {
 		try super.tearDownWithError()
         mockCoreDataManager = nil
 		mockFireStoreManager = nil
+		mockDatabaseUpdater = nil
 		chatService = nil
     }
 	
-	func testSuccessGetChannelsFromFirestore() {
+	func testSuccessGettingChannelsAndStorageToDatabase() {
+		mockDatabaseUpdater.updateCalled = false
 		chatService.startFetchingChannels()
 		var catchChannels = [Channel]()
 		mockFireStoreManager.getChannels { result in
@@ -41,12 +46,18 @@ class ChatServiceSuccessUnitTests: XCTestCase {
 		XCTAssertTrue(mockFireStoreManager.isChannelsListening)
 		XCTAssertEqual(catchChannels.count, 1)
 		XCTAssertEqual(catchChannels[0].id, "Baz")
+		
+		XCTAssertEqual(mockCoreDataManager.channels.count, 1)
+		XCTAssertEqual(mockCoreDataManager.channels[0].id, "Baz")
+		
+		XCTAssertTrue(mockDatabaseUpdater.updateCalled)
 	}
 
-    func testSuccessGetMessagesFromFirestore() throws {
+    func testSuccessGettingMessagesAndStorageToDatabase() throws {
 		let channelId = "Foo"
-		chatService.startFetchingMessages(from: channelId)
 		var catchMessages = [Message]()
+		mockDatabaseUpdater.updateCalled = false
+		chatService.startFetchingMessages(from: channelId)
 		mockFireStoreManager.getMessages(from: channelId) { result in
 			switch result {
 			case .success(let messages): catchMessages = messages
@@ -57,6 +68,12 @@ class ChatServiceSuccessUnitTests: XCTestCase {
 		XCTAssertTrue(mockFireStoreManager.isMessagesListening)
 		XCTAssertEqual(catchMessages.count, 1)
 		XCTAssertEqual(catchMessages[0].content, "Foo")
+		
+		XCTAssertEqual(mockCoreDataManager.channelId, channelId)
+		XCTAssertEqual(mockCoreDataManager.messages.count, 1)
+		XCTAssertEqual(mockCoreDataManager.messages[0].content, "Foo")
+		
+		XCTAssertTrue(mockDatabaseUpdater.updateCalled)
     }
 	
 	func testStopFetchingChannels() {

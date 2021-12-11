@@ -39,7 +39,6 @@ class TouchAnimateCollectionView: UICollectionView, TouchAnimatable {
 	open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		super.touchesBegan(touches, with: event)
 		guard let touch = touches.first else { return }
-		clipsToBounds = false
 		startTouchAnimate(with: touch.location(in: self))
 		layer.addSublayer(emitterLayer)
 	}
@@ -53,7 +52,6 @@ class TouchAnimateCollectionView: UICollectionView, TouchAnimatable {
 	
 	open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		super.touchesEnded(touches, with: event)
-		clipsToBounds = true
 		isScrollEnabled = true
 		stopTouchAnimate()
 	}

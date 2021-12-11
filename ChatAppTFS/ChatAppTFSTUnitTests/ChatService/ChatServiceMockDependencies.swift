@@ -54,25 +54,6 @@ class MockFirestoreManager: FireStorable {
 	}
 }
 
-class MockCoreDataManager: CoreDataManagerProtocol {
-	
-	var channels = [Channel]()
-	var messages = [Message]()
-	
-	func updateDatabase(with channels: [Channel], completion: @escaping ResultClosure<Bool>) {
-		self.channels = channels
-		completion(.success(true))
-	}
-	
-	func updateDatabase(with messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>) {
-		self.messages = messages
-		completion(.success(true))
-	}
-	
-	var viewContext: NSManagedObjectContext = NSPersistentContainer(name: "Foo").viewContext
-	
-}
-
 class MockFirestoreManagerFailure: FireStorable {
 	
 	func getChannels(completion: @escaping ResultClosure<[Channel]>) {
@@ -83,23 +64,38 @@ class MockFirestoreManagerFailure: FireStorable {
 		completion(.failure(MockError.error))
 	}
 	
-	func addMessage(with content: String, senderId: String) {
-		
+	func addMessage(with content: String, senderId: String) {}
+	func addChannel(with name: String) {}
+	func deleteChannel(with channelId: String) {}
+	func stopMessageListener() {}
+	func stopChannelListener() {}
+}
+
+class MockCoreDataManager: CoreDataManagerProtocol {
+	
+	var channels = [Channel]()
+	var messages = [Message]()
+	var channelId: String?
+	
+	func updateDatabase(with channels: [Channel], completion: @escaping ResultClosure<Bool>) {
+		self.channels = channels
+		completion(.success(true))
 	}
 	
-	func addChannel(with name: String) {
-		
+	func updateDatabase(with messages: [Message], toChannel channelId: String, completion: @escaping ResultClosure<Bool>) {
+		self.messages = messages
+		self.channelId = channelId
+		completion(.success(true))
 	}
 	
-	func deleteChannel(with channelId: String) {
-		
-	}
+	var viewContext: NSManagedObjectContext = NSPersistentContainer(name: "Foo").viewContext
 	
-	func stopMessageListener() {
-		
-	}
+}
+
+class MockDatabaseUpdater: DatabaseUpdatable {
+	var updateCalled = false
 	
-	func stopChannelListener() {
-		
+	func updateData() {
+		updateCalled = true
 	}
 }
