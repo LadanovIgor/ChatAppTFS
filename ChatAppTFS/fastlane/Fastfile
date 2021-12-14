@@ -27,6 +27,6 @@ platform :ios do
 
   desc "Build and test with scan"
   lane :build_and_test_scan do
-   scan
+   scan(scheme: "ChatAppTFS")
   end
 end
