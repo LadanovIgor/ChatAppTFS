@@ -20,7 +20,6 @@ class PixabayRequest: RequestProtocol {
 	lazy var urlRequest: URLRequest? = {
 		var queryParams = Constants.PixabayAPI.queryParams
 		queryParams["q"] = searchTerm.rawValue
-        print(queryParams)
 		guard let url = getURL(with: queryParams) else {
 			return nil
 		}
@@ -35,7 +34,7 @@ class PixabayRequest: RequestProtocol {
 	}
 	
 	private func getURL(with queryParams: [String: String]) -> URL? {
-		var urlString = Constants.PixabayAPI.baseUrl
+        var urlString = Constants.PixabayAPI.baseUrl.filter { $0 != "*" }
 		var queryItems = [URLQueryItem]()
 		for (name, value) in queryParams {
 			queryItems.append(.init(name: name, value: value))

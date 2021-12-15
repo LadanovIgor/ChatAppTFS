@@ -21,7 +21,7 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 [bundle exec] fastlane ios clean_build
 ```
 
-Clean build broject
+Clean build project
 
 ### ios tests_without_building
 
