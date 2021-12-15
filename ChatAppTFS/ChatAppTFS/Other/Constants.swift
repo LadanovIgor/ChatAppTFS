@@ -20,8 +20,12 @@ enum Constants {
 	}
 	
 	enum PixabayAPI {
-		static let queryParams = ["key": "24419822-84c709773b61819bb83958ec7", "image_type": "photo", "per_page": "100"]
-		static let baseUrl = "https://pixabay.com/api/?"
+		static let queryParams = [
+            "key": Bundle.main.object(forInfoDictionaryKey: "apiKey") as? String ?? "",
+            "image_type": "photo",
+            "per_page": "100"
+        ]
+        static let baseUrl = "https://pixabay.com/api/?"
 	}
 	
 	enum PicturesScreen {

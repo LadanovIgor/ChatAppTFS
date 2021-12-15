@@ -259,6 +259,7 @@
 		8EFB2D6F2749EC220005B271 /* Picture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
 		8EFB2D712749F0F40005B271 /* PicturesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturesPresenter.swift; sourceTree = "<group>"; };
 		8EFB2D732749F1170005B271 /* PicturesProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturesProtocols.swift; sourceTree = "<group>"; };
+		9032C92C2769B9DB00CF20B9 /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -718,6 +719,7 @@
 		8EB63AD026FDAB2D00548A19 = {
 			isa = PBXGroup;
 			children = (
+				9032C92C2769B9DB00CF20B9 /* DebugConfig.xcconfig */,
 				8EB63ADB26FDAB2D00548A19 /* ChatAppTFS */,
 				8E93EB02275F4340006F9CC7 /* ChatAppTFSTUnitTests */,
 				8E552EA927606D4900B300A5 /* ChatAppTFSUITests */,
@@ -1370,6 +1372,7 @@
 		};
 		8EB63AEB26FDAB2E00548A19 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9032C92C2769B9DB00CF20B9 /* DebugConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

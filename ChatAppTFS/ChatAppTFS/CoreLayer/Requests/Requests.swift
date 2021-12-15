@@ -20,6 +20,7 @@ class PixabayRequest: RequestProtocol {
 	lazy var urlRequest: URLRequest? = {
 		var queryParams = Constants.PixabayAPI.queryParams
 		queryParams["q"] = searchTerm.rawValue
+        print(queryParams)
 		guard let url = getURL(with: queryParams) else {
 			return nil
 		}
