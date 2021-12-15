@@ -17,4 +17,4 @@ jobs:
     - name: Build and run tests
       working-directory: ./ChatAppTFS
       run: |
-        bundle exec fastlane build_and_test_scan
+        bundle exec fastlane build_and_test
