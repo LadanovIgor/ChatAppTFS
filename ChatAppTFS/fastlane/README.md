@@ -15,21 +15,21 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios build
+### ios clean_build
 
 ```sh
-[bundle exec] fastlane ios build
+[bundle exec] fastlane ios clean_build
 ```
 
-Build Project
+Clean build broject
 
-### ios tests
+### ios tests_without_building
 
 ```sh
-[bundle exec] fastlane ios tests
+[bundle exec] fastlane ios tests_without_building
 ```
 
-Run Tests
+Run Tests without building
 
 ### ios build_and_test
 
@@ -38,14 +38,6 @@ Run Tests
 ```
 
 Build and test
-
-### ios build_and_test_scan
-
-```sh
-[bundle exec] fastlane ios build_and_test_scan
-```
-
-Build and test with scan
 
 ----
 

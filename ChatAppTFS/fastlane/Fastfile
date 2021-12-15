@@ -3,30 +3,27 @@ default_platform(:ios)
 
 platform :ios do
 
-  desc "Build Project"
-  lane :build do
-    xcodebuild(
-      workspace: "ChatAppTFS.xcworkspace",
+  desc "Clean build project"
+  lane :clean_build do
+    scan(
+      clean: true,
       scheme: "ChatAppTFS",
-      configuration: "Debug",
-      sdk: 'iphonesimulator',
-      analyze: true
+      build_for_testing: true
     )
   end
 
-  desc "Run Tests"
-  lane :tests do
-   run_tests(scheme: "ChatAppTFS")
+  desc "Run Tests without building"
+  lane :tests_without_building do
+    scan(
+      scheme: "ChatAppTFS",
+      test_without_building: true
+    )
   end
 
   desc "Build and test"
   lane :build_and_test do
-   build
-   tests
+    clean_build
+    tests_without_building
   end
 
-  desc "Build and test with scan"
-  lane :build_and_test_scan do
-   scan(scheme: "ChatAppTFS")
-  end
 end
