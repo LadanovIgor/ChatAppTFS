@@ -75,7 +75,6 @@ final class FireStoreManager {
 				}
 				return channel
 			} catch {
-				print("Some joker created channel with the wrong value type")
 				return nil
 			}
 		}

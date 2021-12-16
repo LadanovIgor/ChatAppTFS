@@ -25,7 +25,7 @@ enum Constants {
             "image_type": "photo",
             "per_page": "100"
         ]
-        static let baseUrl = Bundle.main.object(forInfoDictionaryKey: "pixabayBaseURL") as? String ?? ""
+        static let baseUrl = "https://pixabay.com/api/?"
 	}
 	
 	enum PicturesScreen {

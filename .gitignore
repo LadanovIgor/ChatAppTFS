@@ -21,6 +21,7 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+ChatAppTFS/secret.xcconfig
 ChatAppTFS/secrets.xcconfig
 # Directories potentially created on remote AFP share
 .AppleDB
