@@ -7,7 +7,6 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-
 # Icon must end with two \r
 Icon
 
@@ -22,7 +21,7 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
-
+ChatAppTFS/secrets.xcconfig
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
