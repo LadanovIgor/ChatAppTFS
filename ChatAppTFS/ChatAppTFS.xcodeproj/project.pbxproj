@@ -1372,7 +1372,6 @@
 		};
 		8EB63AEB26FDAB2E00548A19 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 905EC147276B1A3C0092D78C /* secret.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
