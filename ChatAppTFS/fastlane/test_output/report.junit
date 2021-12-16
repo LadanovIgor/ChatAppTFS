@@ -6,27 +6,27 @@
   </testsuite>
   <testsuite name='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' tests='7' failures='0'>
     <testcase classname='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' name='testAddChannel' time='0.001'/>
-    <testcase classname='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' name='testAddMessage' time='0.001'/>
-    <testcase classname='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' name='testDeleteChannel' time='0.001'/>
-    <testcase classname='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' name='testStopFetchingChannels' time='0.016'/>
+    <testcase classname='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' name='testAddMessage' time='0.000'/>
+    <testcase classname='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' name='testDeleteChannel' time='0.000'/>
+    <testcase classname='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' name='testStopFetchingChannels' time='0.001'/>
     <testcase classname='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' name='testStopFetchingMessages' time='0.001'/>
     <testcase classname='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' name='testSuccessGettingChannelsAndStorageToDatabase' time='0.001'/>
     <testcase classname='ChatAppTFSTUnitTests.ChatServiceSuccessUnitTests' name='testSuccessGettingMessagesAndStorageToDatabase' time='0.001'/>
   </testsuite>
   <testsuite name='ChatAppTFSTUnitTests.StorageServiceFailureUnitTests' tests='3' failures='0'>
-    <testcase classname='ChatAppTFSTUnitTests.StorageServiceFailureUnitTests' name='testFailureLoadPlist' time='0.002'/>
-    <testcase classname='ChatAppTFSTUnitTests.StorageServiceFailureUnitTests' name='testFailureLoadValue' time='0.007'/>
-    <testcase classname='ChatAppTFSTUnitTests.StorageServiceFailureUnitTests' name='testFailureSavePlist' time='0.001'/>
+    <testcase classname='ChatAppTFSTUnitTests.StorageServiceFailureUnitTests' name='testFailureLoadPlist' time='0.003'/>
+    <testcase classname='ChatAppTFSTUnitTests.StorageServiceFailureUnitTests' name='testFailureLoadValue' time='0.001'/>
+    <testcase classname='ChatAppTFSTUnitTests.StorageServiceFailureUnitTests' name='testFailureSavePlist' time='0.007'/>
   </testsuite>
   <testsuite name='ChatAppTFSTUnitTests.StorageServiceSuccessUnitTests' tests='3' failures='0'>
-    <testcase classname='ChatAppTFSTUnitTests.StorageServiceSuccessUnitTests' name='testSuccessLoadPlist' time='0.006'/>
+    <testcase classname='ChatAppTFSTUnitTests.StorageServiceSuccessUnitTests' name='testSuccessLoadPlist' time='0.028'/>
     <testcase classname='ChatAppTFSTUnitTests.StorageServiceSuccessUnitTests' name='testSuccessLoadValue' time='0.006'/>
-    <testcase classname='ChatAppTFSTUnitTests.StorageServiceSuccessUnitTests' name='testSuccessSavePlist' time='0.014'/>
+    <testcase classname='ChatAppTFSTUnitTests.StorageServiceSuccessUnitTests' name='testSuccessSavePlist' time='0.009'/>
   </testsuite>
   <testsuite name='ChatAppTFSUITests.ChatAppTFSUITests' tests='4' failures='0'>
-    <testcase classname='ChatAppTFSUITests.ChatAppTFSUITests' name='testEditButton' time='5.631'/>
-    <testcase classname='ChatAppTFSUITests.ChatAppTFSUITests' name='testInfoTextFieldExist' time='6.360'/>
-    <testcase classname='ChatAppTFSUITests.ChatAppTFSUITests' name='testLocationTextFieldExist' time='6.500'/>
-    <testcase classname='ChatAppTFSUITests.ChatAppTFSUITests' name='testNameTextFieldExist' time='6.516'/>
+    <testcase classname='ChatAppTFSUITests.ChatAppTFSUITests' name='testEditButton' time='5.635'/>
+    <testcase classname='ChatAppTFSUITests.ChatAppTFSUITests' name='testInfoTextFieldExist' time='4.429'/>
+    <testcase classname='ChatAppTFSUITests.ChatAppTFSUITests' name='testLocationTextFieldExist' time='6.520'/>
+    <testcase classname='ChatAppTFSUITests.ChatAppTFSUITests' name='testNameTextFieldExist' time='6.591'/>
   </testsuite>
 </testsuites>

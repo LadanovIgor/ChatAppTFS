@@ -15,6 +15,10 @@ jobs:
       working-directory: ./ChatAppTFS
       run: bundle install
     - name: Build and run tests
+      env:
+        FIRESTORE_API_KEY: ${{ secrets.FIRESTORE_API_KEY }}
+        PIXABAY_BASE_URL: ${{ secrets.PIXABAY_BASE_URL }}
+        PYXABAY_API_KEY: ${{ secrets.PYXABAY_API_KEY }}
       working-directory: ./ChatAppTFS
       run: |
         bundle exec fastlane build_and_test
