@@ -9,7 +9,6 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, TouchAnimatable {
-	var emitterLayer = CAEmitterLayer()
 
 	var window: UIWindow?
 	private var orientationLock = UIInterfaceOrientationMask.portrait
@@ -36,23 +35,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TouchAnimatable {
 
 	func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
 		return orientationLock
-	}
-	
-	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-		super.touchesBegan(touches, with: event)
-		guard let touch = touches.first else { return }
-		startTouchAnimate(with: touch.location(in: window))
-		window?.layer.addSublayer(emitterLayer)
-	}
-	
-	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-		super.touchesMoved(touches, with: event)
-		guard let touch = touches.first else { return }
-		moveTouchAnimate(with: touch.location(in: window))
-	}
-	
-	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-		super.touchesEnded(touches, with: event)
-		stopTouchAnimate()
 	}
 }
