@@ -2,12 +2,10 @@ name: CI
 on: [push]
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@v1
     - uses: ruby/setup-ruby@v1
-      env:
-        ImageOS : macos11
       with:
         ruby-version: 2.7
         bundler-cache: true
