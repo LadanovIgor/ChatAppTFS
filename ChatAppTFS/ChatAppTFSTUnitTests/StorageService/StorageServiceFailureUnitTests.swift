@@ -27,6 +27,7 @@ class StorageServiceFailureUnitTests: XCTestCase {
 		let key = "Foo"
 		let promise = XCTestExpectation()
 		var catchError: Error?
+        mockPlistManager.error = MockError.error
 		storageService.loadValue(for: key) { result in
 			switch result {
 			case .success: break
@@ -44,6 +45,7 @@ class StorageServiceFailureUnitTests: XCTestCase {
 		let promise = XCTestExpectation()
 		let plist: [String: Data] = ["Foo": Data()]
 		var catchError: Error?
+        mockPlistManager.error = MockError.error
 		storageService.save(plist) { result in
 			switch result {
 			case .success: break
@@ -60,6 +62,7 @@ class StorageServiceFailureUnitTests: XCTestCase {
 	func testFailureLoadPlist() {
 		let promise = XCTestExpectation()
 		var catchError: Error?
+        mockPlistManager.error = MockError.error
 		storageService.load { result in
 			switch result {
 			case .success: break

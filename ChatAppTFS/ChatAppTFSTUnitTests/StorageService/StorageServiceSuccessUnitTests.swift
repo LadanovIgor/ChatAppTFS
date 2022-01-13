@@ -57,6 +57,7 @@ class StorageServiceSuccessUnitTests: XCTestCase {
 	func testSuccessLoadPlist() {
 		let promise = XCTestExpectation()
 		var catchPlist: [String: Data]?
+        mockPlistManager.plist = ["Foo": Data()]
 		storageService.load { result in
 			switch result {
 			case .success(let plist):

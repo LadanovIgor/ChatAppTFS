@@ -33,12 +33,15 @@ extension ThemeProtocol {
 		UIView.appearance(whenContainedInInstancesOf: [PicturesViewController.self]).backgroundColor = backgroundColor
 		UICollectionView.appearance().backgroundColor = backgroundColor
 		AppCircleView.appearance().backgroundColor = backgroundColor
-		AppView.appearance().backgroundColor = backgroundColor
+ 		AppView.appearance().backgroundColor = backgroundColor
 		AppHeaderView.appearance().backgroundColor = secondaryBackground
 		UIVisualEffectView.appearance().backgroundColor = backgroundColor
 		SendMessageView.appearance().backgroundColor = secondaryBackground
 		AppButton.appearance().backgroundColor = secondaryBackground
 		UIActivityIndicatorView.appearance().tintColor = tint
-		application.windows.reload()
+        
+        UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [.calculationModeCubic]) {
+            application.windows.reload()
+        }
 	}
 }

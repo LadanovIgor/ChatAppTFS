@@ -18,18 +18,18 @@ class MockFirestoreManager: FireStorable {
 	
 	var isMessagesListening = false
 	var isChannelsListening = false
+    var channels: [Channel] = []
+    var messages: [Message] = []
 	
 	func getChannels(completion: @escaping ResultClosure<[Channel]>) {
 		isChannelsListening = true
-		let channel = Channel(identifier: "Baz", name: "Bar", lastMessage: "Foo", lastActivity: nil)
-		completion(.success([channel]))
+		completion(.success(channels))
 	}
 	
 	func getMessages(from channelId: String, completion: @escaping ResultClosure<[Message]>) {
 		self.channelId = channelId
 		isMessagesListening = true
-		let message = Message(content: "Foo", created: nil, senderId: "Bar", senderName: "Baz")
-		completion(.success([message]))
+		completion(.success(messages))
 	}
 	
 	func addMessage(with content: String, senderId: String) {
@@ -55,13 +55,15 @@ class MockFirestoreManager: FireStorable {
 }
 
 class MockFirestoreManagerFailure: FireStorable {
+    
+    var error = MockError.error
 	
 	func getChannels(completion: @escaping ResultClosure<[Channel]>) {
-		completion(.failure(MockError.error))
+		completion(.failure(error))
 	}
 	
 	func getMessages(from channelId: String, completion: @escaping ResultClosure<[Message]>) {
-		completion(.failure(MockError.error))
+		completion(.failure(error))
 	}
 	
 	func addMessage(with content: String, senderId: String) {}

@@ -36,18 +36,19 @@ class MockPlistManagerFailure: PlistManagerProtocol {
 	
 	var plist: [String: Data]?
 	var key: String?
+    var error = MockError.error
 	
 	func save(_ plist: [String: Data], completion: ResultClosure<Bool>) {
 		self.plist = plist
-		completion(.failure(MockError.error))
+		completion(.failure(error))
 	}
 	
 	func getPlist(completion: ResultClosure<[String: Data]>) {
-		completion(.failure(MockError.error))
+		completion(.failure(error))
 	}
 	
 	func getValue(for key: String, completion: @escaping ResultClosure<Data>) {
 		self.key = key
-		completion(.failure(MockError.error))
+		completion(.failure(error))
 	}
 }

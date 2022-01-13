@@ -34,8 +34,10 @@ class ChatServiceSuccessUnitTests: XCTestCase {
 	
 	func testSuccessGettingChannelsAndStorageToDatabase() {
 		mockDatabaseUpdater.updateCalled = false
+        var catchChannels = [Channel]()
+        mockFireStoreManager.channels = [Channel(identifier: "Baz", name: "Bar", lastMessage: nil, lastActivity: nil)]
+        
 		chatService.startFetchingChannels()
-		var catchChannels = [Channel]()
 		mockFireStoreManager.getChannels { result in
 			switch result {
 			case .success(let channels):
@@ -43,6 +45,7 @@ class ChatServiceSuccessUnitTests: XCTestCase {
 			case .failure: break
 			}
 		}
+        
 		XCTAssertTrue(mockFireStoreManager.isChannelsListening)
 		XCTAssertEqual(catchChannels.count, 1)
 		XCTAssertEqual(catchChannels[0].id, "Baz")
@@ -57,6 +60,8 @@ class ChatServiceSuccessUnitTests: XCTestCase {
 		let channelId = "Foo"
 		var catchMessages = [Message]()
 		mockDatabaseUpdater.updateCalled = false
+        mockFireStoreManager.messages = [Message(content: "Foo", created: nil, senderId: nil, senderName: nil)]
+        
 		chatService.startFetchingMessages(from: channelId)
 		mockFireStoreManager.getMessages(from: channelId) { result in
 			switch result {
@@ -64,6 +69,7 @@ class ChatServiceSuccessUnitTests: XCTestCase {
 			case .failure: break
 			}
 		}
+        
 		XCTAssertEqual(mockFireStoreManager.channelId, channelId)
 		XCTAssertTrue(mockFireStoreManager.isMessagesListening)
 		XCTAssertEqual(catchMessages.count, 1)

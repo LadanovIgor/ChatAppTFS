@@ -12,12 +12,12 @@ class ChatServiceFailureUnitTests: XCTestCase {
 	
 	var chatService: ChatService!
 	var mockCoreDataManager: MockCoreDataManager!
-	var mockFireStoreManager: MockFirestoreManager!
+	var mockFireStoreManager: MockFirestoreManagerFailure!
 
 	override func setUpWithError() throws {
 		try super.setUpWithError()
 		mockCoreDataManager = MockCoreDataManager()
-		mockFireStoreManager = MockFirestoreManager()
+		mockFireStoreManager = MockFirestoreManagerFailure()
 		chatService = ChatService(coreDataManager: mockCoreDataManager, firestoreManager: mockFireStoreManager)
 	}
 
@@ -29,26 +29,42 @@ class ChatServiceFailureUnitTests: XCTestCase {
 	}
 	
 	func testFailureGetChannelsFromFirestore() {
+        mockFireStoreManager.error = MockError.error
+        var catchError: Error?
+        let promis = XCTestExpectation()
+        
 		chatService.startFetchingChannels()
 		mockFireStoreManager.getChannels { result in
 			switch result {
 			case .success: break
 			case .failure(let error):
-				XCTAssertTrue(error is MockError)
+				catchError = error
+                promis.fulfill()
 			}
 		}
+        
+        wait(for: [promis], timeout: 1.0)
+        XCTAssertTrue(catchError is MockError)
+        
 	}
 
 	func testFailureGetMessagesFromFirestore() throws {
 		let channelId = "Foo"
+        var catchError: Error?
+        let promis = XCTestExpectation()
+
 		chatService.startFetchingMessages(from: channelId)
 		mockFireStoreManager.getMessages(from: channelId) { result in
 			switch result {
 			case .success: break
 			case .failure(let error):
-				XCTAssertTrue(error is MockError)
+				catchError = error
+                promis.fulfill()
 			}
 		}
+        
+        wait(for: [promis], timeout: 1.0)
+        XCTAssertTrue(catchError is MockError)
 	}
 	
 }
