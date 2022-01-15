@@ -38,16 +38,16 @@ final class Router: RouterProtocol {
 	}
 	
 	func presentThemeScreen(from view: ConversationsListViewProtocol?, themeSelected: ThemeClosure?) {
-		guard let viewController = view as? UIViewController,
-			  let themeViewController = assemblyBuilder?.createThemeModule(themeSelected: themeSelected, router: self) else {
+		guard let themeViewController = assemblyBuilder?.createThemeModule(themeSelected: themeSelected, router: self),
+                let viewController = view as? UIViewController else {
 				  return
 			  }
 		viewController.present(themeViewController, animated: true)
 	}
 	
 	func presentUserProfileScreen(from view: ConversationsListViewProtocol?, with storageService: StoredLocally?) {
-		guard let viewController = view as? ConversationsListViewController,
-			  let userProfileViewController = assemblyBuilder?.createUserProfileModule(router: self) else {
+		guard let userProfileViewController = assemblyBuilder?.createUserProfileModule(router: self),
+              let viewController = view as? ConversationsListViewController else {
 				  return
 			  }
 		userProfileViewController.transitioningDelegate = viewController
@@ -55,8 +55,8 @@ final class Router: RouterProtocol {
 	}
 	
 	func presentPicturesScreen(for view: ProfileViewProtocol?, pictureSelected: @escaping (Data) -> Void) {
-		guard let viewController = view,
-			  let picturesViewController = assemblyBuilder?.createPicturesModule(pictureSelected: pictureSelected, router: self) else {
+		guard let picturesViewController = assemblyBuilder?.createPicturesModule(pictureSelected: pictureSelected, router: self),
+              let viewController = view else {
 				  return
 			  }
 		viewController.present(picturesViewController, animated: true)
