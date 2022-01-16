@@ -77,6 +77,7 @@ extension PicturesPresenter: PicturesPresenterProtocol {
 	var numberOfSection: Int {
 		return pictures.count
 	}
+    
 	func didTapAt(indexPath: IndexPath) {
 		if let pictureSelected = pictureSelected {
 			getData(url: pictures[indexPath.row].webformatURL, completion: pictureSelected)

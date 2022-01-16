@@ -16,8 +16,8 @@ class SendMessageView: UIView {
 	// MARK: - Properties
 
 	private let textField = UITextField()
-	private let sendButton = TouchAnimateButton()
-	private let picturesButton = TouchAnimateButton()
+	private let sendButton = UIButton()
+	private let picturesButton = UIButton()
 	
 	var messageSent: ((String) -> Void)?
 	

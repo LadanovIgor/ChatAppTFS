@@ -12,7 +12,7 @@ class ConversationViewController: UIViewController, KeyboardObservable {
 	// MARK: - Properties
 	
 	var presenter: ConversationPresenterProtocol?
-	let tableView = TouchAnimateTableView(frame: .zero, style: .grouped)
+	let tableView = UITableView(frame: .zero, style: .grouped)
 	let sendMessageView = SendMessageView()
 	var bottomConstraint: NSLayoutConstraint?
 	

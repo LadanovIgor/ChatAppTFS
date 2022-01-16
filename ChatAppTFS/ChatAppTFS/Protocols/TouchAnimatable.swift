@@ -6,7 +6,3 @@
 //
 
 import Foundation
-
-protocol TouchAnimatable: AnyObject {
-	
-}

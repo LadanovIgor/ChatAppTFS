@@ -7,6 +7,6 @@
 
 import UIKit
 
-class AppButton: UIButton, TouchAnimatable {
+class AppButton: UIButton {
 	
 }

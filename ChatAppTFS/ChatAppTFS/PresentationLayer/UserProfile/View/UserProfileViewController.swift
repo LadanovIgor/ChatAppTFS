@@ -12,8 +12,8 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	// MARK: - Outlets and Properties
 	
 	@IBOutlet weak var profileImageView: CircleImageView!
-	@IBOutlet weak var closeProfileButton: TouchAnimateButton!
-	@IBOutlet weak var editProfileButton: TouchAnimateButton!
+	@IBOutlet weak var closeProfileButton: UIButton!
+	@IBOutlet weak var editProfileButton: UIButton!
 	@IBOutlet weak var saveButton: AppButton!
 	@IBOutlet weak var nameTextField: UITextField!
 	@IBOutlet weak var infoTextField: UITextField!

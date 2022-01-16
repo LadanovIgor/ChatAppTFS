@@ -10,14 +10,12 @@
 		8BDF3A2131EB3C340B88B06C /* Pods_ChatAppTFS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787E1A175C51D13815BB921B /* Pods_ChatAppTFS.framework */; };
 		8E0040B2272EAA5F00587E99 /* CustomCoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0040B1272EAA5F00587E99 /* CustomCoreDataError.swift */; };
 		8E0040B4272EBAEA00587E99 /* NSSet+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0040B3272EBAEA00587E99 /* NSSet+.swift */; };
-		8E03E7F32726466B007F1B2B /* TouchAnimateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E03E7F22726466B007F1B2B /* TouchAnimateViews.swift */; };
 		8E03E7F52726511D007F1B2B /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E03E7F42726511D007F1B2B /* ConversationTableViewCell.xib */; };
 		8E0B66FA273FB4300092D5E5 /* LifeCycleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B66F9273FB4300092D5E5 /* LifeCycleProtocol.swift */; };
 		8E0B66FC273FC5D30092D5E5 /* ConversationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B66FB273FC5D30092D5E5 /* ConversationPresenter.swift */; };
 		8E0B66FE273FC6120092D5E5 /* ConversationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B66FD273FC6120092D5E5 /* ConversationDataSource.swift */; };
 		8E0B6700273FDAC00092D5E5 /* UserProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B66FF273FDAC00092D5E5 /* UserProfilePresenter.swift */; };
 		8E0B6702273FDCCC0092D5E5 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B6701273FDCCC0092D5E5 /* UIViewController+.swift */; };
-		8E11B243275744310084673C /* TouchAnimatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E11B242275744310084673C /* TouchAnimatable.swift */; };
 		8E15F8F5272E40BD00EE7918 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E15F8F4272E40BD00EE7918 /* CoreDataManager.swift */; };
 		8E184B12273173D600C352B9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E184B11273173D600C352B9 /* String+.swift */; };
 		8E21E796271DA0280005F20F /* Character+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21E795271DA0280005F20F /* Character+.swift */; };
@@ -147,14 +145,12 @@
 		787E1A175C51D13815BB921B /* Pods_ChatAppTFS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTFS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0040B1272EAA5F00587E99 /* CustomCoreDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCoreDataError.swift; sourceTree = "<group>"; };
 		8E0040B3272EBAEA00587E99 /* NSSet+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSet+.swift"; sourceTree = "<group>"; };
-		8E03E7F22726466B007F1B2B /* TouchAnimateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimateViews.swift; sourceTree = "<group>"; };
 		8E03E7F42726511D007F1B2B /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
 		8E0B66F9273FB4300092D5E5 /* LifeCycleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCycleProtocol.swift; sourceTree = "<group>"; };
 		8E0B66FB273FC5D30092D5E5 /* ConversationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPresenter.swift; sourceTree = "<group>"; };
 		8E0B66FD273FC6120092D5E5 /* ConversationDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationDataSource.swift; sourceTree = "<group>"; };
 		8E0B66FF273FDAC00092D5E5 /* UserProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePresenter.swift; sourceTree = "<group>"; };
 		8E0B6701273FDCCC0092D5E5 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
-		8E11B242275744310084673C /* TouchAnimatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimatable.swift; sourceTree = "<group>"; };
 		8E15F8F4272E40BD00EE7918 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		8E184B11273173D600C352B9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		8E21E795271DA0280005F20F /* Character+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+.swift"; sourceTree = "<group>"; };
@@ -503,7 +499,6 @@
 				8EE62B47272036510011FE58 /* AppViews.swift */,
 				8EE62B49272036680011FE58 /* AppHeaderView.swift */,
 				8EE62B4B2720394E0011FE58 /* AppButton.swift */,
-				8E03E7F22726466B007F1B2B /* TouchAnimateViews.swift */,
 			);
 			path = AppViews;
 			sourceTree = "<group>";
@@ -684,7 +679,6 @@
 				8E64EED82743D70500A72CF1 /* TableViewUpdatable.swift */,
 				8EAB38AA2717052900A1FF98 /* typealiases.swift */,
 				8EA157F8274CF8C400583E62 /* Dismissable.swift */,
-				8E11B242275744310084673C /* TouchAnimatable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1189,7 +1183,6 @@
 				8EE62B3F271FF16E0011FE58 /* CustomOperations.swift in Sources */,
 				8EF3AA1C272D606200BCA00E /* ChatDB.xcdatamodeld in Sources */,
 				8EA157F7274CC5C300583E62 /* UIColor+.swift in Sources */,
-				8E03E7F32726466B007F1B2B /* TouchAnimateViews.swift in Sources */,
 				8E21E796271DA0280005F20F /* Character+.swift in Sources */,
 				8EAB38AB2717052900A1FF98 /* typealiases.swift in Sources */,
 				8EAB38A52717022200A1FF98 /* ChampagneTheme.swift in Sources */,
@@ -1205,7 +1198,6 @@
 				8E2E2703270DE53400BFE156 /* Channel.swift in Sources */,
 				8EC68B71274A657E00BEB00C /* RequestSender.swift in Sources */,
 				8EAAFE27270E8BA500D7497B /* CircleImageView.swift in Sources */,
-				8E11B243275744310084673C /* TouchAnimatable.swift in Sources */,
 				8E7F4FD7274DD48200B7E3B2 /* PictureMessageTableViewCell.swift in Sources */,
 				8EA19D762746538100B8429C /* PlistManager.swift in Sources */,
 				8EE62B48272036510011FE58 /* AppViews.swift in Sources */,
@@ -1396,6 +1388,7 @@
 		};
 		8EB63AEB26FDAB2E00548A19 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 905EC147276B1A3C0092D78C /* secret.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

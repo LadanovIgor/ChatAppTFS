@@ -12,9 +12,9 @@ class ConversationsListViewController: UIViewController {
 	// MARK: - Properties
 	
 	private var presenter: ConversationsListPresenterProtocol?
-	private let tableView = TouchAnimateTableView(frame: .zero, style: .plain)
-	private let leftBarButton = TouchAnimateButton()
-	private let rightBarButton = TouchAnimateButton()
+	private let tableView = UITableView(frame: .zero, style: .plain)
+	private let leftBarButton = UIButton()
+	private let rightBarButton = UIButton()
 	private let barButtonSize = Constants.ConversationListScreen.barButtonSize
 	
 	lazy var animationController: AnimationController = {
