@@ -43,6 +43,30 @@ extension UIImage {
 		}
 		let image = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		return image
-	}
+        return image
+    }
+    
+    var circleMasked: UIImage? {
+        let isLandscape = size.width > size.height
+        let minSize = min(size.width, size.height)
+        let size = CGSize(width: minSize, height: minSize)
+        let rect = CGRect(origin: .zero, size: size)
+        guard let cgImage = cgImage?.cropping(
+            to: CGRect(
+                origin: CGPoint(
+                    x: isLandscape ? ((size.width - size.height) / 2).rounded(.down) : 0,
+                    y: isLandscape ? 0 : ((size.height - size.width) / 2).rounded(.down)),
+                    size: size
+            )
+        ) else {
+            return nil
+        }
+        let format = imageRendererFormat
+        format.opaque = false
+        return UIGraphicsImageRenderer(size: size, format: format).image { _ in
+            UIBezierPath(ovalIn: rect).addClip()
+            UIImage(cgImage: cgImage, scale: format.scale, orientation: imageOrientation)
+                .draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
 }

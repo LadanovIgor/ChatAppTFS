@@ -90,21 +90,31 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 		}
 	}
 	
-	private func getUserName() {
-		storageService?.loadValue(for: Constants.LocalStorage.nameKey) { [weak self] result in
-			switch result {
-			case .success(let data):
-				guard let text = String(data: data, encoding: .utf8) else {
-					return
-				}
-				DispatchQueue.main.async {
-					self?.view?.set(userName: text)
-				}
-			case .failure(let error):
-				print(error.localizedDescription)
-			}
-		}
+	private func loadProfileData() {
+        storageService?.load { [weak self] result in
+            switch result {
+            case .success(let dict):
+                self?.updateView(with: dict)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
 	}
+    
+    private func updateView(with dict: [String: Data]) {
+        var profileImage: UIImage?
+        var profileName: String?
+        
+        if let data = dict[Constants.LocalStorage.imageKey], let image = UIImage(data: data) {
+            profileImage = image
+        }
+        if let data = dict[Constants.LocalStorage.nameKey], let name = String(data: data, encoding: .utf8) {
+            profileName = name
+        }
+        DispatchQueue.main.async {
+            self.view?.set(userName: profileName, profileImage: profileImage)
+        }
+    }
 	
 	// MARK: - Public
 	
@@ -114,7 +124,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	
 	public func viewDidLoad() {
 		getUserId()
-		getUserName()
+		loadProfileData()
 	}
 	
 	public func viewWillAppear() {

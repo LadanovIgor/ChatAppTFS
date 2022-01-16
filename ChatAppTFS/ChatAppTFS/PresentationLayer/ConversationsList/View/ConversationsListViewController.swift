@@ -162,13 +162,15 @@ extension ConversationsListViewController: ConversationsListViewProtocol {
 	public func reload() {
 		tableView.reloadData()
 	}
-	
-	public func set(userName: String) {
-		guard let image = UIImage.textImage(text: userName.getCapitalLetters()) else {
-			return
-		}
-		self.rightBarButton.setImage(image.resize(width: self.barButtonSize, height: self.barButtonSize), for: .normal)
-	}
+    
+    public func set(userName: String?, profileImage: UIImage?) {
+        if let profileImage = profileImage {
+            rightBarButton.setImage(profileImage.circleMasked?.resize(width: barButtonSize, height: barButtonSize), for: .normal)
+        } else if let userName = userName, let image = UIImage.textImage(text: userName.getCapitalLetters()) {
+            rightBarButton.setImage(image.resize(width: barButtonSize, height: barButtonSize), for: .normal)
+        }
+    }
+
 }
 
 	// MARK: - UITableViewDelegate

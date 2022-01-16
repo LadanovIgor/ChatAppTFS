@@ -9,7 +9,7 @@ import Foundation
 import CoreData.NSFetchedResultsController
 
 protocol ConversationsListViewProtocol: TableViewUpdatable {
-	func set(userName: String)
+    func set(userName: String?, profileImage: UIImage?)
 }
 
 protocol ConversationsListPresenterProtocol: AnyObject, LifeCycleProtocol {
