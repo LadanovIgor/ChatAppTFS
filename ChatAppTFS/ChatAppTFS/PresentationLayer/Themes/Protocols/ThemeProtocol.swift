@@ -14,11 +14,11 @@ protocol ThemeProtocol {
 	var textColor: UIColor { get }
 	var barStyle: UIBarStyle { get }
 	var secondaryBackground: UIColor { get }
-	func apply(for application: UIApplication)
+    func apply(for application: UIApplication, with animation: Bool)
 }
 
 extension ThemeProtocol {
-	func apply(for application: UIApplication) {
+    func apply(for application: UIApplication, with animation: Bool) {
 		application.keyWindow?.tintColor = tint
 		UINavigationBar.appearance().barStyle = barStyle
 		UINavigationBar.appearance().barTintColor = backgroundColor
@@ -40,7 +40,11 @@ extension ThemeProtocol {
 		AppButton.appearance().backgroundColor = secondaryBackground
 		UIActivityIndicatorView.appearance().tintColor = tint
         
-        UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [.calculationModeCubic]) {
+        if animation {
+            UIView.animate(withDuration: 0.5, delay: 0, options: []) {
+                application.windows.reload()
+            }
+        } else {
             application.windows.reload()
         }
 	}

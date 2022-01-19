@@ -162,7 +162,6 @@ class UserProfileViewController: UIViewController, UIGestureRecognizerDelegate, 
 	}
 	
 	private func animateEditButton() {
-		print("yes")
 		let rotation = CAKeyframeAnimation()
 		rotation.keyPath = #keyPath(CALayer.transform)
 		rotation.valueFunction = CAValueFunction(name: CAValueFunctionName.rotateZ)

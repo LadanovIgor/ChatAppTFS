@@ -40,7 +40,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PD1-uz-Sqs" customClass="TouchAnimateButton" customModule="ChatAppTFS" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PD1-uz-Sqs">
                             <rect key="frame" x="349" y="31" width="48" height="34"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -65,7 +65,7 @@
                         <constraint firstAttribute="width" secondItem="p9Y-NK-z1Q" secondAttribute="height" multiplier="1:1" id="tIy-R8-nic"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C35-iA-nq7" customClass="TouchAnimateButton" customModule="ChatAppTFS" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C35-iA-nq7">
                     <rect key="frame" x="277" y="327" width="40" height="40"/>
                     <accessibility key="accessibilityConfiguration" identifier="edit"/>
                     <constraints>

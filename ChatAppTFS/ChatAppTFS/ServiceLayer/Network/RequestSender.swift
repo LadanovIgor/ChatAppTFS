@@ -37,7 +37,6 @@ class RequestSender: RequestSenderProtocol {
 				completion(.failure(NetworkError.badData))
 				return
 			}
-            print(data)
 			let cachedResponse = CachedURLResponse(response: httpResponse, data: data)
 			self?.cacheURL.storeCachedResponse(cachedResponse, for: urlRequest)
 			completion(.success(data))

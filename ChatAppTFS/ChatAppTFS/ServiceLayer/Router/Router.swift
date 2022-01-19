@@ -70,7 +70,7 @@ final class Router: RouterProtocol {
 		viewController.present(picturesViewController, animated: true)
 	}
 	
-	func dismiss(_ viewController: UIViewController?) {
+    func dismiss(_ viewController: UIViewController?) {
 		viewController?.dismiss(animated: true, completion: nil)
 	}
 }

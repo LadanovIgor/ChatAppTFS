@@ -95,10 +95,12 @@ class ConversationsListViewController: UIViewController {
 			forHeaderFooterViewReuseIdentifier: ConversationsListTableHeaderView.identifier)
 		view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
-		view.addConstraints(NSLayoutConstraint.constraints(
-			withNewVisualFormat: "H:|[tableView]|,V:|[tableView]|",
-			metrics: nil,
-			views: ["tableView": tableView]))
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 	}
 	
 	private func addTargets() {

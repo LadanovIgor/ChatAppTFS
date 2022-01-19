@@ -76,7 +76,7 @@ class ConversationsListPresenter: NSObject, ConversationsListPresenterProtocol {
 	}
 	
 	private func changeTheme(for theme: ThemeProtocol) {
-		theme.apply(for: UIApplication.shared)
+		theme.apply(for: UIApplication.shared, with: true)
 		let themeName = String(describing: type(of: theme).self)
 		guard let themeNameData = themeName.data(using: .utf8) else {
 			return

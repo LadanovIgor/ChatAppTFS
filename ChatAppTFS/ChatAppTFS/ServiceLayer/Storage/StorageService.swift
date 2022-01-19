@@ -56,7 +56,7 @@ final class StorageService: StoredLocally {
 			case .success(let data):
 				data.setTheme(for: application)
 			case .failure:
-				LightTheme().apply(for: application)
+				LightTheme().apply(for: application, with: false)
 			}
 		}
 	}
