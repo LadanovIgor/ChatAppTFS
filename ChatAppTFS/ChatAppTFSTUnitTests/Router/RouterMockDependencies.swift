@@ -8,7 +8,7 @@
 @testable import ChatAppTFS
 
 class MockConversationsListView: ConversationsListViewProtocol {
-    func set(userName: String) {}
+    func set(userName: String?, profileImage: UIImage?) {}
     func insert(at newIndexPath: IndexPath) {}
     func delete(at indexPath: IndexPath) {}
     func update(at indexPath: IndexPath) {}
